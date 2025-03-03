@@ -1,4 +1,9 @@
-<section>
-  <button (click)="switchLanguage('en')">English</button>
-  <button (click)="switchLanguage('es')">Español</button>
-</section>
+<mat-menu>
+  <button mat-menu-item (click)="switchLanguage('en')">English</button>
+  <button mat-menu-item (click)="switchLanguage('es')">Español</button>
+</mat-menu>
+
+<mat-menu #menu="matMenu">
+  <button mat-menu-item>Menu Item 1</button>
+  <button mat-menu-item>Menu Item 2</button>
+</mat-menu>
