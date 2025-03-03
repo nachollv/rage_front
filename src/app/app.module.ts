@@ -8,6 +8,9 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { HeaderComponent } from './Components/header/header.component';
+import { BodyComponent } from './Components/body/body.component';
+import { FooterComponent } from './Components/footer/footer.component';
 
 // Función para cargar los archivos de traducción
 export function HttpLoaderFactory(http: HttpClient) {
@@ -16,7 +19,10 @@ export function HttpLoaderFactory(http: HttpClient) {
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    HeaderComponent,
+    BodyComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,
