@@ -179,6 +179,11 @@
 
 <main class="main">
   <div class="content">
+    <section>
+      
+      <button (click)="switchLanguage('en')">English</button>
+      <button (click)="switchLanguage('es')">Español</button>
+    </section>
     <div class="left-side">
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -225,7 +230,7 @@
           <clipPath id="a"><path fill="#fff" d="M0 0h982v239H0z" /></clipPath>
         </defs>
       </svg>
-      <h1>Hello, {{ title }}</h1>
+      <h1>{{ 'HELLO' | translate }},  {{ title }} {{ 'rageTitle' | translate }}</h1>
       <p>Congratulations! Your app is running. 🎉</p>
     </div>
     <div class="divider" role="separator" aria-label="Divider"></div>
