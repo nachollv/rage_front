@@ -1,30 +1,43 @@
 <h1>RAGE</h1>
-<section>
-  <button mat-raised-button (click)="switchLanguage('en')">English</button>
-  <button mat-raised-button (click)="switchLanguage('es')">Español</button>
-</section>
+<h2>{{'HELLO' | translate}} {{'rageTitle' | translate}}</h2>
+<button [cdkMenuTriggerFor]="menu" class="example-standalone-item">Click me!</button>
 
-<button mat-raised-button [matMenuTriggerFor]="aboveMenu">Above</button>
-<mat-menu #aboveMenu="matMenu" yPosition="above">
-  <button mat-raised-button color="primary">Item 1</button>
-  <button mat-raised-button>Item 2</button>
-</mat-menu>
-
-<button mat-raised-button [matMenuTriggerFor]="belowMenu">Below</button>
-<mat-menu #belowMenu="matMenu" yPosition="below">
-  <button mat-raised-button>Item 1</button>
-  <button mat-raised-button>Item 2</button>
-</mat-menu>
-
-<button mat-raised-button [matMenuTriggerFor]="beforeMenu">Before</button>
-<mat-menu #beforeMenu="matMenu" xPosition="before">
-  <button mat-raised-button>Item 1</button>
-  <button mat-raised-button>Item 2</button>
-</mat-menu>
-
-
-<button mat-raised-button [matMenuTriggerFor]="afterMenu">After</button>
-<mat-menu #afterMenu="matMenu" xPosition="after">
-  <button mat-raised-button>Item 1</button>
-  <button mat-raised-button>Item 2</button>
-</mat-menu>
+<ng-template #menu>
+  <div class="example-menu" cdkMenu>
+    <button
+        cdkMenuItemCheckbox
+        class="example-menu-item"
+        [cdkMenuItemChecked]="bold"
+        (cdkMenuItemTriggered)="bold = !bold">
+      Bold
+    </button>
+    <button
+        cdkMenuItemCheckbox
+        class="example-menu-item"
+        [cdkMenuItemChecked]="italic"
+        (cdkMenuItemTriggered)="italic = !italic">
+      Italic
+    </button>
+    <hr />
+    <div cdkMenuGroup>
+      @for (size of sizes; track size) {
+        <button
+            cdkMenuItemRadio
+            class="example-menu-item"
+            [cdkMenuItemChecked]="size === selectedSize"
+            (cdkMenuItemTriggered)="selectedSize = size">
+          {{size}}
+        </button>
+      }
+    </div>
+    <hr />
+    <button cdkMenuItem
+            class="example-menu-item"
+            (cdkMenuItemTriggered)="reset()">Reset</button>
+  </div>
+  <hr>
+  <section class="example-menu" cdkMenu>
+    <button mat-raised-button (click)="switchLanguage('en')">English</button>
+    <button mat-raised-button (click)="switchLanguage('es')">Español</button>
+  </section>
+</ng-template>

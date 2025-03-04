@@ -8,7 +8,18 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class HeaderComponent {
   title = 'RAGE: ';
+  bold = false;
+  italic = false;
 
+  sizes = ['Small', 'Normal', 'Large'];
+  selectedSize: string | undefined = 'Normal';
+
+  reset() {
+    this.bold = false;
+    this.italic = false;
+    this.selectedSize = 'Normal';
+  }
+  
   constructor(private translate: TranslateService) {
     this.translate.setDefaultLang('en');
   }
