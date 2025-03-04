@@ -1,21 +1,42 @@
-<section class="register-container">
+<mat-card>
+  <mat-card-title>Register</mat-card-title>
   <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
-    <mat-form-field>
+    <mat-form-field appearance="fill">
       <mat-label>Email</mat-label>
-      <input matInput type="email" formControlName="email">
-      <mat-error *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched">
-        <small *ngIf="registerForm.get('email')?.errors?.['required']">Email is required.</small>
-        <small *ngIf="registerForm.get('email')?.errors?.['email']">Invalid email format.</small>
-      </mat-error>
+      <input matInput formControlName="email" type="email" required>
+      <mat-error *ngIf="registerForm?.get('email')?.invalid">Email is required</mat-error>
     </mat-form-field>
 
-    <mat-form-field>
+    <mat-form-field appearance="fill">
       <mat-label>Password</mat-label>
-      <input matInput type="password" formControlName="password">
-      <mat-error *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched">
-        <small *ngIf="registerForm.get('password')?.errors?.['required']">Password is required.</small>
-      </mat-error>
+      <input matInput formControlName="password" type="password" required>
+      <mat-error *ngIf="registerForm?.get('password')?.invalid">Password is required</mat-error>
     </mat-form-field>
-    <button mat-raised-button type="submit" [disabled]="registerForm.invalid">Register</button>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Retype Password</mat-label>
+      <input matInput formControlName="retypePassword" type="password" required>
+      <mat-error *ngIf="registerForm?.get('retypePassword')?.invalid">Retype Password is required</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>NIF</mat-label>
+      <input matInput formControlName="nif" required>
+      <mat-error *ngIf="registerForm?.get('nif')?.invalid">NIF is required</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Nombre Empresa</mat-label>
+      <input matInput formControlName="companyName" required>
+      <mat-error *ngIf="registerForm?.get('companyName')?.invalid">Nombre Empresa is required</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Código Postal</mat-label>
+      <input matInput formControlName="postalCode" required>
+      <mat-error *ngIf="registerForm?.get('postalCode')?.invalid">Código Postal is required</mat-error>
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" type="submit" [disabled]="registerForm.invalid">Register</button>
   </form>
-</section>
+</mat-card>

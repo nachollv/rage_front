@@ -1,6 +1,6 @@
 <h1>RAGE</h1>
 <h2>{{'HELLO' | translate}} {{'rageTitle' | translate}}</h2>
-<button [cdkMenuTriggerFor]="menu" class="example-standalone-item">Click me!</button>
+<button [cdkMenuTriggerFor]="menu" class="example-standalone-item">Menu</button>
 
 <ng-template #menu>
   <div class="example-menu" cdkMenu>
@@ -34,10 +34,8 @@
     <button cdkMenuItem
             class="example-menu-item"
             (cdkMenuItemTriggered)="reset()">Reset</button>
-  </div>
   <hr>
-  <section class="example-menu" cdkMenu>
     <button mat-raised-button (click)="switchLanguage('en')">English</button>
     <button mat-raised-button (click)="switchLanguage('es')">Español</button>
-  </section>
+  </div>
 </ng-template>
