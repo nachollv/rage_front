@@ -12,6 +12,7 @@ $theme: mat.define-light-theme((
 
 @include mat.all-component-themes($theme);
 
+
 html, body { height: 100%; }
 
 body { margin: 0; 
