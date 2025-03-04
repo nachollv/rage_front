@@ -7,13 +7,20 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 /*  */
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { ReactiveFormsModule } from '@angular/forms'; // Importa ReactiveFormsModule
+
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-import { HeaderComponent } from './Components/header/header.component';
-import { BodyComponent } from './Components/body/body.component';
-import { FooterComponent } from './Components/footer/footer.component';
+import { HeaderComponent } from './Protected/header/header.component';
+import { BodyComponent } from './Protected/body/body.component';
+import { FooterComponent } from './Protected/footer/footer.component';
 /*  */
 import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+/*  */
+import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
 
 
 // Función para cargar los archivos de traducción
@@ -26,14 +33,19 @@ export function HttpLoaderFactory(http: HttpClient) {
     AppComponent,
     HeaderComponent,
     BodyComponent,
-    FooterComponent
+    FooterComponent,
+    LoginComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,
+    ReactiveFormsModule,
     HttpClientModule,
     AppRoutingModule,
     MatMenuModule,
     MatButtonModule,
+    MatInputModule,
+    MatFormFieldModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
