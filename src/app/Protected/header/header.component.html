@@ -1,6 +1,10 @@
-<h1>RAGE</h1>
-<h2>{{'HELLO' | translate}} {{'rageTitle' | translate}}</h2>
-<button [cdkMenuTriggerFor]="menu" class="example-standalone-item">Menu</button>
+<mat-toolbar color="primary">
+  <button mat-button [cdkMenuTriggerFor]="menu" ngClass="app-menu"><span>RAGE</span></button>
+  <h2>{{'HELLO' | translate}} {{'rageTitle' | translate}}</h2>
+</mat-toolbar>
+  
+
+
 
 <ng-template #menu>
   <div class="example-menu" cdkMenu>
