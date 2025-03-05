@@ -16,7 +16,8 @@ export class OrganGeneralDataComponent {
       'Mediana',
       'Gran empresa',
       'Administración',
-      'Entidad sin ánimo de lucro'
+      'Entidad sin ánimo de lucro',
+      'Otras'
     ];
   
     sectors = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];

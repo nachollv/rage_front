@@ -1,0 +1,88 @@
+{
+  "CNAE_Groups": [
+    {
+      "code": "A",
+      "description": "Agricultura, ganadería, silvicultura y pesca"
+    },
+    {
+      "code": "B",
+      "description": "Industrias extractivas"
+    },
+    {
+      "code": "C",
+      "description": "Industria manufacturera"
+    },
+    {
+      "code": "D",
+      "description": "Suministro de energía eléctrica, gas, vapor y aire acondicionado"
+    },
+    {
+      "code": "E",
+      "description": "Suministro de agua, actividades de saneamiento, gestión de residuos y descontaminación"
+    },
+    {
+      "code": "F",
+      "description": "Construcción"
+    },
+    {
+      "code": "G",
+      "description": "Comercio al por mayor y al por menor; reparación de vehículos de motor y motocicletas"
+    },
+    {
+      "code": "H",
+      "description": "Transporte y almacenamiento"
+    },
+    {
+      "code": "I",
+      "description": "Hostelería"
+    },
+    {
+      "code": "J",
+      "description": "Información y comunicaciones"
+    },
+    {
+      "code": "K",
+      "description": "Actividades financieras y de seguros"
+    },
+    {
+      "code": "L",
+      "description": "Actividades inmobiliarias"
+    },
+    {
+      "code": "M",
+      "description": "Actividades profesionales, científicas y técnicas"
+    },
+    {
+      "code": "N",
+      "description": "Actividades administrativas y servicios auxiliares"
+    },
+    {
+      "code": "O",
+      "description": "Administración Pública y defensa; Seguridad Social obligatoria"
+    },
+    {
+      "code": "P",
+      "description": "Educación"
+    },
+    {
+      "code": "Q",
+      "description": "Actividades sanitarias y de servicios sociales"
+    },
+    {
+      "code": "R",
+      "description": "Actividades artísticas, recreativas y de entretenimiento"
+    },
+    {
+      "code": "S",
+      "description": "Otros servicios"
+    },
+    {
+      "code": "T",
+      "description": "Actividades de los hogares como empleadores de personal doméstico; actividades de los hogares como productores de bienes y servicios para uso propio"
+    },
+    {
+      "code": "U",
+      "description": "Actividades de organizaciones y organismos extraterritoriales"
+    }
+  ]
+}

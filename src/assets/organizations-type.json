@@ -1,0 +1,32 @@
+{
+  "organizationTypes": [
+    {
+      "type": "Micro",
+      "description": "Microempresa"
+    },
+    {
+      "type": "Pequeña",
+      "description": "Pequeña empresa"
+    },
+    {
+      "type": "Mediana",
+      "description": "Mediana empresa"
+    },
+    {
+      "type": "Gran empresa",
+      "description": "Gran empresa"
+    },
+    {
+      "type": "Administración",
+      "description": "Administración pública"
+    },
+    {
+      "type": "Entidad sin ánimo de lucro",
+      "description": "Entidad sin ánimo de lucro"
+    },
+    {
+      "type": "Otras",
+      "description": "Otras organizaciones"
+    }
+  ]
+}
