@@ -17,6 +17,9 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { HeaderComponent } from './Protected/header/header.component';
 import { FooterComponent } from './Protected/footer/footer.component';
 /*  */
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
 import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatInputModule } from '@angular/material/input';
@@ -29,6 +32,7 @@ import { CdkMenuModule } from '@angular/cdk/menu';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { OrganGeneralDataComponent } from './Protected/organ-general-data/organ-general-data.component';
+import { DataTableComponent } from './Protected/data-table/data-table.component';
 
 
 // Función para cargar los archivos de traducción
@@ -43,7 +47,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     FooterComponent,
     LoginComponent,
     RegisterComponent,
-    OrganGeneralDataComponent
+    OrganGeneralDataComponent,
+    DataTableComponent
   ],
   imports: [
     BrowserModule,
@@ -51,6 +56,9 @@ export function HttpLoaderFactory(http: HttpClient) {
     HttpClientModule,
     AppRoutingModule,
     MatMenuModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
     MatButtonModule,
     MatInputModule,
     MatFormFieldModule,

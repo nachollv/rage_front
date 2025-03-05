@@ -7,7 +7,11 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrl: './organ-general-data.component.scss'
 })
 export class OrganGeneralDataComponent {
-
+  data = [
+    { name: 'John', age: 25, address: '123 Main St' },
+    { name: 'Jane', age: 30, address: '456 Maple Ave' },
+    { name: 'Doe', age: 35, address: '789 Oak Dr' }
+  ];
     organizationForm: FormGroup;
   
     organizationTypes = [

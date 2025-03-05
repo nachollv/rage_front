@@ -32,4 +32,6 @@
   <button mat-raised-button color="primary" type="submit"[disabled]="organizationForm.invalid">Enviar</button>
 </form>
 </mat-card>
+
+<app-data-table [columns]="['name', 'age', 'address']" [data]="data"></app-data-table>
 </section>
