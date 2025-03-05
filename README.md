@@ -43,3 +43,4 @@ npm install @ngx-translate/core @ngx-translate/http-loader
 ## github
 
 ## netlify
+[![Netlify Status](https://api.netlify.com/api/v1/badges/5af0ffa4-a636-4753-a3fa-fa75e5c39e20/deploy-status)](https://app.netlify.com/sites/ragefootprint/deploys)
