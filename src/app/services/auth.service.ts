@@ -10,11 +10,15 @@ export class AuthService {
 
   // Método para establecer el token
   setToken(token: string) {
-    this.token = token;
+    sessionStorage.setItem('jwtToken', token);
   }
 
   // Método para obtener el token
   getToken(): string | null {
-    return this.token;
+    return sessionStorage.getItem('jwtToken');
+  }
+
+  clearToken() {
+    sessionStorage.removeItem('jwtToken');
   }
 }
