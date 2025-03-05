@@ -1,1 +1,35 @@
-<p>organ-general-data works!</p>
+<section class="organization-container">
+<mat-card>
+  <mat-card-title>{{"organizationData" | translate}}</mat-card-title>
+<form [formGroup]="organizationForm" (ngSubmit)="onSubmit()">
+  <mat-form-field appearance="fill">
+    <mat-label>Nombre</mat-label>
+    <input matInput formControlName="name" required>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>NIF</mat-label>
+    <input matInput formControlName="nif" required>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Tipo de organización</mat-label>
+    <mat-select formControlName="organizationType" required>
+      <mat-option *ngFor="let type of organizationTypes" [value]="type">
+        {{ type }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Sector</mat-label>
+    <mat-select formControlName="sector" required>
+      <mat-option *ngFor="let sector of sectors" [value]="sector">
+        {{ sector }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <button mat-raised-button color="primary" type="submit"[disabled]="organizationForm.invalid">Enviar</button>
+</form>
+</mat-card>
+</section>

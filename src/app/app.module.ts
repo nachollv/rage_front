@@ -19,6 +19,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatCardModule } from '@angular/material/card';
 import {MatToolbarModule} from '@angular/material/toolbar';
+import {MatSelectModule} from '@angular/material/select';
 import { CdkMenuModule } from '@angular/cdk/menu';
 /*  */
 import { LoginComponent } from './login/login.component';
@@ -51,6 +52,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     MatFormFieldModule,
     MatCardModule,
     MatToolbarModule,
+    MatSelectModule,
     CdkMenuModule,
     TranslateModule.forRoot({
       loader: {
