@@ -4,17 +4,17 @@
 <form [formGroup]="organizationForm" (ngSubmit)="onSubmit()">
   <mat-form-field appearance="fill">
     <mat-label>Nombre</mat-label>
-    <input matInput formControlName="name" required>
+    <input matInput formControlName="name">
   </mat-form-field>
 
   <mat-form-field appearance="fill">
     <mat-label>NIF</mat-label>
-    <input matInput formControlName="nif" required>
+    <input matInput formControlName="nif" minlength="9" maxlength="9">
   </mat-form-field>
 
   <mat-form-field appearance="fill">
     <mat-label>Tipo de organización</mat-label>
-    <mat-select formControlName="organizationType" required>
+    <mat-select formControlName="organizationType">
       <mat-option *ngFor="let type of organizationTypes" [value]="type">
         {{ type }}
       </mat-option>
@@ -23,7 +23,7 @@
 
   <mat-form-field appearance="fill">
     <mat-label>Sector</mat-label>
-    <mat-select formControlName="sector" required>
+    <mat-select formControlName="sector">
       <mat-option *ngFor="let sector of sectors" [value]="sector">
         {{ sector }}
       </mat-option>
