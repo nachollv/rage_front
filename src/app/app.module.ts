@@ -11,7 +11,6 @@ import { ReactiveFormsModule } from '@angular/forms'; // Importa ReactiveFormsMo
 
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { HeaderComponent } from './Protected/header/header.component';
-import { BodyComponent } from './Protected/body/body.component';
 import { FooterComponent } from './Protected/footer/footer.component';
 /*  */
 import { MatButtonModule } from '@angular/material/button';
@@ -24,6 +23,7 @@ import { CdkMenuModule } from '@angular/cdk/menu';
 /*  */
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
+import { OrganGeneralDataComponent } from './Protected/organ-general-data/organ-general-data.component';
 
 
 // Función para cargar los archivos de traducción
@@ -35,10 +35,10 @@ export function HttpLoaderFactory(http: HttpClient) {
   declarations: [
     AppComponent,
     HeaderComponent,
-    BodyComponent,
     FooterComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    OrganGeneralDataComponent
   ],
   imports: [
     BrowserModule,

@@ -1,44 +1,38 @@
 <mat-toolbar color="primary">
   <button mat-button [cdkMenuTriggerFor]="menu" ngClass="app-menu"><span>RAGE</span></button>
-  <h2>{{'HELLO' | translate}} {{'rageTitle' | translate}}</h2>
+  <h1>{{'rageTitle' | translate}}. {{'HELLO' | translate}}</h1>
 </mat-toolbar>
   
 
-
-
 <ng-template #menu>
-  <div class="example-menu" cdkMenu>
+  <div ngClass="example-menu" cdkMenu>
     <button
         cdkMenuItemCheckbox
-        class="example-menu-item"
+        ngClass="example-menu-item"
         [cdkMenuItemChecked]="bold"
         (cdkMenuItemTriggered)="bold = !bold">
-      Bold
+      {{'fixedInstallations' | translate}}
     </button>
     <button
         cdkMenuItemCheckbox
-        class="example-menu-item"
+        ngClass="example-menu-item"
         [cdkMenuItemChecked]="italic"
         (cdkMenuItemTriggered)="italic = !italic">
-      Italic
+        {{'vehiclesMachines' | translate}}
     </button>
-    <hr />
     <div cdkMenuGroup>
-      @for (size of sizes; track size) {
-        <button
-            cdkMenuItemRadio
-            class="example-menu-item"
-            [cdkMenuItemChecked]="size === selectedSize"
-            (cdkMenuItemTriggered)="selectedSize = size">
-          {{size}}
-        </button>
-      }
+      <button cdkMenuItemRadio ngClass="example-menu-item">{{'fugitiveEmissions' | translate}}</button>
+      <button cdkMenuItemRadio ngClass="example-menu-item">{{'processEmissions' | translate}}</button>
+      <button cdkMenuItemRadio ngClass="example-menu-item">{{'AdditionalInformation' | translate}}</button>
+      <button cdkMenuItemRadio ngClass="example-menu-item">{{'ElectricityAndOtherEnergies' | translate}}</button>
+      <button cdkMenuItemRadio ngClass="example-menu-item">{{'FinalReport' | translate}}</button>
+      <button cdkMenuItemRadio ngClass="example-menu-item">{{'EmisionFactors' | translate}}</button>
+      <hr>
+      <button cdkMenuItemRadio ngClass="example-menu-item">{{'OrganizationGeneralData' | translate}}</button>
     </div>
     <hr />
-    <button cdkMenuItem
-            class="example-menu-item"
-            (cdkMenuItemTriggered)="reset()">Reset</button>
-  <hr>
+    <button cdkMenuItem ngClass="example-menu-item" (cdkMenuItemTriggered)="reset()">Logout</button>
+    <hr>
     <button mat-raised-button (click)="switchLanguage('en')">English</button>
     <button mat-raised-button (click)="switchLanguage('es')">Español</button>
   </div>

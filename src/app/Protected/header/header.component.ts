@@ -11,7 +11,7 @@ export class HeaderComponent {
   bold = false;
   italic = false;
 
-  sizes = ['Small', 'Normal', 'Large'];
+  menuOptions = ["{{'fugitiveEmissions' | translate}}", 'processEmissions', 'AdditionalInformation', 'ElectricityAndOtherEnergies', 'FinalReport', '<hr>EmisionFactors'];
   selectedSize: string | undefined = 'Normal';
 
   reset() {

@@ -1,5 +1,6 @@
 # RageFront
 Registro y Análisis de Gases de Efecto invernadero
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.0.3.
 
 This project was created in non standalone mode, using this command:
