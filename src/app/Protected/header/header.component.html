@@ -1,8 +1,29 @@
 <mat-toolbar color="primary">
-  <button mat-button [cdkMenuTriggerFor]="menu" ngClass="app-menu"><span>RAGE</span></button>
+  <button mat-button [matMenuTriggerFor]="mainMenu" ngClass="app-menu"><span>RAGE</span></button> 
   <h1>{{'rageTitle' | translate}}. {{'HELLO' | translate}}</h1>
 </mat-toolbar>
-  
+<mat-menu #mainMenu="matMenu">
+  <button mat-menu-item class="example-menu-bar-item" [matMenuTriggerFor]="consumptions">{{'consumptions' | translate}}</button>
+  <button mat-menu-item class="example-menu-bar-item" [matMenuTriggerFor]="emissions">{{'emissions' | translate}}</button>
+  <button mat-menu-item class="example-menu-bar-item">{{'electricityOtherEnergies' | translate}}</button>
+  <hr>
+  <button mat-menu-item ngClass="example-menu-item">{{'emissionFactors' | translate}}</button>
+  <hr>
+  <button mat-menu-item ngClass="example-menu-item">{{'organizationGeneralData' | translate}}</button>
+  <hr>
+  <button mat-menu-item (click)="switchLanguage('en')">English</button>
+  <button mat-menu-item (click)="switchLanguage('es')">Español</button>
+  <hr>
+  <button  mat-menu-item ngClass="example-menu-item" (cdkMenuItemTriggered)="reset()">{{'logout' | translate}}</button>
+</mat-menu>
+<mat-menu #consumptions="matMenu">
+  <button mat-menu-item>{{'fixedInstallationsFuelConsumption' | translate}}</button>
+  <button mat-menu-item>{{'fuelConsumptionVeniclesMachinery' | translate}}</button>
+</mat-menu>
+<mat-menu #emissions="matMenu">
+  <button mat-menu-item>{{'fugitiveEmissions' | translate}}</button>
+  <button mat-menu-item>{{'processEmissions' | translate}}</button>
+</mat-menu>
 
 <ng-template #menu>
   <div ngClass="example-menu" cdkMenu>

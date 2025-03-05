@@ -1,5 +1,18 @@
 {
   "HELLO": "Welcome",
   "rageTitle": "Registration and Analysis of Greenhouse Gases",
-  "footerTitle": "The carbon footprint calculator"
+  "footerTitle": "The carbon footprint calculator",
+  "initWorkingSession": "Init working session",
+  "consumptions": "Consumptions",
+  "emissions": "Emissions",
+  "electricityOtherEnergies": "Electricity and other energies",
+  "fixedInstallationsFuelConsumption": "Fuel consumption in fixed installations",
+  "fuelConsumptionVeniclesMachinery": "Fuel consumption in vehicles and machinery",
+  "fugitiveEmissions": "Fugitive emissions (air conditioning equipment and others)",
+  "processEmissions": "Process emissions",
+  "emissionFactors": "Emission Factors",
+  "organizationGeneralData": "Organization general data",
+
+  "logout": "Logout",
+  "login": "Login"
 }

@@ -1,5 +1,19 @@
 {
   "HELLO": "Bienvenido",
   "rageTitle": "Registro y Análisis de Gases de Efecto invernadero",
-  "footerTitle": "La calculadora de la huella de carbono"
+  "footerTitle": "La calculadora de la huella de carbono",
+  "initWorkingSession": "Iniciar sesión de trabajo",
+
+  "consumptions": "Consumos",
+  "emissions": "Emisiones",
+  "electricityOtherEnergies": "Electricidad y otras energías",
+  "fixedInstallationsFuelConsumption": "Consumo de combustibles en instalaciones fijas",
+  "fuelConsumptionVeniclesMachinery": "Consumo de combustibles en vehículos y maquinaria",
+  "fugitiveEmissions": "Emisiones fugitivas (equipos de climatización y otros)",
+  "processEmissions": "Emisiones de proceso",
+  "emissionFactors": "Factores de emisión",
+  "organizationGeneralData": "Datos generales de la organización",
+
+  "logout": "Salir",
+  "login": "Entrar"
 }
