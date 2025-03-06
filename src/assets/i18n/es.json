@@ -4,8 +4,8 @@
   "footerTitle": "La calculadora de la huella de carbono",
   "initWorkingSession": "Iniciar sesión de trabajo",
 
-  "consumptions": "Consumos",
-  "emissions": "Emisiones",
+  "consumptions": "EMISIONES DIRECTAS (ALCANCE1)",
+  "emissions": "EMISIONES INDIRECTAS POR LA COMPRA DE ELECTRICIDAD Y OTRAS ENERGÍAS (ALCANCE 2)",
   "electricityOtherEnergies": "Electricidad y otras energías",
   "fixedInstallationsFuelConsumption": "Consumo de combustibles en instalaciones fijas",
   "fuelConsumptionVeniclesMachinery": "Consumo de combustibles en vehículos y maquinaria",

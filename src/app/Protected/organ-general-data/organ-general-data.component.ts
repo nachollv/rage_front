@@ -8,9 +8,12 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class OrganGeneralDataComponent {
   data = [
-    { name: 'John', age: 25, address: '123 Main St' },
-    { name: 'Jane', age: 30, address: '456 Maple Ave' },
-    { name: 'Doe', age: 35, address: '789 Oak Dr' }
+    { delegation: 'Central', town: 'Palma', address: '123 Main St', phone: '971971971', edit: true, delete: true},
+    { delegation: 'Sede Felanitx', town: 'Felanitx', address: '456 Maple Ave', phone: '971971971', edit: true, delete: true },
+    { delegation: 'Sede Manacor', town: 'Manacor', address: '789 Oak Dr', phone: '971971971', edit: true, delete: true },  
+    { delegation: 'Sede Calvià', town: 'Calvià', address: '123 Main St', phone: '971971971', edit: false, delete: true },
+    { delegation: 'Sede Andraitx', town: 'Andraitx', address: '456 Maple Ave', phone: '971971971', edit: true, delete: true },
+    { delegation: 'Sede Pollença', town: 'Pollença', address: '789 Oak Dr', phone: '971971971', edit: true, delete: true }
   ];
     organizationForm: FormGroup;
   

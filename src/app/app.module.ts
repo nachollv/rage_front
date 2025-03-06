@@ -17,6 +17,7 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { HeaderComponent } from './Protected/header/header.component';
 import { FooterComponent } from './Protected/footer/footer.component';
 /*  */
+import { MatIconModule } from '@angular/material/icon'
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
@@ -33,6 +34,8 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { OrganGeneralDataComponent } from './Protected/organ-general-data/organ-general-data.component';
 import { DataTableComponent } from './Protected/data-table/data-table.component';
+import { ElectricityComponent } from './Protected/consumption/electricity/electricity.component';
+import { HomeComponent } from './home/home.component';
 
 
 // Función para cargar los archivos de traducción
@@ -48,7 +51,9 @@ export function HttpLoaderFactory(http: HttpClient) {
     LoginComponent,
     RegisterComponent,
     OrganGeneralDataComponent,
-    DataTableComponent
+    DataTableComponent,
+    ElectricityComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
@@ -56,6 +61,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     HttpClientModule,
     AppRoutingModule,
     MatMenuModule,
+    MatIconModule,
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
