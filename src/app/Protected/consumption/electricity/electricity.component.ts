@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogComponent } from '../../../dialog/dialog.component';
 
 @Component({
   selector: 'app-electricity',
@@ -17,7 +19,7 @@ export class ElectricityComponent {
   ];
     consumoForm: FormGroup;
   
-    constructor(private fb: FormBuilder) {
+    constructor(private fb: FormBuilder, public dialog: MatDialog) {
       this.consumoForm = this.fb.group({
         delegacion: ['', Validators.required],
         tipoFactura: ['mensual', Validators.required],
@@ -33,5 +35,22 @@ export class ElectricityComponent {
         console.log(this.consumoForm.value);
       }
     }
+
+    openDialog(): void {
+        const dialogRef = this.dialog.open(DialogComponent, {
+          data: {
+            title: 'Título del Dialog',
+            text: 'Este es el texto del Dialog.',
+            position: 'center'
+          },
+          /* position: { top: '20%', left: '20%' } ,*/ // Ajusta la posición según tus necesidades
+          width: '400px',
+          height: '300px'
+        });
+    
+        dialogRef.afterClosed().subscribe(result => {
+          console.log('El dialog se cerró');
+        });
+      }
   }
   

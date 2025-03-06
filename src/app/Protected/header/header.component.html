@@ -1,16 +1,18 @@
 <mat-toolbar color="primary">
-  <a ngClass="logo" href="/"><img src="../../../assets/logo-rage.jpeg" alt="Logo RAGE" title="RAGE"></a>
-  <button ngClass="app-menu" mat-button [matMenuTriggerFor]="mainMenu"><mat-icon>menu</mat-icon></button> 
-  <h1 ngClass="headerTitle">{{'rageTitle' | translate}}. {{'HELLO' | translate}}</h1>
+  <mat-toolbar-row>
+    <button ngClass="app-menu" mat-button [matMenuTriggerFor]="mainMenu"><mat-icon ngClass="mat-icon-big">menu</mat-icon></button> 
+    <h1 ngClass="headerTitle">{{'rageTitle' | translate}}. {{'HELLO' | translate}}</h1>
+    <a ngClass="logo" href="/"><img src="../../../assets/logo-rage.jpeg" alt="Logo RAGE" title="RAGE"></a>
+  </mat-toolbar-row>
 </mat-toolbar>
+
 <mat-menu #mainMenu="matMenu">
   <button mat-menu-item class="example-menu-bar-item" [matMenuTriggerFor]="consumptions">{{'consumptions' | translate}}</button>
   <button mat-menu-item class="example-menu-bar-item" [matMenuTriggerFor]="emissions">{{'emissions' | translate}}</button>
- 
   <hr>
   <button mat-menu-item ngClass="rage-menu-item">{{'emissionFactors' | translate}}</button>
   <hr>
-  <button mat-menu-item ngClass="rage-menu-item" routerLink="/organ-gen-data" >{{'organizationGeneralData' | translate}}</button>
+  <button mat-menu-item ngClass="rage-menu-item" routerLink="/organ-gen-data">{{'organizationGeneralData' | translate}}</button>
   <hr>
   <button mat-menu-item (click)="switchLanguage('en')">English</button>
   <button mat-menu-item (click)="switchLanguage('es')">Español</button>
@@ -18,46 +20,19 @@
   <button  mat-menu-item ngClass="rage-menu-item" (cdkMenuItemTriggered)="reset()">{{'logout' | translate}}</button>
 </mat-menu>
 <mat-menu #consumptions="matMenu">
-  <section mat-menu-item><button mat-flat-button ><mat-icon style="color: #ff0010;" (click)="openDialog()">info</mat-icon></button>Option 1</section>
-  <button mat-flat-button (click)="openDialog()"><mat-icon style="color: #ff9310;">info</mat-icon></button> <button mat-menu-item>{{'fixedInstallationsFuelConsumption' | translate}}</button>
-  <button mat-menu-item (click)="openDialog()">{{'fuelConsumptionVeniclesMachinery' | translate}}<mat-icon>info</mat-icon></button>
-  <button mat-menu-item (click)="openDialog()">{{'fugitiveEmissions' | translate}}<mat-icon>info</mat-icon></button>
-  <button mat-menu-item (click)="openDialog()">{{'processEmissions' | translate}}<mat-icon>info</mat-icon></button>
+  <button mat-menu-item>
+    {{'fixedInstallationsFuelConsumption' | translate}}
+  </button>
+  <button mat-menu-item>
+    {{'fuelConsumptionVeniclesMachinery' | translate}}
+  </button>
+  <button mat-menu-item>
+    {{'fugitiveEmissions' | translate}}
+  </button>
+  <button mat-menu-item>
+    {{'processEmissions' | translate}}
+  </button>
 </mat-menu>
 <mat-menu #emissions="matMenu">
-  <button mat-menu-item class="example-menu-bar-item" routerLink="/electricity-consumption" (click)="openDialog()">{{'electricityOtherEnergies' | translate}}<mat-icon>info</mat-icon></button>
+  <button mat-menu-item class="example-menu-bar-item" routerLink="/electricity-consumption">{{'electricityOtherEnergies' | translate}}</button>
 </mat-menu>
-
-<ng-template #menu>
-  <div ngClass="rage-menu" cdkMenu>
-    <button
-        cdkMenuItemCheckbox
-        ngClass="rage-menu-item"
-        [cdkMenuItemChecked]="bold"
-        (cdkMenuItemTriggered)="bold = !bold">
-      {{'fixedInstallations' | translate}}
-    </button>
-    <button
-        cdkMenuItemCheckbox
-        ngClass="rage-menu-item"
-        [cdkMenuItemChecked]="italic"
-        (cdkMenuItemTriggered)="italic = !italic">
-        {{'vehiclesMachines' | translate}}
-    </button>
-    <div cdkMenuGroup>
-      <button cdkMenuItemRadio ngClass="rage-menu-item">{{'consumptions' | translate}}</button>
-      <button cdkMenuItemRadio ngClass="rage-menu-item">{{'emissions' | translate}}</button>
-      <button cdkMenuItemRadio ngClass="rage-menu-item">{{'ownenergyinstallations' | translate}}</button>
-      <button cdkMenuItemRadio ngClass="rage-menu-item">{{'indirectemissions' | translate}}</button>
-      <hr>
-      <button cdkMenuItemRadio ngClass="rage-menu-item">{{'emissionfactors' | translate}}</button>
-      <hr>
-      <button cdkMenuItemRadio ngClass="rage-menu-item">{{'OrganizationGeneralData' | translate}}</button>
-    </div>
-    <hr />
-    <button cdkMenuItem ngClass="rage-menu-item" (cdkMenuItemTriggered)="reset()">Logout</button>
-    <hr>
-    <button mat-raised-button (click)="switchLanguage('en')">English</button>
-    <button mat-raised-button (click)="switchLanguage('es')">Español</button>
-  </div>
-</ng-template>

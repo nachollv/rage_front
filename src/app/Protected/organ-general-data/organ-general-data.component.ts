@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogComponent } from '../../dialog/dialog.component';
 
 @Component({
   selector: 'app-organ-general-data',
@@ -29,7 +31,7 @@ export class OrganGeneralDataComponent {
   
     sectors = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
   
-    constructor(private fb: FormBuilder) {
+    constructor(private fb: FormBuilder, public dialog: MatDialog) {
       this.organizationForm = this.fb.group({
         name: ['', [Validators.required, Validators.minLength(9)]],
         nif: ['', [Validators.required, Validators.minLength(9), Validators.maxLength(9)]],
@@ -42,5 +44,22 @@ export class OrganGeneralDataComponent {
       if (this.organizationForm.valid) {
         console.log(this.organizationForm.value);
       }
+    }
+
+    openDialog(): void {
+      const dialogRef = this.dialog.open(DialogComponent, {
+        data: {
+          title: 'Título del Dialog',
+          text: 'Este es el texto del Dialog.',
+          position: 'center'
+        },
+        /* position: { top: '20%', left: '20%' } ,*/ // Ajusta la posición según tus necesidades
+        width: '400px',
+        height: '300px'
+      });
+  
+      dialogRef.afterClosed().subscribe(result => {
+        console.log('El dialog se cerró');
+      });
     }
   }
