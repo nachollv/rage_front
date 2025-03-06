@@ -1,6 +1,5 @@
-<section class="organization-container">
 <mat-card>
-  <mat-card-title>{{"organizationGeneralData" | translate}}</mat-card-title>
+<mat-card-title>{{"organizationGeneralData" | translate}}</mat-card-title>
 <form [formGroup]="organizationForm" (ngSubmit)="onSubmit()">
   <mat-form-field appearance="fill">
     <mat-label>Nombre</mat-label>
@@ -33,5 +32,4 @@
 </form>
 </mat-card>
 
-<app-data-table [columns]="['name', 'town', 'address', 'phone', 'edit', 'delete']" [data]="data"></app-data-table>
-</section>
+<app-data-table [columns]="['delegation', 'town', 'address', 'phone', 'edit', 'delete']" [data]="data"></app-data-table>

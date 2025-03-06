@@ -1,0 +1,33 @@
+<mat-card>
+  <mat-card-title>{{"electricityConsumtions" | translate}}</mat-card-title>  
+<form [formGroup]="consumoForm" (ngSubmit)="onSubmit()">
+  <mat-form-field appearance="fill">
+    <mat-label>Delegación</mat-label>
+    <input matInput formControlName="delegacion" placeholder="Ejemplo: Zona Norte">
+    <mat-error *ngIf="consumoForm.get('delegacion')?.hasError('required')">Este campo es obligatorio</mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Tipo de Factura</mat-label>
+    <mat-select formControlName="tipoFactura">
+      <mat-option value="mensual">Mensual</mat-option>
+      <mat-option value="bimestral">Bimestral</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <div formGroupName="consumos">
+    <mat-form-field appearance="fill">
+      <mat-label>Energía Consumida (kWh)</mat-label>
+      <input matInput formControlName="energia" type="number">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Costo (€)</mat-label>
+      <input matInput formControlName="costo" type="number">
+    </mat-form-field>
+  </div>
+
+  <button mat-raised-button color="primary" type="submit">Registrar</button>
+</form>
+</mat-card>
+<app-data-table [columns]="['delegation', 'year', 'quantity', 'CO2eq', 'edit', 'delete']" [data]="data"></app-data-table>

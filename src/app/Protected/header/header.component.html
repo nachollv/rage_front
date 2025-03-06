@@ -7,11 +7,11 @@
 <mat-menu #mainMenu="matMenu">
   <button mat-menu-item class="example-menu-bar-item" [matMenuTriggerFor]="consumptions">{{'consumptions' | translate}}</button>
   <button mat-menu-item class="example-menu-bar-item" [matMenuTriggerFor]="emissions">{{'emissions' | translate}}</button>
-  <button mat-menu-item class="example-menu-bar-item">{{'electricityOtherEnergies' | translate}}</button>
+  <button mat-menu-item class="example-menu-bar-item" routerLink="/electricity-consumption">{{'electricityOtherEnergies' | translate}}</button>
   <hr>
   <button mat-menu-item ngClass="example-menu-item">{{'emissionFactors' | translate}}</button>
   <hr>
-  <button mat-menu-item ngClass="example-menu-item" routerLink="/organ-gen-data" >{{'organizationGeneralData' | translate}}</button>
+  <button mat-menu-item ngClass="example-menu-item" routerLink="/organ-gen-data">{{'organizationGeneralData' | translate}}</button>
   <hr>
   <button mat-menu-item (click)="switchLanguage('en')">English</button>
   <button mat-menu-item (click)="switchLanguage('es')">Español</button>
@@ -19,7 +19,9 @@
   <button  mat-menu-item ngClass="example-menu-item" (cdkMenuItemTriggered)="reset()">{{'logout' | translate}}</button>
 </mat-menu>
 <mat-menu #consumptions="matMenu">
-  <button mat-menu-item>{{'fixedInstallationsFuelConsumption' | translate}}</button>
+  <button mat-menu-item>{{'fixedInstallationsFuelConsumption' | translate}}<mat-icon matTooltip="Info about the action"
+    matTooltipClass="example-tooltip-uppercase"
+    aria-label="Button that shows a red tooltip">info</mat-icon></button>
   <button mat-menu-item>{{'fuelConsumptionVeniclesMachinery' | translate}}</button>
 </mat-menu>
 <mat-menu #emissions="matMenu">
