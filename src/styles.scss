@@ -12,7 +12,6 @@ $theme: mat.define-light-theme((
 
 @include mat.all-component-themes($theme);
 
-
 html, body { height: 100%; }
 
 body { margin: 0; 
@@ -20,4 +19,9 @@ body { margin: 0;
   font-size: 1rem; 
   background: var(--mat-sys-surface);
   color: var(--mat-sys-on-surface);
+}
+
+img {
+  max-width: 50%;
+  height: auto;
 }

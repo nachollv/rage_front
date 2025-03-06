@@ -1,8 +1,7 @@
 <mat-toolbar color="primary">
-  <a href="/"><img src="../../../assets/logo-rage.jpeg" alt="Logo RAGE" title="RAGE"></a>
-  
-  <button mat-button [matMenuTriggerFor]="mainMenu" ngClass="app-menu"><mat-icon>menu</mat-icon></button> 
-  <h1>{{'rageTitle' | translate}}. {{'HELLO' | translate}}</h1>
+  <a ngClass="logo" href="/"><img src="../../../assets/logo-rage.jpeg" alt="Logo RAGE" title="RAGE"></a>
+  <button ngClass="app-menu" mat-button [matMenuTriggerFor]="mainMenu"><mat-icon>menu</mat-icon></button> 
+  <h1 ngClass="headerTitle">{{'rageTitle' | translate}}. {{'HELLO' | translate}}</h1>
 </mat-toolbar>
 <mat-menu #mainMenu="matMenu">
   <button mat-menu-item class="example-menu-bar-item" [matMenuTriggerFor]="consumptions">{{'consumptions' | translate}}</button>
@@ -19,13 +18,14 @@
   <button  mat-menu-item ngClass="rage-menu-item" (cdkMenuItemTriggered)="reset()">{{'logout' | translate}}</button>
 </mat-menu>
 <mat-menu #consumptions="matMenu">
-  <button mat-menu-item>{{'fixedInstallationsFuelConsumption' | translate}}<mat-icon>info</mat-icon></button>
-  <button mat-menu-item>{{'fuelConsumptionVeniclesMachinery' | translate}}<mat-icon>info</mat-icon></button>
-  <button mat-menu-item>{{'fugitiveEmissions' | translate}}<mat-icon>info</mat-icon></button>
-  <button mat-menu-item>{{'processEmissions' | translate}}<mat-icon>info</mat-icon></button>
+  <section mat-menu-item><button mat-flat-button ><mat-icon style="color: #ff0010;" (click)="openDialog()">info</mat-icon></button>Option 1</section>
+  <button mat-flat-button (click)="openDialog()"><mat-icon style="color: #ff9310;">info</mat-icon></button> <button mat-menu-item>{{'fixedInstallationsFuelConsumption' | translate}}</button>
+  <button mat-menu-item (click)="openDialog()">{{'fuelConsumptionVeniclesMachinery' | translate}}<mat-icon>info</mat-icon></button>
+  <button mat-menu-item (click)="openDialog()">{{'fugitiveEmissions' | translate}}<mat-icon>info</mat-icon></button>
+  <button mat-menu-item (click)="openDialog()">{{'processEmissions' | translate}}<mat-icon>info</mat-icon></button>
 </mat-menu>
 <mat-menu #emissions="matMenu">
-  <button mat-menu-item class="example-menu-bar-item" routerLink="/electricity-consumption">{{'electricityOtherEnergies' | translate}}<mat-icon>info</mat-icon></button>
+  <button mat-menu-item class="example-menu-bar-item" routerLink="/electricity-consumption" (click)="openDialog()">{{'electricityOtherEnergies' | translate}}<mat-icon>info</mat-icon></button>
 </mat-menu>
 
 <ng-template #menu>

@@ -1,3 +1,24 @@
+mat-toolbar {
+  display: grid;
+  grid-template-areas: "logo menu title";
+  grid-template-columns: 5% 5% auto;
+  line-height: inherit; /* quito un padding que desalinea el logo respecto al menu */
+}
+
+mat-icon {
+  transform: scale(2);
+}
+
+.logo {
+grid-area: logo;
+}
+.app-menu {
+grid-area: menu;
+}
+
+.headerTitle {
+  grid-area: title;
+}
 .rage-menu-bar-item {
   cursor: pointer;
   border: none;
@@ -76,6 +97,10 @@
 
 /* Large devices (laptops/desktops, 992px and up) */
 @media only screen and (max-width: 992px) {
+  mat-toolbar {
+    grid-template-areas: "logo menu";
+  }
+
   mat-toolbar h1 {
     display: none;
   }

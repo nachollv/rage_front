@@ -27,7 +27,7 @@
     </mat-form-field>
   </div>
 
-  <button mat-raised-button color="primary" type="submit">Registrar</button>
+  <button mat-raised-button color="primary" type="submit"  [disabled]="consumoForm.invalid">Registrar</button>
 </form>
 </mat-card>
 <app-data-table [columns]="['delegation', 'year', 'quantity', 'CO2eq', 'edit', 'delete']" [data]="data"></app-data-table>

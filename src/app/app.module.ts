@@ -36,6 +36,7 @@ import { OrganGeneralDataComponent } from './Protected/organ-general-data/organ-
 import { DataTableComponent } from './Protected/data-table/data-table.component';
 import { ElectricityComponent } from './Protected/consumption/electricity/electricity.component';
 import { HomeComponent } from './home/home.component';
+import { DialogComponent } from './dialog/dialog.component';
 
 
 // Función para cargar los archivos de traducción
@@ -53,7 +54,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     OrganGeneralDataComponent,
     DataTableComponent,
     ElectricityComponent,
-    HomeComponent
+    HomeComponent,
+    DialogComponent
   ],
   imports: [
     BrowserModule,
