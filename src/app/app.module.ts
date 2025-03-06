@@ -17,6 +17,7 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { HeaderComponent } from './Protected/header/header.component';
 import { FooterComponent } from './Protected/footer/footer.component';
 /*  */
+import { MatIconModule } from '@angular/material/icon'
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
@@ -56,6 +57,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     HttpClientModule,
     AppRoutingModule,
     MatMenuModule,
+    MatIconModule,
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
