@@ -2,19 +2,15 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 100%;
-}
-
-.mat-icon-big {
-  transform: scale(2);
 }
 
 .logo {
   grid-area: logo;
-  max-width: 10%;
+  width: 10%;
 }
 .app-menu {
   grid-area: menu;
+  transform: scale(2);
 }
 
 .headerTitle {

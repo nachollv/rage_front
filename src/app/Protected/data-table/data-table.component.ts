@@ -9,20 +9,21 @@ import { MatSort } from '@angular/material/sort';
   styleUrls: ['./data-table.component.scss']
 })
 export class DataTableComponent implements OnInit {
-  @Input() columns: string[] = [];
-  @Input() data: any[] = [];
-
-  displayedColumns: string[] = [];
-  dataSource!: MatTableDataSource<any>;
+  @Input() displayedColumns: string[] = []
+  @Input() dataSource : MatTableDataSource<any>
 
   @ViewChild(MatPaginator)
-  paginator!: MatPaginator;
+  paginator!: MatPaginator
   @ViewChild(MatSort)
-  sort!: MatSort;
+  sort!: MatSort
+
+  constructor() {
+    this.dataSource = new MatTableDataSource<any>([])
+  }
 
   ngOnInit() {
-    this.displayedColumns = this.columns;
-    this.dataSource = new MatTableDataSource(this.data);
+   /*  this.displayedColumns = this.columns;
+    this.dataSource = new MatTableDataSource(this.data); */
   }
 
   ngAfterViewInit() {

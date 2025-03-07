@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent } from '../../dialog/dialog.component';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-organ-general-data',
@@ -9,6 +10,7 @@ import { DialogComponent } from '../../dialog/dialog.component';
   styleUrl: './organ-general-data.component.scss'
 })
 export class OrganGeneralDataComponent {
+  displayedColumns: string[] = ['delegation', 'town', 'address', 'phone', 'edit', 'delete']
   data = [
     { delegation: 'Central', town: 'Palma', address: '123 Main St', phone: '971971971', edit: true, delete: true},
     { delegation: 'Sede Felanitx', town: 'Felanitx', address: '456 Maple Ave', phone: '971971971', edit: true, delete: true },
@@ -17,7 +19,8 @@ export class OrganGeneralDataComponent {
     { delegation: 'Sede Andraitx', town: 'Andraitx', address: '456 Maple Ave', phone: '971971971', edit: true, delete: true },
     { delegation: 'Sede Pollença', town: 'Pollença', address: '789 Oak Dr', phone: '971971971', edit: true, delete: true }
   ];
-    organizationForm: FormGroup;
+  dataSource = new MatTableDataSource<any>(this.data)
+  organizationForm: FormGroup;
   
     organizationTypes = [
       'Micro',

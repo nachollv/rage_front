@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent } from '../../../dialog/dialog.component';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-fixed-installation',
@@ -9,16 +10,18 @@ import { DialogComponent } from '../../../dialog/dialog.component';
   styleUrl: './fixed-installation.component.scss'
 })
 export class FixedInstallationComponent {
-    fuelForm: FormGroup;
+  displayedColumns: string[] = ['delegation', 'year', 'kg CO2/ud-defecto', 'g CH4/ud-defecto', 'g N2O/ud-defecto', 'g CO2/ud-otros', 'g CH4/ud-otros', 'g N2O/ud-otros', 'kg CO2', 'g CH4', 'g N2O', 'Emisiones Totales (kg CO2e)', 'edit', 'delete']
     /* 'kg CO2/ud', 'g CH4/ud', 'g N2O/ud', 'kg CO2/ud', 'g CH4/ud', 'g N2O/ud', 'kg CO2', 'g CH4', 'g N2O', 'Emisiones Totales (kg CO2e)' */
     data = [
-      { delegation: 'Central', year: 2024, 'kg CO2/ud-defecto': 25, 'g CH4/ud-defecto': 34.25, 'g N2O/ud-defecto': '23.54', 'kg CO2/ud-otros': 45.345, 'g CH4/ud-otros': 0.00, 'g N2O/ud-otros': 0.00, 'kg CO2': 0.12, 'g CH4':12.23, 'g N2O': 25.21, 'Emisiones Totales (kg CO2e)':154.24, edit: true, delete: true},
-      { delegation: 'Felanitx', year: 2024, 'kg CO2/ud-defecto': 25, 'g CH4/ud-defecto': 34.25, 'g N2O/ud-defecto': '23.54', 'kg CO2/ud-otros': 45.345, 'g CH4/ud-otros': 0.00, 'g N2O/ud-otros': 0.00, 'kg CO2': 0.12, 'g CH4':12.23, 'g N2O': 25.21, 'Emisiones Totales (kg CO2e)':154.24, edit: true, delete: true},
-      { delegation: 'Manacor', year: 2024, 'kg CO2/ud-defecto': 25, 'g CH4/ud-defecto': 34.25, 'g N2O/ud-defecto': '23.54', 'kg CO2/ud-otros': 45.345, 'g CH4/ud-otros': 0.00, 'g N2O/ud-otros': 0.00, 'kg CO2': 0.12, 'g CH4':12.23, 'g N2O': 25.21, 'Emisiones Totales (kg CO2e)':154.24, edit: true, delete: true},  
-      { delegation: 'Calvià', year: 2024, 'kg CO2/ud-defecto': 25, 'g CH4/ud-defecto': 34.25, 'g N2O/ud-defecto': '23.54', 'kg CO2/ud-otros': 45.345, 'g CH4/ud-otros': 0.00, 'g N2O/ud-otros': 0.00, 'kg CO2': 0.12, 'g CH4':12.23, 'g N2O': 25.21, 'Emisiones Totales (kg CO2e)':154.24, edit: true, delete: true},
-      { delegation: 'Andraitx', year: 2024, 'kg CO2/ud-defecto': 25, 'g CH4/ud-defecto': 34.25, 'g N2O/ud-defecto': '23.54', 'kg CO2/ud-otros': 45.345, 'g CH4/ud-otros': 0.00, 'g N2O/ud-otros': 0.00, 'kg CO2': 0.12, 'g CH4':12.23, 'g N2O': 25.21, 'Emisiones Totales (kg CO2e)':154.24, edit: true, delete: true},
-      { delegation: 'Pollença', year: 2024, 'kg CO2/ud-defecto': 25, 'g CH4/ud-defecto': 34.25, 'g N2O/ud-defecto': '23.54', 'kg CO2/ud-otros': 45.345, 'g CH4/ud-otros': 0.00, 'g N2O/ud-otros': 0.00, 'kg CO2': 0.12, 'g CH4':12.23, 'g N2O': 25.21, 'Emisiones Totales (kg CO2e)':154.24, edit: true, delete: true},
+      { delegation: 'Central', year: 2024, 'kg CO2/ud-defecto': 25, 'g CH4/ud-defecto': 34.25, 'g N2O/ud-defecto': 23.54, 'kg CO2/ud-otros': 45.345, 'g CH4/ud-otros': 0.00, 'g N2O/ud-otros': 0.00, 'kg CO2': 0.12, 'g CH4':12.23, 'g N2O': 25.21, 'Emisiones Totales (kg CO2e)':154.24, edit: true, delete: true},
+      { delegation: 'Felanitx', year: 2024, 'kg CO2/ud-defecto': 25, 'g CH4/ud-defecto': 34.25, 'g N2O/ud-defecto': 23.54, 'kg CO2/ud-otros': 45.345, 'g CH4/ud-otros': 0.00, 'g N2O/ud-otros': 0.00, 'kg CO2': 0.12, 'g CH4':12.23, 'g N2O': 25.21, 'Emisiones Totales (kg CO2e)':154.24, edit: true, delete: true},
+      { delegation: 'Manacor', year: 2024, 'kg CO2/ud-defecto': 25, 'g CH4/ud-defecto': 34.25, 'g N2O/ud-defecto': 23.54, 'kg CO2/ud-otros': 45.345, 'g CH4/ud-otros': 0.00, 'g N2O/ud-otros': 0.00, 'kg CO2': 0.12, 'g CH4':12.23, 'g N2O': 25.21, 'Emisiones Totales (kg CO2e)':154.24, edit: true, delete: true},  
+      { delegation: 'Calvià', year: 2024, 'kg CO2/ud-defecto': 25, 'g CH4/ud-defecto': 34.25, 'g N2O/ud-defecto': 23.54, 'kg CO2/ud-otros': 45.345, 'g CH4/ud-otros': 0.00, 'g N2O/ud-otros': 0.00, 'kg CO2': 0.12, 'g CH4':12.23, 'g N2O': 25.21, 'Emisiones Totales (kg CO2e)':154.24, edit: true, delete: true},
+      { delegation: 'Andraitx', year: 2024, 'kg CO2/ud-defecto': 25, 'g CH4/ud-defecto': 34.25, 'g N2O/ud-defecto': 23.54, 'kg CO2/ud-otros': 45.345, 'g CH4/ud-otros': 0.00, 'g N2O/ud-otros': 0.00, 'kg CO2': 0.12, 'g CH4':12.23, 'g N2O': 25.21, 'Emisiones Totales (kg CO2e)':154.24, edit: true, delete: true},
+      { delegation: 'Pollença', year: 2024, 'kg CO2/ud-defecto': 25, 'g CH4/ud-defecto': 34.25, 'g N2O/ud-defecto': 23.54, 'kg CO2/ud-otros': 45.345, 'g CH4/ud-otros': 0.00, 'g N2O/ud-otros': 0.00, 'kg CO2': 0.12, 'g CH4':12.23, 'g N2O': 25.21, 'Emisiones Totales (kg CO2e)':154.24, edit: true, delete: true},
     ];
+    dataSource = new MatTableDataSource<any>(this.data)
+    fuelForm: FormGroup;
     constructor(private fb: FormBuilder, public dialog: MatDialog) {
       this.fuelForm = this.fb.group({
         building: ['', Validators.required],

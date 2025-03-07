@@ -33,4 +33,4 @@
 </form>
 </mat-card>
 
-<app-data-table [columns]="['delegation', 'town', 'address', 'phone', 'edit', 'delete']" [data]="data"></app-data-table>
+<app-data-table [displayedColumns]="displayedColumns" [dataSource]="dataSource"></app-data-table>
