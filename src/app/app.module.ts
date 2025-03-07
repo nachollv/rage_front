@@ -17,6 +17,7 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { HeaderComponent } from './Protected/header/header.component';
 import { FooterComponent } from './Protected/footer/footer.component';
 /*  */
+import {MatTabsModule} from '@angular/material/tabs';
 import { MatIconModule } from '@angular/material/icon'
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
@@ -38,6 +39,7 @@ import { ElectricityComponent } from './Protected/consumption/electricity/electr
 import { FixedInstallationComponent } from './Protected/consumption/fixed-installation/fixed-installation.component';
 import { HomeComponent } from './home/home.component';
 import { DialogComponent } from './dialog/dialog.component';
+import { ConsumtionContainerComponent } from './Protected/consumption/consumtion-container/consumtion-container.component';
 
 
 // Función para cargar los archivos de traducción
@@ -58,6 +60,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     FixedInstallationComponent,
     HomeComponent,
     DialogComponent,
+    ConsumtionContainerComponent,
 
   ],
   imports: [
@@ -66,6 +69,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     HttpClientModule,
     AppRoutingModule,
     MatMenuModule,
+    MatTabsModule,
     MatIconModule,
     MatTableModule,
     MatPaginatorModule,
