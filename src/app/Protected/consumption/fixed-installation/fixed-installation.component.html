@@ -1,0 +1,73 @@
+<form [formGroup]="fuelForm" (ngSubmit)="onSubmit()">
+  <mat-form-field>
+    <mat-label>Edificio / Sede</mat-label>
+    <input matInput formControlName="building">
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Tipo de Combustible</mat-label>
+    <input matInput formControlName="fuelType">
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Cantidad de Combustible (ud)</mat-label>
+    <input matInput type="number" formControlName="quantity">
+  </mat-form-field>
+
+  <h3>Factor de Emisión (Por defecto)</h3>
+  <div formGroupName="defaultFactor">
+    <mat-form-field>
+      <mat-label>kg CO2/ud</mat-label>
+      <input matInput type="number" formControlName="co2">
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>g CH4/ud</mat-label>
+      <input matInput type="number" formControlName="ch4">
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>g N2O/ud</mat-label>
+      <input matInput type="number" formControlName="n2o">
+    </mat-form-field>
+  </div>
+
+  <h3>Factor de Emisión (Otros)</h3>
+  <div formGroupName="otherFactor">
+    <mat-form-field>
+      <mat-label>kg CO2/ud</mat-label>
+      <input matInput type="number" formControlName="co2">
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>g CH4/ud</mat-label>
+      <input matInput type="number" formControlName="ch4">
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>g N2O/ud</mat-label>
+      <input matInput type="number" formControlName="n2o">
+    </mat-form-field>
+  </div>
+
+  <h3>Emisiones Parciales</h3>
+  <div formGroupName="partialEmissions">
+    <mat-form-field>
+      <mat-label>kg CO2</mat-label>
+      <input matInput type="number" formControlName="co2" [disabled]=true>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>g CH4</mat-label>
+      <input matInput type="number" formControlName="ch4" [disabled]=true>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>g N2O</mat-label>
+      <input matInput type="number" formControlName="n2o" [disabled]=true>
+    </mat-form-field>
+  </div>
+
+  <h3>Emisiones Totales</h3>
+  <mat-form-field>
+    <mat-label>kg CO2e</mat-label>
+    <input matInput type="number" formControlName="totalEmissions" [disabled]=true>
+  </mat-form-field>
+
+  <button mat-raised-button type="button" (click)="calculateEmissions()">Calcular Emisiones</button>
+  <button mat-raised-button type="submit">Enviar</button>
+</form>

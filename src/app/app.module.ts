@@ -35,6 +35,7 @@ import { RegisterComponent } from './register/register.component';
 import { OrganGeneralDataComponent } from './Protected/organ-general-data/organ-general-data.component';
 import { DataTableComponent } from './Protected/data-table/data-table.component';
 import { ElectricityComponent } from './Protected/consumption/electricity/electricity.component';
+import { FixedInstallationComponent } from './Protected/consumption/fixed-installation/fixed-installation.component';
 import { HomeComponent } from './home/home.component';
 import { DialogComponent } from './dialog/dialog.component';
 
@@ -54,8 +55,10 @@ export function HttpLoaderFactory(http: HttpClient) {
     OrganGeneralDataComponent,
     DataTableComponent,
     ElectricityComponent,
+    FixedInstallationComponent,
     HomeComponent,
-    DialogComponent
+    DialogComponent,
+
   ],
   imports: [
     BrowserModule,
