@@ -23,7 +23,7 @@ export class HeaderComponent {
   }
   
   constructor(private translate: TranslateService, public dialog: MatDialog) {
-    this.translate.setDefaultLang('en');
+    this.translate.setDefaultLang('es');
   }
 
   switchLanguage(language: string) {
