@@ -10,12 +10,12 @@ import { DialogComponent } from '../../../dialog/dialog.component';
 })
 export class ElectricityComponent {
   data = [
-    { delegation: 'Central', year: 2024, '01': 25,  '02': 34.25, '03': '23.54', '04': 45.345, edit: true, delete: true},
-    { delegation: 'Felanitx', year: 2024, '01': 25,  '02': 34.25, '03': '23.54', '04': 45.345, edit: true, delete: true },
-    { delegation: 'Manacor', year: 2024, '01': 25,  '02': 34.25, '03': '23.54', '04': 45.345, edit: true, delete: true },  
-    { delegation: 'Calvià', year: 2024, '01': 25,  '02': 34.25, '03': '23.54', '04': 45.345, edit: false, delete: true },
-    { delegation: 'Andraitx', year: 2024, '01': 25,  '02': 34.25, '03': '23.54', '04': 45.345, edit: true, delete: true },
-    { delegation: 'Pollença', year: 2024, '01': 25,  '02': 34.25, '03': '23.54', '04': 45.345, edit: true, delete: true }
+    { delegation: 'Central', year: 2024, '01': 25, '02': 34.25, '03': '23.54', '04': 45.345, '05': 45.345, '06': 45.345, '07': 45.345, '08': 45.345, '09': 45.345, '10': 45.345, '11': 45.345, edit: true, delete: true},
+    { delegation: 'Felanitx', year: 2024, '01': 25, '02': 34.25, '03': '23.54', '04': 45.345, '05': 45.345, '06': 45.345, '07': 45.345, '08': 45.345, '09': 45.345, '10': 45.345, '11': 45.345, edit: true, delete: true },
+    { delegation: 'Manacor', year: 2024, '01': 25, '02': 34.25, '03': '23.54', '04': 45.345, '05': 45.345, '06': 45.345, '07': 45.345, '08': 45.345, '09': 45.345, '10': 45.345, '11': 45.345, edit: true, delete: true },  
+    { delegation: 'Calvià', year: 2024, '01': 25, '02': 34.25, '03': '23.54', '04': 45.345, '05': 45.345, '06': 45.345, '07': 45.345, '08': 45.345, '09': 45.345, '10': 45.345, '11': 45.345, edit: false, delete: true },
+    { delegation: 'Andraitx', year: 2024, '01': 25, '02': 34.25, '03': '23.54', '04': 45.345, '05': 45.345, '06': 45.345, '07': 45.345, '08': 45.345, '09': 45.345, '10': 45.345, '11': 45.345, edit: true, delete: true },
+    { delegation: 'Pollença', year: 2024, '01': 25, '02': 34.25, '03': '23.54', '04': 45.345, '05': 45.345, '06': 45.345, '07': 45.345, '08': 45.345, '09': 45.345, '10': 45.345, '11': 45.345, edit: true, delete: true }
   ];
     consumoForm: FormGroup;
   
