@@ -5,6 +5,7 @@ import { RegisterComponent } from './register/register.component';
 import { OrganGeneralDataComponent } from './Protected/organ-general-data/organ-general-data.component';
 import { ElectricityComponent } from './Protected/consumption/electricity/electricity.component';
 import { HomeComponent } from './home/home.component';
+import { FixedInstallationComponent } from './Protected/consumption/fixed-installation/fixed-installation.component';
 
 const routes: Routes = [
   /* { path: '', redirectTo: '/login', pathMatch: 'full' }, */
@@ -12,6 +13,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'sign-up', component: RegisterComponent },
   { path: 'organ-gen-data', component: OrganGeneralDataComponent },
+  { path: 'fixed-installation', component: FixedInstallationComponent},
   { path: 'electricity-consumption', component: ElectricityComponent},
   { path: '*', component: HomeComponent}
 
