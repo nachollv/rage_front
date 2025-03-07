@@ -9,26 +9,50 @@
   </mat-form-field>
 
   <mat-form-field appearance="fill">
-    <mat-label>Tipo de Factura</mat-label>
-    <mat-select formControlName="tipoFactura">
-      <mat-option value="mensual">Mensual</mat-option>
-      <mat-option value="bimestral">Bimestral</mat-option>
+    <mat-label>Periodo factura</mat-label>
+    <mat-select formControlName="periodoFactura">
+      <mat-option value="01">Enero</mat-option>
+      <mat-option value="02">Febrero</mat-option>
+      <mat-option value="03">Marzo</mat-option>
+      <mat-option value="04">Abril</mat-option>
+      <mat-option value="05">Mayo</mat-option>
+      <mat-option value="06">Junio</mat-option>
+      <mat-option value="07">Julio</mat-option>
+      <mat-option value="08">Agosto</mat-option>
+      <mat-option value="09">Setiembre</mat-option>
+      <mat-option value="10">Octubre</mat-option>
+      <mat-option value="11">Noviembre</mat-option>
+      <mat-option value="12">Diciembre</mat-option>
     </mat-select>
   </mat-form-field>
 
   <div formGroupName="consumos">
     <mat-form-field appearance="fill">
-      <mat-label>Energía Consumida (kWh)</mat-label>
-      <input matInput formControlName="energia" type="number">
+      <mat-label>Comercializadora</mat-label>
+      <mat-select formControlName="comercializadora">
+        <mat-option value="01">AB ENERGÍA 1903 SL</mat-option>
+        <mat-option value="02">ACCIONA GREEN ENERGY DEVELOPEMENTS SL</mat-option>
+        <mat-option value="03">ACENHOL ENERGÍA SL</mat-option>
+      </mat-select>
     </mat-form-field>
-
     <mat-form-field appearance="fill">
-      <mat-label>Costo (€)</mat-label>
+      <mat-label>¿Dispone de garantía de origen (Gdo) </mat-label>
+      <mat-select formControlName="gdo">
+        <mat-option value="0.000">Gdo energía renovable</mat-option>
+        <mat-option value="0.302">Gdo cogeneración de alta eficiencia</mat-option>
+        <mat-option value="1.000">No</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label> Dato de consumo (kWh)</mat-label>
       <input matInput formControlName="costo" type="number">
+      <section *ngIf="consumoForm.get('costo')?.invalid && consumoForm.get('costo')?.touched">
+        <small>Por favor, ingresa un número de dos dígitos.</small>
+      </section>
     </mat-form-field>
   </div>
 
   <button mat-raised-button color="primary" type="submit"  [disabled]="consumoForm.invalid">Registrar</button>
 </form>
 </mat-card>
-<app-data-table [columns]="['delegation', 'year', 'quantity', 'CO2eq', 'edit', 'delete']" [data]="data"></app-data-table>
+<app-data-table [columns]="['delegation', 'year', '01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', 'edit', 'delete']" [data]="data"></app-data-table>

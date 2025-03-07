@@ -46,11 +46,11 @@ export class OrganGeneralDataComponent {
       }
     }
 
-    openDialog(): void {
+    openDialog(title:string, info:string): void {
       const dialogRef = this.dialog.open(DialogComponent, {
         data: {
-          title: 'Título del Dialog',
-          text: 'Este es el texto del Dialog.',
+          title: title,
+          text: info,
           position: 'center'
         },
         /* position: { top: '20%', left: '20%' } ,*/ // Ajusta la posición según tus necesidades
