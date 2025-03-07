@@ -75,3 +75,5 @@
   <button mat-raised-button type="submit">Enviar</button>
 </form>
 </mat-card>
+
+<app-data-table [columns]="['delegation', 'year', 'kg CO2/ud-defecto', 'g CH4/ud-defecto', 'g N2O/ud-defecto', 'kg CO2/ud-otros', 'g CH4/ud-otros', 'g N2O/ud-otros', 'kg CO2', 'g CH4', 'g N2O', 'Emisiones Totales (kg CO2e)', 'edit', 'delete']" [data]="data"></app-data-table>
