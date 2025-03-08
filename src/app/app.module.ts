@@ -30,6 +30,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSelectModule } from '@angular/material/select';
 import { CdkMenuModule } from '@angular/cdk/menu';
+import {MatRadioModule} from '@angular/material/radio';
 /*  */
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
@@ -81,6 +82,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     MatToolbarModule,
     MatSelectModule,
     CdkMenuModule,
+    MatRadioModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
