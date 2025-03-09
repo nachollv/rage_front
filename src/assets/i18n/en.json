@@ -4,7 +4,7 @@
   "footerTitle": "The carbon footprint calculator",
   "initWorkingSession": "Init working session",
   "consumptions": "DIRECT EMISSIONS (SCOPE 1)",
-  "emissions": "INDIRECT EMISSIONS FROM THE PURCHASE OF ELECTRICITY AND OTHER ENERGIES (SCOPE 2)",
+  "emissions": "INDIRECT EMISSIONS (SCOPE 2)",
   "electricityOtherEnergies": "Electricity and other energies",
   "fixedInstallationsFuelConsumption": "Fuel consumption in fixed installations",
   "ley_1_2005": "obligaciones establecidas en la Ley 1/2005 de 9 de marzo",

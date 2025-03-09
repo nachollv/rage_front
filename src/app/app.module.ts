@@ -40,7 +40,8 @@ import { ElectricityComponent } from './Protected/consumption/electricity/electr
 import { FixedInstallationComponent } from './Protected/consumption/fixed-installation/fixed-installation.component';
 import { HomeComponent } from './home/home.component';
 import { DialogComponent } from './dialog/dialog.component';
-import { ConsumtionContainerComponent } from './Protected/consumption/consumtion-container/consumtion-container.component';
+import { ConsumtionContainerComponent } from './Protected/consumption/consumtion-container-scope1/consumtion-container.component';
+import { ConsumtionContainerScope2Component } from './Protected/consumption/consumtion-container-scope2/consumtion-container-scope2.component';
 
 
 // Función para cargar los archivos de traducción
@@ -62,6 +63,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     HomeComponent,
     DialogComponent,
     ConsumtionContainerComponent,
+    ConsumtionContainerScope2Component,
 
   ],
   imports: [

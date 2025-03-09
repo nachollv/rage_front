@@ -1,0 +1,27 @@
+<h1><button mat-menu-item (click)="openDialog('ALCANCE 1',' emisiones directas de GEI. Por ejemplo, emisiones provenientes de la combustión en 
+  calderas, hornos, vehículos, etc., que son propiedad de o están controladas por la entidad en 
+  cuestión. También incluye las emisiones fugitivas (p.ej. fugas de aire acondicionado, fugas de CH4 
+  de conductos, etc.).')">
+  <mat-icon style="color: #0a470d;">info</mat-icon>{{"consumptions" | translate}}</button> </h1>
+<mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start">
+  <mat-tab label="{{'fixedInstallationsFuelConsumption' | translate}}">
+    <button mat-menu-item (click)="openDialog('Instalaciones fijas no sujetas a las obligaciones establecidas en la Ley 1/2005, de 9 de marzo ','Descripción...')">
+      <mat-icon style="color: #ff9310;">info</mat-icon>{{"fixedInstallationsFuelConsumption" | translate}}</button> 
+    <app-fixed-installation></app-fixed-installation>
+  </mat-tab>
+  <mat-tab label="{{'fuelConsumptionVeniclesMachinery'  | translate}}">
+    {{'fuelConsumptionVeniclesMachinery' | translate}}
+  </mat-tab>
+  <mat-tab label="{{'fugitiveEmissions'  | translate}}">
+    {{'fugitiveEmissions' | translate}}
+  </mat-tab>
+  <mat-tab label="{{'processEmissions'  | translate}}">
+    {{'processEmissions' | translate}}
+  </mat-tab>
+  <mat-tab label="{{'fugasgasesfluorados'  | translate}}">
+    {{'fugasgasesfluorados' | translate}}
+  </mat-tab>
+  <mat-tab label="{{'otrosgases'  | translate}}">
+    {{'otrosgases' | translate}}
+  </mat-tab>
+</mat-tab-group>
