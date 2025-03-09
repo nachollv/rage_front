@@ -1,5 +1,5 @@
 mat-card {
-  width: 550px;
+  width: 80%;
   padding: 1.1rem;
   margin: 1rem auto;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
@@ -38,5 +38,16 @@ mat-error {
   mat-form-field {
     flex: 1 1 calc(50% - 1rem); // Dos columnas con espaciado
     min-width: 200px; // Ancho mínimo para mantener legibilidad
+  }
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (max-width: 992px) {
+  :host {
+    height: auto;
+  }
+
+  mat-card {
+    width: 100%;
   }
 }
