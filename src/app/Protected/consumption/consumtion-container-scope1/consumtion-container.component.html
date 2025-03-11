@@ -4,22 +4,26 @@
 <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start">
   <mat-tab label="{{'fixedInstallationsFuelConsumption' | translate}}">
     <button mat-menu-item (click)="openDialog('ACLARACIÓN', 'Instalaciones fijas no sujetas a las obligaciones establecidas en la Ley 1/2005, de 9 de marzo ')">
-      <mat-icon style="color: #ff9310;">info</mat-icon>{{"fixedInstallationsFuelConsumption" | translate}}</button> 
+    <mat-icon style="color: #ff9310;">info</mat-icon>{{"fixedInstallationsFuelConsumption" | translate}}</button> 
     <app-fixed-installation></app-fixed-installation>
   </mat-tab>
+  <mat-tab label="{{'fuelConsumptionInRoadTransport'  | translate}}">
+    <button mat-menu-item (click)="openDialog('ACLARACIÓN', 'xxxxxxxxxxxxxxxxxxxxxxxxxxxx')"> 
+    <mat-icon style="color: #ff9310;">info</mat-icon>{{"fuelConsumptionInRoadTransport" | translate}}</button> 
+  </mat-tab>
+  <mat-tab label="{{'fuelConsumptionOtherTransportMedia'  | translate}}">
+    <button mat-menu-item (click)="openDialog('ACLARACIÓN', 'xxxxxxxxxxxxxxxxxxxxxxxxxxxx')"> 
+    <mat-icon style="color: #ff9310;">info</mat-icon>{{"fuelConsumptionOtherTransportMedia" | translate}}</button> 
+  </mat-tab>
   <mat-tab label="{{'fuelConsumptionVeniclesMachinery'  | translate}}">
-    {{'fuelConsumptionVeniclesMachinery' | translate}}
+    <button mat-menu-item (click)="openDialog('ACLARACIÓN', 'xxxxxxxxxxxxxxxxxxxxxxxxxxxx')"> 
+      <mat-icon style="color: #ff9310;">info</mat-icon>{{"fuelConsumptionVeniclesMachinery" | translate}}</button>   
   </mat-tab>
-  <mat-tab label="{{'fugitiveEmissions'  | translate}}">
-    {{'fugitiveEmissions' | translate}}
+  <mat-tab label="{{'fluorGasesLeakage'  | translate}}">
+    {{'fluorGasesLeakage' | translate}}
   </mat-tab>
-  <mat-tab label="{{'processEmissions'  | translate}}">
-    {{'processEmissions' | translate}}
-  </mat-tab>
-  <mat-tab label="{{'fugasgasesfluorados'  | translate}}">
-    {{'fugasgasesfluorados' | translate}}
-  </mat-tab>
-  <mat-tab label="{{'otrosgases'  | translate}}">
-    {{'otrosgases' | translate}}
+  <mat-tab label="{{'otherGEH'  | translate}}">
+    <button mat-menu-item (click)="openDialog('ACLARACIÓN', 'xxxxxxxxxxxxxxxxxxxxxxxxxxxx')"> 
+      <mat-icon style="color: #ff9310;">info</mat-icon>{{"otherGEH" | translate}}</button>   
   </mat-tab>
 </mat-tab-group>
