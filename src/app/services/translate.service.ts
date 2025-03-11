@@ -5,10 +5,11 @@ import { TranslateService } from '@ngx-translate/core';
   providedIn: 'root'
 })
 export class TranslationService {
-
+  currentLang: string = 'es'
   constructor(private translate: TranslateService) {
+    this.currentLang != localStorage.getItem("preferredLang")
     // Establece el idioma predeterminado
-    this.translate.setDefaultLang('es');
+    this.translate.setDefaultLang(this.currentLang.split("-")[0]);
   }
 
   // Cambia el idioma
