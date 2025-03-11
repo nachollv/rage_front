@@ -29,6 +29,21 @@
       </mat-option>
     </mat-select>
   </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Límites de la organización</mat-label>
+    <input matInput formControlName="organizationLimits" required>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Límites operativos</mat-label>
+    <input matInput formControlName="operationalLimits" required>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Periodo de cálculo</mat-label>
+    <input matInput formControlName="calculationPeriod" required>
+  </mat-form-field>
+
   <button mat-raised-button color="primary" type="submit"[disabled]="organizationForm.invalid">Enviar</button>
 </form>
 </mat-card>

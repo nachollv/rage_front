@@ -43,7 +43,6 @@ import { DialogComponent } from './dialog/dialog.component';
 import { ConsumtionContainerComponent } from './Protected/consumption/consumtion-container-scope1/consumtion-container.component';
 import { ConsumtionContainerScope2Component } from './Protected/consumption/consumtion-container-scope2/consumtion-container-scope2.component';
 
-
 // Función para cargar los archivos de traducción
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -64,7 +63,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     DialogComponent,
     ConsumtionContainerComponent,
     ConsumtionContainerScope2Component,
-
   ],
   imports: [
     BrowserModule,

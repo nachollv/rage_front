@@ -39,7 +39,10 @@ export class OrganGeneralDataComponent {
         name: ['', [Validators.required, Validators.minLength(9)]],
         nif: ['', [Validators.required, Validators.minLength(9), Validators.maxLength(9)]],
         organizationType: ['', [Validators.required]],
-        sector: ['', [Validators.required]]
+        sector: ['', [Validators.required]],
+        organizationLimits: ['', [Validators.required]],
+        operationalLimits: ['', [Validators.required]],
+        calculationPeriod: ['', [Validators.required]],
       });
     }
   
