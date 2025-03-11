@@ -3,6 +3,10 @@
   "rageTitle": "Registration and Analysis of Greenhouse Gases",
   "footerTitle": "The carbon footprint calculator",
   "initWorkingSession": "Init working session",
+
+  "scopeOneEmissions": "are emissions from sources owned or controlled by the organisation. In a very simplified way, they could be understood as emissions released on-site at the place where the activity takes place, e.g. emissions due to the heating system if it is based on the burning of fossil fuels. For example, emissions from combustion in boilers, furnaces, vehicles, etc., which are owned or controlled by the entity concerned. It also includes fugitive emissions (e.g. air conditioning leaks, CH4 leakage from ducts, etc.). Translated with DeepL.com (free version)",
+  "scopeTwoEmissions": "are emissions resulting from the organisation's activities, but occurring at sources owned or controlled by another organisation. An example of an indirect emission is the emission from electricity consumed by an organisation, the emissions of which have been produced at the place where the electricity was generated 3 organisation, the emissions of which have been produced at the place where the electricity was generated. Translated with DeepL.com (free version).", 
+  
   "consumptions": "DIRECT EMISSIONS (SCOPE 1)",
   "emissions": "INDIRECT EMISSIONS (SCOPE 2)",
   "electricityOtherEnergies": "Electricity and other energies",

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent } from '../../../dialog/dialog.component';
+import { TranslationService } from '../../../services/translate.service';
 
 @Component({
   selector: 'app-consumtion-container',
@@ -8,11 +9,18 @@ import { DialogComponent } from '../../../dialog/dialog.component';
   styleUrl: './consumtion-container.component.scss'
 })
 export class ConsumtionContainerComponent {
+  translatedScopeOneEmissions?: string | undefined;
+  constructor(public dialog: MatDialog, private translate: TranslationService) { }
 
+  ngOnInit() {
+   
+  }
 
-  constructor(public dialog: MatDialog) {}
-
-  openDialog(title:string, text: string): void {
+  openDialog( title: string, text: string ): void {
+    this.translate.getTranslation(text).subscribe((translation: string) => {
+      text = translation;
+      console.log (text)
+    })
     const dialogRef = this.dialog.open(DialogComponent, {
       data: {
         title: title,
