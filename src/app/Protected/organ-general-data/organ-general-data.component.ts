@@ -43,6 +43,7 @@ export class OrganGeneralDataComponent {
         organizationLimits: ['', [Validators.required]],
         operationalLimits: ['', [Validators.required]],
         calculationPeriod: ['', [Validators.required]],
+        objectives: ['', [Validators.required]],
       });
     }
   

@@ -44,6 +44,11 @@
     <input matInput formControlName="calculationPeriod" required>
   </mat-form-field>
 
+  <mat-form-field appearance="fill">
+    <mat-label>Objetivos</mat-label>
+    <input matInput formControlName="objectives" required>
+  </mat-form-field>
+
   <button mat-raised-button color="primary" type="submit"[disabled]="organizationForm.invalid">Enviar</button>
 </form>
 </mat-card>
