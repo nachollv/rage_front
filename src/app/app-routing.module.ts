@@ -7,18 +7,19 @@ import { ElectricityComponent } from './Protected/consumption/electricity/electr
 import { HomeComponent } from './home/home.component';
 import { ConsumtionContainerComponent } from './Protected/consumption/consumtion-container-scope1/consumtion-container.component';
 import { ConsumtionContainerScope2Component } from './Protected/consumption/consumtion-container-scope2/consumtion-container-scope2.component';
+import { ControlPanelContainerComponent } from './control-panel-container/control-panel-container.component';
 
 const routes: Routes = [
   /* { path: '', redirectTo: '/login', pathMatch: 'full' }, */
   { path: '', component: HomeComponent },
   { path: 'login', component: LoginComponent },
   { path: 'sign-up', component: RegisterComponent },
-  { path: 'scope-one', component: ConsumtionContainerComponent},
-  { path: 'scope-two', component: ConsumtionContainerScope2Component},
+  { path: 'scope-one', component: ConsumtionContainerComponent },
+  { path: 'scope-two', component: ConsumtionContainerScope2Component },
   { path: 'organ-gen-data', component: OrganGeneralDataComponent },
- 
-  { path: 'electricity-consumption', component: ElectricityComponent},
-  { path: '*', component: HomeComponent}
+  { path: 'control-panel-container', component: ControlPanelContainerComponent },
+  { path: 'electricity-consumption', component: ElectricityComponent },
+  { path: '*', component: HomeComponent }
 
 ];
 

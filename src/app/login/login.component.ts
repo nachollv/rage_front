@@ -11,6 +11,7 @@ import { AuthService } from '../services/auth.service';
 export class LoginComponent implements OnInit {
   loginForm: FormGroup
   loginResult: string = ""
+  firstLogin: boolean = false
 
   constructor(private fb: FormBuilder, private router: Router, private authService: AuthService) { 
     this.loginForm = this.fb.group({
@@ -27,7 +28,11 @@ export class LoginComponent implements OnInit {
     if (this.loginForm.valid) {
       console.log('Form Submitted:', this.loginForm.value)
       this.loginResult = this.loginForm.value.email + " " + this.loginForm.value.password
+      if (this.firstLogin) {
       this.router.navigate(['/organ-gen-data']);
+      } else {
+        this.router.navigate(['control-panel-container'])
+      }
     }
   }
 

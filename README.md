@@ -1,5 +1,5 @@
 # RageFront
-Registro y Análisis de Gases de Efecto invernadero
+Registro y Análisis de Gases de Efecto Invernadero. Calculadora de la huella de carbono.
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.0.3.
 
@@ -44,3 +44,8 @@ npm install @ngx-translate/core @ngx-translate/http-loader
 
 ## netlify
 [![Netlify Status](https://api.netlify.com/api/v1/badges/5af0ffa4-a636-4753-a3fa-fa75e5c39e20/deploy-status)](https://app.netlify.com/sites/ragefootprint/deploys)
+
+## Charts
+  
+  - And requires charts.js: npm install chart.js --save
+  https://www.chartjs.org/docs/latest/
