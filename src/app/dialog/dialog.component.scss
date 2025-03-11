@@ -1,7 +1,13 @@
 .dialog-card {
-  max-width: 400px;
+  max-width: 500px;
+  padding: 1rem;
+  border: 1px solid green;
 }
 
 .dialog-card-footer {
-  padding: 16px;
+  padding: 1rem;
+}
+
+.mdc-dialog__container {
+  height: auto;
 }
