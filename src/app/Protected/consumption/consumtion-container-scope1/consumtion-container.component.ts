@@ -28,7 +28,7 @@ export class ConsumtionContainerComponent {
         position: 'center'
       },
       width: '400px',
-      height: '300px'
+      height: '400px'
     });
 
     dialogRef.afterClosed().subscribe(result => {
