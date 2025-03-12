@@ -39,11 +39,6 @@
   </mat-form-field>
 
   <mat-form-field appearance="fill">
-    <mat-label>Límites operativos</mat-label>
-    <input matInput formControlName="operationalLimits" required>
-  </mat-form-field>
-
-  <mat-form-field appearance="fill">
     <mat-label>Periodo de cálculo</mat-label>
     <mat-select formControlName="calculationPeriod">
       <mat-option *ngFor="let period of periodList" [value]="period">

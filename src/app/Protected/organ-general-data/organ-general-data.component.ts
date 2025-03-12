@@ -42,8 +42,8 @@ export class OrganGeneralDataComponent {
       this.organizationForm = this.fb.group({
         name: ['', [Validators.required, Validators.minLength(9)]],
         nif: ['', [Validators.required, Validators.minLength(9), Validators.maxLength(9)]],
-        organizationType: ['', [Validators.required]],
-        sector: ['', [Validators.required]],
+        organizationType: ['',],
+        sector: ['',],
         organizationLimits: ['', [Validators.required]],
         operationalLimits: ['', [Validators.required]],
         calculationPeriod: ['', [Validators.required]],
