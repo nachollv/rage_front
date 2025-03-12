@@ -29,14 +29,9 @@
       </mat-option>
     </mat-select>
   </mat-form-field>
-  <mat-form-field appearance="fill">
-    <mat-label>Límites de la organización</mat-label>
-    <mat-select formControlName="organizationLimits">
-      <mat-option *ngFor="let organization of organizationLimit" [value]="organization">
-        {{ organization }}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
+  
+  <mat-label>Límites de la organización</mat-label>
+  <mat-checkbox formControlName="multicenter" (change)="onSelectionChange($event)">Multi-centro</mat-checkbox>
 
   <mat-form-field appearance="fill">
     <mat-label>Periodo de cálculo</mat-label>
@@ -56,8 +51,10 @@
     </mat-select>
   </mat-form-field>
 
-  <button mat-raised-button color="primary" type="submit"[disabled]="organizationForm.invalid">Enviar</button>
+  <button mat-raised-button color="primary" type="submit" [disabled]="organizationForm.invalid">Enviar</button>
 </form>
 </mat-card>
-
-<app-data-table [displayedColumns]="displayedColumns" [dataSource]="dataSource"></app-data-table>
+<section  *ngIf="mustShowDelegations">
+  <button mat-raised-button color="accent">ADD</button>
+  <app-data-table [displayedColumns]="displayedColumns" [dataSource]="dataSource"></app-data-table>
+</section>

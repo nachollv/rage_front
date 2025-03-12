@@ -10,6 +10,7 @@ import { MatTableDataSource } from '@angular/material/table';
   styleUrl: './organ-general-data.component.scss'
 })
 export class OrganGeneralDataComponent {
+  mustShowDelegations: boolean = false
   displayedColumns: string[] = ['delegation', 'town', 'address', 'phone', 'edit', 'delete']
   data = [
     { delegation: 'Central', town: 'Palma', address: '123 Main St', phone: '971971971', edit: true, delete: true},
@@ -20,8 +21,7 @@ export class OrganGeneralDataComponent {
     { delegation: 'Sede Pollença', town: 'Pollença', address: '789 Oak Dr', phone: '971971971', edit: true, delete: true }
   ];
   dataSource = new MatTableDataSource<any>(this.data)
-  organizationForm: FormGroup;
-  
+  organizationForm: FormGroup
     organizationTypes: string[] = [
       'Micro',
       'Pequeña',
@@ -33,7 +33,6 @@ export class OrganGeneralDataComponent {
     ];
   
     sectors: string[] = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
-    organizationLimit: string[] = ['Un centro de producción', 'Varios centros de producción']
     periodList: string[] = ['2021', '2022', '2023', '2024', '2025'];
     objectiveList: string[] = ['Reducción del consumo de energía', 'Minimizar residuos', 'Ahorro de agua', 'Disminución de Emisiones de CO2', 'Aumento del uso de energías renovables'];
 
@@ -41,10 +40,10 @@ export class OrganGeneralDataComponent {
     constructor(private fb: FormBuilder, public dialog: MatDialog) {
       this.organizationForm = this.fb.group({
         name: ['', [Validators.required, Validators.minLength(9)]],
-        nif: ['', [Validators.required, Validators.minLength(9), Validators.maxLength(9)]],
+        nif:  ['', [Validators.required, Validators.minLength(9), Validators.maxLength(9)]],
         organizationType: ['',],
         sector: ['',],
-        organizationLimits: ['', [Validators.required]],
+        multicenter: [false, [Validators.required]],
         operationalLimits: ['', [Validators.required]],
         calculationPeriod: ['', [Validators.required]],
         objectives: ['', [Validators.required]],
@@ -52,10 +51,20 @@ export class OrganGeneralDataComponent {
     }
   
     onSubmit() {
+      this.organizationForm.patchValue({
+        multicenter: false
+      });
       if (this.organizationForm.valid) {
         console.log(this.organizationForm.value);
       }
     }
+
+    onSelectionChange(event: any) {
+      const selectedValue = event.checked;
+      this.mustShowDelegations = selectedValue;
+      console.log('Selected value:', selectedValue);
+    }
+  
 
     openDialog(title:string, info:string): void {
       const dialogRef = this.dialog.open(DialogComponent, {
@@ -64,7 +73,6 @@ export class OrganGeneralDataComponent {
           text: info,
           position: 'center'
         },
-        /* position: { top: '20%', left: '20%' } ,*/ // Ajusta la posición según tus necesidades
         width: '400px',
         height: '300px'
       });
