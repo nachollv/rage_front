@@ -14,6 +14,10 @@ scale: 2;
 @media only screen and (max-width: 992px) {
   mat-toolbar {
     grid-template-areas: "appmenu logo";
+    line-height: normal;
+  }
+  .mat-toolbar-row {
+    justify-content: space-between;
   }
 
   mat-toolbar h1 {
