@@ -31,7 +31,11 @@
   </mat-form-field>
   <mat-form-field appearance="fill">
     <mat-label>Límites de la organización</mat-label>
-    <input matInput formControlName="organizationLimits" required>
+    <mat-select formControlName="organizationLimits">
+      <mat-option *ngFor="let organization of organizationLimit" [value]="organization">
+        {{ organization }}
+      </mat-option>
+    </mat-select>
   </mat-form-field>
 
   <mat-form-field appearance="fill">
@@ -41,7 +45,11 @@
 
   <mat-form-field appearance="fill">
     <mat-label>Periodo de cálculo</mat-label>
-    <input matInput formControlName="calculationPeriod" required>
+    <mat-select formControlName="calculationPeriod">
+      <mat-option *ngFor="let period of periodList" [value]="period">
+        {{ period }}
+      </mat-option>
+    </mat-select>
   </mat-form-field>
 
   <mat-form-field appearance="fill">

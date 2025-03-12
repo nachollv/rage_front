@@ -33,7 +33,9 @@ export class OrganGeneralDataComponent {
     ];
   
     sectors: string[] = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
-    objectiveList: string[] = ['Reducción del consumo de energía', 'Minimizar residuos', 'Ahorro de agua', 'Disminución de Emisiones de CO2', 'Aumento del uso de energías renovables', 'F', 'G', 'H', 'I', 'J'];
+    organizationLimit: string[] = ['centro único', 'varias delegaciones']
+    periodList: string[] = ['2021', '2022', '2023', '2024', '2025'];
+    objectiveList: string[] = ['Reducción del consumo de energía', 'Minimizar residuos', 'Ahorro de agua', 'Disminución de Emisiones de CO2', 'Aumento del uso de energías renovables'];
 
   
     constructor(private fb: FormBuilder, public dialog: MatDialog) {
