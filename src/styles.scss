@@ -19,6 +19,11 @@ body { margin: 0;
   font-size: 1rem; 
   background: var(--mat-sys-surface);
   color: var(--mat-sys-on-surface);
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  margin: 0;
+  font-family: Arial, sans-serif;
 }
 
 img {
