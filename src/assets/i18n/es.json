@@ -1,7 +1,7 @@
 {
   "HELLO": "Bienvenido",
   "rageTitle": "Registro y Análisis de Gases de Efecto invernadero",
-  "footerTitle": "La calculadora de la huella de carbono",
+  "footerTitle": "Medición de huella de carbono",
   "initWorkingSession": "Iniciar sesión de trabajo",
 
   "scopeOneEmissions": "son emisiones de fuentes que son propiedad de o están controladas por la organización. De una manera muy simplificada, podrían entenderse como las emisiones liberadas in situ en el lugar donde se produce la actividad, por ejemplo, las emisiones debidas al sistema de calefacción si éste se basa en la quema de combustibles fósiles. Por ejemplo, emisiones provenientes de la combustión en calderas, hornos, vehículos, etc., que son propiedad de o están controladas por la entidad en cuestión. También incluye las emisiones fugitivas (p.ej. fugas de aire acondicionado, fugas de CH4 de conductos, etc.).",
