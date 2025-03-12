@@ -46,7 +46,11 @@
 
   <mat-form-field appearance="fill">
     <mat-label>Objetivos</mat-label>
-    <input matInput formControlName="objectives" required>
+    <mat-select formControlName="objectives">
+      <mat-option *ngFor="let objective of objectiveList" [value]="objective">
+        {{ objective }}
+      </mat-option>
+    </mat-select>
   </mat-form-field>
 
   <button mat-raised-button color="primary" type="submit"[disabled]="organizationForm.invalid">Enviar</button>

@@ -22,7 +22,7 @@ export class OrganGeneralDataComponent {
   dataSource = new MatTableDataSource<any>(this.data)
   organizationForm: FormGroup;
   
-    organizationTypes = [
+    organizationTypes: string[] = [
       'Micro',
       'Pequeña',
       'Mediana',
@@ -32,7 +32,9 @@ export class OrganGeneralDataComponent {
       'Otras'
     ];
   
-    sectors = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
+    sectors: string[] = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
+    objectiveList: string[] = ['Reducción del consumo de energía', 'Minimizar residuos', 'Ahorro de agua', 'Disminución de Emisiones de CO2', 'Aumento del uso de energías renovables', 'F', 'G', 'H', 'I', 'J'];
+
   
     constructor(private fb: FormBuilder, public dialog: MatDialog) {
       this.organizationForm = this.fb.group({
