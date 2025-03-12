@@ -33,7 +33,7 @@ export class OrganGeneralDataComponent {
     ];
   
     sectors: string[] = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
-    organizationLimit: string[] = ['centro único', 'varias delegaciones']
+    organizationLimit: string[] = ['Un centro de producción', 'Varios centros de producción']
     periodList: string[] = ['2021', '2022', '2023', '2024', '2025'];
     objectiveList: string[] = ['Reducción del consumo de energía', 'Minimizar residuos', 'Ahorro de agua', 'Disminución de Emisiones de CO2', 'Aumento del uso de energías renovables'];
 
