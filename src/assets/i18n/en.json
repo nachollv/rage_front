@@ -12,15 +12,15 @@
   "electricityOtherEnergies": "Electricity and other energies",
   "fixedInstallationsFuelConsumption": "Fuel consumption in fixed installations",
   "ley_1_2005": "obligaciones establecidas en la Ley 1/2005 de 9 de marzo",
-  "fuelConsumptionInRoadTransport": "Consumo de combustibles en transporte por carretera ",
-  "fuelConsumptionOtherTransportMedia": "Consumo de combustibles en otros medios de transporte",
+
+  "fuelConsumptionInRoadTransport": "Consumo de combustibles en vehículos",
   "fuelConsumptionVeniclesMachinery": "Consumo de combustibles en maquinaria",
-  "fluorGasesLeakage": "Fugas de gases fluorados de equipos de refrigeración y/o climatización",
+  "fluorGasesLeakage": "Fugas de gases de refrigerantes fluorados",
   "otherGEH": "Actividades que generan otros gases de efecto invernadero",
-  "fugitiveEmissions": "Fugitive emissions (air conditioning equipment and others)",
-  "processEmissions": "Process emissions",
-  "emissionFactors": "Emission Factors",
-  "organizationGeneralData": "Organization general data",
+  "fugitiveEmissions": "Emisiones fugitivas (equipos de climatización y otros)",
+  "processEmissions": "Emisiones de proceso",
+  "emissionFactors": "Factores de emisión",
+  "organizationGeneralData": "Datos generales de la organización",
 
   "logout": "Logout",
   "login": "Login"
