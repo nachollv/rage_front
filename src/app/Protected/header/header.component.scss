@@ -1,11 +1,9 @@
-/* mat-toolbar-row {
-  justify-content: space-evenly;
+header, mat-toolbar {
+  background-color: green;
+  color: #fff;
+  padding: 20px;
 }
 
-.logo {
-  width: var(--mat-toolbar-standard-height);
-}
- */
 mat-icon{
 scale: 2;
 }
@@ -18,12 +16,12 @@ scale: 2;
 
 .header-logo {
   width: var(--mat-toolbar-standard-height);
-  scale: 0.9;
+  scale: .8;
 }
 
 .header-logo:hover {
   cursor: pointer;
-  scale: 1;
+  scale: .9;
 }
 
 /* Large devices (laptops/desktops, 992px and up) */
