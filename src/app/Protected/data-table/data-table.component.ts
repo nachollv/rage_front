@@ -9,8 +9,8 @@ import { MatSort } from '@angular/material/sort';
   styleUrls: ['./data-table.component.scss']
 })
 export class DataTableComponent implements OnInit {
-  cardMode: boolean = false
-  tableMode: boolean = true
+  /* cardMode: boolean = true
+  tableMode: boolean = true */
   @Input() displayedColumns: string[] = []
   @Input() dataSource : MatTableDataSource<any>
 
