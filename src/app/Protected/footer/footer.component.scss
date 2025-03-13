@@ -9,7 +9,7 @@
 .footer a {
     color: #fff;
     text-decoration: none;
-    margin: 0 10px;
+   /*  margin: 0 10px; */
 }
 .footer a:hover {
     text-decoration: underline;
@@ -19,8 +19,8 @@
 /* Large devices (laptops/desktops, 992px and up) */
 @media only screen and (max-width: 992px) {
   .footer {
-  grid-template-columns: 1fr;
-   text-align: center;
-   padding-bottom: 1rem;
+    grid-template-columns: 1fr;
+    text-align: center;
+    padding-bottom: 1rem;
   }
 }

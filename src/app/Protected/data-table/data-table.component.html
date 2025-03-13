@@ -1,4 +1,4 @@
-<section class="mat-elevation-z8">
+<section class="mat-elevation-z8" *ngIf="1">
   <mat-form-field appearance="fill">
     <mat-label>Filtrar</mat-label>
     <input matInput (keyup)="applyFilter($event)" placeholder="Filtrar">
@@ -26,4 +26,21 @@
   </table>
 
   <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+</section>
+
+<section *ngIf="1">
+  <div *ngFor="let item of dataSource.data">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>{{ item.delegation }}</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p>{{ item.year }}</p>
+        <p>{{ item.kg_CO2_ud_defecto }}</p>
+        <p>{{ item.gCH4_ud_defecto }}</p>
+        <p>{{ item.gN2O_ud_defecto }}</p>
+
+      </mat-card-content>
+    </mat-card>
+  </div>
 </section>
