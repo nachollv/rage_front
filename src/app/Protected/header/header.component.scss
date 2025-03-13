@@ -1,11 +1,11 @@
-mat-toolbar-row {
+/* mat-toolbar-row {
   justify-content: space-evenly;
 }
 
 .logo {
   width: var(--mat-toolbar-standard-height);
 }
-
+ */
 mat-icon{
 scale: 2;
 }
@@ -17,20 +17,26 @@ scale: 2;
 }
 
 .header-logo {
-  height: 40px;
+  width: var(--mat-toolbar-standard-height);
+  scale: 0.9;
+}
+
+.header-logo:hover {
+  cursor: pointer;
+  scale: 1;
 }
 
 /* Large devices (laptops/desktops, 992px and up) */
 @media only screen and (max-width: 992px) {
-  mat-toolbar {
-    grid-template-areas: "appmenu logo";
-    line-height: normal;
-  }
-  .mat-toolbar-row {
-    justify-content: space-between;
+  .header-title {
+    display: none;
   }
 
-  mat-toolbar h1 {
-    display: none;
+  .header-logo {
+    height: auto;
+  }
+
+  mat-toolbar {
+    justify-content: space-between;
   }
 }

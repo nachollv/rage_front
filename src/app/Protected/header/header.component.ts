@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent } from '../../dialog/dialog.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -22,12 +23,16 @@ export class HeaderComponent {
     this.selectedSize = 'Normal';
   }
   
-  constructor(private translate: TranslateService, public dialog: MatDialog) {
+  constructor(private translate: TranslateService, private router: Router, public dialog: MatDialog) {
     this.translate.setDefaultLang('es');
   }
 
   switchLanguage(language: string) {
-    this.translate.use(language);
+    this.translate.use(language)
+  }
+
+  goHome () {
+    this.router.navigate([''])
   }
 
   openDialog(): void {

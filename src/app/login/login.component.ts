@@ -29,7 +29,7 @@ export class LoginComponent implements OnInit {
       console.log('Form Submitted:', this.loginForm.value)
       this.loginResult = this.loginForm.value.email + " " + this.loginForm.value.password
       if (this.firstLogin) {
-      this.router.navigate(['/organ-gen-data']);
+        this.router.navigate(['/organ-gen-data'])
       } else {
         this.router.navigate(['control-panel-container'])
       }

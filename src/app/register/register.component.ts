@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {     FormBuilder,
+  FormGroup,
+  Validators,
+  AbstractControl, } from '@angular/forms';
 
 @Component({
   selector: 'app-register',
@@ -14,17 +17,53 @@ export class RegisterComponent implements OnInit {
   ngOnInit(): void {
     this.registerForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(8)]],
+      password: ['', [Validators.required,  
+        Validators.minLength(6),
+        this.hasUppercase,
+        this.hasNumber,
+        this.hasSpecialCharacter,]],
       retypePassword: ['', [Validators.required, Validators.minLength(8)]],
-      nif: ['', Validators.required],
-      companyName: ['', Validators.required],
-      postalCode: ['', Validators.required]
+      nif: ['', [Validators.required, Validators.minLength(9), Validators.maxLength(9)]],
+      companyName: ['', [Validators.required]],
+      postalCode: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(5)]]
     }, { validator: this.passwordMatchValidator });
   }
 
   passwordMatchValidator(form: FormGroup): { [key: string]: boolean } | null {
-    return form.get('password')?.value === form.get('retypePassword')?.value ? null : { 'mismatch': true };
+    const password = form.get('password')?.value;
+    const confirmPassword = form.get('confirmPassword')?.value;
+    if (password !== confirmPassword) {
+        return { passwordMismatch: true };
+    }
+    return null;
   }
+
+   // Custom validator to check if the password contains at least one uppercase letter
+   hasUppercase(control: AbstractControl) {
+    const value = control.value;
+    if (value && !/[A-Z]/.test(value)) {
+        return { uppercase: true };
+    }
+    return null;
+}
+
+// Custom validator to check if the password contains at least one number
+hasNumber(control: AbstractControl) {
+    const value = control.value;
+    if (value && !/\d/.test(value)) {
+        return { number: true };
+    }
+    return null;
+}
+
+// Custom validator to check if the password contains at least one special character
+hasSpecialCharacter(control: AbstractControl) {
+    const value = control.value;
+    if (value && !/[!@#$%^&*(),.?":{}|<>]/.test(value)) {
+        return { specialCharacter: true };
+    }
+    return null;
+}
 
   onSubmit(): void {
     if (this.registerForm.valid) {

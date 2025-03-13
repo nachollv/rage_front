@@ -1,6 +1,7 @@
 <mat-card>
-<mat-card-title><button mat-menu-item (click)="openDialog('Sobre la huella de carbono','una explicación de la huella de carbono...')">
-  <mat-icon style="color: #ff9310;">info</mat-icon>{{"organizationGeneralData" | translate}}</button></mat-card-title>
+<!-- <mat-card-title><button mat-menu-item (click)="openDialog('Sobre la huella de carbono','una explicación de la huella de carbono...')">
+  <mat-icon style="color: #ff9310;">info</mat-icon>{{"organizationGeneralData" | translate}}</button>
+</mat-card-title> -->
 <form [formGroup]="organizationForm" (ngSubmit)="onSubmit()">
   <mat-form-field appearance="fill">
     <mat-label>Nombre</mat-label>
