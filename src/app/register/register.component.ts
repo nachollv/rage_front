@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {     FormBuilder,
-  FormGroup,
-  Validators,
-  AbstractControl, } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, AbstractControl, } from '@angular/forms';
+import { passwordMatchValidator } from '../custom-validators/custom.validator';
 
 @Component({
   selector: 'app-register',
@@ -22,20 +20,11 @@ export class RegisterComponent implements OnInit {
         this.hasUppercase,
         this.hasNumber,
         this.hasSpecialCharacter,]],
-      retypePassword: ['', [Validators.required, Validators.minLength(8)]],
+      retypePassword: ['', [Validators.required, Validators.minLength(6), passwordMatchValidator]],
       nif: ['', [Validators.required, Validators.minLength(9), Validators.maxLength(9)]],
       companyName: ['', [Validators.required]],
-      postalCode: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(5)]]
-    }, { validator: this.passwordMatchValidator });
-  }
-
-  passwordMatchValidator(form: FormGroup): { [key: string]: boolean } | null {
-    const password = form.get('password')?.value;
-    const confirmPassword = form.get('confirmPassword')?.value;
-    if (password !== confirmPassword) {
-        return { passwordMismatch: true };
-    }
-    return null;
+      postalCode: ['', [Validators.minLength(5), Validators.maxLength(5)]]
+    });
   }
 
    // Custom validator to check if the password contains at least one uppercase letter
