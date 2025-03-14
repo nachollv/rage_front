@@ -73,15 +73,16 @@ mat-card-content p {
 }
 
 mat-card-actions {
-  display: flex;
+  display: grid;
   justify-content: space-between;
   padding: 1rem;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 1rem;
 }
 
 button[mat-button] {
   background-color: #4caf50;
   color: white;
-  margin-right: .5rem;
 }
 
 button[mat-button]:hover {

@@ -29,3 +29,14 @@ mat-form-field {
 button {
   width: 100%;
 }
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (max-width: 992px) {
+  :host {
+    height: auto;
+  }
+
+  mat-card {
+    width: 100%;
+  }
+}

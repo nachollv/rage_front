@@ -28,8 +28,8 @@
   <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
 </section>
 
-<section ngClass="cards">
-  <article *ngFor="let item of dataSource.data">
+
+  <section *ngFor="let item of dataSource.data" ngClass="cards">
     <mat-card>
       <mat-card-header>
         <mat-card-title>{{ item.delegation }} [{{ item.year }}]</mat-card-title>
@@ -52,5 +52,5 @@
         </mat-card-actions>
       </mat-card-content>
     </mat-card>
-  </article>
-</section>
+  </section>
+
