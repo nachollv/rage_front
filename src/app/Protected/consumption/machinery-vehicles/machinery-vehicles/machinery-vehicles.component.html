@@ -1,7 +1,7 @@
 <mat-card>
 <form [formGroup]="machineryForm" (ngSubmit)="calculateEmissions()">
   <mat-form-field>
-    <mat-label>Año</mat-label>
+    <mat-label>Periodo de cálculo</mat-label>
     <input matInput formControlName="year" (input)="onFuelTypeChange()">
   </mat-form-field>
   <mat-form-field appearance="fill">
@@ -78,6 +78,8 @@
     <input matInput formControlName="totalEmissions">
   </mat-form-field>
 
-  <button mat-raised-button color="primary" type="submit">Calcular Emisiones</button>
+  <button mat-raised-button color="primary" type="submit">Registrar</button>
 </form>
 </mat-card>
+
+<app-data-table [displayedColumns]="displayedColumns" [dataSource]="dataSource"></app-data-table>

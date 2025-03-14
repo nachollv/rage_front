@@ -31,7 +31,7 @@ export class FixedInstallationComponent {
     
     constructor(private fb: FormBuilder, public dialog: MatDialog, private fuelDataService: FuelDataService) {
       this.fuelForm = this.fb.group({
-        year: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(4)]],
+        year: [{ value: '2025', disabled: true }, [Validators.required, Validators.minLength(4), Validators.maxLength(4)]],
         building: ['', Validators.required],
         fuelType: ['', Validators.required],
         quantity: ['', [Validators.required, Validators.min(0)]],

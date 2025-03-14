@@ -31,6 +31,7 @@ export class MachineryVehiclesComponent implements OnInit {
 
   constructor(private fb: FormBuilder, private fuelDataService: FuelDataService) {
     this.machineryForm = this.fb.group({
+      year: [{ value: '2025', disabled: true }, [Validators.required, Validators.minLength(4), Validators.maxLength(4)]],
       building: ['', Validators.required],
       vehicleCategory: ['', Validators.required],
       fuelType: ['', Validators.required],
