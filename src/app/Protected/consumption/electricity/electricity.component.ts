@@ -25,10 +25,11 @@ export class ElectricityComponent {
     constructor(private fb: FormBuilder, public dialog: MatDialog) {
       this.consumoForm = this.fb.group({
         delegacion: ['', Validators.required],
+        year: [{ value: 2025, disabled: true }],
         periodoFactura: ['mensual', Validators.required],
         consumos: this.fb.group({
         comercializadora: ['', [Validators.required]],
-        costo: ['', [Validators.required, Validators.pattern(/^\d{2}$/)]],
+        activityData: ['', [Validators.required, Validators.pattern(/^\d+(\.\d{2})?$/)]],
         gdo: ['', [Validators.required]]
         })
       });

@@ -2,11 +2,14 @@
  
 <form [formGroup]="consumoForm" (ngSubmit)="onSubmit()">
   <mat-form-field appearance="fill">
-    <mat-label>Delegación</mat-label>
+    <mat-label>Centro de producción</mat-label>
     <input matInput formControlName="delegacion" placeholder="Ejemplo: Zona Norte">
     <mat-error *ngIf="consumoForm.get('delegacion')?.hasError('required')">Este campo es obligatorio</mat-error>
   </mat-form-field>
-
+  <mat-form-field appearance="fill">
+    <mat-label>Periodo de cálculo</mat-label>
+    <input matInput formControlName="year" placeholder="Ejemplo: 2023">
+  </mat-form-field>
   <mat-form-field appearance="fill">
     <mat-label>Periodo factura</mat-label>
     <mat-select formControlName="periodoFactura">
@@ -25,7 +28,7 @@
     </mat-select>
   </mat-form-field>
 
-  <div formGroupName="consumos">
+  <section formGroupName="consumos">
     <mat-form-field appearance="fill">
       <mat-label>Comercializadora</mat-label>
       <mat-select formControlName="comercializadora">
@@ -43,13 +46,16 @@
       </mat-select>
     </mat-form-field>
     <mat-form-field appearance="fill">
-      <mat-label> Dato de consumo (kWh)</mat-label>
-      <input matInput formControlName="costo" type="number">
-      <section *ngIf="consumoForm.get('costo')?.invalid && consumoForm.get('costo')?.touched">
-        <small>Por favor, ingresa un número de dos dígitos.</small>
-      </section>
+      <mat-label>Dato de consumo (kWh)</mat-label>
+      <input matInput formControlName="activityData" type="text">
+      <mat-error *ngIf="consumoForm.get('activityData')?.hasError('required')">
+        {{ "Este campo es obligatorio" | translate }}
+      </mat-error>
+      <mat-error *ngIf="consumoForm.get('activityData')?.hasError('pattern')">
+        {{ "El formato debe ser un número con hasta dos decimales" | translate }}
+      </mat-error>
     </mat-form-field>
-  </div>
+  </section>
 
   <button mat-raised-button color="primary" type="submit"  [disabled]="consumoForm.invalid">Registrar</button>
 </form>
