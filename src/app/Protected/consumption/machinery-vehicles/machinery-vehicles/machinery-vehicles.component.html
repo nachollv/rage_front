@@ -1,0 +1,77 @@
+<form [formGroup]="machineryForm" (ngSubmit)="calculateEmissions()">
+  <mat-form-field appearance="fill">
+    <mat-label>Edificio / Sede</mat-label>
+    <input matInput formControlName="building">
+    <mat-error *ngIf="machineryForm.get('building')?.invalid">Campo obligatorio</mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Categoría de vehículo</mat-label>
+    <input matInput formControlName="vehicleCategory">
+    <mat-error *ngIf="machineryForm.get('vehicleCategory')?.invalid">Campo obligatorio</mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Tipo de Combustible</mat-label>
+    <input matInput formControlName="fuelType">
+    <mat-error *ngIf="machineryForm.get('fuelType')?.invalid">Campo obligatorio</mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Cantidad (ud)</mat-label>
+    <input matInput formControlName="quantity" type="number">
+    <mat-error *ngIf="machineryForm.get('quantity')?.invalid">Campo obligatorio y debe ser un número</mat-error>
+  </mat-form-field>
+
+  <div formGroupName="defaultEmissionFactor">
+    <mat-form-field appearance="fill">
+      <mat-label>Factor de emisión por defecto (kg CO2/ud)</mat-label>
+      <input matInput formControlName="co2" type="number">
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Factor de emisión por defecto (g CH4/ud)</mat-label>
+      <input matInput formControlName="ch4" type="number">
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Factor de emisión por defecto (g N2O/ud)</mat-label>
+      <input matInput formControlName="n2o" type="number">
+    </mat-form-field>
+  </div>
+
+  <div formGroupName="otherEmissionFactor">
+    <mat-form-field appearance="fill">
+      <mat-label>Otros factores de emisión (kg CO2/ud)</mat-label>
+      <input matInput formControlName="co2" type="number">
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Otros factores de emisión (g CH4/ud)</mat-label>
+      <input matInput formControlName="ch4" type="number">
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Otros factores de emisión (g N2O/ud)</mat-label>
+      <input matInput formControlName="n2o" type="number">
+    </mat-form-field>
+  </div>
+
+  <div formGroupName="partialEmissions">
+    <mat-form-field appearance="fill">
+      <mat-label>Emisiones parciales (kg CO2)</mat-label>
+      <input matInput formControlName="co2">
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Emisiones parciales (g CH4)</mat-label>
+      <input matInput formControlName="ch4">
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Emisiones parciales (g N2O)</mat-label>
+      <input matInput formControlName="n2o">
+    </mat-form-field>
+  </div>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Emisiones totales (kg CO2e)</mat-label>
+    <input matInput formControlName="totalEmissions">
+  </mat-form-field>
+
+  <button mat-raised-button color="primary" type="submit">Calcular Emisiones</button>
+</form>
