@@ -29,7 +29,7 @@ export class MachineryVehiclesComponent implements OnInit {
         'Hulla y antracita (kg)', 'Hullas subituminosas (kg)', 'Gasóleo A (l)', 'Gasolina  (l)'];
   machineryForm: FormGroup;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private fuelDataService: FuelDataService) {
     this.machineryForm = this.fb.group({
       building: ['', Validators.required],
       vehicleCategory: ['', Validators.required],
@@ -71,6 +71,15 @@ export class MachineryVehiclesComponent implements OnInit {
     this.machineryForm.patchValue({
       partialEmissions: { co2, ch4, n2o },
       totalEmissions: co2 + ch4 + n2o
+    });
+  }
+
+  onFuelTypeChange() {
+    const year = this.machineryForm.get('year')?.value;
+    const fuelType = this.machineryForm.get('fuelType')?.value;
+    this.fuelDataService.getFuelData(year, fuelType).subscribe(fuelValue => {
+      console.log(`Selected Year: ${year}, Selected Fuel: ${fuelType}, Value: ${fuelValue}`);
+      // Puedes actualizar el formulario o realizar otras acciones con el valor del combustible seleccionado
     });
   }
 }

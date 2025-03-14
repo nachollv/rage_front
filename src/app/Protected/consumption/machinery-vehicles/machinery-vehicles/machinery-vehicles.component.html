@@ -1,6 +1,11 @@
+<mat-card>
 <form [formGroup]="machineryForm" (ngSubmit)="calculateEmissions()">
+  <mat-form-field>
+    <mat-label>Año</mat-label>
+    <input matInput formControlName="year" (input)="onFuelTypeChange()">
+  </mat-form-field>
   <mat-form-field appearance="fill">
-    <mat-label>Edificio / Sede</mat-label>
+    <mat-label>Centro de producción</mat-label>
     <input matInput formControlName="building">
     <mat-error *ngIf="machineryForm.get('building')?.invalid">Campo obligatorio</mat-error>
   </mat-form-field>
@@ -75,3 +80,4 @@
 
   <button mat-raised-button color="primary" type="submit">Calcular Emisiones</button>
 </form>
+</mat-card>
