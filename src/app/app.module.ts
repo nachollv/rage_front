@@ -44,6 +44,7 @@ import { DialogComponent } from './dialog/dialog.component';
 import { ConsumtionContainerComponent } from './Protected/consumption/consumtion-container-scope1/consumtion-container.component';
 import { ConsumtionContainerScope2Component } from './Protected/consumption/consumtion-container-scope2/consumtion-container-scope2.component';
 import { ControlPanelContainerComponent } from './control-panel-container/control-panel-container.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 // Función para cargar los archivos de traducción
 export function HttpLoaderFactory(http: HttpClient) {
@@ -66,6 +67,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     ConsumtionContainerComponent,
     ConsumtionContainerScope2Component,
     ControlPanelContainerComponent,
+    PageNotFoundComponent,
   ],
   imports: [
     BrowserModule,
