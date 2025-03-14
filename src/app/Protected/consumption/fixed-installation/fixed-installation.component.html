@@ -12,7 +12,7 @@
     </mat-radio-group>
 
   <mat-form-field>
-    <mat-label>Edificio / Sede</mat-label>
+    <mat-label>Centro de producción</mat-label>
     <input matInput formControlName="building">
   </mat-form-field>
 
@@ -28,8 +28,8 @@
     <input matInput type="number" formControlName="quantity">
   </mat-form-field>
 
-  <h3>Factor de Emisión (Por defecto)[ Co2eq: CO2+CH4+N2O</h3>
-  <div formGroupName="defaultFactor">
+  <h3>Factor de Emisión [ Co2eq: CO2+CH4+N2O</h3>
+  <section formGroupName="defaultFactor">
     <mat-form-field>
       <mat-label>kg CO2/ud</mat-label>
       <input matInput type="number" formControlName="co2">
@@ -42,26 +42,10 @@
       <mat-label>g N2O/ud</mat-label>
       <input matInput type="number" formControlName="n2o">
     </mat-form-field>
-  </div>
-
-  <h3>Factor de Emisión (Otros)</h3>
-  <div formGroupName="otherFactor">
-    <mat-form-field>
-      <mat-label>kg CO2/ud</mat-label>
-      <input matInput type="number" formControlName="co2">
-    </mat-form-field>
-    <mat-form-field>
-      <mat-label>g CH4/ud</mat-label>
-      <input matInput type="number" formControlName="ch4">
-    </mat-form-field>
-    <mat-form-field>
-      <mat-label>g N2O/ud</mat-label>
-      <input matInput type="number" formControlName="n2o">
-    </mat-form-field>
-  </div>
+  </section>
 
   <h3>Emisiones Parciales</h3>
-  <div formGroupName="partialEmissions">
+  <section formGroupName="partialEmissions">
     <mat-form-field>
       <mat-label>kg CO2</mat-label>
       <input matInput type="number" formControlName="co2">
@@ -74,7 +58,7 @@
       <mat-label>g N2O</mat-label>
       <input matInput type="number" formControlName="n2o">
     </mat-form-field>
-  </div>
+  </section>
 
   <h3>Emisiones Totales</h3>
   <mat-form-field>

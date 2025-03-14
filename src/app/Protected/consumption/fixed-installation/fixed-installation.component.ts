@@ -36,9 +36,9 @@ export class FixedInstallationComponent {
         fuelType: ['', Validators.required],
         quantity: ['', [Validators.required, Validators.min(0)]],
         defaultFactor: this.fb.group({
-          co2: [0, Validators.required],
-          ch4: [0, Validators.required],
-          n2o: [0, Validators.required]
+          co2: [{ value: 0, disabled: true }],
+          ch4: [{ value: 0, disabled: true }],
+          n2o: [{ value: 0, disabled: true }]
         }),
         otherFactor: this.fb.group({
           co2: [{ value: 0, disabled: true }],
