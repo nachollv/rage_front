@@ -10,7 +10,7 @@ import { ConsumtionContainerScope2Component } from './Protected/consumption/cons
 import { ControlPanelContainerComponent } from './control-panel-container/control-panel-container.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/login', pathMatch: 'full' },
+  { path: '*', redirectTo: '/login', pathMatch: 'full' },
   { path: '', component: HomeComponent },
   { path: 'login', component: LoginComponent },
   { path: 'sign-up', component: RegisterComponent },
@@ -19,7 +19,7 @@ const routes: Routes = [
   { path: 'organ-gen-data', component: OrganGeneralDataComponent },
   { path: 'control-panel-container', component: ControlPanelContainerComponent },
   { path: 'electricity-consumption', component: ElectricityComponent },
-  { path: '*', component: HomeComponent }
+  /* { path: '*', component: HomeComponent } */
 
 ];
 
