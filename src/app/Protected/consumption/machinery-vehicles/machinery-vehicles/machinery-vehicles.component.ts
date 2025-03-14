@@ -8,7 +8,7 @@ import { MatTableDataSource } from '@angular/material/table';
 @Component({
   selector: 'app-machinery-vehicles',
   templateUrl: './machinery-vehicles.component.html',
-  styleUrls: ['./machinery-vehicles.component.css']
+  styleUrls: ['./machinery-vehicles.component.scss']
 })
 export class MachineryVehiclesComponent implements OnInit {
     displayedColumns: string[] = ['delegation', 'year', 'tipoCombustible', 'kg_CO2_ud_defecto', 'gCH4_ud_defecto', 'gN2O_ud_defecto', 'g CO2_ud_otros', 'gCH4_ud_otros', 'gN2O_ud_otros', 'kg__CO2', 'g_CH4', 'g_N2O', 'kg__CO2e', 'edit', 'delete']
