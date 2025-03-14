@@ -21,7 +21,10 @@
   "processEmissions": "Emisiones de proceso",
   "emissionFactors": "Factores de emisión",
   "organizationGeneralData": "Datos generales de la organización",
-
+  "electricityConsumptionInBuildings": "Electricity consumption in buildings",
+  "electricityConsumptionInVehicles": "Electricity consumption in vehicles",
+  "otherEnergiesConsumption": "Other electricity consumption",
+  "renovableEnergyInstallations": "Renovable Energy Installations",
   "logout": "Logout",
   "login": "Login"
 }
