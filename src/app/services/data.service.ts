@@ -17,7 +17,7 @@
      providedIn: 'root'
    })
    export class DataService {
-     private baseUrl = 'https://back.rage.es'; // Base URL del backend
+     private baseUrl = 'https://pre.tramits.idi.es/public/index.php'; // Base URL del backend
 
      private cnaeGroupsUrl = `${this.baseUrl}/cnae-groups`; // Endpoint para grupos CNAE
      private organizationTypesUrl = `${this.baseUrl}/organization-types`; // Endpoint para tipos de organización

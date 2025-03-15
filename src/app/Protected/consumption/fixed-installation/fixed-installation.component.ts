@@ -27,12 +27,12 @@ export class FixedInstallationComponent {
       'Gas manufacturado (kg)', 'Biogás (kg)**', 'Biomasa madera (kg)**', 'Biomasa pellets (kg)**', 
       'Biomasa astillas (kg)**', 'Biomasa serrines virutas (kg)**', 'Biomasa cáscara f. secos (kg)**', 
       'Biomasa hueso aceituna (kg)**', 'Carbón vegetal (kg)**', 'Coque de petróleo (kg)', 'Coque de carbón (kg)', 
-      'Hulla y antracita (kg)', 'Hullas subituminosas (kg)', 'Gasóleo A (l)', 'Gasolina  (l)'];
-    
+      'Hulla y antracita (kg)', 'Hullas subituminosas (kg)', 'B7 (I)','B10 (I)', 'B20 (I)', 'B30 (I)', 'B100 (I)', 'E5 (I)', 'E10 (I)','E85 (I)', 'E100 (I)'];
+     
     constructor(private fb: FormBuilder, public dialog: MatDialog, private fuelDataService: FuelDataService) {
       this.fuelForm = this.fb.group({
         year: [{ value: '2025', disabled: true }, [Validators.required, Validators.minLength(4), Validators.maxLength(4)]],
-        building: ['', Validators.required],
+        building: [{value: 'Centro de producción A', disabled: true}],
         fuelType: ['', Validators.required],
         quantity: ['', [Validators.required, Validators.min(0)]],
         defaultFactor: this.fb.group({

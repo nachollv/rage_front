@@ -4,20 +4,13 @@
     <mat-label>Periodo de cálculo</mat-label>
     <input matInput formControlName="year" (input)="onFuelTypeChange()">
   </mat-form-field>
-
-  <label id="ley_1_2005">{{'ley_1_2005' | translate}}</label>
-    <mat-radio-group aria-labelledby="ley_1_2005" aria-label="Select an option">
-      <mat-radio-button value="1">No sujeta</mat-radio-button>
-      <mat-radio-button value="2">Sujeta</mat-radio-button>
-    </mat-radio-group>
-
   <mat-form-field>
     <mat-label>Centro de producción</mat-label>
     <input matInput formControlName="building">
   </mat-form-field>
 
   <mat-form-field>
-    <mat-label>Dato de actividad</mat-label>
+    <mat-label>Tipo de combustible</mat-label>
     <mat-select formControlName="fuelType" (selectionChange)="onFuelTypeChange()">
       <mat-option *ngFor="let fuel of fuelTypes" [value]="fuel">{{ fuel }}</mat-option>
     </mat-select>
