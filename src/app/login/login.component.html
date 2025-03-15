@@ -18,6 +18,10 @@
       <button mat-raised-button color="primary" type="submit" [disabled]="loginForm.invalid">{{"login" | translate}}</button>
     </form>
   </mat-card>
+  <section>
+    <a mat-button routerLink="/recover-password">{{"recoverPassword" | translate}}</a>
+  </section>
+  
   <span>{{loginResult}}</span>
   <a mat-button routerLink="/sign-up">{{"signUp" | translate}}</a>
 </section>
