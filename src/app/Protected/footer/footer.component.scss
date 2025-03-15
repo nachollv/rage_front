@@ -5,11 +5,12 @@
   color: #fff;
   padding: 1.1rem;
   text-align: center;
+  position: relative;
+  bottom: 0;
 }
 .footer a {
     color: #fff;
     text-decoration: none;
-   /*  margin: 0 10px; */
 }
 .footer a:hover {
     text-decoration: underline;
