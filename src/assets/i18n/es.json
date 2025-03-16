@@ -26,6 +26,8 @@
   "renovableEnergyInstallations": "Instalaciones de energía renovable",
   "logout": "Salir",
   "login": "Entrar",
+  "signIn": "Iniciar sesión",
+  "signUp": "Registrarse",
   "recoverPassword": "Recuperar contraseña",  
   "send": "Enviar",
   "cancel": "Cancelar"
