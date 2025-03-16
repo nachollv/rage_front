@@ -32,7 +32,11 @@ export class LoginComponent implements OnInit {
     this.authService.login(this.loginForm.get('email')!.value, this.loginForm.get('password')!.value).subscribe({
       next: (response) => {
         this.authService.saveToken(response.token); // Almacena el token
-        //this.router.navigate(['/dashboard']); // Redirige a otra página
+        this.showSnackBar("Bienvenido a la aplicación")
+        setTimeout(() => {
+           this.router.navigate(['/dashboard']); // Redirige a otra página
+        }, 1500);
+       
       },
       error: (err) => {
         this.errorMessage = 'Credenciales incorrectas. Intenta de nuevo.'+err.error.message;

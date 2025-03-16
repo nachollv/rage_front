@@ -18,7 +18,7 @@ const routes: Routes = [
   { path: 'scope-one', component: ConsumtionContainerComponent },
   { path: 'scope-two', component: ConsumtionContainerScope2Component },
   { path: 'organ-gen-data', component: OrganGeneralDataComponent },
-  { path: 'control-panel-container', component: ControlPanelContainerComponent },
+  { path: 'dashboard', component: ControlPanelContainerComponent },
   { path: 'electricity-consumption', component: ElectricityComponent },
   /* { path: '*', component: HomeComponent } */
   { path: '*', redirectTo: '/login', pathMatch: 'full' },
