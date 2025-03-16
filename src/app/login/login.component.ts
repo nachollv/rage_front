@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-login',
@@ -12,8 +13,11 @@ export class LoginComponent implements OnInit {
   loginForm: FormGroup
   loginResult: string = ""
   firstLogin: boolean = false
+  email:string = '';
+  password:string = '';
+  errorMessage:string = '';
 
-  constructor(private fb: FormBuilder, private router: Router, private authService: AuthService) { 
+  constructor(private fb: FormBuilder, private router: Router, private authService: AuthService, private snackBar: MatSnackBar,) { 
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]]
@@ -25,20 +29,24 @@ export class LoginComponent implements OnInit {
   }
   
   onSubmit(): void {
-    if (this.loginForm.valid) {
-      console.log('Form Submitted:', this.loginForm.value)
-      this.loginResult = this.loginForm.value.email + " " + this.loginForm.value.password
-      if (this.firstLogin) {
-        this.router.navigate(['/organ-gen-data'])
-      } else {
-        this.router.navigate(['control-panel-container'])
+    this.authService.login(this.loginForm.get('email')!.value, this.loginForm.get('password')!.value).subscribe({
+      next: (response) => {
+        this.authService.saveToken(response.token); // Almacena el token
+        //this.router.navigate(['/dashboard']); // Redirige a otra página
+      },
+      error: (err) => {
+        this.errorMessage = 'Credenciales incorrectas. Intenta de nuevo.'+err.error.message;
+        this.showSnackBar(this.errorMessage)
       }
-    }
+    });
   }
 
-  login() {
-    // Lógica para autenticar al usuario y obtener el token
-    const token = 'jwt-token-obtenido-del-servidor';
-    this.authService.setToken(token);
+  private showSnackBar(error: string): void {
+    this.snackBar.open(error, 'Close', {
+      duration: 5000,
+      verticalPosition: 'bottom',
+      horizontalPosition: 'center',
+      panelClass: ['custom-snackbar'],
+    });
   }
 }
