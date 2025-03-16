@@ -6,8 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class RecoveryPasswordService {
-  private apiUrl = 'http://tuservidor/email_api.php'; // Cambia esto por la URL de tu API
-
+  private apiUrl = 'https://pre.tramits.idi.es/public/index.php/send-mail';
   constructor(private http: HttpClient) {}
 
   sendRecoveryEmail(email: string): Observable<any> {
