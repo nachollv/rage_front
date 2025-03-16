@@ -10,6 +10,7 @@ import { ConsumtionContainerComponent } from './Protected/consumption/consumtion
 import { ConsumtionContainerScope2Component } from './Protected/consumption/consumtion-container-scope2/consumtion-container-scope2.component';
 import { ControlPanelContainerComponent } from './control-panel-container/control-panel-container.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { RecoveryPasswordComponent } from './recovery-password/recovery-password.component';
 
 const routes: Routes = [
 
@@ -21,6 +22,7 @@ const routes: Routes = [
   { path: 'organ-gen-data', component: OrganGeneralDataComponent, canActivate: [AuthGuard] },
   { path: 'dashboard', component: ControlPanelContainerComponent },
   { path: 'electricity-consumption', component: ElectricityComponent, canActivate: [AuthGuard] },
+  { path: 'recover-password', component: RecoveryPasswordComponent },
   { path: '*', redirectTo: '/login', pathMatch: 'full' },
   { path: '**', component: PageNotFoundComponent },
 

@@ -25,5 +25,8 @@
   "otherEnergiesConsumption": "Otro consumo eléctrico",
   "renovableEnergyInstallations": "Instalaciones de energía renovable",
   "logout": "Salir",
-  "login": "Entrar"
+  "login": "Entrar",
+  "recoverPassword": "Recuperar contraseña",  
+  "send": "Enviar",
+  "cancel": "Cancelar"
 }

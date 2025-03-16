@@ -47,6 +47,7 @@ import { ConsumtionContainerScope2Component } from './Protected/consumption/cons
 import { ControlPanelContainerComponent } from './control-panel-container/control-panel-container.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { MachineryVehiclesComponent } from './Protected/consumption/machinery-vehicles/machinery-vehicles/machinery-vehicles.component';
+import { RecoveryPasswordComponent } from './recovery-password/recovery-password.component';
 
 // Función para cargar los archivos de traducción
 export function HttpLoaderFactory(http: HttpClient) {
@@ -77,6 +78,7 @@ export function tokenGetter() {
     ControlPanelContainerComponent,
     PageNotFoundComponent,
     MachineryVehiclesComponent,
+    RecoveryPasswordComponent,
   ],
   imports: [
     BrowserModule,
