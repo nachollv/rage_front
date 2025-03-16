@@ -3,6 +3,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent } from '../../dialog/dialog.component';
 import { Router } from '@angular/router';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Component({
   selector: 'app-header',
@@ -11,20 +12,18 @@ import { Router } from '@angular/router';
 })
 export class HeaderComponent {
   title = 'RAGE: ';
-  bold = false;
-  italic = false;
 
-  menuOptions = ["{{'fugitiveEmissions' | translate}}", 'processEmissions', 'AdditionalInformation', 'ElectricityAndOtherEnergies', 'FinalReport', '<hr>EmisionFactors'];
+  role: string = ''; // Rol del usuario
+  menuOptions: string[] = []; // Opciones del menú
   selectedSize: string | undefined = 'Normal';
 
-  reset() {
-    this.bold = false;
-    this.italic = false;
-    this.selectedSize = 'Normal';
-  }
-  
-  constructor(private translate: TranslateService, private router: Router, public dialog: MatDialog) {
+  constructor(private jwtHelper: JwtHelperService, private translate: TranslateService, private router: Router, public dialog: MatDialog) {
     this.translate.setDefaultLang('es');
+  }
+
+  ngOnInit(): void {
+    this.setUserRole();
+    this.setMenuOptions();
   }
 
   switchLanguage(language: string) {
@@ -33,6 +32,29 @@ export class HeaderComponent {
 
   goHome () {
     this.router.navigate([''])
+  }
+
+  logout() {
+    localStorage.removeItem('authToken'); // Elimina el token del usuario
+    this.router.navigate(['/login']); // Redirige al usuario a la página de inicio de sesión
+  }
+
+  private setUserRole(): void {
+    const token = localStorage.getItem('authToken');
+    if (token) {
+      const decodedToken = this.jwtHelper.decodeToken(token);
+      console.log(decodedToken)
+      this.role = decodedToken.data['rol'] || 'User'; // Establece el rol predeterminado como "User"
+    }
+  }
+
+  private setMenuOptions(): void {
+    console.log (this.role)
+    if (this.role === 'Admin') {
+      this.menuOptions = ['fugitiveEmissions', 'processEmissions', 'AdditionalInformation', 'ElectricityAndOtherEnergies', 'FinalReport', 'EmisionFactors'];
+    } else {
+      this.menuOptions = ['Inicio', 'Mi Perfil', 'Soporte'];
+    }
   }
 
   openDialog(): void {

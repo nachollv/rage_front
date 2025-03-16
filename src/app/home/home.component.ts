@@ -9,9 +9,9 @@ import { DialogComponent } from '../dialog/dialog.component';
 })
 export class HomeComponent {
 
- constructor( public dialog: MatDialog ) {}
+  constructor( public dialog: MatDialog ) {}
 
-   openDialog(): void {
+  openDialog(): void {
         const dialogRef = this.dialog.open(DialogComponent, {
           data: {
             title: 'Sobre la huella de carbono',
@@ -26,6 +26,6 @@ export class HomeComponent {
         dialogRef.afterClosed().subscribe(result => {
           console.log('El dialog se cerró');
         });
-      }
+  }
 
 }

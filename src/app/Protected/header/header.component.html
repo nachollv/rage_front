@@ -5,10 +5,13 @@
     <img src="../../../assets/logo-huella.jpeg" alt="Logotipo de la empresa" ngClass="header-logo" (click)="goHome()">
   </mat-toolbar>
 </header>
-
 <mat-menu #mainMenu="matMenu">
- <button mat-menu-item routerLink="scope-one">{{'consumptions' | translate}}</button>
- 
+  <ul>
+    <li *ngFor="let option of menuOptions">
+      <button mat-menu-item routerLink="{{option}}">{{option | translate}}</button>
+    </li>
+  </ul>
+  <button mat-menu-item routerLink="scope-one">{{'consumptions' | translate}}</button>
   <button mat-menu-item routerLink="scope-two">{{'emissions' | translate}}</button>
   <hr>
   <button mat-menu-item ngClass="rage-menu-item">{{'emissionFactors' | translate}}</button>
@@ -18,7 +21,7 @@
   <button mat-menu-item (click)="switchLanguage('en')">English</button>
   <button mat-menu-item (click)="switchLanguage('es')">Español</button>
   <hr>
-  <button  mat-menu-item ngClass="rage-menu-item" (cdkMenuItemTriggered)="reset()">{{'logout' | translate}}</button>
+  <button  mat-menu-item ngClass="rage-menu-item" (cdkMenuItemTriggered)="logout()">{{'logout' | translate}}</button>
 </mat-menu>
 <mat-menu #consumptions="matMenu">
   <button mat-menu-item routerLink="fixed-installation">{{'fixedInstallationsFuelConsumption' | translate}}</button>

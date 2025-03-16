@@ -4,6 +4,7 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { DataService } from './services/data.service';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { AuthService } from './services/auth.service';
+import { JwtModule } from '@auth0/angular-jwt';
 /*  */
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
@@ -52,6 +53,12 @@ export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
 }
 
+// Función para obtener el token del almacenamiento local
+export function tokenGetter() {
+  const token = localStorage.getItem('authToken');
+  return token;
+}
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -96,6 +103,13 @@ export function HttpLoaderFactory(http: HttpClient) {
         provide: TranslateLoader,
         useFactory: HttpLoaderFactory,
         deps: [HttpClient]
+      }
+    }),
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: tokenGetter,
+        allowedDomains: ['*'],
+        /*        disallowedRoutes: ['localhost:3000/api/auth'] */
       }
     })
   ],
