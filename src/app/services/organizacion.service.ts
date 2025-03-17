@@ -26,6 +26,11 @@ export class OrganizacionService {
     return this.http.get<Organizacion>(`${this.apiUrl}/${id}`);
   }
 
+    // Obtener una organización por Email
+    getOrganizacionByEmail(email: string): Observable<Organizacion> {
+      return this.http.get<Organizacion>(`${this.apiUrl}/search/${encodeURIComponent(email)}`);
+    }
+
   // Crear una nueva organización
   crearOrganizacion(organizacion: Organizacion): Observable<Organizacion> {
     return this.http.post<Organizacion>(this.apiUrl, organizacion);
