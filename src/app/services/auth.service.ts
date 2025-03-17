@@ -1,14 +1,21 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
   private apiUrl = 'https://pre.tramits.idi.es/public/index.php/auth';
-  constructor(private http: HttpClient) {}
 
+  private userRole = new BehaviorSubject<string>(''); // Observa el rol del usuario
+  constructor(private http: HttpClient) {}
+  currentUserRole$ = this.userRole.asObservable(); // Observable para suscribirse
+
+  setRole(role: string): void {
+    this.userRole.next(role); // Actualiza el rol del usuario
+  }
   // Método para iniciar sesión
   login(email: string, password: string): Observable<any> {
     const body = { email, password };

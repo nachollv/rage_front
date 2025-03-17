@@ -3,6 +3,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent } from '../../dialog/dialog.component';
 import { Router } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Component({
@@ -12,19 +13,37 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 })
 export class HeaderComponent {
   title = 'RAGE: ';
-
-  role: string = '' // Rol del usuario
-  menuOptions: string[] = [] // Opciones del menú
-  selectedSize: string | undefined = 'Normal'
   viewUserMenu: boolean = true
-
-  constructor(private jwtHelper: JwtHelperService, private translate: TranslateService, private router: Router, public dialog: MatDialog) {
+  role: string = 'User' // Rol del usuario
+  userName: string = '' // Nombre del usuario
+  menuItems: string[] = [] // Opciones del menú
+  decodedToken: any;
+  
+    constructor(
+    private jwtHelper: JwtHelperService,
+    private translate: TranslateService, 
+    private router: Router, public dialog: MatDialog
+    ) {
     this.translate.setDefaultLang('es');
   }
 
   ngOnInit(): void {
-    this.setUserRole();
-    this.setMenuOptions();
+    const token = localStorage.getItem('authToken')
+    if (token) {
+      this.decodedToken = this.jwtHelper.decodeToken(token)
+      this.role = this.decodedToken.data.rol
+      this.userName = this.decodedToken.data.nombre
+    } else {
+      console.log('Token no encontrado');
+    }
+  
+      if (this.role === 'Admin') {
+        this.menuItems = ['Dashboard', 'Users', 'Settings'];
+        this.viewUserMenu = !this.viewUserMenu
+      } else if (this.decodedToken.data.rol === 'User') {
+        this.menuItems = ['Home', 'Profile', 'Help'];
+      }
+ 
   }
 
   switchLanguage(language: string) {
@@ -38,26 +57,6 @@ export class HeaderComponent {
   logout() {
     localStorage.removeItem('authToken'); // Elimina el token del usuario
     this.router.navigate(['login']); // Redirige al usuario a la página de inicio de sesión
-  }
-
-  private setUserRole(): void {
-    const token = localStorage.getItem('authToken');
-    if (token) {
-      const decodedToken = this.jwtHelper.decodeToken(token);
-      this.role = decodedToken.data['rol'] || 'User'; // Establece el rol predeterminado como "User"
-    }
-  }
-
-  private setMenuOptions(): void {
-
-      if (this.role === 'Admin') {
-      /* this.menuOptions = ['usermanagement', 'viewUserList', 'dashboard']; */
-      this.viewUserMenu = false
-    } else {
-      this.viewUserMenu = true
-
-     /*  this.menuOptions = ['activityRegistration', 'bashboard', 'recoverPassword', 'predefinedLanguage', 'passwordValidity']; */
-    }
   }
 
   openDialog(): void {

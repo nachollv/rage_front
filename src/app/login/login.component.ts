@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Component({
   selector: 'app-login',
@@ -16,8 +17,12 @@ export class LoginComponent implements OnInit {
   email:string = '';
   password:string = '';
   errorMessage:string = '';
+  role: string = ''
 
-  constructor(private fb: FormBuilder, private router: Router, private authService: AuthService, private snackBar: MatSnackBar,) { 
+  constructor(
+    private jwtHelper: JwtHelperService,
+    private fb: FormBuilder, private router: Router, 
+    private authService: AuthService, private snackBar: MatSnackBar) { 
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]]
@@ -31,12 +36,13 @@ export class LoginComponent implements OnInit {
   onSubmit(): void {
     this.authService.login(this.loginForm.get('email')!.value, this.loginForm.get('password')!.value).subscribe({
       next: (response) => {
-        this.authService.saveToken(response.token); // Almacena el token
+        this.role = this.jwtHelper.decodeToken(response.token).data.rol === 'Admin' ? 'Admin' : 'User'
+        console.log('Role:', this.role)
+        this.authService.setRole(this.role)
+        this.authService.saveToken(response.token)
+
         this.showSnackBar("Bienvenido a la aplicación RAGE, un momento...")
-        setTimeout(() => {
-           this.router.navigate(['/dashboard']); // Redirige a otra página
-        }, 1500);
-       
+        this.router.navigate(['/dashboard']).then(() => { window.location.reload(); });
       },
       error: (err) => {
         this.errorMessage = 'Credenciales incorrectas. Intenta de nuevo.'+err.error.message;

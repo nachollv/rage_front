@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Chart, registerables  } from 'chart.js';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Component({
   selector: 'app-control-panel-container',
@@ -9,12 +10,13 @@ import { Chart, registerables  } from 'chart.js';
 
 
 export class ControlPanelContainerComponent implements OnInit {
- 
-  constructor() {
+  viewUserMenu: boolean = true
+  role: string = '' // Rol del usuario
+  constructor(private jwtHelper: JwtHelperService, ) {
   
   }
 
-  ngOnInit() { 
+  ngOnInit():void {
     Chart.register(...registerables);
     this.createBarChart();
   }
