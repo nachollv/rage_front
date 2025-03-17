@@ -13,9 +13,10 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 export class HeaderComponent {
   title = 'RAGE: ';
 
-  role: string = ''; // Rol del usuario
-  menuOptions: string[] = []; // Opciones del menú
-  selectedSize: string | undefined = 'Normal';
+  role: string = '' // Rol del usuario
+  menuOptions: string[] = [] // Opciones del menú
+  selectedSize: string | undefined = 'Normal'
+  viewUserMenu: boolean = true
 
   constructor(private jwtHelper: JwtHelperService, private translate: TranslateService, private router: Router, public dialog: MatDialog) {
     this.translate.setDefaultLang('es');
@@ -36,24 +37,26 @@ export class HeaderComponent {
 
   logout() {
     localStorage.removeItem('authToken'); // Elimina el token del usuario
-    this.router.navigate(['/login']); // Redirige al usuario a la página de inicio de sesión
+    this.router.navigate(['login']); // Redirige al usuario a la página de inicio de sesión
   }
 
   private setUserRole(): void {
     const token = localStorage.getItem('authToken');
     if (token) {
       const decodedToken = this.jwtHelper.decodeToken(token);
-      console.log(decodedToken)
       this.role = decodedToken.data['rol'] || 'User'; // Establece el rol predeterminado como "User"
     }
   }
 
   private setMenuOptions(): void {
-    console.log (this.role)
-    if (this.role === 'Admin') {
-      this.menuOptions = ['fugitiveEmissions', 'processEmissions', 'AdditionalInformation', 'ElectricityAndOtherEnergies', 'FinalReport', 'EmisionFactors'];
+
+      if (this.role === 'Admin') {
+      /* this.menuOptions = ['usermanagement', 'viewUserList', 'dashboard']; */
+      this.viewUserMenu = false
     } else {
-      this.menuOptions = ['Inicio', 'Mi Perfil', 'Soporte'];
+      this.viewUserMenu = true
+
+     /*  this.menuOptions = ['activityRegistration', 'bashboard', 'recoverPassword', 'predefinedLanguage', 'passwordValidity']; */
     }
   }
 

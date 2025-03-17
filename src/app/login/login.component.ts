@@ -32,7 +32,7 @@ export class LoginComponent implements OnInit {
     this.authService.login(this.loginForm.get('email')!.value, this.loginForm.get('password')!.value).subscribe({
       next: (response) => {
         this.authService.saveToken(response.token); // Almacena el token
-        this.showSnackBar("Bienvenido a la aplicación")
+        this.showSnackBar("Bienvenido a la aplicación RAGE, un momento...")
         setTimeout(() => {
            this.router.navigate(['/dashboard']); // Redirige a otra página
         }, 1500);
@@ -47,7 +47,7 @@ export class LoginComponent implements OnInit {
 
   private showSnackBar(error: string): void {
     this.snackBar.open(error, 'Close', {
-      duration: 5000,
+      duration: 1500,
       verticalPosition: 'bottom',
       horizontalPosition: 'center',
       panelClass: ['custom-snackbar'],

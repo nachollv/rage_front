@@ -24,6 +24,9 @@
   "electricityConsumptionInVehicles": "Consumo eléctrico en vehículos",
   "otherEnergiesConsumption": "Otro consumo eléctrico",
   "renovableEnergyInstallations": "Instalaciones de energía renovable",
+
+  "userManagement": "Gestión de usuarios",
+  "dashboard": "Cuadro de mando",
   "logout": "Salir",
   "login": "Entrar",
   "signIn": "Iniciar sesión",
