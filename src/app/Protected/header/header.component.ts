@@ -3,7 +3,6 @@ import { TranslateService } from '@ngx-translate/core';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent } from '../../dialog/dialog.component';
 import { Router } from '@angular/router';
-import { AuthService } from '../../services/auth.service';
 import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Component({
@@ -39,11 +38,9 @@ export class HeaderComponent {
   
       if (this.role === 'Admin') {
         this.menuItems = ['Dashboard', 'Users', 'Settings'];
-        this.viewUserMenu = !this.viewUserMenu
       } else if (this.decodedToken.data.rol === 'User') {
         this.menuItems = ['Home', 'Profile', 'Help'];
       }
- 
   }
 
   switchLanguage(language: string) {
