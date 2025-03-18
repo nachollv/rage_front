@@ -17,11 +17,12 @@
   <mat-form-field appearance="fill">
     <mat-label>Tipo de organización</mat-label>
     <mat-select formControlName="organizationType">
-      <mat-option *ngFor="let type of organizationTypes" [value]="type">
-        {{ type }}
+      <mat-option *ngFor="let type of organizationTypes" [value]="type.id">
+        {{ type.name }}
       </mat-option>
     </mat-select>
   </mat-form-field>
+  
 
   <mat-form-field appearance="fill">
     <mat-label>Sector</mat-label>

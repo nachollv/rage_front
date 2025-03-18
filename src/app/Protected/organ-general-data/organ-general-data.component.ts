@@ -24,15 +24,16 @@ export class OrganGeneralDataComponent implements OnInit {
   ];
   dataSource = new MatTableDataSource<any>(this.data)
   organizationForm: FormGroup
-  organizationTypes: string[] = [
-      'Micro',
-      'Pequeña',
-      'Mediana',
-      'Gran empresa',
-      'Administración',
-      'Entidad sin ánimo de lucro',
-      'Otras'
-    ];
+  organizationTypes: { id: number, name: string }[] = [
+    { id: 1, name: 'Micro' },
+    { id: 2, name: 'Pequeña' },
+    { id: 3, name: 'Mediana' },
+    { id: 4, name: 'Gran empresa' },
+    { id: 5, name: 'Administración' },
+    { id: 6, name: 'Entidad sin ánimo de lucro' },
+    { id: 7, name: 'Otras' }
+  ];
+  
     sectors: string[] = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
     periodList: string[] = ['2021', '2022', '2023', '2024', '2025'];
     objectiveList: string[] = ['Reducción del consumo de energía', 'Minimizar residuos', 'Ahorro de agua', 'Disminución de Emisiones de CO2', 'Aumento del uso de energías renovables'];
@@ -76,6 +77,7 @@ export class OrganGeneralDataComponent implements OnInit {
             id: theOrganization.id,
             cif: theOrganization.cif,
             companyName: theOrganization.companyName,
+            organizationType: theOrganization.organizationType,
             cnae: theOrganization.cnae,
             zipCode:theOrganization.zipCode,
             activa: theOrganization.activa,
@@ -85,6 +87,7 @@ export class OrganGeneralDataComponent implements OnInit {
             updated_at: theOrganization.updated_at,
             deleted_at: theOrganization.deleted_at,
           };
+          console.log (data)
           this.organizationForm.patchValue(data);
         })
       
