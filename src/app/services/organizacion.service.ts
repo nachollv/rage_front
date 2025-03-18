@@ -12,7 +12,7 @@ export interface Organizacion {
   providedIn: 'root',
 })
 export class OrganizacionService {
-  private apiUrl = 'https://pre.tramits.idi.es/public/index.php/organizacion';
+  private apiUrl = 'https://pre.tramits.idi.es/public/index.php';
 
   constructor(private http: HttpClient) {}
 
@@ -26,14 +26,14 @@ export class OrganizacionService {
     return this.http.get<Organizacion>(`${this.apiUrl}/${id}`);
   }
 
-    // Obtener una organización por Email
-    getOrganizacionByEmail(email: string): Observable<Organizacion> {
-      return this.http.get<Organizacion>(`${this.apiUrl}/search/${encodeURIComponent(email)}`);
-    }
+  // Obtener una organización por Email
+  getOrganizacionByEmail(email: string): Observable<Organizacion> {
+    return this.http.get<Organizacion>(`${this.apiUrl}/search/${encodeURIComponent(email)}`);
+  }
 
   // Crear una nueva organización
   crearOrganizacion(organizacion: Organizacion): Observable<Organizacion> {
-    return this.http.post<Organizacion>(this.apiUrl, organizacion);
+    return this.http.post<Organizacion>(`${this.apiUrl}/register`, organizacion);
   }
 
   // Actualizar una organización existente
