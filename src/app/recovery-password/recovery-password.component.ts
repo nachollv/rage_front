@@ -29,6 +29,7 @@ export class RecoveryPasswordComponent implements OnInit {
   }
 
   onSubmit(): void {
+    this.message ="Un momento, enviando ..."
     if (this.recoveryForm.valid) {
       const email = this.recoveryForm.value.email;
       this.recoveryService.sendRecoveryEmail(email).subscribe({
