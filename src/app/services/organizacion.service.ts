@@ -38,9 +38,9 @@ export class OrganizacionService {
   }
 
   // Actualizar una organización existente
-  actualizarOrganizacion(organizacion: Organizacion): Observable<Organizacion> {
+  actualizarOrganizacion(id: number, organizacion: Organizacion): Observable<Organizacion> {
     return this.http.put<Organizacion>(
-      `${this.apiUrl}/organizacion/${organizacion.id}`,
+      `${this.apiUrl}/organizacion/${id}`,
       organizacion
     );
   }

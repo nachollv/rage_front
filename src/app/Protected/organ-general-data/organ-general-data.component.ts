@@ -4,8 +4,10 @@ import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent } from '../../dialog/dialog.component';
 import { MatTableDataSource } from '@angular/material/table';
 import { OrganizacionService } from '../../services/organizacion.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { AuthService } from '../../services/auth.service';
+
 @Component({
   selector: 'app-organ-general-data',
   templateUrl: './organ-general-data.component.html',
@@ -40,7 +42,7 @@ export class OrganGeneralDataComponent implements OnInit {
     token: string = ''
     organizationID: string = ''
   
-    constructor(private fb: FormBuilder,
+    constructor(private fb: FormBuilder, private snackBar: MatSnackBar,
       private jwtHelper: JwtHelperService,
       private authService: AuthService, private organizationService: OrganizacionService,
       public dialog: MatDialog) {
@@ -87,7 +89,6 @@ export class OrganGeneralDataComponent implements OnInit {
             updated_at: theOrganization.updated_at,
             deleted_at: theOrganization.deleted_at,
           };
-          console.log (data)
           this.organizationForm.patchValue(data);
         })
       
@@ -98,10 +99,22 @@ export class OrganGeneralDataComponent implements OnInit {
       this.organizationForm.patchValue({
         multicenter: false
       });
+      Object.keys(this.organizationForm.controls).forEach(campo => {
+        const control = this.organizationForm.get(campo);
+        if (control?.invalid) {
+          console.log(`${campo} es inválido`);
+        }
+      });
+      
       if (this.organizationForm.valid) {
-        console.log(this.organizationForm.value);
-      }
-    }
+        this.organizationService.actualizarOrganizacion(this.organizationForm.get('id')?.value, this.organizationForm.value)
+        .subscribe((response: any) => { 
+          this.showSnackBar('Información'+'La organización ha sido actualizada correctamente'+response);
+        }, (error: any) => {
+          this.showSnackBar('Error'+ 'Ha ocurrido un error al actualizar la organización'+error.message);
+        }); 
+
+    }}
 
     onSelectionChange(event: any) {
       const selectedValue = event.checked;
@@ -122,6 +135,15 @@ export class OrganGeneralDataComponent implements OnInit {
   
       dialogRef.afterClosed().subscribe(result => {
         console.log('El dialog se cerró');
+      });
+    }
+
+    private showSnackBar(error: string): void {
+      this.snackBar.open(error, 'Close', {
+        duration: 1500,
+        verticalPosition: 'bottom',
+        horizontalPosition: 'center',
+        panelClass: ['custom-snackbar'],
       });
     }
   }

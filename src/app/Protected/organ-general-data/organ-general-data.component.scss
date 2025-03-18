@@ -1,7 +1,7 @@
 @use '../../../styles.scss';
 
 mat-card {
-  width: 40%;
+  max-width: 80%;
   min-height: 80vh;
   padding: 1.1rem;
   margin: 1rem auto;

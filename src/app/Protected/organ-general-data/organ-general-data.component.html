@@ -40,7 +40,7 @@
   
   <mat-form-field appearance="fill">
     <mat-label>zipCode</mat-label>
-    <input matInput formControlName="zipCode" minlength="9" maxlength="9">
+    <input matInput formControlName="zipCode" minlength="5" maxlength="5">
   </mat-form-field>
   <mat-form-field appearance="fill">
     <mat-label>email</mat-label>
@@ -61,6 +61,7 @@
   <button mat-raised-button color="primary" type="submit" [disabled]="organizationForm.invalid">Enviar</button>
 </form>
 </mat-card>
+
 <section  *ngIf="mustShowDelegations">
   <button mat-raised-button color="accent">ADD PRODUCTION CENTER</button>
   <app-data-table [displayedColumns]="displayedColumns" [dataSource]="dataSource"></app-data-table>
