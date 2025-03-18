@@ -11,6 +11,7 @@ export interface Organizacion {
 @Injectable({
   providedIn: 'root',
 })
+
 export class OrganizacionService {
   private apiUrl = 'https://pre.tramits.idi.es/public/index.php';
 
@@ -22,30 +23,30 @@ export class OrganizacionService {
   }
 
   // Obtener una organización por ID
-  getOrganizacion(id: number): Observable<Organizacion> {
-    return this.http.get<Organizacion>(`${this.apiUrl}/${id}`);
+  getOrganizacion(id: string): Observable<Organizacion> {
+    return this.http.get<Organizacion>(`${this.apiUrl}/organizacion/${id}`);
   }
 
   // Obtener una organización por Email
   getOrganizacionByEmail(email: string): Observable<Organizacion> {
-    return this.http.get<Organizacion>(`${this.apiUrl}/search/${encodeURIComponent(email)}`);
+    return this.http.get<Organizacion>(`${this.apiUrl}/organizacion/search/${encodeURIComponent(email)}`);
   }
 
   // Crear una nueva organización
   crearOrganizacion(organizacion: Organizacion): Observable<Organizacion> {
-    return this.http.post<Organizacion>(`${this.apiUrl}/register`, organizacion);
+    return this.http.post<Organizacion>(`${this.apiUrl}/organizacion/register`, organizacion);
   }
 
   // Actualizar una organización existente
   actualizarOrganizacion(organizacion: Organizacion): Observable<Organizacion> {
     return this.http.put<Organizacion>(
-      `${this.apiUrl}/${organizacion.id}`,
+      `${this.apiUrl}/organizacion/${organizacion.id}`,
       organizacion
     );
   }
 
   // Eliminar una organización
   eliminarOrganizacion(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+    return this.http.delete<void>(`${this.apiUrl}/organizacion/${id}`);
   }
 }

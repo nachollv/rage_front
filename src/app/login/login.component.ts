@@ -37,7 +37,6 @@ export class LoginComponent implements OnInit {
     this.authService.login(this.loginForm.get('email')!.value, this.loginForm.get('password')!.value).subscribe({
       next: (response) => {
         this.role = this.jwtHelper.decodeToken(response.token).data.rol === 'Admin' ? 'Admin' : 'User'
-        console.log('Role:', this.role)
         this.authService.setRole(this.role)
         this.authService.saveToken(response.token)
 

@@ -1,15 +1,17 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent } from '../../dialog/dialog.component';
 import { MatTableDataSource } from '@angular/material/table';
-
+import { OrganizacionService } from '../../services/organizacion.service';
+import { JwtHelperService } from '@auth0/angular-jwt';
+import { AuthService } from '../../services/auth.service';
 @Component({
   selector: 'app-organ-general-data',
   templateUrl: './organ-general-data.component.html',
   styleUrl: './organ-general-data.component.scss'
 })
-export class OrganGeneralDataComponent {
+export class OrganGeneralDataComponent implements OnInit {
   mustShowDelegations: boolean = false
   displayedColumns: string[] = ['delegation', 'town', 'address', 'phone', 'edit', 'delete']
   data = [
@@ -22,7 +24,7 @@ export class OrganGeneralDataComponent {
   ];
   dataSource = new MatTableDataSource<any>(this.data)
   organizationForm: FormGroup
-    organizationTypes: string[] = [
+  organizationTypes: string[] = [
       'Micro',
       'Pequeña',
       'Mediana',
@@ -31,23 +33,62 @@ export class OrganGeneralDataComponent {
       'Entidad sin ánimo de lucro',
       'Otras'
     ];
-  
     sectors: string[] = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
     periodList: string[] = ['2021', '2022', '2023', '2024', '2025'];
     objectiveList: string[] = ['Reducción del consumo de energía', 'Minimizar residuos', 'Ahorro de agua', 'Disminución de Emisiones de CO2', 'Aumento del uso de energías renovables'];
-
+    token: string = ''
+    organizationID: string = ''
   
-    constructor(private fb: FormBuilder, public dialog: MatDialog) {
+    constructor(private fb: FormBuilder,
+      private jwtHelper: JwtHelperService,
+      private authService: AuthService, private organizationService: OrganizacionService,
+      public dialog: MatDialog) {
       this.organizationForm = this.fb.group({
-        name: ['', [Validators.required, Validators.minLength(9)]],
-        nif:  ['', [Validators.required, Validators.minLength(9), Validators.maxLength(9)]],
-        organizationType: ['',],
-        sector: ['',],
-        multicenter: [false, [Validators.required]],
-        operationalLimits: ['', [Validators.required]],
-        calculationPeriod: ['', [Validators.required]],
-        objectives: ['', [Validators.required]],
+        id: [{ value: '', disabled: true }],
+        cif: [''],
+        companyName: [''],
+        organizationType: [''],
+        cnae: [''],
+        zipCode: [''],
+        activa: [''],
+        multipleProductionCenter: [''],
+        email: [''],
+        created_at: [{ value: '', disabled: true }],
+        updated_at: [{ value: '', disabled: true }],
+        deleted_at: [{ value: '', disabled: true }],
       });
+    }
+
+    ngOnInit(): void {
+     if (this.authService.getToken()) {
+        this.token = this.authService.getToken()!
+    }
+      this.organizationID = this.jwtHelper.decodeToken(this.token).data.id_empresa
+      this.getTheOrganization(this.organizationID)
+    }
+
+    getTheOrganization(id: string) {
+
+      this.organizationService.getOrganizacion(id)
+        .subscribe((theOrganization: any) => {
+            
+          const data = {
+            id: theOrganization.id,
+            cif: theOrganization.cif,
+            companyName: theOrganization.companyName,
+            cnae: theOrganization.cnae,
+            zipCode:theOrganization.zipCode,
+            activa: theOrganization.activa,
+            multipleProductionCenter: theOrganization.multipleProductionCenter,
+            email: theOrganization.email,
+            created_at: theOrganization.created_at,
+            updated_at: theOrganization.updated_at,
+            deleted_at: theOrganization.deleted_at,
+          };
+          this.organizationForm.patchValue(data);
+        })
+      
+    
     }
   
     onSubmit() {
@@ -65,7 +106,6 @@ export class OrganGeneralDataComponent {
       console.log('Selected value:', selectedValue);
     }
   
-
     openDialog(title:string, info:string): void {
       const dialogRef = this.dialog.open(DialogComponent, {
         data: {
