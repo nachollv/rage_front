@@ -34,9 +34,9 @@
   </mat-form-field>
   
   <mat-label>Límites de la organización</mat-label>
-  <mat-checkbox formControlName="multipleProductionCenter" (change)="onSelectionChange($event)">Multi-centro</mat-checkbox>
+  <mat-checkbox (change)="onMultipleOrgChange($event)">Multi-centro</mat-checkbox>
   <mat-label>Está activa?</mat-label>
-  <mat-checkbox formControlName="activa" (change)="onSelectionChange($event)">Sí</mat-checkbox>
+  <mat-checkbox (change)="onActivaChange($event)">Sí</mat-checkbox>
   
   <mat-form-field appearance="fill">
     <mat-label>zipCode</mat-label>

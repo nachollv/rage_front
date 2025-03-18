@@ -40,13 +40,13 @@ export class OrganizacionService {
   // Actualizar una organización existente
   actualizarOrganizacion(id: number, organizacion: Organizacion): Observable<Organizacion> {
     return this.http.put<Organizacion>(
-      `${this.apiUrl}/organizacion/${id}`,
+      `${this.apiUrl}/organizacion/update/${id}`,
       organizacion
     );
   }
 
   // Eliminar una organización
   eliminarOrganizacion(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/organizacion/${id}`);
+    return this.http.delete<void>(`${this.apiUrl}/organizacion/delete/${id}`);
   }
 }

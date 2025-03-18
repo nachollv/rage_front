@@ -7,6 +7,7 @@ import { OrganizacionService } from '../../services/organizacion.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { AuthService } from '../../services/auth.service';
+import { MatCheckboxChange } from '@angular/material/checkbox';
 
 @Component({
   selector: 'app-organ-general-data',
@@ -26,14 +27,14 @@ export class OrganGeneralDataComponent implements OnInit {
   ];
   dataSource = new MatTableDataSource<any>(this.data)
   organizationForm: FormGroup
-  organizationTypes: { id: number, name: string }[] = [
-    { id: 1, name: 'Micro' },
-    { id: 2, name: 'Pequeña' },
-    { id: 3, name: 'Mediana' },
-    { id: 4, name: 'Gran empresa' },
-    { id: 5, name: 'Administración' },
-    { id: 6, name: 'Entidad sin ánimo de lucro' },
-    { id: 7, name: 'Otras' }
+  organizationTypes: { id: string, name: string }[] = [
+    { id: 'Micro', name: 'Micro' },
+    { id: 'Peque', name: 'Pequeña' },
+    { id: 'Media', name: 'Mediana' },
+    { id: 'Grane', name: 'Gran empresa' },
+    { id: 'Admin', name: 'Administración' },
+    { id: 'Entid', name: 'Entidad sin ánimo de lucro' },
+    { id: 'Otras', name: 'Otras' }
   ];
   
     sectors: string[] = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
@@ -53,8 +54,8 @@ export class OrganGeneralDataComponent implements OnInit {
         organizationType: [''],
         cnae: [''],
         zipCode: [''],
-        activa: [''],
-        multipleProductionCenter: [''],
+        activa: [false],
+        multipleProductionCenter: [false],
         email: [''],
         created_at: [{ value: '', disabled: true }],
         updated_at: [{ value: '', disabled: true }],
@@ -65,7 +66,7 @@ export class OrganGeneralDataComponent implements OnInit {
     ngOnInit(): void {
      if (this.authService.getToken()) {
         this.token = this.authService.getToken()!
-    }
+      }
       this.organizationID = this.jwtHelper.decodeToken(this.token).data.id_empresa
       this.getTheOrganization(this.organizationID)
     }
@@ -90,36 +91,57 @@ export class OrganGeneralDataComponent implements OnInit {
             deleted_at: theOrganization.deleted_at,
           };
           this.organizationForm.patchValue(data);
+          if (theOrganization.multipleProductionCenter === '1') {
+            this.mustShowDelegations = true;
+            this.organizationForm.get('multipleProductionCenter')?.setValue('1');
+          } else {
+            this.mustShowDelegations = false;
+            this.organizationForm.get('multipleProductionCenter')?.setValue('0');
+          }
+
+          if (theOrganization.activa === '1') {
+            this.organizationForm.get('activa')?.setValue('1');
+          } else {
+            this.organizationForm.get('activa')?.setValue('0');
+          }
+        }, (error: any) => {
+          this.showSnackBar('Error' + 'Ha ocurrido un error al obtener la organización' + error.message);
+
         })
-      
-    
     }
-  
-    onSubmit() {
-      this.organizationForm.patchValue({
-        multicenter: false
-      });
-      Object.keys(this.organizationForm.controls).forEach(campo => {
-        const control = this.organizationForm.get(campo);
-        if (control?.invalid) {
-          console.log(`${campo} es inválido`);
-        }
-      });
-      
+
+    onSubmit() { 
       if (this.organizationForm.valid) {
         this.organizationService.actualizarOrganizacion(this.organizationForm.get('id')?.value, this.organizationForm.value)
         .subscribe((response: any) => { 
           this.showSnackBar('Información'+'La organización ha sido actualizada correctamente'+response);
         }, (error: any) => {
           this.showSnackBar('Error'+ 'Ha ocurrido un error al actualizar la organización'+error.message);
-        }); 
-
+        });
     }}
 
-    onSelectionChange(event: any) {
-      const selectedValue = event.checked;
-      this.mustShowDelegations = selectedValue;
-      console.log('Selected value:', selectedValue);
+    onMultipleOrgChange(event: MatCheckboxChange) {
+      console.log(`¿Está seleccionado?: ${event.checked}`);
+      const isChecked = event.checked
+      if (isChecked) {
+        this.organizationForm.get('multipleProductionCenter')?.setValue('1')
+        this.mustShowDelegations = true
+      }
+      else {
+        this.organizationForm.get('multipleProductionCenter')?.setValue('0')
+        this.mustShowDelegations = false
+      }
+    }
+
+    onActivaChange(event: MatCheckboxChange) {
+      console.log(`¿Está seleccionado?: ${event.checked}`);
+      const isChecked = event.checked
+      if (isChecked) {
+        this.organizationForm.get('activa')?.setValue('1');
+      }
+      else {
+        this.organizationForm.get('activa')?.setValue('0');
+      }
     }
   
     openDialog(title:string, info:string): void {
