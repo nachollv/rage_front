@@ -6,8 +6,6 @@
   </mat-toolbar>
 </header>
 <mat-menu #mainMenu="matMenu">
-  Actual user: {{userName}} {{role}}
-
   <section *ngIf="role === 'User'">
     <button mat-menu-item routerLink="scope-one">{{'consumptions' | translate}}</button>
     <button mat-menu-item routerLink="scope-two">{{'emissions' | translate}}</button>

@@ -33,5 +33,7 @@
   "signUp": "Registrarse",
   "recoverPassword": "Recuperar contraseña",  
   "send": "Enviar",
-  "cancel": "Cancelar"
+  "cancel": "Cancelar",
+  "currentUser": "Usuario"
+
 }

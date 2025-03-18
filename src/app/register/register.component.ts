@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators, AbstractControl, } from '@angular/f
 import { passwordMatchValidator } from '../custom-validators/custom.validator';
 import { OrganizacionService } from '../services/organizacion.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -12,7 +13,10 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class RegisterComponent implements OnInit {
   registerForm!: FormGroup; /* ! operador de aserción no nulo (!) para indicar que registerForm será inicializado antes de ser utilizado. */
   submitted:boolean = false;
-  constructor(private fb: FormBuilder, private registerService: OrganizacionService, private snackBar: MatSnackBar) {}
+  constructor(private fb: FormBuilder, 
+    private registerService: OrganizacionService, 
+    private snackBar: MatSnackBar,
+    private router: Router) {}
 
   ngOnInit(): void {
     this.registerForm = this.fb.group({
@@ -25,7 +29,7 @@ export class RegisterComponent implements OnInit {
       retypePassword: ['', [Validators.required, Validators.minLength(6), passwordMatchValidator]],
       nif: ['', [Validators.required, Validators.minLength(9), Validators.maxLength(9)]],
       companyName: ['', [Validators.required]],
-      postalCode: ['', [Validators.minLength(5), Validators.maxLength(5)]]
+      zipCode: ['', [Validators.minLength(5), Validators.maxLength(5)]]
     });
   }
 
@@ -65,8 +69,8 @@ onSubmit(): void {
     // Llama al servicio para registrar la organización
     this.registerService.crearOrganizacion(formData).subscribe(
       (response) => {
-        this.showSnackBar('Registro exitoso:' + response)
-
+        this.showSnackBar('Su empresa ha sido registada correctamente.')
+        this.router.navigate(['/login'])
       },
       (error) => {
         this.showSnackBar('Error en el registro:' + error)
@@ -79,7 +83,7 @@ onSubmit(): void {
 
 private showSnackBar(error: string): void {
   this.snackBar.open(error, 'Close', {
-    duration: 1500,
+    duration: 5000,
     verticalPosition: 'bottom',
     horizontalPosition: 'center',
     panelClass: ['custom-snackbar'],
