@@ -21,11 +21,11 @@ export interface EmisionesCombustibles {
 export class FuelDataService {
   
     private apiUrl = 'https://pre.tramits.idi.es/public/index.php';
-  
+
     constructor(private http: HttpClient) {}
   
     getAll(): Observable<EmisionesCombustibles[]> {
-      return this.http.get<EmisionesCombustibles[]>(`${this.apiUrl}/fuel/emisionescombustibles`).pipe(
+      return this.http.get<EmisionesCombustibles[]>(`${this.apiUrl}/emisionescombustibles`).pipe(
         catchError(this.handleError)
       );
     }
@@ -37,7 +37,7 @@ export class FuelDataService {
     }
 
     getByYear(year: number): Observable<EmisionesCombustibles> {
-      return this.http.get<EmisionesCombustibles>(`${this.apiUrl}/fuel/emisionescombustibles/${year}`).pipe(
+      return this.http.get<EmisionesCombustibles>(`${this.apiUrl}/emisionescombustibles/${year}`).pipe(
         catchError(this.handleError)
       );
     }
