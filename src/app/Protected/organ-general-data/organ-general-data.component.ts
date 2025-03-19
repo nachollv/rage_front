@@ -15,6 +15,7 @@ import { MatCheckboxChange } from '@angular/material/checkbox';
   templateUrl: './organ-general-data.component.html',
   styleUrl: './organ-general-data.component.scss'
 })
+
 export class OrganGeneralDataComponent implements OnInit {
   mustShowDelegations: boolean = false
   displayedColumns: string[] = ['delegation', 'town', 'address', 'phone', 'edit', 'delete']

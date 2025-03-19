@@ -31,7 +31,7 @@ export class MachineryVehiclesComponent implements OnInit {
 
   constructor(private fb: FormBuilder, private fuelDataService: FuelDataService) {
     this.machineryForm = this.fb.group({
-      year: [{ value: '2025', disabled: true }, [Validators.required, Validators.minLength(4), Validators.maxLength(4)]],
+      year: [{ value: '2024', disabled: true }, [Validators.required, Validators.minLength(4), Validators.maxLength(4)]],
       building: ['', Validators.required],
       vehicleCategory: ['', Validators.required],
       fuelType: ['', Validators.required],
@@ -78,7 +78,7 @@ export class MachineryVehiclesComponent implements OnInit {
   onFuelTypeChange() {
     const year = this.machineryForm.get('year')?.value;
     const fuelType = this.machineryForm.get('fuelType')?.value;
-    this.fuelDataService.getFuelData(year, fuelType).subscribe(fuelValue => {
+    this.fuelDataService.getByYearType(year, fuelType).subscribe(fuelValue => {
       console.log(`Selected Year: ${year}, Selected Fuel: ${fuelType}, Value: ${fuelValue}`);
       // Puedes actualizar el formulario o realizar otras acciones con el valor del combustible seleccionado
     });

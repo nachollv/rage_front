@@ -40,11 +40,6 @@ export class FixedInstallationComponent {
           ch4: [{ value: 0, disabled: true }],
           n2o: [{ value: 0, disabled: true }]
         }),
-        otherFactor: this.fb.group({
-          co2: [{ value: 0, disabled: true }],
-          ch4: [{ value: 0, disabled: true }],
-          n2o: [{ value: 0, disabled: true }]
-        }),
         partialEmissions: this.fb.group({
           co2: [{ value: 0, disabled: true }],
           ch4: [{ value: 0, disabled: true }],
@@ -52,6 +47,15 @@ export class FixedInstallationComponent {
         }),
         totalEmissions: [{ value: 0, disabled: true }]
       });
+      this.getFuelConsumptions()
+    }
+
+    getFuelConsumptions() {
+      this.fuelDataService.getByYear(2024)
+        .subscribe((fuel:any) => {
+        console.log(fuel)
+        this.fuelTypes = fuel
+        })
     }
   
     calculateEmissions() {
@@ -82,7 +86,7 @@ export class FixedInstallationComponent {
     onFuelTypeChange() {
       const year = this.fuelForm.get('year')?.value;
       const fuelType = this.fuelForm.get('fuelType')?.value;
-      this.fuelDataService.getFuelData(year, fuelType).subscribe(fuelValue => {
+      this.fuelDataService.getById(year).subscribe(fuelValue => {
         console.log(`Selected Year: ${year}, Selected Fuel: ${fuelType}, Value: ${fuelValue}`);
         // Puedes actualizar el formulario o realizar otras acciones con el valor del combustible seleccionado
       });
