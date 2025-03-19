@@ -4,8 +4,15 @@ import { Observable } from 'rxjs';
 
 export interface Organizacion {
   id: number;
-  nombre: string;
+  companyName: string;
   descripcion: string;
+  activa: boolean;
+  cif: string;
+  cnae: string;
+  email: string;
+  multipleProductionCenter: boolean;
+  organizationType: number;
+  zipCode: string;
 }
 
 @Injectable({
@@ -19,17 +26,12 @@ export class OrganizacionService {
 
   // Obtener todas las organizaciones
   getOrganizaciones(): Observable<Organizacion[]> {
-    return this.http.get<Organizacion[]>(this.apiUrl);
+    return this.http.get<Organizacion[]>(`${this.apiUrl}/organizacion`);
   }
 
   // Obtener una organización por ID
-  getOrganizacion(id: string): Observable<Organizacion> {
+  getOrganizacion(id: number): Observable<Organizacion> {
     return this.http.get<Organizacion>(`${this.apiUrl}/organizacion/${id}`);
-  }
-
-  // Obtener una organización por Email
-  getOrganizacionByEmail(email: string): Observable<Organizacion> {
-    return this.http.get<Organizacion>(`${this.apiUrl}/organizacion/search/${encodeURIComponent(email)}`);
   }
 
   // Crear una nueva organización

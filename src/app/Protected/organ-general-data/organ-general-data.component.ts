@@ -4,6 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent } from '../../dialog/dialog.component';
 import { MatTableDataSource } from '@angular/material/table';
 import { OrganizacionService } from '../../services/organizacion.service';
+import { ProductioncenterService } from '../../services/productioncenter.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { AuthService } from '../../services/auth.service';
@@ -17,15 +18,8 @@ import { MatCheckboxChange } from '@angular/material/checkbox';
 export class OrganGeneralDataComponent implements OnInit {
   mustShowDelegations: boolean = false
   displayedColumns: string[] = ['delegation', 'town', 'address', 'phone', 'edit', 'delete']
-  data = [
-    { delegation: 'Central', town: 'Palma', address: '123 Main St', phone: '971971971', edit: true, delete: true},
-    { delegation: 'Sede Felanitx', town: 'Felanitx', address: '456 Maple Ave', phone: '971971971', edit: true, delete: true },
-    { delegation: 'Sede Manacor', town: 'Manacor', address: '789 Oak Dr', phone: '971971971', edit: true, delete: true },  
-    { delegation: 'Sede Calvià', town: 'Calvià', address: '123 Main St', phone: '971971971', edit: false, delete: true },
-    { delegation: 'Sede Andraitx', town: 'Andraitx', address: '456 Maple Ave', phone: '971971971', edit: true, delete: true },
-    { delegation: 'Sede Pollença', town: 'Pollença', address: '789 Oak Dr', phone: '971971971', edit: true, delete: true }
-  ];
-  dataSource = new MatTableDataSource<any>(this.data)
+
+  dataSource = new MatTableDataSource<any>()
   organizationForm: FormGroup
   organizationTypes: { id: string, name: string }[] = [
     { id: '1', name: 'Micro' },
@@ -41,11 +35,12 @@ export class OrganGeneralDataComponent implements OnInit {
     periodList: string[] = ['2021', '2022', '2023', '2024', '2025'];
     objectiveList: string[] = ['Reducción del consumo de energía', 'Minimizar residuos', 'Ahorro de agua', 'Disminución de Emisiones de CO2', 'Aumento del uso de energías renovables'];
     token: string = ''
-    organizationID: string = ''
+    organizationID!: number
   
     constructor(private fb: FormBuilder, private snackBar: MatSnackBar,
       private jwtHelper: JwtHelperService,
       private authService: AuthService, private organizationService: OrganizacionService,
+      private productionCenterService: ProductioncenterService,
       public dialog: MatDialog) {
       this.organizationForm = this.fb.group({
         id: [{ value: '', disabled: true }],
@@ -71,7 +66,7 @@ export class OrganGeneralDataComponent implements OnInit {
       this.getTheOrganization(this.organizationID)
     }
 
-    getTheOrganization(id: string) {
+    getTheOrganization(id: number) {
 
       this.organizationService.getOrganizacion(id)
         .subscribe((theOrganization: any) => {
@@ -96,19 +91,29 @@ export class OrganGeneralDataComponent implements OnInit {
             this.organizationForm.get('multipleProductionCenter')?.setValue('1');
           } else {
             this.mustShowDelegations = false;
-            this.organizationForm.get('multipleProductionCenter')?.setValue('0');
+            this.organizationForm.get('multipleProductionCenter')?.setValue('0')
           }
 
           if (theOrganization.activa === '1') {
-            this.organizationForm.get('activa')?.setValue('1');
+            this.organizationForm.get('activa')?.setValue('1')
           } else {
-            this.organizationForm.get('activa')?.setValue('0');
+            this.organizationForm.get('activa')?.setValue('0')
           }
+
+        this.getProductionCenters(theOrganization.id) 
         }, (error: any) => {
           this.showSnackBar('Error' + 'Ha ocurrido un error al obtener la organización' + error.message);
 
         })
     }
+
+    getProductionCenters(idEmpresa: number) {
+      this.productionCenterService.getCentrosDeProduccionFromOrganizacion(idEmpresa)
+        .subscribe((productionCenter:any) => {
+        console.log (productionCenter)
+        this.dataSource = new MatTableDataSource<any>(productionCenter)
+        })
+    } 
 
     onSubmit() { 
       if (this.organizationForm.valid) {
