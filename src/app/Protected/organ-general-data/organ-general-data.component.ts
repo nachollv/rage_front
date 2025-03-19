@@ -28,13 +28,13 @@ export class OrganGeneralDataComponent implements OnInit {
   dataSource = new MatTableDataSource<any>(this.data)
   organizationForm: FormGroup
   organizationTypes: { id: string, name: string }[] = [
-    { id: 'Micro', name: 'Micro' },
-    { id: 'Peque', name: 'Pequeña' },
-    { id: 'Media', name: 'Mediana' },
-    { id: 'Grane', name: 'Gran empresa' },
-    { id: 'Admin', name: 'Administración' },
-    { id: 'Entid', name: 'Entidad sin ánimo de lucro' },
-    { id: 'Otras', name: 'Otras' }
+    { id: '1', name: 'Micro' },
+    { id: '2', name: 'Pequeña' },
+    { id: '3', name: 'Mediana' },
+    { id: '4', name: 'Gran empresa' },
+    { id: '5', name: 'Administración' },
+    { id: '6', name: 'Entidad sin ánimo de lucro' },
+    { id: '7', name: 'Otras' }
   ];
   
     sectors: string[] = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
@@ -114,6 +114,7 @@ export class OrganGeneralDataComponent implements OnInit {
       if (this.organizationForm.valid) {
         this.organizationService.actualizarOrganizacion(this.organizationForm.get('id')?.value, this.organizationForm.value)
         .subscribe((response: any) => { 
+
           this.showSnackBar('Información'+'La organización ha sido actualizada correctamente'+response);
         }, (error: any) => {
           this.showSnackBar('Error'+ 'Ha ocurrido un error al actualizar la organización'+error.message);
