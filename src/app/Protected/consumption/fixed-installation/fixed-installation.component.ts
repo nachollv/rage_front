@@ -27,7 +27,7 @@ export class FixedInstallationComponent {
     constructor(private fb: FormBuilder, public dialog: MatDialog, private fuelDataService: FuelDataService) {
       this.fuelForm = this.fb.group({
         year: [{ value: '2023', disabled: true }, [Validators.required, Validators.minLength(4), Validators.maxLength(4)]],
-        building: [{value: 'Centro de producción A', disabled: true}],
+        building: [{value: '', disabled: true}],
         fuelType: ['', Validators.required],
         quantity: ['', [Validators.required, Validators.min(0)]],
         defaultFactor: this.fb.group({
@@ -78,12 +78,17 @@ export class FixedInstallationComponent {
     }
 
     onFuelTypeChange() {
-      const year = this.fuelForm.get('year')?.value;
-      const fuelType = this.fuelForm.get('fuelType')?.value;
-      this.fuelDataService.getById(year).subscribe(fuelValue => {
-        console.log(`Selected Year: ${year}, Selected Fuel: ${fuelType}, Value: ${fuelValue}`);
-        // Puedes actualizar el formulario o realizar otras acciones con el valor del combustible seleccionado
-      });
+      const quantity = this.fuelForm.value.get('quantity').value
+      const fuelType = this.fuelForm.value.fuelType;
+      if (fuelType && fuelType.quantity) {
+        const CH4_g_ud = fuelType.CH4_g_ud;
+        const CO2_kg_ud = fuelType.CO2_kg_ud;
+        const N2O_g_ud = fuelType.N2O_g_ud;
+        console.log('Quantity:', quantity*CH4_g_ud, quantity*CO2_kg_ud, quantity*N2O_g_ud);
+
+      } else {
+        console.error('No se encontró el valor de quantity en fuelType.');
+      }
     }
 
     openDialog(title:string, text: string): void {
