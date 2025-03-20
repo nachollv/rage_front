@@ -31,14 +31,14 @@ export class FixedInstallationComponent {
         fuelType: ['', Validators.required],
         quantity: ['', [Validators.required, Validators.min(0)]],
         defaultFactor: this.fb.group({
-          co2: [{ value: 0, disabled: true }],
-          ch4: [{ value: 0, disabled: true }],
-          n2o: [{ value: 0, disabled: true }]
+          fe_co2: [{ value: null, disabled: true }],
+          fe_ch4: [{ value: null, disabled: true }],
+          fe_n2o: [{ value: null, disabled: true }]
         }),
         partialEmissions: this.fb.group({
-          co2: [{ value: 0, disabled: true }],
-          ch4: [{ value: 0, disabled: true }],
-          n2o: [{ value: 0, disabled: true }]
+          co2: [{ value: null, disabled: true }],
+          ch4: [{ value: null, disabled: true }],
+          n2o: [{ value: null, disabled: true }]
         }),
         totalEmissions: [{ value: 0, disabled: true }]
       });
@@ -77,17 +77,33 @@ export class FixedInstallationComponent {
       }
     }
 
-    onFuelTypeChange() {
-      const quantity = this.fuelForm.value.get('quantity').value
-      const fuelType = this.fuelForm.value.fuelType;
-      if (fuelType && fuelType.quantity) {
-        const CH4_g_ud = fuelType.CH4_g_ud;
-        const CO2_kg_ud = fuelType.CO2_kg_ud;
-        const N2O_g_ud = fuelType.N2O_g_ud;
-        console.log('Quantity:', quantity*CH4_g_ud, quantity*CO2_kg_ud, quantity*N2O_g_ud);
+    setEmissionFactors() {
 
-      } else {
-        console.error('No se encontró el valor de quantity en fuelType.');
+        const fuelData = this.fuelForm.value
+        const fuelType = fuelData.fuelType
+        const CO2_kg_ud = parseFloat(fuelType.CO2_kg_ud).toFixed(3);
+        const CH4_g_ud = parseFloat(fuelType.CH4_g_ud).toFixed(3);
+        const N2O_g_ud = parseFloat(fuelType.N2O_g_ud).toFixed(3);
+        this.fuelForm.get('defaultFactor')?.get('fe_co2')?.setValue(CO2_kg_ud);
+        this.fuelForm.get('defaultFactor')?.get('fe_ch4')?.setValue(CH4_g_ud);
+        this.fuelForm.get('defaultFactor')?.get('fe_n2o')?.setValue(N2O_g_ud);
+
+    }
+
+    onFuelTypeChange() {
+
+      if (this.fuelForm.valid) {
+        const fuelData = this.fuelForm.value
+        const fuelType = fuelData.fuelType
+        const CH4_g_ud = parseFloat( fuelType.CH4_g_ud );
+        const CO2_kg_ud = parseFloat( fuelType.CO2_kg_ud );
+        const N2O_g_ud = parseFloat( fuelType.N2O_g_ud );
+        console.log (CO2_kg_ud, CH4_g_ud,  N2O_g_ud)
+        console.log('Quantity:', fuelData.quantity* CH4_g_ud, fuelData.quantity*CO2_kg_ud, fuelData.quantity*N2O_g_ud);
+        this.fuelForm.get('partialEmissions')?.get('co2')?.setValue(fuelData.quantity * CO2_kg_ud);
+        this.fuelForm.get('partialEmissions')?.get('ch4')?.setValue(fuelData.quantity * CH4_g_ud);
+        this.fuelForm.get('partialEmissions')?.get('n2o')?.setValue(fuelData.quantity * N2O_g_ud);
+        this.fuelForm.get('totalEmissions')?.setValue(fuelData.quantity * CO2_kg_ud+fuelData.quantity * CH4_g_ud+fuelData.quantity * N2O_g_ud)
       }
     }
 

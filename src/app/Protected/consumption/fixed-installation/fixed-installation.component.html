@@ -11,29 +11,29 @@
 
   <mat-form-field>
     <mat-label>Tipo de combustible</mat-label>
-    <mat-select formControlName="fuelType" (selectionChange)="onFuelTypeChange()">
+    <mat-select formControlName="fuelType" (selectionChange)="setEmissionFactors()">
       <mat-option *ngFor="let fuel of fuelTypes" [value]="fuel">{{ fuel.Combustible }}</mat-option>
     </mat-select>
   </mat-form-field>
 
   <mat-form-field>
     <mat-label>Cantidad (ud)</mat-label>
-    <input matInput type="number" formControlName="quantity" (selectionChange)="onFuelTypeChange()">
+    <input matInput type="number" formControlName="quantity" (change)="onFuelTypeChange()">
   </mat-form-field>
 
   <h3>Factor de Emisión [ Co2eq: CO2+CH4+N2O</h3>
   <section formGroupName="defaultFactor">
     <mat-form-field>
       <mat-label>kg CO2/ud</mat-label>
-      <input matInput type="number" formControlName="co2">
+      <input matInput type="number" formControlName="fe_co2">
     </mat-form-field>
     <mat-form-field>
       <mat-label>g CH4/ud</mat-label>
-      <input matInput type="number" formControlName="ch4">
+      <input matInput type="number" formControlName="fe_ch4">
     </mat-form-field>
     <mat-form-field>
       <mat-label>g N2O/ud</mat-label>
-      <input matInput type="number" formControlName="n2o">
+      <input matInput type="number" formControlName="fe_n2o">
     </mat-form-field>
   </section>
 
