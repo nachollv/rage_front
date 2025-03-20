@@ -10,7 +10,7 @@ import { MatTableDataSource } from '@angular/material/table';
   styleUrl: './electricity.component.scss'
 })
 export class ElectricityComponent {
-  displayedColumns: string[] = ['delegation', 'year', '01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', 'edit', 'delete']
+  displayedColumns: string[] = ['calculationYear', 'productionCenter', '01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', 'edit', 'delete']
   data = [
     { delegation: 'Central', year: 2024, '01': 25, '02': 34.25, '03': '23.54', '04': 45.345, '05': 45.345, '06': 45.345, '07': 45.345, '08': 45.345, '09': 45.345, '10': 45.345, '11': 45.345, edit: true, delete: true},
     { delegation: 'Felanitx', year: 2024, '01': 25, '02': 34.25, '03': '23.54', '04': 45.345, '05': 45.345, '06': 45.345, '07': 45.345, '08': 45.345, '09': 45.345, '10': 45.345, '11': 45.345, edit: true, delete: true },

@@ -3,24 +3,24 @@
   <h3>Formulario de Emisiones</h3>
   
   <mat-form-field>
-    <mat-label>Periodo de cálculo</mat-label>
-    <input matInput formControlName="year">
+    <mat-label>Año de cálculo</mat-label>
+    <input matInput formControlName="Anio">
   </mat-form-field>
   <mat-form-field>
     <mat-label>Centro de producción</mat-label>
-    <input matInput formControlName="building">
+    <input matInput formControlName="edificio_sede" placeholder="Ej. Edificio 1" />
   </mat-form-field>
 
   <mat-form-field>
     <mat-label>Nombre del gas o de la mezcla</mat-label>
-    <mat-select formControlName="gasMezcla" placeholder="Introduce el nombre del gas o mezcla" (selectionChange)="setPCAAndChemicalFormula()">
+    <mat-select formControlName="nombre_gas_mezcla" placeholder="Introduce el nombre del gas o mezcla" (selectionChange)="setPCAAndChemicalFormula()">
       <mat-option *ngFor="let gas of gasTypes" [value]="gas">{{ gas.Nombre }}</mat-option>
     </mat-select>
   </mat-form-field>
   <section>
     <mat-form-field>
       <mat-label>Fórmula química</mat-label>
-      <input matInput formControlName="formulaQuimica" placeholder="Ej. CO2" />
+      <input matInput formControlName="formulaQuimica" placeholder="Ej. HFC-41" />
     </mat-form-field>
   
     <mat-form-field>
@@ -31,12 +31,12 @@
   <section>
     <mat-form-field>
       <mat-label>Capacidad del equipo (kg)</mat-label>
-      <input matInput type="number" formControlName="capacidadEquipo" placeholder="Ej. 10.5" />
+      <input matInput type="number" formControlName="capacidad_equipo" placeholder="Ej. 10.5" />
     </mat-form-field>
   
     <mat-form-field>
       <mat-label>Recarga del equipo (kg)</mat-label>
-      <input matInput type="number" formControlName="recargaEquipo" (change)="equipmentRecharge()" placeholder="Ej. 5.0" />
+      <input matInput type="number" formControlName="recarga_equipo" (change)="equipmentRecharge()" placeholder="Ej. 5.0" />
     </mat-form-field>
   </section>
   <mat-form-field>
@@ -44,8 +44,8 @@
     <input matInput type="number" formControlName="emisionesCO2e" />
   </mat-form-field>
 
-  <button mat-raised-button color="primary" type="submit" [disabled]="emisionesForm.invalid">Enviar</button>
+  <button mat-raised-button color="accent" type="submit" [disabled]="emisionesForm.invalid">Enviar</button>
 </form>
 </mat-card>
-<app-data-table></app-data-table>
+<app-data-table [displayedColumns]="displayedColumns" [dataSource]="dataSource"></app-data-table>
 

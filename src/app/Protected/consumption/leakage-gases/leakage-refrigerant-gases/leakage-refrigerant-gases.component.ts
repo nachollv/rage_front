@@ -13,24 +13,28 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrl: './leakage-refrigerant-gases.component.scss'
 })
 export class LeakageRefrigerantGasesComponent {
-
+  displayedColumns: string[] = ['calculationYear', 'productionCenter', 'nombre_gas_mezcla', 'capacidad_equipo', 'recarga_equipo', 'created_at', 'updated_at', 'edit', 'delete']
+  data = [{ }]
+  dataSource = new MatTableDataSource<any>(this.data)
   emisionesForm: FormGroup;
   gasTypes: any[] = []
 
   constructor(private fb: FormBuilder, private leakGases: LeakrefrigerantgasesService, 
     private registerLeak: RegistroemisionesFugasService, private dialog: MatDialog,
     private snackBar: MatSnackBar) {
+
     this.emisionesForm = this.fb.group({
-      year: [{ value: '2023', disabled: true }, [Validators.required, Validators.minLength(4), Validators.maxLength(4)]],
-      building: [{ value: '', disabled: true }, Validators.required],
-      gasMezcla: ['', Validators.required],
+      Anio: [{ value: '2023', disabled: true }, [Validators.required, Validators.minLength(4), Validators.maxLength(4)]],
+      edificio_sede: [{ value: '1', disabled: true }, Validators.required],
+      nombre_gas_mezcla: ['', Validators.required],
       formulaQuimica: [{ value: '', disabled: true }, Validators.required],
       pca: [{ value: '', disabled: true }, Validators.required],
-      capacidadEquipo: [null, [Validators.required, Validators.min(0)]],
-      recargaEquipo: [null, [Validators.required, Validators.min(0)]],
+      capacidad_equipo: [null, [Validators.required, Validators.min(0)]],
+      recarga_equipo: [null, [Validators.required, Validators.min(0)]],
       emisionesCO2e: [{ value: 0, disabled: true }]
     });
     this.getGases()
+    this.getregistros()
   }
 
   getGases() {
@@ -40,9 +44,17 @@ export class LeakageRefrigerantGasesComponent {
       })
   }
 
+  getregistros() {
+    this.registerLeak.getRegistros()
+      .subscribe((registros:any) => {
+      console.log ("registros", registros)
+      this.dataSource = new MatTableDataSource(registros)
+      })
+  }
+
   setPCAAndChemicalFormula() {
     const gasData = this.emisionesForm.value
-    const gasType = gasData.gasMezcla
+    const gasType = gasData.nombre_gas_mezcla
     const chemicalFormula = gasType.FormulaQuimica;
     const pca6AR = parseFloat(gasType.PCA_6AR).toFixed(3);
     const equipmentRecharge = gasData.recargaEquipo
@@ -53,37 +65,43 @@ export class LeakageRefrigerantGasesComponent {
     }
   }
 
-
   equipmentRecharge() {
     const gasData = this.emisionesForm.value
-    const equipmentCapacity = gasData.capacidadEquipo
-    const equipmentRecharge = gasData.recargaEquipo
-    const pca6AR = gasData.gasMezcla.PCA_6AR
-    // Convertir ambos valores a números
+    const equipmentCapacity = gasData.capacidad_equipo
+    const equipmentRecharge = gasData.recarga_equipo
+    const pca6AR = gasData.nombre_gas_mezcla.PCA_6AR
     const recharge = parseFloat(equipmentRecharge).toFixed(2);
     const capacity = parseFloat(equipmentCapacity).toFixed(2);
     if (recharge > capacity) {
       alert("La recarga no puede ser mayor que la capacidad");
-      this.emisionesForm.get('recargaEquipo')?.setValue(0);
+      this.emisionesForm.get('recarga_equipo')?.setValue(0);
       return
     }
     this.emisionesForm.get('emisionesCO2e')?.setValue(parseFloat(recharge) * parseFloat(parseFloat(pca6AR).toFixed(2)))
   }
 
   onSubmit(): void {
-    if (this.emisionesForm.valid) {
-     this.registerLeak.createRegistro(this.emisionesForm.value).subscribe({
-      next: (response) => {  this.showSnackBar("Registro creado correctamente"+response) },
-      error: (err) => { this.showSnackBar("Error al crear el registro"+err) } })
+    const formValue = this.emisionesForm.value
+    const AnioValue = this.emisionesForm.get('Anio')?.value;
+    const edificio_sedeValue = this.emisionesForm.get('edificio_sede')?.value;
+    formValue.capacidad_equipo = parseFloat(formValue.capacidad_equipo).toFixed(2);
+    formValue.recarga_equipo = parseFloat(formValue.recarga_equipo).toFixed(2);
+    formValue.Anio = AnioValue;
+    formValue.edificio_sede = edificio_sedeValue;
+    formValue.nombre_gas_mezcla = formValue.nombre_gas_mezcla.Nombre;
+    console.log(formValue)
 
-    } else {
-      console.error('Formulario no válido');
-    }
+     this.registerLeak.createRegistro(formValue).subscribe({
+      next: (response) => { 
+        this.showSnackBar("Registro creado correctamente "+response)
+        this.getregistros()},
+      error: (err) => { this.showSnackBar("Error al crear el registro "+err.message) } })
+
   }
 
   private showSnackBar(error: string): void {
     this.snackBar.open(error, 'Close', {
-      duration: 1500,
+      duration: 15000,
       verticalPosition: 'bottom',
       horizontalPosition: 'center',
       panelClass: ['custom-snackbar'],
