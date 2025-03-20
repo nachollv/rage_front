@@ -1,8 +1,8 @@
 <mat-card>
-<form [formGroup]="machineryForm" (ngSubmit)="calculateEmissions()">
+<form [formGroup]="machineryForm" (ngSubmit)="registerEmissions()">
   <mat-form-field>
     <mat-label>Periodo de cálculo</mat-label>
-    <input matInput formControlName="year" (input)="onFuelTypeChange()">
+    <input matInput formControlName="year">
   </mat-form-field>
   <mat-form-field appearance="fill">
     <mat-label>Centro de producción</mat-label>
@@ -12,7 +12,7 @@
 
   <mat-form-field appearance="fill">
     <mat-label>Categoría de vehículo</mat-label>
-    <mat-select formControlName="vehicleCategory" (selectionChange)="setEmissionFactors()">
+    <mat-select formControlName="vehicleCategory" (selectionChange)="setFuelTypes()">
       <mat-option *ngFor="let vehicle of vehicleTypes" [value]="vehicle">{{ vehicle.Categoria }}</mat-option>
     </mat-select>
     <mat-error *ngIf="machineryForm.get('vehicleCategory')?.invalid">Campo obligatorio</mat-error>
@@ -20,27 +20,29 @@
 
   <mat-form-field appearance="fill">
     <mat-label>Tipo de Combustible</mat-label>
-    <input matInput formControlName="fuelType">
+    <mat-select formControlName="fuelType" (selectionChange)="setEmissionFactors()">
+      <mat-option *ngFor="let fuel of fuelTypes" [value]="fuel">{{ fuel.Combustible }}</mat-option>
+    </mat-select>
     <mat-error *ngIf="machineryForm.get('fuelType')?.invalid">Campo obligatorio</mat-error>
   </mat-form-field>
 
   <mat-form-field appearance="fill">
     <mat-label>Cantidad (ud)</mat-label>
-    <input matInput formControlName="quantity" type="number">
+    <input matInput formControlName="quantity" type="number" (change)="onQuantityChange()">
     <mat-error *ngIf="machineryForm.get('quantity')?.invalid">Campo obligatorio y debe ser un número</mat-error>
   </mat-form-field>
 
   <div formGroupName="defaultEmissionFactor">
     <mat-form-field appearance="fill">
-      <mat-label>Factor de emisión por defecto (kg CO2/ud)</mat-label>
+      <mat-label>Factor de emisión (kg CO2/ud)</mat-label>
       <input matInput formControlName="co2" type="number">
     </mat-form-field>
     <mat-form-field appearance="fill">
-      <mat-label>Factor de emisión por defecto (g CH4/ud)</mat-label>
+      <mat-label>Factor de emisión (g CH4/ud)</mat-label>
       <input matInput formControlName="ch4" type="number">
     </mat-form-field>
     <mat-form-field appearance="fill">
-      <mat-label>Factor de emisión por defecto (g N2O/ud)</mat-label>
+      <mat-label>Factor de emisión (g N2O/ud)</mat-label>
       <input matInput formControlName="n2o" type="number">
     </mat-form-field>
   </div>

@@ -22,6 +22,7 @@ export class MachineryVehiclesComponent implements OnInit {
       ];
       dataSource = new MatTableDataSource<any>(this.data)
       vehicleTypes: any[] = []
+      fuelTypes: any[] = []
       machineryForm: FormGroup;
 
   constructor(private fb: FormBuilder, private vehicleFuelService: VehiclesFuelConsumptionService) {
@@ -32,9 +33,9 @@ export class MachineryVehiclesComponent implements OnInit {
       fuelType: ['', Validators.required],
       quantity: ['', [Validators.required, Validators.pattern(/^\d+$/)]],
       defaultEmissionFactor: this.fb.group({
-        co2: ['', Validators.required],
-        ch4: ['', Validators.required],
-        n2o: ['', Validators.required]
+        co2: [{ value: '', disabled: true }, Validators.required],
+        ch4: [{ value: '', disabled: true }, Validators.required],
+        n2o: [{ value: '', disabled: true }, Validators.required]
       }),
       partialEmissions: this.fb.group({
         co2: [{ value: '', disabled: true }],
@@ -50,7 +51,6 @@ export class MachineryVehiclesComponent implements OnInit {
     this.vehicleFuelService.getByYear(2023)
       .subscribe((fuel:any) => {
       this.vehicleTypes = fuel
-      console.log (this.vehicleTypes)
       })
   }
 
@@ -58,25 +58,46 @@ export class MachineryVehiclesComponent implements OnInit {
     
   }
 
-  setEmissionFactors() {
+  setFuelTypes() {
 
     const machineryData = this.machineryForm.value
     console.log (machineryData.vehicleCategory.Categoria)
     this.vehicleFuelService.getByYearType(2023, machineryData.vehicleCategory.Categoria)
-      .subscribe((fuelType:any) => {
-        console.log ("fuel types: ", fuelType)
+      .subscribe((fuelTypes:any) => {
+        this.fuelTypes = fuelTypes
       })
-    /* const fuelType = fuelData.fuelType
-    const CO2_kg_ud = parseFloat(fuelType.CO2_kg_ud).toFixed(3);
-    const CH4_g_ud = parseFloat(fuelType.CH4_g_ud).toFixed(3);
-    const N2O_g_ud = parseFloat(fuelType.N2O_g_ud).toFixed(3);
-    this.machineryForm.get('defaultEmissionFactor')?.get('fe_co2')?.setValue(CO2_kg_ud);
-    this.machineryForm.get('defaultEmissionFactor')?.get('fe_ch4')?.setValue(CH4_g_ud);
-    this.machineryForm.get('defaultEmissionFactor')?.get('fe_n2o')?.setValue(N2O_g_ud); */
 
 }
 
-  calculateEmissions(): void {
+setEmissionFactors () {
+  console.log (this.machineryForm.value)
+  const fuelData = this.machineryForm.value
+  const fuelType = fuelData.fuelType
+  const CO2_kg_ud = parseFloat(fuelType.CO2_kg_ud).toFixed(3);
+  const CH4_g_ud = parseFloat(fuelType.CH4_g_ud).toFixed(3);
+  const N2O_g_ud = parseFloat(fuelType.N2O_g_ud).toFixed(3);
+  this.machineryForm.get('defaultEmissionFactor')?.get('co2')?.setValue(CO2_kg_ud);
+  this.machineryForm.get('defaultEmissionFactor')?.get('ch4')?.setValue(CH4_g_ud);
+  this.machineryForm.get('defaultEmissionFactor')?.get('n2o')?.setValue(N2O_g_ud);
+}
+
+onQuantityChange() {
+  if (this.machineryForm.valid) {
+    const fuelData = this.machineryForm.value
+    const fuelType = fuelData.fuelType
+    const CH4_g_ud = parseFloat( fuelType.CH4_g_ud );
+    const CO2_kg_ud = parseFloat( fuelType.CO2_kg_ud );
+    const N2O_g_ud = parseFloat( fuelType.N2O_g_ud );
+    console.log (CO2_kg_ud, CH4_g_ud,  N2O_g_ud)
+    console.log('Quantity:', fuelData.quantity* CH4_g_ud, fuelData.quantity*CO2_kg_ud, fuelData.quantity*N2O_g_ud);
+    this.machineryForm.get('partialEmissions')?.get('co2')?.setValue(fuelData.quantity * CO2_kg_ud);
+    this.machineryForm.get('partialEmissions')?.get('ch4')?.setValue(fuelData.quantity * CH4_g_ud);
+    this.machineryForm.get('partialEmissions')?.get('n2o')?.setValue(fuelData.quantity * N2O_g_ud);
+    this.machineryForm.get('totalEmissions')?.setValue(fuelData.quantity * CO2_kg_ud+fuelData.quantity * CH4_g_ud+fuelData.quantity * N2O_g_ud)
+  }
+}
+
+/*   calculateEmissions(): void {
     const formValues = this.machineryForm.value;
     const quantity = formValues.quantity;
     const defaultFactors = formValues.defaultEmissionFactor;
@@ -90,14 +111,17 @@ export class MachineryVehiclesComponent implements OnInit {
       partialEmissions: { co2, ch4, n2o },
       totalEmissions: co2 + ch4 + n2o
     });
-  }
+  } */
 
-  onFuelTypeChange() {
+ /*  onFuelTypeChange() {
     const year = this.machineryForm.get('year')?.value;
     const fuelType = this.machineryForm.get('fuelType')?.value;
     this.vehicleFuelService.getByYearType(year, fuelType).subscribe(fuelValue => {
       console.log(`Selected Year: ${year}, Selected Fuel: ${fuelType}, Value: ${fuelValue}`);
       // Puedes actualizar el formulario o realizar otras acciones con el valor del combustible seleccionado
     });
-  }
+  } */
+
+  registerEmissions() { }
+    
 }
