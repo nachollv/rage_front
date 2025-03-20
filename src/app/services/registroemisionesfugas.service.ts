@@ -13,35 +13,35 @@ export class RegistroemisionesFugasService {
 
   // Crear registro
   createRegistro(registro: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}`, registro).pipe(
+    return this.http.post(`${this.apiUrl}/registroemisionesfugas`, registro).pipe(
       catchError(this.handleError)
     );
   }
 
   // Leer todos los registros
   getRegistros(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}`).pipe(
+    return this.http.get<any[]>(`${this.apiUrl}/registroemisionesfugas`).pipe(
       catchError(this.handleError)
     );
   }
 
   // Leer un registro por ID
   getRegistroById(id: number): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/${id}`).pipe(
+    return this.http.get<any>(`${this.apiUrl}/registroemisionesfugas/${id}`).pipe(
       catchError(this.handleError)
     );
   }
 
   // Actualizar un registro
   updateRegistro(id: number, registro: any): Observable<any> {
-    return this.http.put(`${this.apiUrl}/${id}`, registro).pipe(
+    return this.http.put(`${this.apiUrl}/registroemisionesfugas/${id}`, registro).pipe(
       catchError(this.handleError)
     );
   }
 
   // Eliminar un registro
   deleteRegistro(id: number): Observable<any> {
-    return this.http.delete(`${this.apiUrl}/${id}`).pipe(
+    return this.http.delete(`${this.apiUrl}/registroemisionesfugas/${id}`).pipe(
       catchError(this.handleError)
     );
   }

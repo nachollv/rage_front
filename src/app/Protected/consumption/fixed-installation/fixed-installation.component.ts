@@ -4,6 +4,7 @@ import { FuelDataService } from '../../../services/fuel-data.service';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent } from '../../../dialog/dialog.component';
 import { MatTableDataSource } from '@angular/material/table';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-fixed-installation',
@@ -24,7 +25,7 @@ export class FixedInstallationComponent {
     fuelForm: FormGroup;
     fuelTypes: any[] = []
     
-    constructor(private fb: FormBuilder, public dialog: MatDialog, private fuelDataService: FuelDataService) {
+    constructor(private fb: FormBuilder, public dialog: MatDialog, private fuelDataService: FuelDataService, private snackBar: MatSnackBar) {
       this.fuelForm = this.fb.group({
         year: [{ value: '2023', disabled: true }, [Validators.required, Validators.minLength(4), Validators.maxLength(4)]],
         building: [{value: '', disabled: true}],
@@ -122,6 +123,15 @@ export class FixedInstallationComponent {
   
       dialogRef.afterClosed().subscribe(result => {
         console.log('El dialog se cerró');
+      });
+    }
+
+    private showSnackBar(error: string): void {
+      this.snackBar.open(error, 'Close', {
+        duration: 1500,
+        verticalPosition: 'bottom',
+        horizontalPosition: 'center',
+        panelClass: ['custom-snackbar'],
       });
     }
   }

@@ -1,6 +1,11 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { LeakrefrigerantgasesService } from '../../../../services/leakrefrigerantgases.service';
+import { RegistroemisionesFugasService } from '../../../../services/registroemisionesfugas.service';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogComponent } from '../../../../dialog/dialog.component';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-leakage-refrigerant-gases',
@@ -12,7 +17,9 @@ export class LeakageRefrigerantGasesComponent {
   emisionesForm: FormGroup;
   gasTypes: any[] = []
 
-  constructor(private fb: FormBuilder, private leakGases: LeakrefrigerantgasesService) {
+  constructor(private fb: FormBuilder, private leakGases: LeakrefrigerantgasesService, 
+    private registerLeak: RegistroemisionesFugasService, private dialog: MatDialog,
+    private snackBar: MatSnackBar) {
     this.emisionesForm = this.fb.group({
       year: [{ value: '2023', disabled: true }, [Validators.required, Validators.minLength(4), Validators.maxLength(4)]],
       building: [{ value: '', disabled: true }, Validators.required],
@@ -65,10 +72,22 @@ export class LeakageRefrigerantGasesComponent {
 
   onSubmit(): void {
     if (this.emisionesForm.valid) {
-      console.log('Formulario enviado:', this.emisionesForm.value);
+     this.registerLeak.createRegistro(this.emisionesForm.value).subscribe({
+      next: (response) => {  this.showSnackBar("Registro creado correctamente"+response) },
+      error: (err) => { this.showSnackBar("Error al crear el registro"+err) } })
+
     } else {
       console.error('Formulario no válido');
     }
+  }
+
+  private showSnackBar(error: string): void {
+    this.snackBar.open(error, 'Close', {
+      duration: 1500,
+      verticalPosition: 'bottom',
+      horizontalPosition: 'center',
+      panelClass: ['custom-snackbar'],
+    });
   }
 }
 
