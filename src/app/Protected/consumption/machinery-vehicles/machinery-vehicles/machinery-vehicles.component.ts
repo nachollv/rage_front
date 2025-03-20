@@ -101,31 +101,6 @@ onQuantityChange() {
   }
 }
 
-/*   calculateEmissions(): void {
-    const formValues = this.machineryForm.value;
-    const quantity = formValues.quantity;
-    const defaultFactors = formValues.defaultEmissionFactor;
-    const otherFactors = formValues.otherEmissionFactor;
-
-    const co2 = quantity * (otherFactors.co2 || defaultFactors.co2);
-    const ch4 = quantity * (otherFactors.ch4 || defaultFactors.ch4);
-    const n2o = quantity * (otherFactors.n2o || defaultFactors.n2o);
-
-    this.machineryForm.patchValue({
-      partialEmissions: { co2, ch4, n2o },
-      totalEmissions: co2 + ch4 + n2o
-    });
-  } */
-
- /*  onFuelTypeChange() {
-    const year = this.machineryForm.get('year')?.value;
-    const fuelType = this.machineryForm.get('fuelType')?.value;
-    this.vehicleFuelService.getByYearType(year, fuelType).subscribe(fuelValue => {
-      console.log(`Selected Year: ${year}, Selected Fuel: ${fuelType}, Value: ${fuelValue}`);
-      // Puedes actualizar el formulario o realizar otras acciones con el valor del combustible seleccionado
-    });
-  } */
-
-  registerEmissions() { }
+registerEmissions() { }
     
 }

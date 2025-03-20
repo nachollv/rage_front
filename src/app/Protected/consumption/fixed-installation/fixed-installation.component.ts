@@ -87,7 +87,10 @@ export class FixedInstallationComponent {
         this.fuelForm.get('defaultFactor')?.get('fe_co2')?.setValue(CO2_kg_ud);
         this.fuelForm.get('defaultFactor')?.get('fe_ch4')?.setValue(CH4_g_ud);
         this.fuelForm.get('defaultFactor')?.get('fe_n2o')?.setValue(N2O_g_ud);
-
+        this.fuelForm.get('partialEmissions')?.get('co2')?.setValue(fuelData.quantity *  parseFloat(CO2_kg_ud));
+        this.fuelForm.get('partialEmissions')?.get('ch4')?.setValue(fuelData.quantity * parseFloat(CH4_g_ud));
+        this.fuelForm.get('partialEmissions')?.get('n2o')?.setValue(fuelData.quantity * parseFloat(N2O_g_ud));
+        this.fuelForm.get('totalEmissions')?.setValue(fuelData.quantity * parseFloat(CO2_kg_ud)+fuelData.quantity * parseFloat(CH4_g_ud)+fuelData.quantity * parseFloat(N2O_g_ud))
     }
 
     onFuelTypeChange() {

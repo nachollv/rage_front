@@ -48,6 +48,7 @@ import { ControlPanelContainerComponent } from './control-panel-container/contro
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { MachineryVehiclesComponent } from './Protected/consumption/machinery-vehicles/machinery-vehicles/machinery-vehicles.component';
 import { RecoveryPasswordComponent } from './recovery-password/recovery-password.component';
+import { LeakageRefrigerantGasesComponent } from './Protected/consumption/leakage-gases/leakage-refrigerant-gases/leakage-refrigerant-gases.component';
 
 // Función para cargar los archivos de traducción
 export function HttpLoaderFactory(http: HttpClient) {
@@ -79,6 +80,7 @@ export function tokenGetter() {
     PageNotFoundComponent,
     MachineryVehiclesComponent,
     RecoveryPasswordComponent,
+    LeakageRefrigerantGasesComponent,
   ],
   imports: [
     BrowserModule,
