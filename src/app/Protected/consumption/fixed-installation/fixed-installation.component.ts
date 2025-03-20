@@ -22,8 +22,8 @@ export class FixedInstallationComponent {
     ];
     dataSource = new MatTableDataSource<any>(this.data)
     fuelForm: FormGroup;
-
     fuelTypes: any[] = []
+    
     constructor(private fb: FormBuilder, public dialog: MatDialog, private fuelDataService: FuelDataService) {
       this.fuelForm = this.fb.group({
         year: [{ value: '2023', disabled: true }, [Validators.required, Validators.minLength(4), Validators.maxLength(4)]],
@@ -78,7 +78,6 @@ export class FixedInstallationComponent {
     }
 
     setEmissionFactors() {
-
         const fuelData = this.fuelForm.value
         const fuelType = fuelData.fuelType
         const CO2_kg_ud = parseFloat(fuelType.CO2_kg_ud).toFixed(3);

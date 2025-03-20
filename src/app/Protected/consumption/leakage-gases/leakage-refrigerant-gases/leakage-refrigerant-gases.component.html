@@ -1,14 +1,21 @@
+<mat-card>
 <form [formGroup]="emisionesForm" (ngSubmit)="onSubmit()">
   <h3>Formulario de Emisiones</h3>
   
   <mat-form-field>
-    <mat-label>Edificio / Sede</mat-label>
-    <input matInput formControlName="edificio" placeholder="Introduce el edificio o sede" />
+    <mat-label>Periodo de cálculo</mat-label>
+    <input matInput formControlName="year">
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Centro de producción</mat-label>
+    <input matInput formControlName="building">
   </mat-form-field>
 
   <mat-form-field>
     <mat-label>Nombre del gas o de la mezcla</mat-label>
-    <input matInput formControlName="gasMezcla" placeholder="Introduce el nombre del gas o mezcla" />
+    <mat-select formControlName="gasMezcla" placeholder="Introduce el nombre del gas o mezcla" (selectionChange)="setEmissionFactors()">
+      <mat-option *ngFor="let gas of gasTypes" [value]="gas">{{ gas.Nombre }}</mat-option>
+    </mat-select>
   </mat-form-field>
 
   <mat-form-field>
@@ -48,4 +55,5 @@
 
   <button mat-raised-button color="primary" type="submit" [disabled]="emisionesForm.invalid">Enviar</button>
 </form>
+</mat-card>
 

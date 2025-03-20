@@ -19,7 +19,6 @@ export interface EmisionesCombustibles {
   })
 
 export class FuelDataService {
-  
     private apiUrl = 'https://pre.tramits.idi.es/public/index.php';
 
     constructor(private http: HttpClient) {}

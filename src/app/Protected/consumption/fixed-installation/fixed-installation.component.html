@@ -2,7 +2,7 @@
 <form [formGroup]="fuelForm" (ngSubmit)="onSubmit()">
   <mat-form-field>
     <mat-label>Periodo de cálculo</mat-label>
-    <input matInput formControlName="year" (input)="onFuelTypeChange()">
+    <input matInput formControlName="year">
   </mat-form-field>
   <mat-form-field>
     <mat-label>Centro de producción</mat-label>
