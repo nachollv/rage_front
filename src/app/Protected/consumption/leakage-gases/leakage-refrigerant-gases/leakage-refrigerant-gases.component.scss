@@ -20,10 +20,15 @@ form {
   display: flex;
   flex-direction: column;
   gap: 16px;
-  max-width: 400px;
+  max-width: 100%;
   margin: auto;
 }
 
 mat-form-field {
   width: 100%;
+}
+
+section {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
 }

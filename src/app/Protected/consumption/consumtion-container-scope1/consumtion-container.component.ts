@@ -10,10 +10,18 @@ import { TranslationService } from '../../../services/translate.service';
 })
 export class ConsumtionContainerComponent {
   translatedScopeOneEmissions?: string | undefined;
+  selectedTabIndexscope1: number = 0;
   constructor(public dialog: MatDialog, private translate: TranslationService) { }
 
   ngOnInit() {
-   
+    const savedTabIndex = localStorage.getItem('selectedTabIndexscope1');
+    if (savedTabIndex !== null) {
+      this.selectedTabIndexscope1 = +savedTabIndex;
+    }
+  }
+
+  onTabChange(index: number) {
+    localStorage.setItem('selectedTabIndexscope1', index.toString());
   }
 
   openDialog( title: string, text: string ): void {

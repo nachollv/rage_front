@@ -1,7 +1,7 @@
 <h1><button mat-menu-item (click) = "openDialog('ALCANCE 1','scopeOneEmissions')">
   <mat-icon style="color: #0a470d;">info</mat-icon>{{"consumptions" | translate}}</button> </h1>
 
-<mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start">
+<mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start" [(selectedIndex)]="selectedTabIndexscope1" (selectedIndexChange)="onTabChange($event)">
   <mat-tab label="{{'fixedInstallationsFuelConsumption' | translate}}">
     <button mat-menu-item (click)="openDialog('ACLARACIÓN', 'Instalaciones fijas no sujetas a las obligaciones establecidas en la Ley 1/2005, de 9 de marzo ')">
     <mat-icon style="color: #ff9310;">info</mat-icon>{{"fixedInstallationsFuelConsumption" | translate}}</button>

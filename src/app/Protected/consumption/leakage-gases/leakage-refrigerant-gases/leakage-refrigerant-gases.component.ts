@@ -15,13 +15,13 @@ export class LeakageRefrigerantGasesComponent {
   constructor(private fb: FormBuilder, private leakGases: LeakrefrigerantgasesService) {
     this.emisionesForm = this.fb.group({
       year: [{ value: '2023', disabled: true }, [Validators.required, Validators.minLength(4), Validators.maxLength(4)]],
-      building: [{ value: '', disabled: true }, Validators.required], // Campo obligatorio
+      building: [{ value: '', disabled: true }, Validators.required],
       gasMezcla: ['', Validators.required],
       formulaQuimica: [{ value: '', disabled: true }, Validators.required],
       pca: [{ value: '', disabled: true }, Validators.required],
       capacidadEquipo: [null, [Validators.required, Validators.min(0)]],
-      recargaEquipo: [null, [Validators.min(0)]],
-      emisionesCO2e: [{ value: 0, disabled: true }] // Campo deshabilitado, por ejemplo
+      recargaEquipo: [null, [Validators.required, Validators.min(0)]],
+      emisionesCO2e: [{ value: 0, disabled: true }]
     });
     this.getGases()
   }
@@ -35,17 +35,15 @@ export class LeakageRefrigerantGasesComponent {
 
   setPCAAndChemicalFormula() {
     const gasData = this.emisionesForm.value
-    console.log (gasData)
     const gasType = gasData.gasMezcla
     const chemicalFormula = gasType.FormulaQuimica;
     const pca6AR = parseFloat(gasType.PCA_6AR).toFixed(3);
-    const equipmentCapacity = gasData.recargaEquipo
     const equipmentRecharge = gasData.recargaEquipo
     this.emisionesForm.get('formulaQuimica')?.setValue(chemicalFormula);
     this.emisionesForm.get('pca')?.setValue(pca6AR);
-   
-
-    this.emisionesForm.get('emisionesCO2e')?.setValue(equipmentRecharge * parseFloat(chemicalFormula)+equipmentRecharge * parseFloat(pca6AR))
+    if (equipmentRecharge) {
+      this.emisionesForm.get('emisionesCO2e')?.setValue(equipmentRecharge * parseFloat(chemicalFormula)+equipmentRecharge * parseFloat(pca6AR))
+    }
   }
 
 
@@ -53,15 +51,16 @@ export class LeakageRefrigerantGasesComponent {
     const gasData = this.emisionesForm.value
     const equipmentCapacity = gasData.capacidadEquipo
     const equipmentRecharge = gasData.recargaEquipo
-
-// Convertir ambos valores a números
-const recharge = parseFloat(equipmentRecharge);
-const capacity = parseFloat(equipmentCapacity);
-if (recharge > capacity) {
-  alert("La recarga no puede ser mayor que la capacidad");
-  this.emisionesForm.get('recargaEquipo')?.setValue(0);
-}
-
+    const pca6AR = gasData.gasMezcla.PCA_6AR
+    // Convertir ambos valores a números
+    const recharge = parseFloat(equipmentRecharge).toFixed(2);
+    const capacity = parseFloat(equipmentCapacity).toFixed(2);
+    if (recharge > capacity) {
+      alert("La recarga no puede ser mayor que la capacidad");
+      this.emisionesForm.get('recargaEquipo')?.setValue(0);
+      return
+    }
+    this.emisionesForm.get('emisionesCO2e')?.setValue(parseFloat(recharge) * parseFloat(parseFloat(pca6AR).toFixed(2)))
   }
 
   onSubmit(): void {

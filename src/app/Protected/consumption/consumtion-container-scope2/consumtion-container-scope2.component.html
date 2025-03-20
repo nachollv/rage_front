@@ -1,8 +1,8 @@
 <h1><button mat-menu-item (click)="openDialog ('ALCANCE 2','emisiones indirectas de GEI asociadas a la generación de electricidad adquirida y 
 consumida por la organización.')"><mat-icon style="color: #0a470d;">info</mat-icon>{{"emissions" | translate}}</button> </h1>
 
-
-<mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start">
+ 
+<mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start"  [(selectedIndex)]="selectedTabIndexscope2" (selectedIndexChange)="onTabChange($event)">
   <mat-tab label="{{'electricityConsumptionInBuildings' | translate}}">
     <button mat-menu-item (click)="openDialog('Instalaciones fijas no sujetas a las obligaciones establecidas en la Ley 1/2005, de 9 de marzo ','Descripción...')">
       <mat-icon style="color: #ff9310;">info</mat-icon>{{"electricityConsumptionInBuildings" | translate}}</button>

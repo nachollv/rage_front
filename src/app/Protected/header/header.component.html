@@ -9,17 +9,15 @@
   <section *ngIf="role === 'User'">
     <button mat-menu-item routerLink="scope-one">{{'consumptions' | translate}}</button>
     <button mat-menu-item routerLink="scope-two">{{'emissions' | translate}}</button>
-    <hr>
-    <button mat-menu-item ngClass="rage-menu-item">{{'emissionFactors' | translate}}</button>
-    <hr>
   </section>
   <section *ngIf="role === 'Admin'">
-
     <button mat-menu-item ngClass="rage-menu-item" routerLink="/user-management">{{'userManagement' | translate}}</button>
     <button mat-menu-item ngClass="rage-menu-item" routerLink="/dashboard">{{'dashboard' | translate}}</button>
     <button mat-menu-item ngClass="rage-menu-item" routerLink="/organ-gen-data">{{'organizationGeneralData' | translate}}</button>
     <hr>
+    <button mat-menu-item ngClass="rage-menu-item">{{'emissionFactors' | translate}}</button>
   </section>
+  <hr>
   <button mat-menu-item (click)="switchLanguage('en')">English</button>
   <button mat-menu-item (click)="switchLanguage('es')">Español</button>
   <hr>

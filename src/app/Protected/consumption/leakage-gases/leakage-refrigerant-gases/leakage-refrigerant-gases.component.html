@@ -17,33 +17,35 @@
       <mat-option *ngFor="let gas of gasTypes" [value]="gas">{{ gas.Nombre }}</mat-option>
     </mat-select>
   </mat-form-field>
-
+  <section>
+    <mat-form-field>
+      <mat-label>Fórmula química</mat-label>
+      <input matInput formControlName="formulaQuimica" placeholder="Ej. CO2" />
+    </mat-form-field>
+  
+    <mat-form-field>
+      <mat-label>PCA</mat-label>
+      <input matInput type="number" formControlName="pca" placeholder="Ej. 1.0" />
+    </mat-form-field>
+  </section>
+  <section>
+    <mat-form-field>
+      <mat-label>Capacidad del equipo (kg)</mat-label>
+      <input matInput type="number" formControlName="capacidadEquipo" placeholder="Ej. 10.5" />
+    </mat-form-field>
+  
+    <mat-form-field>
+      <mat-label>Recarga del equipo (kg)</mat-label>
+      <input matInput type="number" formControlName="recargaEquipo" (change)="equipmentRecharge()" placeholder="Ej. 5.0" />
+    </mat-form-field>
+  </section>
   <mat-form-field>
-    <mat-label>Fórmula química</mat-label>
-    <input matInput formControlName="formulaQuimica" placeholder="Ej. CO2" />
-  </mat-form-field>
-
-  <mat-form-field>
-    <mat-label>PCA</mat-label>
-    <input matInput type="number" formControlName="pca" placeholder="Ej. 1.0" />
-  </mat-form-field>
-
-  <mat-form-field>
-    <mat-label>Capacidad del equipo (kg)</mat-label>
-    <input matInput type="number" formControlName="capacidadEquipo" placeholder="Ej. 10.5" />
-  </mat-form-field>
-
-  <mat-form-field>
-    <mat-label>Recarga del equipo (kg)</mat-label>
-    <input matInput type="number" formControlName="recargaEquipo" (change)="equipmentRecharge()" placeholder="Ej. 5.0" />
-  </mat-form-field>
-
-  <mat-form-field>
-    <mat-label>Emisiones A (kg CO2e)</mat-label>
+    <mat-label>Emisiones A kg CO<sub>2</sub>e</mat-label>
     <input matInput type="number" formControlName="emisionesCO2e" />
   </mat-form-field>
 
   <button mat-raised-button color="primary" type="submit" [disabled]="emisionesForm.invalid">Enviar</button>
 </form>
 </mat-card>
+<app-data-table></app-data-table>
 
