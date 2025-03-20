@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { FuelDataService } from '../../../../services/fuel-data.service';
+import { VehiclesFuelConsumptionService } from '../../../../services/vehicles-fuel-consumption.service';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent } from '../../../../dialog/dialog.component';
 import { MatTableDataSource } from '@angular/material/table';
@@ -21,18 +21,13 @@ export class MachineryVehiclesComponent implements OnInit {
         { delegation: 'Pollença', year: 2024, tipoCombustible: 'Gasólea A', 'kg_CO2_ud_defecto': 25, 'gCH4_ud_defecto': 34.25, 'gN2O_ud_defecto': 23.54, 'kg_CO2_ud_otros': 45.345, 'gCH4_ud_otros': 0.00, 'gN2O_ud_otros': 0.00, 'kg__CO2': 0.12, 'g_CH4':12.23, 'g_N2O': 25.21, 'kg__CO2e':154.24, edit: true, delete: true},
       ];
       dataSource = new MatTableDataSource<any>(this.data)
-      fuelTypes: string[] = ['Gasóleo C (l)', 'Gasóleo B (l)', 'Gas natural (kWhPCS)*', 
-        'Fuelóleo (l)', 'LPG (l)', 'Queroseno (l)', 'Gas propano (kg)', 'Gas butano (kg)', 
-        'Gas manufacturado (kg)', 'Biogás (kg)**', 'Biomasa madera (kg)**', 'Biomasa pellets (kg)**', 
-        'Biomasa astillas (kg)**', 'Biomasa serrines virutas (kg)**', 'Biomasa cáscara f. secos (kg)**', 
-        'Biomasa hueso aceituna (kg)**', 'Carbón vegetal (kg)**', 'Coque de petróleo (kg)', 'Coque de carbón (kg)', 
-        'Hulla y antracita (kg)', 'Hullas subituminosas (kg)', 'Gasóleo A (l)', 'Gasolina  (l)'];
-  machineryForm: FormGroup;
+      vehicleTypes: any[] = []
+      machineryForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private fuelDataService: FuelDataService) {
+  constructor(private fb: FormBuilder, private vehicleFuelService: VehiclesFuelConsumptionService) {
     this.machineryForm = this.fb.group({
-      year: [{ value: '2024', disabled: true }, [Validators.required, Validators.minLength(4), Validators.maxLength(4)]],
-      building: ['', Validators.required],
+      year: [{ value: '2023', disabled: true }, [Validators.required, Validators.minLength(4), Validators.maxLength(4)]],
+      building: [{ value: '', disabled: true }, Validators.required],
       vehicleCategory: ['', Validators.required],
       fuelType: ['', Validators.required],
       quantity: ['', [Validators.required, Validators.pattern(/^\d+$/)]],
@@ -41,11 +36,6 @@ export class MachineryVehiclesComponent implements OnInit {
         ch4: ['', Validators.required],
         n2o: ['', Validators.required]
       }),
-      otherEmissionFactor: this.fb.group({
-        co2: [''],
-        ch4: [''],
-        n2o: ['']
-      }),
       partialEmissions: this.fb.group({
         co2: [{ value: '', disabled: true }],
         ch4: [{ value: '', disabled: true }],
@@ -53,11 +43,38 @@ export class MachineryVehiclesComponent implements OnInit {
       }),
       totalEmissions: [{ value: '', disabled: true }]
     });
+    this.getFuelConsumptions()
+  }
+
+  getFuelConsumptions() {
+    this.vehicleFuelService.getByYear(2023)
+      .subscribe((fuel:any) => {
+      this.vehicleTypes = fuel
+      console.log (this.vehicleTypes)
+      })
   }
 
   ngOnInit(): void {
     
   }
+
+  setEmissionFactors() {
+
+    const machineryData = this.machineryForm.value
+    console.log (machineryData.vehicleCategory.Categoria)
+    this.vehicleFuelService.getByYearType(2023, machineryData.vehicleCategory.Categoria)
+      .subscribe((fuelType:any) => {
+        console.log ("fuel types: ", fuelType)
+      })
+    /* const fuelType = fuelData.fuelType
+    const CO2_kg_ud = parseFloat(fuelType.CO2_kg_ud).toFixed(3);
+    const CH4_g_ud = parseFloat(fuelType.CH4_g_ud).toFixed(3);
+    const N2O_g_ud = parseFloat(fuelType.N2O_g_ud).toFixed(3);
+    this.machineryForm.get('defaultEmissionFactor')?.get('fe_co2')?.setValue(CO2_kg_ud);
+    this.machineryForm.get('defaultEmissionFactor')?.get('fe_ch4')?.setValue(CH4_g_ud);
+    this.machineryForm.get('defaultEmissionFactor')?.get('fe_n2o')?.setValue(N2O_g_ud); */
+
+}
 
   calculateEmissions(): void {
     const formValues = this.machineryForm.value;
@@ -78,7 +95,7 @@ export class MachineryVehiclesComponent implements OnInit {
   onFuelTypeChange() {
     const year = this.machineryForm.get('year')?.value;
     const fuelType = this.machineryForm.get('fuelType')?.value;
-    this.fuelDataService.getByYearType(year, fuelType).subscribe(fuelValue => {
+    this.vehicleFuelService.getByYearType(year, fuelType).subscribe(fuelValue => {
       console.log(`Selected Year: ${year}, Selected Fuel: ${fuelType}, Value: ${fuelValue}`);
       // Puedes actualizar el formulario o realizar otras acciones con el valor del combustible seleccionado
     });

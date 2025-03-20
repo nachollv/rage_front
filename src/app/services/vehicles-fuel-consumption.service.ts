@@ -3,9 +3,10 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
   
-export interface EmisionesCombustibles {
+export interface vehicleFuel {
     id: number;         // Identificador único de la emisión
     Combustible: string;     // Nombre descriptivo de la emisión
+    Categoria: string; // Tipo de vehículo
     Anio: string;
     CO2_kg_ud: number;
     CH4_g_ud: number;
@@ -18,44 +19,48 @@ export interface EmisionesCombustibles {
     providedIn: 'root',
   })
 
-export class FuelDataService {
+  export class VehiclesFuelConsumptionService {
   
     private apiUrl = 'https://pre.tramits.idi.es/public/index.php';
 
     constructor(private http: HttpClient) {}
   
-    getAll(): Observable<EmisionesCombustibles[]> {
-      return this.http.get<EmisionesCombustibles[]>(`${this.apiUrl}/emisionescombustibles`).pipe(
+    getAll(): Observable<vehicleFuel[]> {
+      return this.http.get<vehicleFuel[]>(`${this.apiUrl}/emisionescombustiblesvehiculos`).pipe(
         catchError(this.handleError)
       );
     }
   
-    getById(id: number): Observable<EmisionesCombustibles> {
-      return this.http.get<EmisionesCombustibles>(`${this.apiUrl}/${id}`).pipe(
+    getById(id: number): Observable<vehicleFuel> {
+      return this.http.get<vehicleFuel>(`${this.apiUrl}/emisionescombustiblesvehiculos/${id}`).pipe(
         catchError(this.handleError)
       );
     }
 
-    getByYear(year: number): Observable<EmisionesCombustibles> {
-      return this.http.get<EmisionesCombustibles>(`${this.apiUrl}/emisionescombustibles/year/${year}`).pipe(
+    getByYear(year: number): Observable<vehicleFuel> {
+      return this.http.get<vehicleFuel>(`${this.apiUrl}/emisionescombustiblesvehiculos/year/${year}`).pipe(
         catchError(this.handleError)
       );
     }
 
-    getByYearType(year: number, fuelType:string): Observable<EmisionesCombustibles> {
-      return this.http.get<EmisionesCombustibles>(`${this.apiUrl}/${year}`).pipe(
+    getByYearType(year: number, vehicleType: string): Observable<vehicleFuel> {
+      return this.http.get<vehicleFuel>(`${this.apiUrl}/emisionescombustiblesvehiculos/year/${year}/type/${vehicleType}`, {
+        params: {
+          vehicleType: vehicleType
+        }
+      }).pipe(
         catchError(this.handleError)
       );
     }
   
-    create(data: EmisionesCombustibles): Observable<EmisionesCombustibles> {
-      return this.http.post<EmisionesCombustibles>(this.apiUrl, data).pipe(
+    create(data: vehicleFuel): Observable<vehicleFuel> {
+      return this.http.post<vehicleFuel>(`${this.apiUrl}/emisionescombustiblesvehiculos/vehicleFuel`, data).pipe(
         catchError(this.handleError)
       );
     }
   
-    update(id: number, data: EmisionesCombustibles): Observable<EmisionesCombustibles> {
-      return this.http.put<EmisionesCombustibles>(`${this.apiUrl}/${id}`, data).pipe(
+    update(id: number, data: vehicleFuel): Observable<vehicleFuel> {
+      return this.http.put<vehicleFuel>(`${this.apiUrl}/emisionescombustiblesvehiculos/vehicleFuel/${id}`, data).pipe(
         catchError(this.handleError)
       );
     }
@@ -79,4 +84,3 @@ export class FuelDataService {
       return throwError(() => new Error(errorMessage));
     }
   }
-  

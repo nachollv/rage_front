@@ -12,7 +12,9 @@
 
   <mat-form-field appearance="fill">
     <mat-label>Categoría de vehículo</mat-label>
-    <input matInput formControlName="vehicleCategory">
+    <mat-select formControlName="vehicleCategory" (selectionChange)="setEmissionFactors()">
+      <mat-option *ngFor="let vehicle of vehicleTypes" [value]="vehicle">{{ vehicle.Categoria }}</mat-option>
+    </mat-select>
     <mat-error *ngIf="machineryForm.get('vehicleCategory')?.invalid">Campo obligatorio</mat-error>
   </mat-form-field>
 
@@ -39,21 +41,6 @@
     </mat-form-field>
     <mat-form-field appearance="fill">
       <mat-label>Factor de emisión por defecto (g N2O/ud)</mat-label>
-      <input matInput formControlName="n2o" type="number">
-    </mat-form-field>
-  </div>
-
-  <div formGroupName="otherEmissionFactor">
-    <mat-form-field appearance="fill">
-      <mat-label>Otros factores de emisión (kg CO2/ud)</mat-label>
-      <input matInput formControlName="co2" type="number">
-    </mat-form-field>
-    <mat-form-field appearance="fill">
-      <mat-label>Otros factores de emisión (g CH4/ud)</mat-label>
-      <input matInput formControlName="ch4" type="number">
-    </mat-form-field>
-    <mat-form-field appearance="fill">
-      <mat-label>Otros factores de emisión (g N2O/ud)</mat-label>
       <input matInput formControlName="n2o" type="number">
     </mat-form-field>
   </div>
