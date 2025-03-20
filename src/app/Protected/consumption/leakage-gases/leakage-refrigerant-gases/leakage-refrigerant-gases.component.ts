@@ -24,8 +24,8 @@ export class LeakageRefrigerantGasesComponent {
     private snackBar: MatSnackBar) {
 
     this.emisionesForm = this.fb.group({
-      Anio: [{ value: '2023', disabled: true }, [Validators.required, Validators.minLength(4), Validators.maxLength(4)]],
-      edificio_sede: [{ value: '1', disabled: true }, Validators.required],
+      calculationYear: [{ value: '2023', disabled: true }, [Validators.required, Validators.minLength(4), Validators.maxLength(4)]],
+      productionCenter: [{ value: '1', disabled: true }, Validators.required],
       nombre_gas_mezcla: ['', Validators.required],
       formulaQuimica: [{ value: '', disabled: true }, Validators.required],
       pca: [{ value: '', disabled: true }, Validators.required],
@@ -82,12 +82,12 @@ export class LeakageRefrigerantGasesComponent {
 
   onSubmit(): void {
     const formValue = this.emisionesForm.value
-    const AnioValue = this.emisionesForm.get('Anio')?.value;
-    const edificio_sedeValue = this.emisionesForm.get('edificio_sede')?.value;
+    const calculationYearValue = this.emisionesForm.get('calculationYear')?.value;
+    const productionCenterValue = this.emisionesForm.get('productionCenter')?.value;
     formValue.capacidad_equipo = parseFloat(formValue.capacidad_equipo).toFixed(2);
     formValue.recarga_equipo = parseFloat(formValue.recarga_equipo).toFixed(2);
-    formValue.Anio = AnioValue;
-    formValue.edificio_sede = edificio_sedeValue;
+    formValue.calculationYear = calculationYearValue;
+    formValue.productionCenter = productionCenterValue;
     formValue.nombre_gas_mezcla = formValue.nombre_gas_mezcla.Nombre;
     console.log(formValue)
 
