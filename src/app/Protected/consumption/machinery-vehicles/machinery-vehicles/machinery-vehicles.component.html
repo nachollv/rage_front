@@ -32,7 +32,9 @@
     <mat-error *ngIf="machineryForm.get('quantity')?.invalid">Campo obligatorio y debe ser un número</mat-error>
   </mat-form-field>
 
-  <div formGroupName="defaultEmissionFactor">
+<section ngClass="emissions">
+  <section formGroupName="defaultEmissionFactor">
+    <h3>Factores de Emisión por gases</h3>
     <mat-form-field appearance="fill">
       <mat-label>Factor de emisión (kg CO2/ud)</mat-label>
       <input matInput formControlName="co2" type="number">
@@ -45,9 +47,10 @@
       <mat-label>Factor de emisión (g N2O/ud)</mat-label>
       <input matInput formControlName="n2o" type="number">
     </mat-form-field>
-  </div>
+  </section>
 
-  <div formGroupName="partialEmissions">
+  <section formGroupName="partialEmissions">
+    <h3>Emisiones Parciales</h3>
     <mat-form-field appearance="fill">
       <mat-label>Emisiones parciales (kg CO2)</mat-label>
       <input matInput formControlName="co2">
@@ -60,10 +63,11 @@
       <mat-label>Emisiones parciales (g N2O)</mat-label>
       <input matInput formControlName="n2o">
     </mat-form-field>
-  </div>
+  </section>
+</section>
 
+<h3>Emisiones Totales  [CO<sub>2</sub>eq: CO<sub>2</sub>+CH<sub>4</sub>+N<sub>2</sub>O]</h3>
   <mat-form-field appearance="fill">
-    <mat-label>Emisiones totales (kg CO2e)</mat-label>
     <input matInput formControlName="totalEmissions">
   </mat-form-field>
 

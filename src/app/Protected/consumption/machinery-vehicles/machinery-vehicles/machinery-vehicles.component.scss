@@ -16,6 +16,11 @@ mat-form-field {
   margin-bottom: 20px;
 }
 
+.emissions {
+  display: grid;
+  grid-template-columns: 50% 50%;
+}
+
 button {
   width: 100%;
   align-self: center; // Centrar el botón dentro del formulario
