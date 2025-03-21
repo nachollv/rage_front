@@ -49,6 +49,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { MachineryVehiclesComponent } from './Protected/consumption/machinery-vehicles/machinery-vehicles/machinery-vehicles.component';
 import { RecoveryPasswordComponent } from './recovery-password/recovery-password.component';
 import { LeakageRefrigerantGasesComponent } from './Protected/consumption/leakage-gases/leakage-refrigerant-gases/leakage-refrigerant-gases.component';
+import { ElectricityConsumptionVehiclesComponent } from './Protected/consumption/consumtion-container-scope2/electricity-consumption-vehicles/electricity-consumption-vehicles.component';
 
 // Función para cargar los archivos de traducción
 export function HttpLoaderFactory(http: HttpClient) {
@@ -81,6 +82,7 @@ export function tokenGetter() {
     MachineryVehiclesComponent,
     RecoveryPasswordComponent,
     LeakageRefrigerantGasesComponent,
+    ElectricityConsumptionVehiclesComponent,
   ],
   imports: [
     BrowserModule,

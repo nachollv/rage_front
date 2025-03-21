@@ -1,0 +1,72 @@
+<form [formGroup]="emisionesForm" (ngSubmit)="onSubmit()">
+  <div formArrayName="registros">
+    <div *ngFor="let registro of registros.controls; let i = index" [formGroupName]="i" class="registro-item">
+      <mat-card>
+        <mat-card-title>Registro {{ i + 1 }}</mat-card-title>
+        <mat-card-content>
+          <mat-form-field class="full-width">
+            <mat-label>Edificio / Sede</mat-label>
+            <input matInput placeholder="Nombre del edificio" formControlName="edificio" />
+            <mat-error *ngIf="registro.get('edificio')?.hasError('required')">
+              Este campo es obligatorio
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field class="full-width">
+            <mat-label>Comercializadora</mat-label>
+            <input matInput placeholder="Nombre de la comercializadora" formControlName="comercializadora" />
+            <mat-error *ngIf="registro.get('comercializadora')?.hasError('required')">
+              Este campo es obligatorio
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field class="full-width">
+            <mat-label>¿Dispone de Garantía de Origen?</mat-label>
+            <mat-select formControlName="garantiaOrigen">
+              <mat-option value="Sí">Sí</mat-option>
+              <mat-option value="No">No</mat-option>
+            </mat-select>
+            <mat-error *ngIf="registro.get('garantiaOrigen')?.hasError('required')">
+              Este campo es obligatorio
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field class="full-width">
+            <mat-label>Dato de consumo (kWh)</mat-label>
+            <input matInput type="number" placeholder="Consumo en kWh" formControlName="consumo" />
+            <mat-error *ngIf="registro.get('consumo')?.hasError('required')">
+              Este campo es obligatorio
+            </mat-error>
+            <mat-error *ngIf="registro.get('consumo')?.hasError('min')">
+              El consumo debe ser mayor o igual a 0
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field class="full-width">
+            <mat-label>Factor Mix eléct. (kg CO2e/kWh)</mat-label>
+            <input matInput type="number" placeholder="Factor Mix eléctrico" formControlName="factorMixElectrico" />
+            <mat-error *ngIf="registro.get('factorMixElectrico')?.hasError('required')">
+              Este campo es obligatorio
+            </mat-error>
+            <mat-error *ngIf="registro.get('factorMixElectrico')?.hasError('min')">
+              El factor debe ser mayor o igual a 0
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field class="full-width">
+            <mat-label>Emisiones (kg CO2e)</mat-label>
+            <input matInput type="number" placeholder="Emisiones generadas" formControlName="emisiones" />
+            <mat-error *ngIf="registro.get('emisiones')?.hasError('required')">
+              Este campo es obligatorio
+            </mat-error>
+            <mat-error *ngIf="registro.get('emisiones')?.hasError('min')">
+              Las emisiones deben ser mayor o igual a 0
+            </mat-error>
+          </mat-form-field>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+  <button mat-raised-button type="button" (click)="addRegistro({})">Añadir Registro</button>
+  <button mat-raised-button color="primary" type="submit" [disabled]="emisionesForm.invalid">Enviar</button>
+</form>
