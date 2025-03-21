@@ -17,10 +17,11 @@
      providedIn: 'root'
    })
    export class DataService {
-     private baseUrl = 'https://pre.tramits.idi.es/public/index.php'; // Base URL del backend
+  //private apiUrl = 'https://pre.tramits.idi.es/public/index.php/auth';
+  private apiUrl = 'https://rage.industrialocalsostenible.com/public/index.php';
 
-     private cnaeGroupsUrl = `${this.baseUrl}/cnae-groups`; // Endpoint para grupos CNAE
-     private organizationTypesUrl = `${this.baseUrl}/organization-types`; // Endpoint para tipos de organización
+     private cnaeGroupsUrl = `${this.apiUrl}/cnae-groups`; // Endpoint para grupos CNAE
+     private organizationTypesUrl = `${this.apiUrl}/organization-types`; // Endpoint para tipos de organización
 
      private httpOptions = {
        headers: new HttpHeaders({ 'Content-Type': 'application/json' })

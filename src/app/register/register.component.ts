@@ -27,8 +27,10 @@ export class RegisterComponent implements OnInit {
         this.hasNumber,
         this.hasSpecialCharacter,]],
       retypePassword: ['', [Validators.required, Validators.minLength(6), passwordMatchValidator]],
-      nif: ['', [Validators.required, Validators.minLength(9), Validators.maxLength(9)]],
+      cif: ['', [Validators.required, Validators.minLength(9), Validators.maxLength(9)]],
       companyName: ['', [Validators.required]],
+      nombre: [''],
+      rol: ['Admin'],
       zipCode: ['', [Validators.minLength(5), Validators.maxLength(5)]]
     });
   }
@@ -65,7 +67,7 @@ onSubmit(): void {
 
   if (this.registerForm.valid) {
     const formData = this.registerForm.value;
-
+    formData.nombre = this.registerForm.get('companyName')?.value;
     // Llama al servicio para registrar la organización
     this.registerService.crearOrganizacion(formData).subscribe(
       (response) => {
@@ -73,7 +75,7 @@ onSubmit(): void {
         this.router.navigate(['/login'])
       },
       (error) => {
-        this.showSnackBar('Error en el registro:' + error)
+        this.showSnackBar('Error en el registro:' + error.messages)
       }
     );
   } else {

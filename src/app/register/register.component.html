@@ -29,10 +29,10 @@
     </mat-form-field>
 
     <mat-form-field appearance="fill">
-      <mat-label>NIF</mat-label>
-      <input matInput formControlName="nif" minlength="9" maxlength="9">
-      <mat-error *ngIf="registerForm?.get('nif')?.invalid">NIF is required</mat-error>
-      <mat-error *ngIf="registerForm?.get('nif')?.hasError('minlength')">Min length is 9 chars</mat-error>
+      <mat-label>CIF</mat-label>
+      <input matInput formControlName="cif" minlength="9" maxlength="9">
+      <mat-error *ngIf="registerForm?.get('cif')?.invalid">cif is required</mat-error>
+      <mat-error *ngIf="registerForm?.get('cif')?.hasError('minlength')">Min length is 9 chars</mat-error>
     </mat-form-field>
 
     <mat-form-field appearance="fill">

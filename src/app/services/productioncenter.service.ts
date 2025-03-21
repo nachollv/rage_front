@@ -20,7 +20,9 @@ export interface CentroDeProduccion {
 })
 
 export class ProductioncenterService {
-  private apiUrl = 'https://pre.tramits.idi.es/public/index.php';
+  //private apiUrl = 'https://pre.tramits.idi.es/public/index.php/auth';
+  private apiUrl = 'https://rage.industrialocalsostenible.com/public/index.php';
+
 
   constructor(private http: HttpClient) {}
 
