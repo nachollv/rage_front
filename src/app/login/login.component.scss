@@ -8,6 +8,13 @@
   background-color: #f5f5f5;
 }
 
+.login-container h1 {
+  font-size: 32px; /* Encabezado grande */
+  margin: 20px 0; /* Espaciado claro */
+  color: #333; /* Cambia el color si es necesario */
+  text-align: center; /* Opcional: Centrar el texto */
+}
+
 mat-card {
   width: 400px;
   padding: 20px;

@@ -20,7 +20,8 @@ export interface Organizacion {
 })
 
 export class OrganizacionService {
-  private apiUrl = 'https://pre.tramits.idi.es/public/index.php';
+  //private apiUrl = 'https://pre.tramits.idi.es/public/index.php/auth';
+  private apiUrl = 'https://rage.industrialocalsostenible.com/public/index.php';
 
   constructor(private http: HttpClient) {}
 
@@ -36,7 +37,7 @@ export class OrganizacionService {
 
   // Crear una nueva organización
   crearOrganizacion(organizacion: Organizacion): Observable<Organizacion> {
-    return this.http.post<Organizacion>(`${this.apiUrl}/organizacion/register`, organizacion);
+    return this.http.post<Organizacion>(`${this.apiUrl}/organizacion/create`, organizacion);
   }
 
   // Actualizar una organización existente
