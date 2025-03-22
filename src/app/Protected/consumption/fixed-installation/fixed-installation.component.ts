@@ -12,7 +12,7 @@ import { ScopeOneRecordsService } from '../../../services/scope-one-records.serv
   styleUrl: './fixed-installation.component.scss'
 })
 export class FixedInstallationComponent {
-  displayedColumns: string[] = ['calculationYear', 'productionCenter', 'tipoCombustible', 'kg_CO2_ud_defecto', 'gCH4_ud_defecto', 'gN2O_ud_defecto', 'g CO2_ud_otros', 'gCH4_ud_otros', 'gN2O_ud_otros', 'kg__CO2', 'g_CH4', 'g_N2O', 'kg__CO2e', 'edit', 'delete']
+  displayedColumns: string[] = ['calculationYear', 'productionCenter', 'fuel_type', 'quantity', 'edit', 'delete']
   data = [{ }]
 
     dataSource = new MatTableDataSource<any>(this.data)
@@ -54,24 +54,29 @@ export class FixedInstallationComponent {
     getScopeOneRecords(calculationYear: number = 2023, productionCenter: number = 1) {
       this.scopeOneRecordsService.getRecordsByFilters(calculationYear, productionCenter)
         .subscribe({
-          next: (records: any) => {
-            this.dataSource.data = records;
-            this.showSnackBar('Registros obtenidos: ' + records);
+          next: (registros: any) => {
+            registros.data.forEach((registro: any) => {
+              registro.edit = true
+              registro.delete = true
+              registro.fuel_type = this.fuelTypes.find((fuelType: any) => fuelType.id === registro.fuel_type) || {}
+              console.log(registro.fuel_type)
+            })
+            this.dataSource = new MatTableDataSource(registros.data)
+            this.showSnackBar('Registros obtenidos: ' + registros.data.length)
           },
           error: (err: any) => {
-            this.showSnackBar('Error al obtener los registros: ' + err);
+            this.showSnackBar('Error al obtener los registros: ' + err)
           }
         });
     }
-    
     
     onSubmit() {
         console.log('Formulario válido: ', this.fuelForm.get('calculationYear')?.value, 
         this.fuelForm.get('productionCenter')?.value, 
         this.fuelForm.get('quantity')?.value, this.fuelForm.get('fuelType')?.value.id);
         const formValue = this.fuelForm.value
-        formValue.calculation_year = this.fuelForm.get('calculationYear')?.value
-        formValue.production_center = this.fuelForm.get('productionCenter')?.value
+        formValue.calculationYear = this.fuelForm.get('calculationYear')?.value
+        formValue.productionCenter = this.fuelForm.get('productionCenter')?.value
         formValue.fuel_type = this.fuelForm.get('fuelType')?.value.id
         formValue.quantity = this.fuelForm.get('quantity')?.value
 
