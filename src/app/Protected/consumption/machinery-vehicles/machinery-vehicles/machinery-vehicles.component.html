@@ -1,12 +1,12 @@
 <mat-card>
-<form [formGroup]="machineryForm" (ngSubmit)="registerEmissions()">
+<form [formGroup]="machineryForm" (ngSubmit)="onSubmit()">
   <mat-form-field>
     <mat-label>Año de cálculo</mat-label>
-    <input matInput formControlName="year">
+    <input matInput formControlName="calculationYear">
   </mat-form-field>
   <mat-form-field appearance="fill">
     <mat-label>Centro de producción</mat-label>
-    <input matInput formControlName="building">
+    <input matInput formControlName="productionCenter">
     <mat-error *ngIf="machineryForm.get('building')?.invalid">Campo obligatorio</mat-error>
   </mat-form-field>
 

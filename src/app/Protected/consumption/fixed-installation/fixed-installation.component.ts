@@ -6,6 +6,7 @@ import { DialogComponent } from '../../../dialog/dialog.component';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ScopeOneRecordsService } from '../../../services/scope-one-records.service';
+
 @Component({
   selector: 'app-fixed-installation',
   templateUrl: './fixed-installation.component.html',
@@ -25,7 +26,7 @@ export class FixedInstallationComponent {
       private snackBar: MatSnackBar) {
       this.fuelForm = this.fb.group({
         calculationYear: [{ value: '2023', disabled: true }, [Validators.required, Validators.minLength(4), Validators.maxLength(4)]],
-        productionCenter: [{value: '1', disabled: true}],
+        productionCenter: [{value: '2', disabled: true}],
         fuelType: ['', Validators.required],
         quantity: ['', [Validators.required, Validators.min(0)]],
         defaultFactor: this.fb.group({
@@ -41,7 +42,7 @@ export class FixedInstallationComponent {
         totalEmissions: [{ value: 0, disabled: true }]
       });
       this.getFuelConsumptions(2023)
-      this.getScopeOneRecords(2023, 1)
+      this.getScopeOneRecords(2023, 2)
     }
 
     getFuelConsumptions(calculationYear: number = 2023) {
@@ -51,18 +52,17 @@ export class FixedInstallationComponent {
         })
     }
 
-    getScopeOneRecords(calculationYear: number = 2023, productionCenter: number = 1) {
-      this.scopeOneRecordsService.getRecordsByFilters(calculationYear, productionCenter)
+    getScopeOneRecords(calculationYear: number = 2023, productionCenter: number = 2, activityType: string = 'fixed') {
+      this.scopeOneRecordsService.getRecordsByFilters(calculationYear, productionCenter, activityType)
         .subscribe({
           next: (registros: any) => {
             registros.data.forEach((registro: any) => {
               registro.edit = true
               registro.delete = true
-              registro.fuel_type = this.fuelTypes.find((fuelType: any) => fuelType.id === registro.fuel_type) || {}
-              console.log(registro.fuel_type)
+              registro.fuel_type = this.fuelTypes.find((fuelType: any) => fuelType.id === registro.fuel_type)?.Combustible || 'desconocido'
             })
             this.dataSource = new MatTableDataSource(registros.data)
-            this.showSnackBar('Registros obtenidos: ' + registros.data.length)
+            this.showSnackBar('Registros obtenidos fixed: ' + registros.data.length)
           },
           error: (err: any) => {
             this.showSnackBar('Error al obtener los registros: ' + err)
@@ -71,16 +71,16 @@ export class FixedInstallationComponent {
     }
     
     onSubmit() {
-        console.log('Formulario válido: ', this.fuelForm.get('calculationYear')?.value, 
         this.fuelForm.get('productionCenter')?.value, 
-        this.fuelForm.get('quantity')?.value, this.fuelForm.get('fuelType')?.value.id);
+        this.fuelForm.get('quantity')?.value, this.fuelForm.get('fuelType')?.value.id;
         const formValue = this.fuelForm.value
         formValue.calculationYear = this.fuelForm.get('calculationYear')?.value
         formValue.productionCenter = this.fuelForm.get('productionCenter')?.value
         formValue.fuel_type = this.fuelForm.get('fuelType')?.value.id
+        formValue.activityType = 'fixed'
         formValue.quantity = this.fuelForm.get('quantity')?.value
 
-        this.scopeOneRecordsService.createRecord(this.fuelForm.value)
+        this.scopeOneRecordsService.createRecord(formValue)
           .subscribe(
             (fuel: any) => {
               this.showSnackBar('Éxito:' + fuel);
@@ -140,10 +140,10 @@ export class FixedInstallationComponent {
       });
     }
 
-    private showSnackBar(error: string): void {
-      this.snackBar.open(error, 'Close', {
+    private showSnackBar(msg: string): void {
+      this.snackBar.open(msg, 'Close', {
         duration: 15000,
-        verticalPosition: 'bottom',
+        verticalPosition: 'top',
         horizontalPosition: 'center',
         panelClass: ['custom-snackbar'],
       });

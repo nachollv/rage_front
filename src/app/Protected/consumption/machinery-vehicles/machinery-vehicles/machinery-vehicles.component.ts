@@ -1,27 +1,33 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { VehiclesFuelConsumptionService } from '../../../../services/vehicles-fuel-consumption.service';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent } from '../../../../dialog/dialog.component';
 import { MatTableDataSource } from '@angular/material/table';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { ScopeOneRecordsService } from '../../../../services/scope-one-records.service';
 
 @Component({
   selector: 'app-machinery-vehicles',
   templateUrl: './machinery-vehicles.component.html',
   styleUrls: ['./machinery-vehicles.component.scss']
 })
-export class MachineryVehiclesComponent implements OnInit {
-    displayedColumns: string[] = ['calculationYear', 'productionCenter', 'tipoCombustible', 'kg_CO2_ud_defecto', 'gCH4_ud_defecto', 'gN2O_ud_defecto', 'g CO2_ud_otros', 'gCH4_ud_otros', 'gN2O_ud_otros', 'kg__CO2', 'g_CH4', 'g_N2O', 'kg__CO2e', 'edit', 'delete']
+export class MachineryVehiclesComponent {
+    displayedColumns: string[] = ['calculationYear', 'productionCenter', 'vehicle_type','fuel_type', 'quantity', 'edit', 'delete']
       data = [ { }, ]
       dataSource = new MatTableDataSource<any>(this.data)
       vehicleTypes: any[] = []
       fuelTypes: any[] = []
       machineryForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private vehicleFuelService: VehiclesFuelConsumptionService) {
+  constructor(private fb: FormBuilder, 
+    private scopeOneRecordsService: ScopeOneRecordsService,
+    private vehicleFuelService: VehiclesFuelConsumptionService,
+    private snackBar: MatSnackBar
+  ) {
     this.machineryForm = this.fb.group({
-      year: [{ value: '2023', disabled: true }, [Validators.required, Validators.minLength(4), Validators.maxLength(4)]],
-      building: [{ value: '', disabled: true }, Validators.required],
+      calculationYear: [{ value: '2023', disabled: true }, [Validators.required, Validators.minLength(4), Validators.maxLength(4)]],
+      productionCenter: [{ value: '2', disabled: true }, Validators.required],
       vehicleCategory: ['', Validators.required],
       fuelType: ['', Validators.required],
       quantity: ['', [Validators.required, Validators.pattern(/^\d+$/)]],
@@ -38,6 +44,8 @@ export class MachineryVehiclesComponent implements OnInit {
       totalEmissions: [{ value: '', disabled: true }]
     });
     this.getFuelConsumptions()
+    this.getScopeOneRecords(2023, 2)
+
   }
 
   getFuelConsumptions() {
@@ -47,9 +55,46 @@ export class MachineryVehiclesComponent implements OnInit {
       })
   }
 
-  ngOnInit(): void {
-    
+  getScopeOneRecords(calculationYear: number = 2023, productionCenter: number = 2, activityType: string = 'machinery') {
+    this.scopeOneRecordsService.getRecordsByFilters(calculationYear, productionCenter, activityType)
+      .subscribe({
+        next: (registros: any) => {
+          registros.data.forEach((registro: any) => {
+            registro.edit = true
+            registro.delete = true
+            registro.fuel_type = this.fuelTypes.find((fuelType: any) => fuelType.id === registro.fuel_type)?.Combustible || 'desconocido'
+          })
+          this.dataSource = new MatTableDataSource(registros.data)
+          this.showSnackBar('Registros obtenidos fixed: ' + registros.data.length)
+        },
+        error: (err: any) => {
+          this.showSnackBar('Error al obtener los registros: ' + err)
+        }
+      });
   }
+
+  onSubmit() {
+    this.machineryForm.get('productionCenter')?.value, 
+    this.machineryForm.get('quantity')?.value, this.machineryForm.get('fuelType')?.value.id;
+    const formValue = this.machineryForm.value
+    formValue.calculationYear = this.machineryForm.get('calculationYear')?.value
+    formValue.productionCenter = this.machineryForm.get('productionCenter')?.value
+    formValue.vehicle_type = this.machineryForm.get('vehicleCategory')?.value.id
+    formValue.fuel_type = this.machineryForm.get('fuelType')?.value.id
+    formValue.activityType = 'machinery'
+    formValue.quantity = this.machineryForm.get('quantity')?.value
+
+    this.scopeOneRecordsService.createRecord(formValue)
+      .subscribe(
+        (fuel: any) => {
+          this.showSnackBar('Éxito:' + fuel);
+          this.getFuelConsumptions()
+        },
+        (error: any) => {
+          this.showSnackBar('Error al crear:' + error);
+        }
+      );
+}
 
   setFuelTypes() {
 
@@ -94,6 +139,12 @@ onQuantityChange() {
   }
 }
 
-registerEmissions() { }
-    
+private showSnackBar(msg: string): void {
+  this.snackBar.open(msg, 'Close', {
+    duration: 15000,
+    verticalPosition: 'top',
+    horizontalPosition: 'center',
+    panelClass: ['custom-snackbar'],
+  });
+}
 }

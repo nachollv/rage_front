@@ -46,9 +46,9 @@ export class LeakageRefrigerantGasesComponent {
 
   getregistros() {
     this.registerLeak.getRegistros()
-      .subscribe((registros:any) => {
-      this.dataSource = new MatTableDataSource(registros)
-      this.showSnackBar('Registros obtenidos: ' + registros.length)
+      .subscribe((registrosleak:any) => {
+      this.dataSource = new MatTableDataSource(registrosleak)
+      this.showSnackBar('Registros leak obtenidos: ' + registrosleak.length)
       })
   }
 
