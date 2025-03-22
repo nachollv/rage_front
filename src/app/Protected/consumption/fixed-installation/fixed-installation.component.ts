@@ -66,7 +66,15 @@ export class FixedInstallationComponent {
     
     
     onSubmit() {
-        console.log('Formulario válido', this.fuelForm.value);
+        console.log('Formulario válido: ', this.fuelForm.get('calculationYear')?.value, 
+        this.fuelForm.get('productionCenter')?.value, 
+        this.fuelForm.get('quantity')?.value, this.fuelForm.get('fuelType')?.value.id);
+        const formValue = this.fuelForm.value
+        formValue.calculation_year = this.fuelForm.get('calculationYear')?.value
+        formValue.production_center = this.fuelForm.get('productionCenter')?.value
+        formValue.fuel_type = this.fuelForm.get('fuelType')?.value.id
+        formValue.quantity = this.fuelForm.get('quantity')?.value
+
         this.scopeOneRecordsService.createRecord(this.fuelForm.value)
           .subscribe(
             (fuel: any) => {

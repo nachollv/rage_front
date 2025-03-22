@@ -29,39 +29,35 @@ export class ScopeOneRecordsService {
 
   // Obtener un registro por ID
   getRecord(id: number): Observable<any> {
-    return this.http.get(`${this.apiUrl}/show/${id}`).pipe(
+    return this.http.get(`${this.apiUrl}/scopeonerecords/show/${id}`).pipe(
       catchError(this.handleError)
     );
   }
 
   // Crear un nuevo registro
   createRecord(data: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/create`, data).pipe(
+    return this.http.post(`${this.apiUrl}/scopeonerecords/create`, data).pipe(
       catchError(this.handleError)
     );
   }
 
   // Actualizar un registro por ID
   updateRecord(id: number, data: any): Observable<any> {
-    return this.http.put(`${this.apiUrl}/update/${id}`, data).pipe(
+    return this.http.put(`${this.apiUrl}/scopeonerecords/update/${id}`, data).pipe(
       catchError(this.handleError)
     );
   }
 
   // Eliminar un registro por ID
   deleteRecord(id: number): Observable<any> {
-    return this.http.delete(`${this.apiUrl}/delete/${id}`).pipe(
+    return this.http.delete(`${this.apiUrl}/scopeonerecords/delete/${id}`).pipe(
       catchError(this.handleError)
     );
   }
 
   // Obtener registros por calculationYear y productionCenter
-  getRecordsByFilters(calculationYear: number, productionCenter: number): Observable<any> {
-      return this.http.get<any>(`${this.apiUrl}/scopeonerecords/calculationYear/${calculationYear}/productionCenter/${productionCenter}`, {
-      params: {
-        calculationYear: calculationYear.toString(),
-        productionCenter: productionCenter
-      }
+  getRecordsByFilters(activityYear: number, productionCenter: number): Observable<any> {
+      return this.http.get<any>(`${this.apiUrl}/scopeonerecords/activityYear/${activityYear}/productionCenter/${productionCenter}`, {
     }).pipe(
       catchError(this.handleError)
     );
