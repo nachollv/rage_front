@@ -2,11 +2,11 @@
 <form [formGroup]="fuelForm" (ngSubmit)="onSubmit()">
   <mat-form-field>
     <mat-label>Año de cálculo</mat-label>
-    <input matInput formControlName="year">
+    <input matInput formControlName="calculationYear">
   </mat-form-field>
   <mat-form-field>
     <mat-label>Centro de producción</mat-label>
-    <input matInput formControlName="building">
+    <input matInput formControlName="productionCenter">
   </mat-form-field>
 
   <mat-form-field>
@@ -18,7 +18,7 @@
 
   <mat-form-field>
     <mat-label>Cantidad (ud)</mat-label>
-    <input matInput type="number" formControlName="quantity" (change)="onFuelTypeChange()">
+    <input matInput type="number" formControlName="quantity" (change)="onQuantityChange()">
   </mat-form-field>
 
   <section ngClass="emissions">
@@ -62,7 +62,7 @@
     <input matInput type="number" formControlName="totalEmissions">
   </mat-form-field>
 
-  <button mat-raised-button color="accent" type="submit">Registrar</button>
+  <button mat-raised-button color="accent" type="submit" [disabled]="!fuelForm.valid">Registrar</button>
 </form>
 </mat-card>
 

@@ -5,7 +5,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent } from '../../../dialog/dialog.component';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSnackBar } from '@angular/material/snack-bar';
-
+import { ScopeOneRecordsService } from '../../../services/scope-one-records.service';
 @Component({
   selector: 'app-fixed-installation',
   templateUrl: './fixed-installation.component.html',
@@ -19,10 +19,13 @@ export class FixedInstallationComponent {
     fuelForm: FormGroup;
     fuelTypes: any[] = []
     
-    constructor(private fb: FormBuilder, public dialog: MatDialog, private fuelDataService: FuelDataService, private snackBar: MatSnackBar) {
+    constructor(private fb: FormBuilder, public dialog: MatDialog,
+      private fuelDataService: FuelDataService,
+      private scopeOneRecordsService: ScopeOneRecordsService,
+      private snackBar: MatSnackBar) {
       this.fuelForm = this.fb.group({
-        year: [{ value: '2023', disabled: true }, [Validators.required, Validators.minLength(4), Validators.maxLength(4)]],
-        building: [{value: '', disabled: true}],
+        calculationYear: [{ value: '2023', disabled: true }, [Validators.required, Validators.minLength(4), Validators.maxLength(4)]],
+        productionCenter: [{value: '1', disabled: true}],
         fuelType: ['', Validators.required],
         quantity: ['', [Validators.required, Validators.min(0)]],
         defaultFactor: this.fb.group({
@@ -37,41 +40,45 @@ export class FixedInstallationComponent {
         }),
         totalEmissions: [{ value: 0, disabled: true }]
       });
-      this.getFuelConsumptions()
+      this.getFuelConsumptions(2023)
+      this.getScopeOneRecords(2023, 1)
     }
 
-    getFuelConsumptions() {
-      this.fuelDataService.getByYear(2023)
+    getFuelConsumptions(calculationYear: number = 2023) {
+      this.fuelDataService.getByYear(calculationYear)
         .subscribe((fuel:any) => {
         this.fuelTypes = fuel
         })
     }
-  
-    calculateEmissions() {
-      const quantity = this.fuelForm.get('quantity')?.value;
-      const defaultFactor = this.fuelForm.get('defaultFactor')?.value;
-      const otherFactor = this.fuelForm.get('otherFactor')?.value;
-  
-      const co2 = quantity * (otherFactor.co2 || defaultFactor.co2);
-      const ch4 = quantity * (otherFactor.ch4 || defaultFactor.ch4);
-      const n2o = quantity * (otherFactor.n2o || defaultFactor.n2o);
-  
-      this.fuelForm.get('partialEmissions.co2')?.setValue(co2);
-      this.fuelForm.get('partialEmissions.ch4')?.setValue(ch4);
-      this.fuelForm.get('partialEmissions.n2o')?.setValue(n2o);
-  
-      const totalEmissions = co2 + ch4 + n2o;
-      this.fuelForm.get('totalEmissions')?.setValue(totalEmissions);
-    }
-  
-    onSubmit() {
-      if (this.fuelForm.valid) {
-        console.log('Formulario válido', this.fuelForm.value);
-      } else {
-        console.log('Formulario no válido');
-      }
-    }
 
+    getScopeOneRecords(calculationYear: number = 2023, productionCenter: number = 1) {
+      this.scopeOneRecordsService.getRecordsByFilters(calculationYear, productionCenter)
+        .subscribe({
+          next: (records: any) => {
+            this.dataSource.data = records;
+            this.showSnackBar('Registros obtenidos: ' + records);
+          },
+          error: (err: any) => {
+            this.showSnackBar('Error al obtener los registros: ' + err);
+          }
+        });
+    }
+    
+    
+    onSubmit() {
+        console.log('Formulario válido', this.fuelForm.value);
+        this.scopeOneRecordsService.createRecord(this.fuelForm.value)
+          .subscribe(
+            (fuel: any) => {
+              this.showSnackBar('Éxito:' + fuel);
+              this.getFuelConsumptions()
+            },
+            (error: any) => {
+              this.showSnackBar('Error al crear:' + error);
+            }
+          );
+    }
+    
     setEmissionFactors() {
         const fuelData = this.fuelForm.value
         const fuelType = fuelData.fuelType
@@ -87,7 +94,7 @@ export class FixedInstallationComponent {
         this.fuelForm.get('totalEmissions')?.setValue(fuelData.quantity * parseFloat(CO2_kg_ud)+fuelData.quantity * parseFloat(CH4_g_ud)+fuelData.quantity * parseFloat(N2O_g_ud))
     }
 
-    onFuelTypeChange() {
+    onQuantityChange() {
 
       if (this.fuelForm.valid) {
         const fuelData = this.fuelForm.value
@@ -122,7 +129,7 @@ export class FixedInstallationComponent {
 
     private showSnackBar(error: string): void {
       this.snackBar.open(error, 'Close', {
-        duration: 1500,
+        duration: 15000,
         verticalPosition: 'bottom',
         horizontalPosition: 'center',
         panelClass: ['custom-snackbar'],

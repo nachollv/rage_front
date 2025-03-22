@@ -47,7 +47,6 @@ export class LeakageRefrigerantGasesComponent {
   getregistros() {
     this.registerLeak.getRegistros()
       .subscribe((registros:any) => {
-      console.log ("registros", registros)
       this.dataSource = new MatTableDataSource(registros)
       })
   }

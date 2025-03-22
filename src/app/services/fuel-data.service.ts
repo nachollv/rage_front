@@ -49,7 +49,7 @@ export class FuelDataService {
     }
   
     create(data: EmisionesCombustibles): Observable<EmisionesCombustibles> {
-      return this.http.post<EmisionesCombustibles>(this.apiUrl, data).pipe(
+      return this.http.post<EmisionesCombustibles>(`${this.apiUrl}/create`, data).pipe(
         catchError(this.handleError)
       );
     }
