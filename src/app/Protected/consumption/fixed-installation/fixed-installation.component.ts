@@ -25,7 +25,7 @@ export class FixedInstallationComponent {
       private scopeOneRecordsService: ScopeOneRecordsService,
       private snackBar: MatSnackBar) {
       this.fuelForm = this.fb.group({
-        calculationYear: [{ value: '2023', disabled: true }, [Validators.required, Validators.minLength(4), Validators.maxLength(4)]],
+        calculationYear: [{ value: '2023', disabled: true }],
         productionCenter: [{value: '2', disabled: true}],
         fuelType: ['', Validators.required],
         quantity: ['', [Validators.required, Validators.min(0)]],

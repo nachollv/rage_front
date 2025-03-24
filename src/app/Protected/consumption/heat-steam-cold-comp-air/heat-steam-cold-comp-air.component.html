@@ -1,16 +1,24 @@
 <mat-card>
   <form [formGroup]="energyForm" (ngSubmit)="onSubmit()">
     <table mat-table [dataSource]="rows.controls" class="mat-elevation-z8">
+      <!-- Año de la actividad -->
+        <ng-container matColumnDef="calculationYear">
+          <th mat-header-cell *matHeaderCellDef>Año de actividad</th>
+            <td mat-cell *matCellDef="let row; let i = index">
+              <mat-form-field>
+                <input matInput formControlName="calculationYear">
+              </mat-form-field>
+            </td>
+        </ng-container>
       <!-- Edificio / Sede -->
-      <ng-container matColumnDef="building">
+      <ng-container matColumnDef="productionCenter">
         <th mat-header-cell *matHeaderCellDef>Edificio / Sede</th>
         <td mat-cell *matCellDef="let row; let i = index">
           <mat-form-field>
-            <input matInput formControlName="building">
+            <input matInput formControlName="productionCenter">
           </mat-form-field>
         </td>
       </ng-container>
-  
       <!-- Tipo de energía adquirida -->
       <ng-container matColumnDef="energyType">
         <th mat-header-cell *matHeaderCellDef>Tipo de energía adquirida</th>
@@ -51,8 +59,8 @@
         </td>
       </ng-container>
   
-      <tr mat-header-row *matHeaderRowDef="['building', 'energyType', 'consumption', 'emissionFactor', 'emissions']"></tr>
-      <tr mat-row *matRowDef="let row; columns: ['building', 'energyType', 'consumption', 'emissionFactor', 'emissions'];"></tr>
+      <tr mat-header-row *matHeaderRowDef="['calculationYear', 'productionCenter', 'energyType', 'consumption', 'emissionFactor', 'emissions']"></tr>
+      <tr mat-row *matRowDef="let row; columns: ['calculationYear', 'productionCenter', 'energyType', 'consumption', 'emissionFactor', 'emissions'];"></tr>
     </table>
     <button mat-button type="button" (click)="addRow()">Agregar fila</button>
     <button mat-button type="submit">Enviar</button>

@@ -17,7 +17,8 @@ export class HeatSteamColdCompAirComponent {
   
     createRow(): FormGroup {
       return this.fb.group({
-        building: [''], // Edificio / Sede
+        calculationYear: [{ value: '2023', disabled: true }],
+        productionCenter: [{value: '2', disabled: true}],
         energyType: [''], // Tipo de energía adquirida
         consumption: [''], // Dato de consumo (kWh)
         emissionFactor: [''], // Factor emisión (kg CO2e/kWh)
