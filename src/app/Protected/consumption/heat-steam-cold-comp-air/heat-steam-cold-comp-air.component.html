@@ -1,1 +1,61 @@
-<p>heat-steam-cold-comp-air works!</p>
+<mat-card>
+  <form [formGroup]="energyForm" (ngSubmit)="onSubmit()">
+    <table mat-table [dataSource]="rows.controls" class="mat-elevation-z8">
+      <!-- Edificio / Sede -->
+      <ng-container matColumnDef="building">
+        <th mat-header-cell *matHeaderCellDef>Edificio / Sede</th>
+        <td mat-cell *matCellDef="let row; let i = index">
+          <mat-form-field>
+            <input matInput formControlName="building">
+          </mat-form-field>
+        </td>
+      </ng-container>
+  
+      <!-- Tipo de energía adquirida -->
+      <ng-container matColumnDef="energyType">
+        <th mat-header-cell *matHeaderCellDef>Tipo de energía adquirida</th>
+        <td mat-cell *matCellDef="let row; let i = index">
+          <mat-form-field>
+            <input matInput formControlName="energyType">
+          </mat-form-field>
+        </td>
+      </ng-container>
+  
+      <!-- Dato de consumo (kWh) -->
+      <ng-container matColumnDef="consumption">
+        <th mat-header-cell *matHeaderCellDef>Dato de consumo (kWh)</th>
+        <td mat-cell *matCellDef="let row; let i = index">
+          <mat-form-field>
+            <input matInput type="number" formControlName="consumption" (input)="calculateEmissions(i)">
+          </mat-form-field>
+        </td>
+      </ng-container>
+  
+      <!-- Factor emisión (kg CO2e/kWh) -->
+      <ng-container matColumnDef="emissionFactor">
+        <th mat-header-cell *matHeaderCellDef>Factor emisión (kg CO2e/kWh)</th>
+        <td mat-cell *matCellDef="let row; let i = index">
+          <mat-form-field>
+            <input matInput type="number" formControlName="emissionFactor" (input)="calculateEmissions(i)">
+          </mat-form-field>
+        </td>
+      </ng-container>
+  
+      <!-- Emisiones (kg CO2e) -->
+      <ng-container matColumnDef="emissions">
+        <th mat-header-cell *matHeaderCellDef>Emisiones (kg CO2e)</th>
+        <td mat-cell *matCellDef="let row">
+          <mat-form-field>
+            <input matInput formControlName="emissions">
+          </mat-form-field>
+        </td>
+      </ng-container>
+  
+      <tr mat-header-row *matHeaderRowDef="['building', 'energyType', 'consumption', 'emissionFactor', 'emissions']"></tr>
+      <tr mat-row *matRowDef="let row; columns: ['building', 'energyType', 'consumption', 'emissionFactor', 'emissions'];"></tr>
+    </table>
+    <button mat-button type="button" (click)="addRow()">Agregar fila</button>
+    <button mat-button type="submit">Enviar</button>
+  </form>
+  
+</mat-card>
