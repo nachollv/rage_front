@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogComponent } from '../../../../dialog/dialog.component';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-electricity-consumption-vehicles',
@@ -7,49 +10,27 @@ import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
   styleUrl: './electricity-consumption-vehicles.component.scss'
 })
 export class ElectricityConsumptionVehiclesComponent {
-  emisionesForm: FormGroup;
+  vehiclesElectricityConsumption: FormGroup;
 
-  constructor(private fb: FormBuilder) {
-    this.emisionesForm = this.fb.group({
-      registros: this.fb.array([])
-    });
+    constructor(private fb: FormBuilder, public dialog: MatDialog) {
 
-    // Inicialización de ejemplo
-    this.addRegistro({
-      edificio: 'Edificio Principal',
-      comercializadora: 'ACCIONA GREEN ENERGY DEVELOPMENTS SL',
-      garantiaOrigen: 'Sí',
-      consumo: 50,
-      factorMixElectrico: 0.302,
-      emisiones: 15.10
-    });
+    this.vehiclesElectricityConsumption = this.fb.group({
+        productionCenter: [{ value: 2, disabled: true }],
+        activityYear: [{ value: 2025, disabled: true }],
+        periodoFactura: ['', Validators.required],
+        consumos: this.fb.group({
+        comercializadora: ['', [Validators.required]],
+        activityData: ['', [Validators.required, Validators.pattern(/^\d+(\.\d{2})?$/)]],
+        gdo: ['', [Validators.required]]}),
+        factorMixElectrico: [{ value: '', disabled: true }],
+        emisionesCO2e: [{ value: 0, disabled: true }]
+      });
   }
-
-  ngOnInit(): void {}
-
-  // Método para obtener el FormArray
-  get registros(): FormArray {
-    return this.emisionesForm.get('registros') as FormArray;
-  }
-
-  // Método para añadir un nuevo registro al formulario
-  addRegistro(data: any) {
-    const registroGroup = this.fb.group({
-      edificio: [data.edificio, Validators.required],
-      comercializadora: [data.comercializadora, Validators.required],
-      garantiaOrigen: [data.garantiaOrigen, Validators.required],
-      consumo: [data.consumo, [Validators.required, Validators.min(0)]],
-      factorMixElectrico: [data.factorMixElectrico, [Validators.required, Validators.min(0)]],
-      emisiones: [data.emisiones, [Validators.required, Validators.min(0)]]
-    });
-
-    this.registros.push(registroGroup);
-  }
-
+  
   // Método para enviar el formulario
   onSubmit() {
-    if (this.emisionesForm.valid) {
-      console.log('Formulario válido:', this.emisionesForm.value);
+    if (this.vehiclesElectricityConsumption.valid) {
+      console.log('Formulario válido:', this.vehiclesElectricityConsumption.value);
     } else {
       console.log('Formulario no válido');
     }

@@ -1,14 +1,15 @@
 <mat-card>
  
-<form [formGroup]="consumoForm" (ngSubmit)="onSubmit()">
+<form [formGroup]="buildingElecConsumption" (ngSubmit)="onSubmit()">
 
   <mat-form-field appearance="fill">
     <mat-label>Año de cálculo</mat-label>
-    <input matInput formControlName="year" placeholder="Ejemplo: 2023">
+    <input matInput formControlName="activityYear" placeholder="Ejemplo: 2023">
   </mat-form-field>
+  
   <mat-form-field appearance="fill">
     <mat-label>Centro de producción</mat-label>
-    <input matInput formControlName="delegacion" placeholder="Ejemplo: Zona Norte">
+    <input matInput formControlName="productionCenter" placeholder="Ejemplo: Zona Norte">
   </mat-form-field>
 
   <mat-form-field appearance="fill">
@@ -49,16 +50,16 @@
     <mat-form-field appearance="fill">
       <mat-label>Dato de consumo (kWh)</mat-label>
       <input matInput formControlName="activityData" type="text">
-      <mat-error *ngIf="consumoForm.get('activityData')?.hasError('required')">
+      <mat-error *ngIf="buildingElecConsumption.get('activityData')?.hasError('required')">
         {{ "Este campo es obligatorio" | translate }}
       </mat-error>
-      <mat-error *ngIf="consumoForm.get('activityData')?.hasError('pattern')">
+      <mat-error *ngIf="buildingElecConsumption.get('activityData')?.hasError('pattern')">
         {{ "El formato debe ser un número con hasta dos decimales" | translate }}
       </mat-error>
     </mat-form-field>
   </section>
 
-  <button mat-raised-button color="primary" type="submit"  [disabled]="consumoForm.invalid">Registrar</button>
+  <button mat-raised-button color="primary" type="submit"  [disabled]="buildingElecConsumption.invalid">Registrar</button>
 </form>
 </mat-card>
 <app-data-table [displayedColumns]="displayedColumns" [dataSource]="dataSource"></app-data-table>

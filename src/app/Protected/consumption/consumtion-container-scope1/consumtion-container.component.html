@@ -7,9 +7,14 @@
     <mat-icon style="color: #ff9310;">info</mat-icon>{{"fixedInstallationsFuelConsumption" | translate}}</button>
     <app-fixed-installation></app-fixed-installation>
   </mat-tab>
-  <mat-tab label="{{'fuelConsumptionVeniclesMachinery'  | translate}}">
+  <mat-tab label="{{'fuelConsumptionVenicles'  | translate}}">
     <button mat-menu-item (click)="openDialog('ACLARACIÓN', 'xxxxxxxxxxxxxxxxxxxxxxxxxxxx')"> 
-    <mat-icon style="color: #ff9310;">info</mat-icon>{{"fuelConsumptionVeniclesMachinery" | translate}}</button>
+    <mat-icon style="color: #ff9310;">info</mat-icon>{{"fuelConsumptionVenicles" | translate}}</button>
+    <app-machinery-vehicles></app-machinery-vehicles>
+  </mat-tab>
+  <mat-tab label="{{'fuelConsumptionMachinery'  | translate}}">
+    <button mat-menu-item (click)="openDialog('ACLARACIÓN', 'xxxxxxxxxxxxxxxxxxxxxxxxxxxx')"> 
+    <mat-icon style="color: #ff9310;">info</mat-icon>{{"fuelConsumptionMachinery" | translate}}</button>
     <app-machinery-vehicles></app-machinery-vehicles>
   </mat-tab>
   <mat-tab label="{{'fluorGasesLeakage'  | translate}}">

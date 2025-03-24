@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { DialogComponent } from '../../../dialog/dialog.component';
+import { DialogComponent } from '../../../../dialog/dialog.component';
 import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
@@ -20,12 +20,12 @@ export class ElectricityComponent {
     { delegation: 'Pollença', year: 2024, '01': 25, '02': 34.25, '03': '23.54', '04': 45.345, '05': 45.345, '06': 45.345, '07': 45.345, '08': 45.345, '09': 45.345, '10': 45.345, '11': 45.345, edit: true, delete: true }
   ];
   dataSource = new MatTableDataSource<any>(this.data)
-  consumoForm: FormGroup;
+  buildingElecConsumption: FormGroup;
   
     constructor(private fb: FormBuilder, public dialog: MatDialog) {
-      this.consumoForm = this.fb.group({
-        delegacion: ['', Validators.required],
-        year: [{ value: 2025, disabled: true }],
+      this.buildingElecConsumption = this.fb.group({
+        productionCenter: [{ value: 2, disabled: true }],
+        activityYear: [{ value: 2025, disabled: true }],
         periodoFactura: ['mensual', Validators.required],
         consumos: this.fb.group({
         comercializadora: ['', [Validators.required]],
@@ -36,8 +36,8 @@ export class ElectricityComponent {
     }
   
     onSubmit() {
-      if (this.consumoForm.valid) {
-        console.log(this.consumoForm.value);
+      if (this.buildingElecConsumption.valid) {
+        console.log(this.buildingElecConsumption.value);
       }
     }
 
