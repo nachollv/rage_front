@@ -1,8 +1,8 @@
 <header>
   <mat-toolbar>
-    <button mat-icon-button aria-label="Menu" [matMenuTriggerFor]="mainMenu"><mat-icon>menu</mat-icon></button>
+    <button mat-icon-button aria-label="Menu" [matMenuTriggerFor]="mainMenu" accesskey="m" tabindex="0"><mat-icon>menu</mat-icon></button>
     <span ngClass="header-title">{{'rageTitle' | translate}}</span>
-    <img src="../../../assets/logo-huella.jpeg" alt="Logotipo de la empresa" title="Registro Actividad" ngClass="header-logo" (click)="goHome()">
+    <img src="../../../assets/logo-huella.jpeg" alt="Logotipo de la empresa" title="Registro Actividad" ngClass="header-logo" (click)="goHome()" accesskey="l" tabindex="1">
   </mat-toolbar>
 </header>
 <mat-menu #mainMenu="matMenu">
