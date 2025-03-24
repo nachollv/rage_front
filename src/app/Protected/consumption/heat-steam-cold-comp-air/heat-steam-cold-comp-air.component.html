@@ -1,69 +1,62 @@
 <mat-card>
-  <form [formGroup]="energyForm" (ngSubmit)="onSubmit()">
-    <table mat-table [dataSource]="rows.controls" class="mat-elevation-z8">
-      <!-- Año de la actividad -->
-        <ng-container matColumnDef="calculationYear">
-          <th mat-header-cell *matHeaderCellDef>Año de actividad</th>
-            <td mat-cell *matCellDef="let row; let i = index">
-              <mat-form-field>
-                <input matInput formControlName="calculationYear">
-              </mat-form-field>
-            </td>
-        </ng-container>
-      <!-- Edificio / Sede -->
-      <ng-container matColumnDef="productionCenter">
-        <th mat-header-cell *matHeaderCellDef>Edificio / Sede</th>
-        <td mat-cell *matCellDef="let row; let i = index">
-          <mat-form-field>
-            <input matInput formControlName="productionCenter">
-          </mat-form-field>
-        </td>
-      </ng-container>
-      <!-- Tipo de energía adquirida -->
-      <ng-container matColumnDef="energyType">
-        <th mat-header-cell *matHeaderCellDef>Tipo de energía adquirida</th>
-        <td mat-cell *matCellDef="let row; let i = index">
-          <mat-form-field>
-            <input matInput formControlName="energyType">
-          </mat-form-field>
-        </td>
-      </ng-container>
+  <form [formGroup]="energyForm" (ngSubmit)="onSubmit()" class="form-container">
+    <!-- Año de cálculo -->
+    <div class="form-group">
+      <mat-form-field appearance="fill">
+        <mat-label>Año de cálculo</mat-label>
+        <input matInput formControlName="calculationYear">
+      </mat-form-field>
+    </div>
   
-      <!-- Dato de consumo (kWh) -->
-      <ng-container matColumnDef="consumption">
-        <th mat-header-cell *matHeaderCellDef>Dato de consumo (kWh)</th>
-        <td mat-cell *matCellDef="let row; let i = index">
-          <mat-form-field>
-            <input matInput type="number" formControlName="consumption" (input)="calculateEmissions(i)">
-          </mat-form-field>
-        </td>
-      </ng-container>
+    <!-- Centro de producción -->
+    <div class="form-group">
+      <mat-form-field appearance="fill">
+        <mat-label>Centro de producción</mat-label>
+        <input matInput formControlName="productionCenter">
+      </mat-form-field>
+    </div>
   
-      <!-- Factor emisión (kg CO2e/kWh) -->
-      <ng-container matColumnDef="emissionFactor">
-        <th mat-header-cell *matHeaderCellDef>Factor emisión (kg CO2e/kWh)</th>
-        <td mat-cell *matCellDef="let row; let i = index">
-          <mat-form-field>
-            <input matInput type="number" formControlName="emissionFactor" (input)="calculateEmissions(i)">
-          </mat-form-field>
-        </td>
-      </ng-container>
+    <!-- Tipo de energía -->
+    <div class="form-group">
+      <mat-form-field appearance="fill">
+        <mat-label>Tipo de energía</mat-label>
+        <mat-select formControlName="energyType">
+          <mat-option value="calor">Calor</mat-option>
+          <mat-option value="vapor">Vapor</mat-option>
+          <mat-option value="frio">Frío</mat-option>
+          <mat-option value="aire-comprimido">Aire comprimido</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
   
-      <!-- Emisiones (kg CO2e) -->
-      <ng-container matColumnDef="emissions">
-        <th mat-header-cell *matHeaderCellDef>Emisiones (kg CO2e)</th>
-        <td mat-cell *matCellDef="let row">
-          <mat-form-field>
-            <input matInput formControlName="emissions">
-          </mat-form-field>
-        </td>
-      </ng-container>
+    <!-- Factor de emisión -->
+    <div class="form-group">
+      <mat-form-field appearance="fill">
+        <mat-label>Factor de emisión (kg CO2e/kWh)</mat-label>
+        <input matInput type="number" formControlName="emissionFactor" (input)="calculateEmissions()">
+      </mat-form-field>
+    </div>
+
+    <!-- Consumo -->
+    <div class="form-group">
+      <mat-form-field appearance="fill">
+        <mat-label>Consumo (kWh)</mat-label>
+          <input matInput type="number" formControlName="consumption" (input)="calculateEmissions()">
+      </mat-form-field>
+    </div>
   
-      <tr mat-header-row *matHeaderRowDef="['calculationYear', 'productionCenter', 'energyType', 'consumption', 'emissionFactor', 'emissions']"></tr>
-      <tr mat-row *matRowDef="let row; columns: ['calculationYear', 'productionCenter', 'energyType', 'consumption', 'emissionFactor', 'emissions'];"></tr>
-    </table>
-    <button mat-button type="button" (click)="addRow()">Agregar fila</button>
-    <button mat-button type="submit">Enviar</button>
+    <!-- Emisiones -->
+    <div class="form-group">
+      <mat-form-field appearance="fill">
+        <mat-label>Emisiones (kg CO2e)</mat-label>
+        <input matInput formControlName="emissions">
+      </mat-form-field>
+    </div>
+  
+    <!-- Botones -->
+    <div class="button-group">
+      <button mat-raised-button color="accent" type="submit">Enviar</button>
+    </div>
   </form>
   
 </mat-card>
