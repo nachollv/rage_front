@@ -11,11 +11,12 @@ consumida por la organización.')"><mat-icon style="color: #0a470d;">info</mat-i
   <mat-tab label="{{'electricityConsumptionInVehicles'  | translate}}">
     <button mat-menu-item (click)="openDialog('Instalaciones fijas no sujetas a las obligaciones establecidas en la Ley 1/2005, de 9 de marzo ','Descripción...')">
       <mat-icon style="color: #ff9310;">info</mat-icon>{{"electricityConsumptionInVehicles" | translate}}</button>
-      <app-electricity-consumption-vehicles></app-electricity-consumption-vehicles>
+      <app-electricity-vehicles></app-electricity-vehicles>
   </mat-tab>
 
   <mat-tab label="{{'heatSteamColdCompressedAir'  | translate}}">
     <button mat-menu-item (click)="openDialog('Instalaciones fijas no sujetas a las obligaciones establecidas en la Ley 1/2005, de 9 de marzo ','Descripción...')">
-      <mat-icon style="color: #ff9310;">info</mat-icon>{{"heatSteamColdCompressedAir" | translate}}</button> 
+      <mat-icon style="color: #ff9310;">info</mat-icon>{{"heatSteamColdCompressedAir" | translate}}</button>
+      <app-heat-steam-cold-comp-air></app-heat-steam-cold-comp-air>
   </mat-tab>
 </mat-tab-group>

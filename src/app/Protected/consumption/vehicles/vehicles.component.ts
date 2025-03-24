@@ -1,16 +1,16 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { VehiclesFuelConsumptionService } from '../../../../services/vehicles-fuel-consumption.service';
+import { VehiclesFuelConsumptionService } from '../../../services/vehicles-fuel-consumption.service';
 import { MatDialog } from '@angular/material/dialog';
-import { DialogComponent } from '../../../../dialog/dialog.component';
+import { DialogComponent } from '../../../dialog/dialog.component';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { ScopeOneRecordsService } from '../../../../services/scope-one-records.service';
+import { ScopeOneRecordsService } from '../../../services/scope-one-records.service';
 
 @Component({
-  selector: 'app-machinery-vehicles',
-  templateUrl: './machinery-vehicles.component.html',
-  styleUrls: ['./machinery-vehicles.component.scss']
+  selector: 'app-vehicles',
+  templateUrl: './vehicles.component.html',
+  styleUrls: ['./vehicles.component.scss']
 })
 export class MachineryVehiclesComponent {
     displayedColumns: string[] = ['calculationYear', 'productionCenter', 'vehicle_type','fuel_type', 'quantity', 'edit', 'delete']

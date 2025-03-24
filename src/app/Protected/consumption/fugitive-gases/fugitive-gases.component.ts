@@ -1,18 +1,18 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { LeakrefrigerantgasesService } from '../../../../services/leakrefrigerantgases.service';
-import { RegistroemisionesFugasService } from '../../../../services/registroemisionesfugas.service';
+import { LeakrefrigerantgasesService } from '../../../services/leakrefrigerantgases.service';
+import { RegistroemisionesFugasService } from '../../../services/registroemisionesfugas.service';
 import { MatDialog } from '@angular/material/dialog';
-import { DialogComponent } from '../../../../dialog/dialog.component';
+import { DialogComponent } from '../../../dialog/dialog.component';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
-  selector: 'app-leakage-refrigerant-gases',
-  templateUrl: './leakage-refrigerant-gases.component.html',
-  styleUrl: './leakage-refrigerant-gases.component.scss'
+  selector: 'app-fugitive-gases',
+  templateUrl: './fugitive-gases.component.html',
+  styleUrl: './fugitive-gases.component.scss'
 })
-export class LeakageRefrigerantGasesComponent {
+export class FugitiveGasesComponent {
   displayedColumns: string[] = ['calculationYear', 'productionCenter', 'nombre_gas_mezcla', 'capacidad_equipo', 'recarga_equipo', 'created_at', 'updated_at', 'edit', 'delete']
   data = [{ }]
   dataSource = new MatTableDataSource<any>(this.data)

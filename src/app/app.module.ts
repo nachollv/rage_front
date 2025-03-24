@@ -38,7 +38,7 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { OrganGeneralDataComponent } from './Protected/organ-general-data/organ-general-data.component';
 import { DataTableComponent } from './Protected/data-table/data-table.component';
-import { ElectricityComponent } from './Protected/consumption/consumtion-container-scope2/electricity/electricity.component';
+import { ElectricityComponent } from './Protected/consumption/electricity/electricity.component';
 import { FixedInstallationComponent } from './Protected/consumption/fixed-installation/fixed-installation.component';
 import { HomeComponent } from './home/home.component';
 import { DialogComponent } from './dialog/dialog.component';
@@ -46,10 +46,12 @@ import { ConsumtionContainerComponent } from './Protected/consumption/consumtion
 import { ConsumtionContainerScope2Component } from './Protected/consumption/consumtion-container-scope2/consumtion-container-scope2.component';
 import { ControlPanelContainerComponent } from './control-panel-container/control-panel-container.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
-import { MachineryVehiclesComponent } from './Protected/consumption/machinery-vehicles/machinery-vehicles/machinery-vehicles.component';
+import { MachineryVehiclesComponent } from './Protected/consumption/vehicles/vehicles.component';
 import { RecoveryPasswordComponent } from './recovery-password/recovery-password.component';
-import { LeakageRefrigerantGasesComponent } from './Protected/consumption/leakage-gases/leakage-refrigerant-gases/leakage-refrigerant-gases.component';
-import { ElectricityConsumptionVehiclesComponent } from './Protected/consumption/consumtion-container-scope2/electricity-consumption-vehicles/electricity-consumption-vehicles.component';
+import { FugitiveGasesComponent } from './Protected/consumption/fugitive-gases/fugitive-gases.component';
+import { ElectricityVehiclesComponent } from './Protected/consumption/electricity-vehicles/electricity-vehicles.component';
+import { MachineryComponent } from './Protected/consumption/machinery/machinery.component';
+import { HeatSteamColdCompAirComponent } from './Protected/consumption/heat-steam-cold-comp-air/heat-steam-cold-comp-air.component';
 
 // Función para cargar los archivos de traducción
 export function HttpLoaderFactory(http: HttpClient) {
@@ -81,8 +83,10 @@ export function tokenGetter() {
     PageNotFoundComponent,
     MachineryVehiclesComponent,
     RecoveryPasswordComponent,
-    LeakageRefrigerantGasesComponent,
-    ElectricityConsumptionVehiclesComponent,
+    FugitiveGasesComponent,
+    ElectricityVehiclesComponent,
+    MachineryComponent,
+    HeatSteamColdCompAirComponent,
   ],
   imports: [
     BrowserModule,

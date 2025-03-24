@@ -4,7 +4,7 @@ import { AuthGuard } from './auth.guard';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { OrganGeneralDataComponent } from './Protected/organ-general-data/organ-general-data.component';
-import { ElectricityComponent } from './Protected/consumption/consumtion-container-scope2/electricity/electricity.component';
+import { ElectricityComponent } from './Protected/consumption/electricity/electricity.component';
 import { HomeComponent } from './home/home.component';
 import { ConsumtionContainerComponent } from './Protected/consumption/consumtion-container-scope1/consumtion-container.component';
 import { ConsumtionContainerScope2Component } from './Protected/consumption/consumtion-container-scope2/consumtion-container-scope2.component';

@@ -7,19 +7,24 @@
     <mat-icon style="color: #ff9310;">info</mat-icon>{{"fixedInstallationsFuelConsumption" | translate}}</button>
     <app-fixed-installation></app-fixed-installation>
   </mat-tab>
-  <mat-tab label="{{'fuelConsumptionVenicles'  | translate}}">
+  <mat-tab label="{{'roadTransport'  | translate}}">
     <button mat-menu-item (click)="openDialog('ACLARACIÓN', 'xxxxxxxxxxxxxxxxxxxxxxxxxxxx')"> 
-    <mat-icon style="color: #ff9310;">info</mat-icon>{{"fuelConsumptionVenicles" | translate}}</button>
-    <app-machinery-vehicles></app-machinery-vehicles>
+    <mat-icon style="color: #ff9310;">info</mat-icon>{{"roadTransport" | translate}}</button>
+    <app-vehicles></app-vehicles>
+  </mat-tab>
+  <mat-tab label="{{'railSeaAirTransport'  | translate}}">
+    <button mat-menu-item (click)="openDialog('ACLARACIÓN', 'xxxxxxxxxxxxxxxxxxxxxxxxxxxx')"> 
+    <mat-icon style="color: #ff9310;">info</mat-icon>{{"railSeaAirTransport" | translate}}</button>
+    <app-vehicles></app-vehicles>
   </mat-tab>
   <mat-tab label="{{'fuelConsumptionMachinery'  | translate}}">
     <button mat-menu-item (click)="openDialog('ACLARACIÓN', 'xxxxxxxxxxxxxxxxxxxxxxxxxxxx')"> 
     <mat-icon style="color: #ff9310;">info</mat-icon>{{"fuelConsumptionMachinery" | translate}}</button>
-    <app-machinery-vehicles></app-machinery-vehicles>
+    <app-machinery></app-machinery>
   </mat-tab>
-  <mat-tab label="{{'fluorGasesLeakage'  | translate}}">
+  <mat-tab label="{{'fugitiveEmissions'  | translate}}">
     <button mat-menu-item (click)="openDialog('ACLARACIÓN', 'xxxxxxxxxxxxxxxxxxxxxxxxxxxx')"> 
-      <mat-icon style="color: #ff9310;">info</mat-icon>{{"fluorGasesLeakage" | translate}}</button>
-      <app-leakage-refrigerant-gases></app-leakage-refrigerant-gases>
+      <mat-icon style="color: #ff9310;">info</mat-icon>{{"fugitiveEmissions" | translate}}</button>
+      <app-fugitive-gases></app-fugitive-gases>
   </mat-tab>
 </mat-tab-group>

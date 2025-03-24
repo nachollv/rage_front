@@ -1,20 +1,20 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { DialogComponent } from '../../../../dialog/dialog.component';
+import { DialogComponent } from '../../../dialog/dialog.component';
 import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
-  selector: 'app-electricity-consumption-vehicles',
-  templateUrl: './electricity-consumption-vehicles.component.html',
-  styleUrl: './electricity-consumption-vehicles.component.scss'
+  selector: 'app-electricity-vehicles',
+  templateUrl: './electricity-vehicles.component.html',
+  styleUrl: './electricity-vehicles.component.scss'
 })
-export class ElectricityConsumptionVehiclesComponent {
-  vehiclesElectricityConsumption: FormGroup;
+export class ElectricityVehiclesComponent {
+  vehiclesElectricity: FormGroup;
 
     constructor(private fb: FormBuilder, public dialog: MatDialog) {
 
-    this.vehiclesElectricityConsumption = this.fb.group({
+    this.vehiclesElectricity = this.fb.group({
         productionCenter: [{ value: 2, disabled: true }],
         activityYear: [{ value: 2025, disabled: true }],
         periodoFactura: ['', Validators.required],
@@ -29,8 +29,8 @@ export class ElectricityConsumptionVehiclesComponent {
   
   // Método para enviar el formulario
   onSubmit() {
-    if (this.vehiclesElectricityConsumption.valid) {
-      console.log('Formulario válido:', this.vehiclesElectricityConsumption.value);
+    if (this.vehiclesElectricity.valid) {
+      console.log('Formulario válido:', this.vehiclesElectricity.value);
     } else {
       console.log('Formulario no válido');
     }
