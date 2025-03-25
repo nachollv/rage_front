@@ -1,16 +1,25 @@
-<mat-card>
+<mat-card ngClass="form-card">
   <form [formGroup]="transportForm" (ngSubmit)="onSubmit()">
-    <div *ngFor="let row of rows.controls; let i = index" [formGroupName]="i" class="form-row">
+    <section ngClass="form-row"> 
       <!-- Edificio / Sede -->
-      <mat-form-field appearance="fill">
-        <mat-label>Edificio / Sede</mat-label>
-        <input matInput formControlName="building" />
-      </mat-form-field>
+ 
+          <mat-form-field appearance="fill">
+            <mat-label>Año de cálculo</mat-label>
+           <input matInput formControlName="activityYear" placeholder="Ejemplo: 2023">
+          </mat-form-field>
+          <mat-form-field appearance="fill">
+            <mat-label>Centro de producción</mat-label>
+            <input matInput formControlName="productionCenter" placeholder="Ejemplo: Zona Norte">
+          </mat-form-field>
   
       <!-- Tipo de transporte -->
       <mat-form-field appearance="fill">
         <mat-label>Tipo de transporte</mat-label>
-        <input matInput formControlName="transportType" />
+        <mat-select formControlName="transportType">
+          <mat-option value="01">Transporte ferroviario</mat-option>
+            <mat-option value="02">Transporte marítimo</mat-option>
+            <mat-option value="03">Transporte aéreo</mat-option>
+        </mat-select>
       </mat-form-field>
   
       <!-- Tipo de Combustible -->
@@ -22,11 +31,11 @@
       <!-- Cantidad combustible (ud) -->
       <mat-form-field appearance="fill">
         <mat-label>Cantidad combustible (ud)</mat-label>
-        <input matInput type="number" formControlName="fuelQuantity" (input)="calculateEmissions(i)" />
+        <input matInput type="number" formControlName="fuelQuantity" (input)="calculateEmissions()" />
       </mat-form-field>
   
       <!-- Factores de emisión por defecto -->
-      <div formGroupName="defaultEmissionFactor" class="factor-group">
+      <section formGroupName="defaultEmissionFactor" ngClass="factor-group">
         <mat-form-field appearance="fill">
           <mat-label>kg CO₂/ud</mat-label>
           <input matInput type="number" formControlName="co2" />
@@ -39,10 +48,10 @@
           <mat-label>g N₂O/ud</mat-label>
           <input matInput type="number" formControlName="n2o" />
         </mat-form-field>
-      </div>
+      </section>
   
       <!-- Emisiones parciales -->
-      <div formGroupName="partialEmissions" class="emissions-group">
+      <section formGroupName="partialEmissions" ngClass="emissions-group">
         <mat-form-field appearance="fill">
           <mat-label>kg CO₂</mat-label>
           <input matInput formControlName="co2"  />
@@ -55,20 +64,18 @@
           <mat-label>g N₂O</mat-label>
           <input matInput formControlName="n2o"  />
         </mat-form-field>
-      </div>
+      </section>
   
       <!-- Emisiones totales -->
       <mat-form-field appearance="fill">
-        <mat-label>Emisiones totales B (kg CO₂e)</mat-label>
+        <mat-label>Emisiones Totales (tnCO<sub>2</sub>eq)</mat-label>
         <input matInput formControlName="totalEmissions"  />
       </mat-form-field>
-    </div>
+    </section>
   
     <!-- Botones -->
-    <div class="form-actions">
-      <button mat-raised-button color="primary" type="button" (click)="addRow()">Agregar Fila</button>
+    <section ngClass="form-actions">
       <button mat-raised-button color="accent" type="submit">Enviar</button>
-    </div>
+    </section>
   </form>
-  
 </mat-card>

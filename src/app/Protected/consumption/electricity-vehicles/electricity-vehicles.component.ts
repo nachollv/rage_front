@@ -16,7 +16,7 @@ export class ElectricityVehiclesComponent {
 
     this.vehiclesElectricity = this.fb.group({
         productionCenter: [{ value: 2, disabled: true }],
-        activityYear: [{ value: 2025, disabled: true }],
+        activityYear: [{ value: 2023, disabled: true }],
         periodoFactura: ['', Validators.required],
         consumos: this.fb.group({
         comercializadora: ['', [Validators.required]],

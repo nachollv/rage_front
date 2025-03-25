@@ -1,59 +1,46 @@
-import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, FormArray } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-rail-sea-airtransport',
   templateUrl: './rail-sea-airtransport.component.html',
   styleUrl: './rail-sea-airtransport.component.scss'
 })
-export class RailSeaAirtransportComponent {
+export class RailSeaAirtransportComponent implements OnInit {
 
-  transportForm: FormGroup;
+  transportForm!: FormGroup;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder) { }
+
+  ngOnInit(): void {
     this.transportForm = this.fb.group({
-      rows: this.fb.array([this.createRow()]), // Inicializa con una fila vacía
-    });
-  }
-
-  createRow(): FormGroup {
-    return this.fb.group({
-      building: [''], // Edificio / Sede
-      transportType: [''], // Tipo de transporte
-      fuelType: [''], // Tipo de Combustible
-      fuelQuantity: [''], // Cantidad de combustible
+      activityYear: ['', Validators.required],
+      productionCenter: ['', Validators.required],
+      transportType: ['', Validators.required],
+      fuelType: ['', Validators.required],
+      fuelQuantity: ['', [Validators.required, Validators.min(0)]],
       defaultEmissionFactor: this.fb.group({
-        co2: [''], // Por defecto: kg CO₂/ud
-        ch4: [''], // Por defecto: g CH₄/ud
-        n2o: [''], // Por defecto: g N₂O/ud
-      }),
-      otherEmissionFactor: this.fb.group({
-        co2: [''], // Otros: kg CO₂/ud
-        ch4: [''], // Otros: g CH₄/ud
-        n2o: [''], // Otros: g N₂O/ud
+        co2: [0, Validators.required],
+        ch4: [0, Validators.required],
+        n2o: [0, Validators.required]
       }),
       partialEmissions: this.fb.group({
-        co2: [{ value: '', disabled: true }], // Parcial: kg CO₂
-        ch4: [{ value: '', disabled: true }], // Parcial: g CH₄
-        n2o: [{ value: '', disabled: true }], // Parcial: g N₂O
+        co2: [0, Validators.required],
+        ch4: [0, Validators.required],
+        n2o: [0, Validators.required]
       }),
-      totalEmissions: [{ value: '', disabled: true }], // Totales B: kg CO₂e
+      totalEmissions: [0, Validators.required]
     });
   }
-
   get rows(): FormArray {
     return this.transportForm.get('rows') as FormArray;
   }
 
-  addRow(): void {
-    this.rows.push(this.createRow());
-  }
-
-  calculateEmissions(index: number): void {
-    const row = this.rows.at(index);
-    const quantity = row.get('fuelQuantity')?.value;
-    const defaultFactors = row.get('defaultEmissionFactor')?.value;
-    const partialEmissions = row.get('partialEmissions') as FormGroup;
+  calculateEmissions(): void {
+    const formValue = this.transportForm.value
+    const quantity = formValue.get('fuelQuantity')?.value;
+    const defaultFactors = formValue.get('defaultEmissionFactor')?.value;
+    const partialEmissions = formValue.get('partialEmissions') as FormGroup;
 
     if (quantity && defaultFactors) {
       const co2 = quantity * defaultFactors.co2;
@@ -65,10 +52,10 @@ export class RailSeaAirtransportComponent {
       partialEmissions.get('n2o')?.setValue(n2o.toFixed(2));
 
       const total = co2 + ch4 / 1000 + n2o / 1000; // Conversión de CH₄ y N₂O a kg CO₂e
-      row.get('totalEmissions')?.setValue(total.toFixed(2));
+      formValue.get('totalEmissions')?.setValue(total.toFixed(2));
     } else {
       partialEmissions.reset();
-      row.get('totalEmissions')?.setValue('');
+      formValue.get('totalEmissions')?.setValue('');
     }
   }
 

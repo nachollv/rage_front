@@ -1,6 +1,9 @@
 {
   "HELLO": "Welcome",
   "rageTitle": "Registration and Analysis of Greenhouse Gases",
+  "rageTitleShort": "RAGE",
+  "footerContact": "Contact",
+  "footerContactEmail": "Email",
   "footerTitle": "Carbon footprint measurement",
   "initWorkingSession": "Init working session",
 
