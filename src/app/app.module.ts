@@ -52,6 +52,7 @@ import { FugitiveGasesComponent } from './Protected/consumption/fugitive-gases/f
 import { ElectricityVehiclesComponent } from './Protected/consumption/electricity-vehicles/electricity-vehicles.component';
 import { MachineryComponent } from './Protected/consumption/machinery/machinery.component';
 import { HeatSteamColdCompAirComponent } from './Protected/consumption/heat-steam-cold-comp-air/heat-steam-cold-comp-air.component';
+import { RailSeaAirtransportComponent } from './Protected/consumption/rail-sea-airtransport/rail-sea-airtransport.component';
 
 // Función para cargar los archivos de traducción
 export function HttpLoaderFactory(http: HttpClient) {
@@ -87,6 +88,7 @@ export function tokenGetter() {
     ElectricityVehiclesComponent,
     MachineryComponent,
     HeatSteamColdCompAirComponent,
+    RailSeaAirtransportComponent,
   ],
   imports: [
     BrowserModule,

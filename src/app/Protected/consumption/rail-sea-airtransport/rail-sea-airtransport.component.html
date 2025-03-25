@@ -1,5 +1,5 @@
 <mat-card>
-  <form [formGroup]="emissionsForm" (ngSubmit)="onSubmit()">
+  <form [formGroup]="transportForm" (ngSubmit)="onSubmit()">
     <div *ngFor="let row of rows.controls; let i = index" [formGroupName]="i" class="form-row">
       <!-- Edificio / Sede -->
       <mat-form-field appearance="fill">
@@ -7,22 +7,22 @@
         <input matInput formControlName="building" />
       </mat-form-field>
   
-      <!-- Tipo de maquinaria -->
+      <!-- Tipo de transporte -->
       <mat-form-field appearance="fill">
-        <mat-label>Tipo de maquinaria</mat-label>
-        <input matInput formControlName="machineryType" />
+        <mat-label>Tipo de transporte</mat-label>
+        <input matInput formControlName="transportType" />
       </mat-form-field>
   
-      <!-- Tipo de Combustible o lubricante -->
+      <!-- Tipo de Combustible -->
       <mat-form-field appearance="fill">
-        <mat-label>Tipo de Combustible o lubricante</mat-label>
+        <mat-label>Tipo de Combustible</mat-label>
         <input matInput formControlName="fuelType" />
       </mat-form-field>
   
-      <!-- Cantidad (ud) -->
+      <!-- Cantidad combustible (ud) -->
       <mat-form-field appearance="fill">
-        <mat-label>Cantidad (ud)</mat-label>
-        <input matInput type="number" formControlName="quantity" (input)="calculateEmissions(i)" />
+        <mat-label>Cantidad combustible (ud)</mat-label>
+        <input matInput type="number" formControlName="fuelQuantity" (input)="calculateEmissions(i)" />
       </mat-form-field>
   
       <!-- Factores de emisión por defecto -->
@@ -59,7 +59,7 @@
   
       <!-- Emisiones totales -->
       <mat-form-field appearance="fill">
-        <mat-label>Emisiones totales C (kg CO₂e)</mat-label>
+        <mat-label>Emisiones totales B (kg CO₂e)</mat-label>
         <input matInput formControlName="totalEmissions"  />
       </mat-form-field>
     </div>

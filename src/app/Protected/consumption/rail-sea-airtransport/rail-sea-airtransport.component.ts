@@ -2,16 +2,16 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray } from '@angular/forms';
 
 @Component({
-  selector: 'app-machinery',
-  templateUrl: './machinery.component.html',
-  styleUrl: './machinery.component.scss'
+  selector: 'app-rail-sea-airtransport',
+  templateUrl: './rail-sea-airtransport.component.html',
+  styleUrl: './rail-sea-airtransport.component.scss'
 })
-export class MachineryComponent {
+export class RailSeaAirtransportComponent {
 
-  emissionsForm: FormGroup;
+  transportForm: FormGroup;
 
   constructor(private fb: FormBuilder) {
-    this.emissionsForm = this.fb.group({
+    this.transportForm = this.fb.group({
       rows: this.fb.array([this.createRow()]), // Inicializa con una fila vacía
     });
   }
@@ -19,13 +19,13 @@ export class MachineryComponent {
   createRow(): FormGroup {
     return this.fb.group({
       building: [''], // Edificio / Sede
-      machineryType: [''], // Tipo de maquinaria
-      fuelType: [''], // Tipo de Combustible o lubricante
-      quantity: [''], // Cantidad (ud)
+      transportType: [''], // Tipo de transporte
+      fuelType: [''], // Tipo de Combustible
+      fuelQuantity: [''], // Cantidad de combustible
       defaultEmissionFactor: this.fb.group({
-        co2: [''], // kg CO₂/ud
-        ch4: [''], // g CH₄/ud
-        n2o: [''], // g N₂O/ud
+        co2: [''], // Por defecto: kg CO₂/ud
+        ch4: [''], // Por defecto: g CH₄/ud
+        n2o: [''], // Por defecto: g N₂O/ud
       }),
       otherEmissionFactor: this.fb.group({
         co2: [''], // Otros: kg CO₂/ud
@@ -33,16 +33,16 @@ export class MachineryComponent {
         n2o: [''], // Otros: g N₂O/ud
       }),
       partialEmissions: this.fb.group({
-        co2: [{ value: '', disabled: true }], // Emisiones parciales C: kg CO₂
-        ch4: [{ value: '', disabled: true }], // Emisiones parciales C: g CH₄
-        n2o: [{ value: '', disabled: true }], // Emisiones parciales C: g N₂O
+        co2: [{ value: '', disabled: true }], // Parcial: kg CO₂
+        ch4: [{ value: '', disabled: true }], // Parcial: g CH₄
+        n2o: [{ value: '', disabled: true }], // Parcial: g N₂O
       }),
-      totalEmissions: [{ value: '', disabled: true }], // Emisiones totales C: kg CO₂e
+      totalEmissions: [{ value: '', disabled: true }], // Totales B: kg CO₂e
     });
   }
 
   get rows(): FormArray {
-    return this.emissionsForm.get('rows') as FormArray;
+    return this.transportForm.get('rows') as FormArray;
   }
 
   addRow(): void {
@@ -51,7 +51,7 @@ export class MachineryComponent {
 
   calculateEmissions(index: number): void {
     const row = this.rows.at(index);
-    const quantity = row.get('quantity')?.value;
+    const quantity = row.get('fuelQuantity')?.value;
     const defaultFactors = row.get('defaultEmissionFactor')?.value;
     const partialEmissions = row.get('partialEmissions') as FormGroup;
 
@@ -73,6 +73,7 @@ export class MachineryComponent {
   }
 
   onSubmit(): void {
-    console.log(this.emissionsForm.value);
+    console.log(this.transportForm.value);
   }
 }
+
