@@ -70,7 +70,7 @@
           </mat-form-field>
 
           <mat-form-field class="full-width">
-            <mat-label>Emisiones (kg CO2e)</mat-label>
+            <mat-label>Emisiones Totales (tnCO<sub>2</sub>eq)</mat-label>
             <input matInput type="number" placeholder="Emisiones generadas" formControlName="emisionesCO2e" />
             <mat-error *ngIf="vehiclesElectricity.get('emisiones')?.hasError('required')">
               Este campo es obligatorio

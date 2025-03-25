@@ -3,6 +3,7 @@
 
 $primary-palette: mat.define-palette(mat.$green-palette);
 $accent-palette: mat.define-palette(mat.$purple-palette, A200, A100, A400);
+
 $theme: mat.define-light-theme((
   color: (
     primary: $primary-palette,
@@ -21,7 +22,6 @@ body {
   color: var(--mat-sys-on-surface);
   margin: 0;
 }
-
 
 img {
   max-width: 50%;
