@@ -7,9 +7,7 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root'
 })
 export class AuthService {
-  //private apiUrl = 'https://pre.tramits.idi.es/public/index.php/auth';
   private apiUrl = 'https://rage.industrialocalsostenible.com/public/index.php/auth';
-
 
   private userRole = new BehaviorSubject<string>(''); // Observa el rol del usuario
   constructor(private http: HttpClient) {}

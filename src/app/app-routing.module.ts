@@ -11,12 +11,14 @@ import { ConsumtionContainerScope2Component } from './Protected/consumption/cons
 import { ControlPanelContainerComponent } from './control-panel-container/control-panel-container.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { RecoveryPasswordComponent } from './recovery-password/recovery-password.component';
+import { UserManagementComponent } from './Protected/user/user-management/user-management.component';
 
 const routes: Routes = [
 
   { path: '', component: HomeComponent },
   { path: 'login', component: LoginComponent },
   { path: 'sign-up', component: RegisterComponent },
+  { path: 'user-management', component: UserManagementComponent, canActivate: [AuthGuard] },
   { path: 'scope-one', component: ConsumtionContainerComponent, canActivate: [AuthGuard] },
   { path: 'scope-two', component: ConsumtionContainerScope2Component, canActivate: [AuthGuard] },
   { path: 'organ-gen-data', component: OrganGeneralDataComponent, canActivate: [AuthGuard] },

@@ -4,6 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent } from '../../dialog/dialog.component';
 import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -20,14 +21,16 @@ export class HeaderComponent {
   
     constructor(
     private jwtHelper: JwtHelperService,
-    private translate: TranslateService, 
+    private translate: TranslateService,
+    private authService: AuthService,
     private router: Router, public dialog: MatDialog
     ) {
     this.translate.setDefaultLang('es');
   }
 
   ngOnInit(): void {
-    const token = localStorage.getItem('authToken')
+    /* const token = localStorage.getItem('authToken') */
+    const token = this.authService.getToken()
     if (token) {
       this.decodedToken = this.jwtHelper.decodeToken(token)
       this.role = this.decodedToken.data.rol

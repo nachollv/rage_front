@@ -17,7 +17,7 @@ import { ReactiveFormsModule } from '@angular/forms'; // Importa ReactiveFormsMo
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { HeaderComponent } from './Protected/header/header.component';
 import { FooterComponent } from './Protected/footer/footer.component';
-/*  */
+/* Angular material components */
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatIconModule } from '@angular/material/icon'
 import { MatTableModule } from '@angular/material/table';
@@ -33,7 +33,8 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSelectModule } from '@angular/material/select';
 import { CdkMenuModule } from '@angular/cdk/menu';
 import { MatRadioModule } from '@angular/material/radio';
-/*  */
+import { MatListModule } from '@angular/material/list';
+/* RAGE app components */
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { OrganGeneralDataComponent } from './Protected/organ-general-data/organ-general-data.component';
@@ -53,6 +54,7 @@ import { ElectricityVehiclesComponent } from './Protected/consumption/electricit
 import { MachineryComponent } from './Protected/consumption/machinery/machinery.component';
 import { HeatSteamColdCompAirComponent } from './Protected/consumption/heat-steam-cold-comp-air/heat-steam-cold-comp-air.component';
 import { RailSeaAirtransportComponent } from './Protected/consumption/rail-sea-airtransport/rail-sea-airtransport.component';
+import { UserManagementComponent } from './Protected/user/user-management/user-management.component';
 
 // Función para cargar los archivos de traducción
 export function HttpLoaderFactory(http: HttpClient) {
@@ -89,6 +91,7 @@ export function tokenGetter() {
     MachineryComponent,
     HeatSteamColdCompAirComponent,
     RailSeaAirtransportComponent,
+    UserManagementComponent,
   ],
   imports: [
     BrowserModule,
@@ -110,6 +113,7 @@ export function tokenGetter() {
     MatSelectModule,
     CdkMenuModule,
     MatRadioModule,
+    MatListModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

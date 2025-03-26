@@ -1,0 +1,34 @@
+<mat-card>
+  <h2>Gestión de Usuarios</h2>
+  <form [formGroup]="userForm" (ngSubmit)="editingIndex === null ? addUser() : updateUser()">
+    <mat-form-field appearance="fill">
+      <mat-label>Nombre</mat-label>
+      <input matInput formControlName="name" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Email</mat-label>
+      <input matInput formControlName="email" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Rol</mat-label>
+      <mat-select formControlName="role">
+        <mat-option value="Admin">Administrador</mat-option>
+        <mat-option value="User">Usuario</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" type="submit"  [disabled]="userForm.invalid">
+      {{ editingIndex === null ? 'Añadir Usuario' : 'Actualizar Usuario' }}
+    </button>
+  </form>
+
+  <mat-list>
+    <mat-list-item *ngFor="let user of users; let i = index">
+      {{ user.name }} ({{ user.email }} - {{ user.role }})
+      <button mat-button color="accent" (click)="editUser(i)">Editar</button>
+      <button mat-button color="warn" (click)="deleteUser(i)">Eliminar</button>
+    </mat-list-item>
+  </mat-list>
+</mat-card>

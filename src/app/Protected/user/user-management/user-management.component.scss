@@ -1,0 +1,22 @@
+mat-card {
+  width: 80%;
+  padding: 1.1rem;
+  margin: 1rem auto;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+mat-card-title {
+  text-align: center;
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+mat-form-field {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+button {
+  width: 100%;
+  align-self: center; // Centrar el botón dentro del formulario
+  margin-top: 1rem; // Agregar espacio encima del botón
+}
