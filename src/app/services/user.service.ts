@@ -7,7 +7,7 @@ import { catchError } from 'rxjs/operators';
   providedIn: 'root',
 })
 export class UserService {
-  private apiUrl = 'https://rage.industrialocalsostenible.com/public/index.php/auth';
+  private apiUrl = 'https://rage.industrialocalsostenible.com/public/index.php/users';
 
   constructor(private http: HttpClient) {}
 
