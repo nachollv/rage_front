@@ -7,15 +7,17 @@ import { AuthService } from '../../../services/auth.service';
 
 export interface User {
   id: number;
-  name: string;
+  nombre: string;
   email: string;
-  role: string;
+  rol: string;
+  fecha_registro: Date;
+  organizacion: number;
 }
 
 @Component({
   selector: 'app-user-management',
   templateUrl: './user-management.component.html',
-  styleUrl: './user-management.component.scss'
+  styleUrl: './user-management.component.scss',
 })
 export class UserManagementComponent {
 
@@ -31,9 +33,11 @@ export class UserManagementComponent {
     private userService: UserService, private snackBar: MatSnackBar) {
     
     this.userForm = this.fb.group({
-      name: ['', Validators.required],
+      nombre: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      role: ['', Validators.required],
+      rol: ['', Validators.required],
+      fecha_registro: [new Date(), Validators.required],
+      organizacion: [0, Validators.required]
     });
     const token = this.authService.getToken()
     if (token) {
@@ -54,13 +58,11 @@ export class UserManagementComponent {
       (error) => {
         console.error('Error al obtener los usuarios de la organización:', error.message); // Registrar el error
         // Opcional: Mostrar un mensaje de error al usuario
-        this.showSnackBar('No se pudieron obtener los usuarios de la organización. Intente más tarde.');
+        this.showSnackBar('No se pudieron obtener los usuarios de la organización. Intente más tarde. '+error.message);
       }
     );
   }
   
-
-
   addUser() {
     if (this.userForm.valid) {
       const newUser: User = { id: Date.now(), ...this.userForm.value };

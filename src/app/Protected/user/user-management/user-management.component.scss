@@ -15,8 +15,24 @@ mat-form-field {
   margin-bottom: 20px;
 }
 
-button {
+.submitBtn {
   width: 100%;
   align-self: center; // Centrar el botón dentro del formulario
   margin-top: 1rem; // Agregar espacio encima del botón
+}
+
+.mat-list-item {
+  display: flex; /* Ensures proper layout */
+  align-items: center;
+  justify-content: space-between; /* Distributes space evenly */
+}
+
+span {
+  width: 100%;
+  background-color: aquamarine;
+}
+
+button {
+  margin-left: auto; /* Align buttons to the right */
+  width: 25%;
 }
