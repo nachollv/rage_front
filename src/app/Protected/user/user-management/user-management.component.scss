@@ -21,18 +21,24 @@ mat-form-field {
   margin-top: 1rem; // Agregar espacio encima del botón
 }
 
-.mat-list-item {
-  display: flex; /* Ensures proper layout */
-  align-items: center;
-  justify-content: space-between; /* Distributes space evenly */
+.userlist {
+  width: 100%; // Ocupa el ancho completo
+  padding: 0.5rem 0; // Espaciado para cada elemento
 }
 
-span {
-  width: 100%;
-  background-color: aquamarine;
+.user-item {
+  display: flex; // Activar flexbox
+  align-items: center; // Centrar verticalmente
+  justify-content: space-between; // Distribuir espacio entre columnas
+  width: 100%; // Asegurarse de que cada fila ocupe el ancho total
+}
+
+.user-column {
+  flex: 1; // Cada columna ocupa el mismo espacio
+  text-align: left; // Alineación del texto
+  padding: 0 1rem; // Espaciado horizontal entre columnas
 }
 
 button {
-  margin-left: auto; /* Align buttons to the right */
-  width: 25%;
+  margin-left: 0.5rem; // Separar botones para que no estén pegados
 }

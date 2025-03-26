@@ -25,12 +25,15 @@
   </form>
 
   <mat-list>
-    <mat-list-item *ngFor="let user of users; let i = index">
-      <span [innerHTML]="user.nombre"></span>
-      <span [innerHTML]="user.email"></span>
-      <span [innerHTML]="user.rol"></span>
-      <button mat-button color="accent" (click)="editUser(i)">Editar</button>
-      <button mat-button color="warn" (click)="deleteUser(i)">Eliminar</button>
+    <mat-list-item *ngFor="let user of users; let i = index" class="userlist">
+      <div class="user-item">
+        <span class="user-column">{{ user.nombre }}</span>
+        <span class="user-column">{{ user.email }}</span>
+        <span class="user-column">{{ user.rol }}</span>
+        <button mat-button color="accent" (click)="editUser(i)">Editar</button>
+        <button mat-button color="warn" (click)="deleteUser(i)">Eliminar</button>
+      </div>
     </mat-list-item>
   </mat-list>
+  
 </mat-card>
