@@ -10,6 +10,10 @@ ng new rage_front --no-standalone
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
 
+## Production servers
+  - Frontend: [text](https://ragefootprint.netlify.app/)
+  - Backend: [text](https://rage.industrialocalsostenible.com/public/index.php)
+
 ## Code scaffolding
 
 Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
@@ -41,6 +45,9 @@ npm install @auth0/angular-jwt
 npm install @ngx-translate/core @ngx-translate/http-loader
 
 ## github
+
+- [text](https://github.com/nachollv/rage_front.git)
+
 
 ## netlify
 [![Netlify Status](https://api.netlify.com/api/v1/badges/5af0ffa4-a636-4753-a3fa-fa75e5c39e20/deploy-status)](https://app.netlify.com/sites/ragefootprint/deploys)
