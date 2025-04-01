@@ -20,20 +20,18 @@ export interface CentroDeProduccion {
 })
 
 export class ProductioncenterService {
-  //private apiUrl = 'https://pre.tramits.idi.es/public/index.php/auth';
   private apiUrl = 'https://rage.industrialocalsostenible.com/public/index.php';
-
 
   constructor(private http: HttpClient) {}
 
   // Obtener todas los Centros de producción
   getAllCentrosDeProduccion(): Observable<CentroDeProduccion[]> {
-    return this.http.get<CentroDeProduccion[]>(`${this.apiUrl}/centrodeproduccion`);
+    return this.http.get<CentroDeProduccion[]>(`${this.apiUrl}/users`);
   }
 
   // Obtener un Centro De Produccion
   getCentroDeProduccionByID(id: number): Observable<CentroDeProduccion> {
-    return this.http.get<CentroDeProduccion>(`${this.apiUrl}/centrodeproduccion/${id}`);
+    return this.http.get<CentroDeProduccion>(`${this.apiUrl}/users/${id}`);
   }
 
   // Obtener los Centros De Produccion de una Organización
@@ -43,19 +41,16 @@ export class ProductioncenterService {
 
   // Crear una nueva Centro De Produccion
   crearCentroDeProduccion(centrodeproduccion: CentroDeProduccion): Observable<CentroDeProduccion> {
-    return this.http.post<CentroDeProduccion>(`${this.apiUrl}/centrodeproduccion/register`, centrodeproduccion);
+    return this.http.post<CentroDeProduccion>(`${this.apiUrl}/users/register`, centrodeproduccion);
   }
 
   // Actualizar una Centro De Produccion existente
   actualizarCentroDeProduccion(id: number, centrodeproduccion: CentroDeProduccion): Observable<CentroDeProduccion> {
-    return this.http.put<CentroDeProduccion>(
-      `${this.apiUrl}/centrodeproduccion/update/${id}`,
-      centrodeproduccion
-    );
+    return this.http.put<CentroDeProduccion>( `${this.apiUrl}/users/update/${id}`, centrodeproduccion );
   }
 
   // Eliminar una Centro De Produccion
   eliminarCentroDeProduccion(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/centrodeproduccion/delete/${id}`);
+    return this.http.delete<void>(`${this.apiUrl}/users/delete/${id}`);
   }
 }

@@ -2,7 +2,6 @@
   <form [formGroup]="transportForm" (ngSubmit)="onSubmit()">
     <section ngClass="form-row"> 
       <!-- Edificio / Sede -->
- 
           <mat-form-field appearance="fill">
             <mat-label>Año de cálculo</mat-label>
            <input matInput formControlName="activityYear" placeholder="Ejemplo: 2023">
@@ -17,8 +16,8 @@
         <mat-label>Tipo de transporte</mat-label>
         <mat-select formControlName="transportType">
           <mat-option value="01">Transporte ferroviario</mat-option>
-            <mat-option value="02">Transporte marítimo</mat-option>
-            <mat-option value="03">Transporte aéreo</mat-option>
+          <mat-option value="02">Transporte marítimo</mat-option>
+          <mat-option value="03">Transporte aéreo</mat-option>
         </mat-select>
       </mat-form-field>
   

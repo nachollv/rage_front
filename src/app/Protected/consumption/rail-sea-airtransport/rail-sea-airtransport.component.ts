@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ProductioncenterService } from '../../../services/productioncenter.service';
 
 @Component({
   selector: 'app-rail-sea-airtransport',
@@ -7,15 +8,15 @@ import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
   styleUrl: './rail-sea-airtransport.component.scss'
 })
 export class RailSeaAirtransportComponent implements OnInit {
-
   transportForm!: FormGroup;
-
-  constructor(private fb: FormBuilder) { }
+  constructor(  private fb: FormBuilder, 
+                private productionCenterService: ProductioncenterService 
+            ) { }
 
   ngOnInit(): void {
     this.transportForm = this.fb.group({
-      activityYear: ['', Validators.required],
-      productionCenter: ['', Validators.required],
+      activityYear: [{ value: '2023', disabled: true }],
+      productionCenter: [{value: '2', disabled: true}],
       transportType: ['', Validators.required],
       fuelType: ['', Validators.required],
       fuelQuantity: ['', [Validators.required, Validators.min(0)]],
@@ -31,9 +32,16 @@ export class RailSeaAirtransportComponent implements OnInit {
       }),
       totalEmissions: [0, Validators.required]
     });
+    this.getProductionCenterDetails(this.transportForm.get('productionCenter')!.value)
   }
-  get rows(): FormArray {
-    return this.transportForm.get('rows') as FormArray;
+
+  getProductionCenterDetails(id:number) {
+    this.productionCenterService.getCentroDeProduccionByID(id)
+      .subscribe((pCenterItem: any) => {
+        this.transportForm.patchValue({
+          productionCenter: pCenterItem.nombre
+        })
+      })
   }
 
   calculateEmissions(): void {
