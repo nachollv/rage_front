@@ -1,13 +1,13 @@
 <mat-card>
-<form [formGroup]="machineryForm" (ngSubmit)="onSubmit()">
-  <mat-form-field>
+<form [formGroup]="vehicleForm" (ngSubmit)="onSubmit()">
+  <mat-form-field *ngIf="showField">
     <mat-label>Año de cálculo</mat-label>
     <input matInput formControlName="calculationYear">
   </mat-form-field>
-  <mat-form-field appearance="fill">
+  <mat-form-field *ngIf="showField">
     <mat-label>Centro de producción</mat-label>
     <input matInput formControlName="productionCenter">
-    <mat-error *ngIf="machineryForm.get('building')?.invalid">Campo obligatorio</mat-error>
+    <mat-error *ngIf="vehicleForm.get('building')?.invalid">Campo obligatorio</mat-error>
   </mat-form-field>
 
   <mat-form-field appearance="fill">
@@ -15,7 +15,7 @@
     <mat-select formControlName="vehicleCategory" (selectionChange)="setFuelTypes()">
       <mat-option *ngFor="let vehicle of vehicleTypes" [value]="vehicle">{{ vehicle.Categoria }}</mat-option>
     </mat-select>
-    <mat-error *ngIf="machineryForm.get('vehicleCategory')?.invalid">Campo obligatorio</mat-error>
+    <mat-error *ngIf="vehicleForm.get('vehicleCategory')?.invalid">Campo obligatorio</mat-error>
   </mat-form-field>
 
   <mat-form-field appearance="fill">
@@ -23,13 +23,13 @@
     <mat-select formControlName="fuelType" (selectionChange)="setEmissionFactors()">
       <mat-option *ngFor="let fuel of fuelTypes" [value]="fuel">{{ fuel.Combustible }}</mat-option>
     </mat-select>
-    <mat-error *ngIf="machineryForm.get('fuelType')?.invalid">Campo obligatorio</mat-error>
+    <mat-error *ngIf="vehicleForm.get('fuelType')?.invalid">Campo obligatorio</mat-error>
   </mat-form-field>
 
   <mat-form-field appearance="fill">
     <mat-label>Cantidad (ud)</mat-label>
     <input matInput formControlName="quantity" type="number" (change)="onQuantityChange()">
-    <mat-error *ngIf="machineryForm.get('quantity')?.invalid">Campo obligatorio y debe ser un número</mat-error>
+    <mat-error *ngIf="vehicleForm.get('quantity')?.invalid">Campo obligatorio y debe ser un número</mat-error>
   </mat-form-field>
 
 <section ngClass="emissions">

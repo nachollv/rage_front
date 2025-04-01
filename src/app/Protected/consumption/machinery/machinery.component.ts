@@ -18,7 +18,7 @@ export class MachineryComponent {
 
   createRow(): FormGroup {
     return this.fb.group({
-      building: [''], // Edificio / Sede
+      productionCenter: [{ value: '2', disabled: true }],
       machineryType: [''], // Tipo de maquinaria
       fuelType: [''], // Tipo de Combustible o lubricante
       quantity: [''], // Cantidad (ud)

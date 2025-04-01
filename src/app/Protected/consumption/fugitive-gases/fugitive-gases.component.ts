@@ -18,6 +18,7 @@ export class FugitiveGasesComponent {
   dataSource = new MatTableDataSource<any>(this.data)
   emisionesForm: FormGroup;
   gasTypes: any[] = []
+  showField: boolean = false
 
   constructor(private fb: FormBuilder, private leakGases: LeakrefrigerantgasesService, 
     private registerLeak: RegistroemisionesFugasService, private dialog: MatDialog,

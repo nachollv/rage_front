@@ -1,18 +1,17 @@
-.form-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
-  margin-bottom: 1.5rem;
+mat-card {
+  width: 80%;
+  padding: 1.1rem;
+  margin: 1rem auto;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
-.factor-group, .emissions-group {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
+mat-card-title {
+  text-align: center;
+  font-size: 24px;
+  margin-bottom: 20px;
 }
 
-.form-actions {
-  margin-top: 2rem;
-  display: flex;
-  justify-content: space-between;
+mat-form-field {
+  width: 100%;
+  margin-bottom: 20px;
 }

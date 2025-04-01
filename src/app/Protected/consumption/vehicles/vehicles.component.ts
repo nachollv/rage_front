@@ -6,6 +6,7 @@ import { DialogComponent } from '../../../dialog/dialog.component';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ScopeOneRecordsService } from '../../../services/scope-one-records.service';
+import { ProductioncenterService } from '../../../services/productioncenter.service';
 
 @Component({
   selector: 'app-vehicles',
@@ -18,16 +19,18 @@ export class MachineryVehiclesComponent {
       dataSource = new MatTableDataSource<any>(this.data)
       vehicleTypes: any[] = []
       fuelTypes: any[] = []
-      machineryForm: FormGroup;
-
-  constructor(private fb: FormBuilder, 
+      vehicleForm: FormGroup;
+      showField: boolean = false
+      
+  constructor (private fb: FormBuilder, 
     private scopeOneRecordsService: ScopeOneRecordsService,
     private vehicleFuelService: VehiclesFuelConsumptionService,
+    private productionCenterService: ProductioncenterService,
     private snackBar: MatSnackBar
   ) {
-    this.machineryForm = this.fb.group({
-      calculationYear: [{ value: '2023', disabled: true }, [Validators.required, Validators.minLength(4), Validators.maxLength(4)]],
-      productionCenter: [{ value: '2', disabled: true }, Validators.required],
+    this.vehicleForm = this.fb.group({
+      calculationYear: [{ value: '2023', disabled: true }],
+      productionCenter: [{ value: '2', disabled: true }],
       vehicleCategory: ['', Validators.required],
       fuelType: ['', Validators.required],
       quantity: ['', [Validators.required, Validators.pattern(/^\d+$/)]],
@@ -43,9 +46,19 @@ export class MachineryVehiclesComponent {
       }),
       totalEmissions: [{ value: '', disabled: true }]
     });
+    this.getProductionCenterDetails(this.vehicleForm.get('productionCenter')!.value)
     this.getFuelConsumptions()
     this.getScopeOneRecords(2023, 2)
 
+  }
+
+  getProductionCenterDetails(id:number) {
+    this.productionCenterService.getCentroDeProduccionByID(id)
+      .subscribe((pCenterItem: any) => {
+        this.vehicleForm.patchValue({
+          productionCenter: pCenterItem.nombre
+        })
+      })
   }
 
   getFuelConsumptions() {
@@ -74,15 +87,15 @@ export class MachineryVehiclesComponent {
   }
 
   onSubmit() {
-    this.machineryForm.get('productionCenter')?.value, 
-    this.machineryForm.get('quantity')?.value, this.machineryForm.get('fuelType')?.value.id;
-    const formValue = this.machineryForm.value
-    formValue.calculationYear = this.machineryForm.get('calculationYear')?.value
-    formValue.productionCenter = this.machineryForm.get('productionCenter')?.value
-    formValue.vehicle_type = this.machineryForm.get('vehicleCategory')?.value.id
-    formValue.fuel_type = this.machineryForm.get('fuelType')?.value.id
+    this.vehicleForm.get('productionCenter')?.value, 
+    this.vehicleForm.get('quantity')?.value, this.vehicleForm.get('fuelType')?.value.id;
+    const formValue = this.vehicleForm.value
+    formValue.calculationYear = this.vehicleForm.get('calculationYear')?.value
+    formValue.productionCenter = this.vehicleForm.get('productionCenter')?.value
+    formValue.vehicle_type = this.vehicleForm.get('vehicleCategory')?.value.id
+    formValue.fuel_type = this.vehicleForm.get('fuelType')?.value.id
     formValue.activityType = 'machinery'
-    formValue.quantity = this.machineryForm.get('quantity')?.value
+    formValue.quantity = this.vehicleForm.get('quantity')?.value
 
     this.scopeOneRecordsService.createRecord(formValue)
       .subscribe(
@@ -98,7 +111,7 @@ export class MachineryVehiclesComponent {
 
   setFuelTypes() {
 
-    const machineryData = this.machineryForm.value
+    const machineryData = this.vehicleForm.value
     console.log (machineryData.vehicleCategory.Categoria)
     this.vehicleFuelService.getByYearType(2023, machineryData.vehicleCategory.Categoria)
       .subscribe((fuelTypes:any) => {
@@ -108,34 +121,33 @@ export class MachineryVehiclesComponent {
 }
 
 setEmissionFactors () {
-  console.log (this.machineryForm.value)
-  const fuelData = this.machineryForm.value
+  const fuelData = this.vehicleForm.value
   const fuelType = fuelData.fuelType
   const CO2_kg_ud = parseFloat(fuelType.CO2_kg_ud).toFixed(3);
   const CH4_g_ud = parseFloat(fuelType.CH4_g_ud).toFixed(3);
   const N2O_g_ud = parseFloat(fuelType.N2O_g_ud).toFixed(3);
-  this.machineryForm.get('defaultEmissionFactor')?.get('co2')?.setValue(CO2_kg_ud);
-  this.machineryForm.get('defaultEmissionFactor')?.get('ch4')?.setValue(CH4_g_ud);
-  this.machineryForm.get('defaultEmissionFactor')?.get('n2o')?.setValue(N2O_g_ud);
-  this.machineryForm.get('partialEmissions')?.get('co2')?.setValue(fuelData.quantity *  parseFloat(CO2_kg_ud));
-  this.machineryForm.get('partialEmissions')?.get('ch4')?.setValue(fuelData.quantity * parseFloat(CH4_g_ud));
-  this.machineryForm.get('partialEmissions')?.get('n2o')?.setValue(fuelData.quantity * parseFloat(N2O_g_ud));
-  this.machineryForm.get('totalEmissions')?.setValue(fuelData.quantity * parseFloat(CO2_kg_ud)+fuelData.quantity * parseFloat(CH4_g_ud)+fuelData.quantity * parseFloat(N2O_g_ud))
+  this.vehicleForm.get('defaultEmissionFactor')?.get('co2')?.setValue(CO2_kg_ud);
+  this.vehicleForm.get('defaultEmissionFactor')?.get('ch4')?.setValue(CH4_g_ud);
+  this.vehicleForm.get('defaultEmissionFactor')?.get('n2o')?.setValue(N2O_g_ud);
+  this.vehicleForm.get('partialEmissions')?.get('co2')?.setValue(fuelData.quantity *  parseFloat(CO2_kg_ud));
+  this.vehicleForm.get('partialEmissions')?.get('ch4')?.setValue(fuelData.quantity * parseFloat(CH4_g_ud));
+  this.vehicleForm.get('partialEmissions')?.get('n2o')?.setValue(fuelData.quantity * parseFloat(N2O_g_ud));
+  this.vehicleForm.get('totalEmissions')?.setValue(fuelData.quantity * parseFloat(CO2_kg_ud)+fuelData.quantity * parseFloat(CH4_g_ud)+fuelData.quantity * parseFloat(N2O_g_ud))
 }
 
 onQuantityChange() {
-  if (this.machineryForm.valid) {
-    const fuelData = this.machineryForm.value
+  if (this.vehicleForm.valid) {
+    const fuelData = this.vehicleForm.value
     const fuelType = fuelData.fuelType
     const CH4_g_ud = parseFloat( fuelType.CH4_g_ud );
     const CO2_kg_ud = parseFloat( fuelType.CO2_kg_ud );
     const N2O_g_ud = parseFloat( fuelType.N2O_g_ud );
     console.log (CO2_kg_ud, CH4_g_ud,  N2O_g_ud)
     console.log('Quantity:', fuelData.quantity* CH4_g_ud, fuelData.quantity*CO2_kg_ud, fuelData.quantity*N2O_g_ud);
-    this.machineryForm.get('partialEmissions')?.get('co2')?.setValue(fuelData.quantity * CO2_kg_ud);
-    this.machineryForm.get('partialEmissions')?.get('ch4')?.setValue(fuelData.quantity * CH4_g_ud);
-    this.machineryForm.get('partialEmissions')?.get('n2o')?.setValue(fuelData.quantity * N2O_g_ud);
-    this.machineryForm.get('totalEmissions')?.setValue(fuelData.quantity * CO2_kg_ud+fuelData.quantity * CH4_g_ud+fuelData.quantity * N2O_g_ud)
+    this.vehicleForm.get('partialEmissions')?.get('co2')?.setValue(fuelData.quantity * CO2_kg_ud);
+    this.vehicleForm.get('partialEmissions')?.get('ch4')?.setValue(fuelData.quantity * CH4_g_ud);
+    this.vehicleForm.get('partialEmissions')?.get('n2o')?.setValue(fuelData.quantity * N2O_g_ud);
+    this.vehicleForm.get('totalEmissions')?.setValue(fuelData.quantity * CO2_kg_ud+fuelData.quantity * CH4_g_ud+fuelData.quantity * N2O_g_ud)
   }
 }
 

@@ -8,7 +8,9 @@ import { ProductioncenterService } from '../../../services/productioncenter.serv
   styleUrl: './rail-sea-airtransport.component.scss'
 })
 export class RailSeaAirtransportComponent implements OnInit {
-  transportForm!: FormGroup;
+  transportForm!: FormGroup
+  showField: boolean = false
+
   constructor(  private fb: FormBuilder, 
                 private productionCenterService: ProductioncenterService 
             ) { }

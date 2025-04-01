@@ -14,12 +14,12 @@ import { ProductioncenterService } from '../../../services/productioncenter.serv
   styleUrl: './fixed-installation.component.scss'
 })
 export class FixedInstallationComponent {
-  displayedColumns: string[] = ['calculationYear', 'productionCenter', 'fuel_type', 'quantity', 'edit', 'delete']
-  data = [{ }]
-
+    displayedColumns: string[] = ['calculationYear', 'productionCenter', 'fuel_type', 'quantity', 'edit', 'delete']
+    data = [{ }]
     dataSource = new MatTableDataSource<any>(this.data)
     fuelForm: FormGroup;
     fuelTypes: any[] = []
+    showField: boolean = false
     
     constructor(private fb: FormBuilder, public dialog: MatDialog,
       private fuelDataService: FuelDataService,

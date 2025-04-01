@@ -1,10 +1,10 @@
 <mat-card>
 <form [formGroup]="emisionesForm" (ngSubmit)="onSubmit()">
-  <mat-form-field>
+  <mat-form-field *ngIf="showField">
     <mat-label>Año de cálculo</mat-label>
     <input matInput formControlName="calculationYear">
   </mat-form-field>
-  <mat-form-field>
+  <mat-form-field *ngIf="showField">
     <mat-label>Centro de producción</mat-label>
     <input matInput formControlName="productionCenter" placeholder="Ej. Edificio 1" />
   </mat-form-field>
