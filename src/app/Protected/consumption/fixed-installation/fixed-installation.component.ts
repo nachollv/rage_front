@@ -6,6 +6,7 @@ import { DialogComponent } from '../../../dialog/dialog.component';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ScopeOneRecordsService } from '../../../services/scope-one-records.service';
+import { ProductioncenterService } from '../../../services/productioncenter.service';
 
 @Component({
   selector: 'app-fixed-installation',
@@ -22,6 +23,7 @@ export class FixedInstallationComponent {
     
     constructor(private fb: FormBuilder, public dialog: MatDialog,
       private fuelDataService: FuelDataService,
+      private productionCenterService: ProductioncenterService,
       private scopeOneRecordsService: ScopeOneRecordsService,
       private snackBar: MatSnackBar) {
       this.fuelForm = this.fb.group({
@@ -41,8 +43,19 @@ export class FixedInstallationComponent {
         }),
         totalEmissions: [{ value: 0, disabled: true }]
       });
+      this.getProductionCenterDetails(this.fuelForm.get('productionCenter')!.value)
       this.getFuelConsumptions(2023)
       this.getScopeOneRecords(2023, 2)
+    }
+
+
+    getProductionCenterDetails(id:number) {
+      this.productionCenterService.getCentroDeProduccionByID(id)
+        .subscribe((pCenterItem: any) => {
+          this.fuelForm.patchValue({
+            productionCenter: pCenterItem.nombre
+          })
+        })
     }
 
     getFuelConsumptions(calculationYear: number = 2023) {
