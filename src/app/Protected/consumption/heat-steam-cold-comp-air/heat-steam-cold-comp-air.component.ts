@@ -8,7 +8,8 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 })
 export class HeatSteamColdCompAirComponent {
   energyForm: FormGroup;
-
+  showField: boolean = false
+  
   constructor(private fb: FormBuilder) {
     // Estructura del formulario reactivo
     this.energyForm = this.fb.group({

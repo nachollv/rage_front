@@ -22,7 +22,6 @@ export class ConsumtionContainerComponent {
             calculationYear: [{ value: '2023', disabled: true }],
             productionCenter: [{value: '2', disabled: true}],
           });
-    
     }
 
   ngOnInit() {

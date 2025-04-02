@@ -9,7 +9,8 @@ import { FormBuilder, FormGroup, FormArray } from '@angular/forms';
 export class MachineryComponent {
 
   emissionsForm: FormGroup;
-
+  showField: boolean = false
+  
   constructor(private fb: FormBuilder) {
     this.emissionsForm = this.fb.group({
       rows: this.fb.array([this.createRow()]), // Inicializa con una fila vacía

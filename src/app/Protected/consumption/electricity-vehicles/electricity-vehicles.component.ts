@@ -11,7 +11,8 @@ import { MatTableDataSource } from '@angular/material/table';
 })
 export class ElectricityVehiclesComponent {
   vehiclesElectricity: FormGroup;
-
+  showField: boolean = false
+  
     constructor(private fb: FormBuilder, public dialog: MatDialog) {
 
     this.vehiclesElectricity = this.fb.group({

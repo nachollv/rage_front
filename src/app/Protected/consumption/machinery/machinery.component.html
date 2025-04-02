@@ -2,7 +2,7 @@
   <form [formGroup]="emissionsForm" (ngSubmit)="onSubmit()">
     <div *ngFor="let row of rows.controls; let i = index" [formGroupName]="i" class="form-row">
       <!-- Edificio / Sede -->
-      <mat-form-field appearance="fill">
+      <mat-form-field  *ngIf="showField">
         <mat-label>Centro de producción</mat-label>
         <input matInput formControlName="productionCenter" />
       </mat-form-field>

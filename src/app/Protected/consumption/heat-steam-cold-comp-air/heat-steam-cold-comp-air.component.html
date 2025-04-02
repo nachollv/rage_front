@@ -2,7 +2,7 @@
   <form [formGroup]="energyForm" (ngSubmit)="onSubmit()" class="form-container">
     <!-- Año de cálculo -->
     <div class="form-group">
-      <mat-form-field appearance="fill">
+      <mat-form-field *ngIf="showField">
         <mat-label>Año de cálculo</mat-label>
         <input matInput formControlName="calculationYear">
       </mat-form-field>
@@ -10,7 +10,7 @@
   
     <!-- Centro de producción -->
     <div class="form-group">
-      <mat-form-field appearance="fill">
+      <mat-form-field *ngIf="showField">
         <mat-label>Centro de producción</mat-label>
         <input matInput formControlName="productionCenter">
       </mat-form-field>

@@ -35,7 +35,26 @@
   
   <mat-label>Límites de la organización</mat-label>
   <mat-checkbox (change)="onMultipleOrgChange($event)">Multi-centro</mat-checkbox>
-  <mat-checkbox (change)="onActivaChange($event)">Activa</mat-checkbox>
+  <section>
+    <h3>Configurar Año de Actividad</h3>
+    <mat-form-field appearance="fill" formControlName="activityYear" class="form-field">
+      <mat-label>Seleccione uno o varios años</mat-label>
+      <mat-select [(value)]="selectedYears" multiple>
+        <mat-option *ngFor="let year of availableYears" [value]="year.id">
+          {{ year.year }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </section>
+  
+  <section>
+    <h4>Años Seleccionados:</h4>
+    <ul>
+      <li *ngFor="let year of selectedYears">
+        {{ year }}
+      </li>
+    </ul>
+  </section>
   
   <mat-form-field appearance="fill">
     <mat-label>zipCode</mat-label>

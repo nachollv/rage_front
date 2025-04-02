@@ -19,7 +19,6 @@ import { MatCheckboxChange } from '@angular/material/checkbox';
 export class OrganGeneralDataComponent implements OnInit {
   mustShowDelegations: boolean = false
   displayedColumns: string[] = ['delegation', 'town', 'address', 'phone', 'edit', 'delete']
-
   dataSource = new MatTableDataSource<any>()
   organizationForm: FormGroup
   organizationTypes: { id: string, name: string }[] = [
@@ -37,6 +36,17 @@ export class OrganGeneralDataComponent implements OnInit {
     objectiveList: string[] = ['Reducción del consumo de energía', 'Minimizar residuos', 'Ahorro de agua', 'Disminución de Emisiones de CO2', 'Aumento del uso de energías renovables'];
     token: string = ''
     organizationID!: number
+    availableYears = [
+      { id: 1, year: 2020 },
+      { id: 2, year: 2021 },
+      { id: 3, year: 2022 },
+      { id: 4, year: 2023 },
+      { id: 5, year: 2024 }
+    ];
+  
+    // Años seleccionados por el usuario
+    selectedYears: { id: number, year: number }[] = [ { id: 2, year: 2021 },
+      { id: 3, year: 2022 }];
   
     constructor(private fb: FormBuilder, private snackBar: MatSnackBar,
       private jwtHelper: JwtHelperService,
@@ -48,9 +58,9 @@ export class OrganGeneralDataComponent implements OnInit {
         cif: [''],
         companyName: [''],
         organizationType: [''],
+        activityYear: ['2,3', Validators.required],
         cnae: [''],
         zipCode: [''],
-        activa: [false],
         multipleProductionCenter: [false],
         email: [''],
         created_at: [{ value: '', disabled: true }],
@@ -71,7 +81,7 @@ export class OrganGeneralDataComponent implements OnInit {
 
       this.organizationService.getOrganizacion(id)
         .subscribe((theOrganization: any) => {
-            
+          console.log (theOrganization.multipleProductionCenter)
           const data = {
             id: theOrganization.id,
             cif: theOrganization.cif,
@@ -79,8 +89,8 @@ export class OrganGeneralDataComponent implements OnInit {
             organizationType: theOrganization.organizationType,
             cnae: theOrganization.cnae,
             zipCode:theOrganization.zipCode,
-            activa: theOrganization.activa,
             multipleProductionCenter: theOrganization.multipleProductionCenter,
+            activityYear: [2, 3],
             email: theOrganization.email,
             created_at: theOrganization.created_at,
             updated_at: theOrganization.updated_at,
@@ -104,7 +114,6 @@ export class OrganGeneralDataComponent implements OnInit {
         this.getProductionCenters(theOrganization.id) 
         }, (error: any) => {
           this.showSnackBar('Error' + 'Ha ocurrido un error al obtener la organización' + error.message);
-
         })
     }
 
