@@ -39,16 +39,16 @@ export class UserManagementComponent {
       email: ['', [Validators.required, Validators.email]],
       rol: ['', Validators.required],
       fecha_registro: [new Date(), Validators.required],
-      organizacion: [0, Validators.required]
+      id_empresa: [0, Validators.required]
     });
     const token = this.authService.getToken()
     if (token) {
       this.decodedToken = this.jwtHelper.decodeToken(token)
-      this.actualID = this.decodedToken.data.id_empresa;
+      this.actualID = this.decodedToken.data.id_empresa
       this.xxDays = this.decodedToken.data.daysPasswordDuration
-      this.getUsersByOrganization(this.actualID);
+      this.getUsersByOrganization(this.actualID)
     }
-    this.getUsersByOrganization(this.actualID);
+    this.getUsersByOrganization(this.actualID)
   }
 
   getUsersByOrganization(id: string) {
@@ -67,8 +67,7 @@ export class UserManagementComponent {
   addUser() {
     if (this.userForm.valid) {
       const userData = this.userForm.value
-      userData.organizacion = this.actualID
-      /* Random user password */
+      userData.id_empresa = this.actualID
       userData.password = this.userService.generatePassword();
       userData.fecha_registro = new Date()
       const fechaConXXDias = new Date(userData.fecha_registro);
