@@ -42,10 +42,10 @@ export class UserManagementComponent {
     const token = this.authService.getToken()
     if (token) {
       this.decodedToken = this.jwtHelper.decodeToken(token)
-      this.actualID = this.decodedToken.data.id;
+      this.actualID = this.decodedToken.data.id_empresa;
       this.getUsersByOrganization(this.actualID);
     }
-    console.log(this.actualID);
+    console.log("actual ID: ", this.actualID);
     this.getUsersByOrganization(this.actualID);
   }
 
@@ -53,7 +53,7 @@ export class UserManagementComponent {
     this.userService.getUsersByOrganization(+id).subscribe(
       (users: User[]) => {
         this.users = users; // Asignar usuarios si la solicitud es exitosa
-        this.showSnackBar('Usuarios de la organización obtenidos: ' + users.length);
+        this.showSnackBar('Se han encontrado ' + users.length + ' usuarios para esta organización');
       },
       (error) => {
         console.error('Error al obtener los usuarios de la organización:', error.message); // Registrar el error
@@ -68,6 +68,12 @@ export class UserManagementComponent {
       const newUser: User = { id: Date.now(), ...this.userForm.value };
       this.users.push(newUser);
       this.userForm.reset();
+      this.userService.createUser(this.userForm.value)
+      .subscribe({
+        next: (response) => { 
+          this.showSnackBar("Registro creado correctamente "+response)
+          },
+        error: (err) => { this.showSnackBar("Error al crear el registro "+err.message) } })
     }
   }
 

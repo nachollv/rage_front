@@ -32,21 +32,23 @@ export class OrganGeneralDataComponent implements OnInit {
   ];
   
     sectors: string[] = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
-    periodList: string[] = ['2021', '2022', '2023', '2024', '2025'];
     objectiveList: string[] = ['Reducción del consumo de energía', 'Minimizar residuos', 'Ahorro de agua', 'Disminución de Emisiones de CO2', 'Aumento del uso de energías renovables'];
     token: string = ''
     organizationID!: number
     availableYears = [
-      { id: 1, year: 2020 },
-      { id: 2, year: 2021 },
-      { id: 3, year: 2022 },
-      { id: 4, year: 2023 },
-      { id: 5, year: 2024 }
+      { id: 1, year: 2019 },
+      { id: 2, year: 2020 },
+      { id: 3, year: 2021 },
+      { id: 4, year: 2022 },
+      { id: 5, year: 2023 },
+      { id: 6, year: 2024 },
+      { id: 7, year: 2025 },
+      { id: 8, year: 2026 }
     ];
   
     // Años seleccionados por el usuario
-    selectedYears: { id: number, year: number }[] = [ { id: 2, year: 2021 },
-      { id: 3, year: 2022 }];
+    selectedYears: { id: number, year: number }[] = [ { id: 5, year: 2023 },
+      { id: 6, year: 2024 }];
   
     constructor(private fb: FormBuilder, private snackBar: MatSnackBar,
       private jwtHelper: JwtHelperService,
@@ -58,10 +60,10 @@ export class OrganGeneralDataComponent implements OnInit {
         cif: [''],
         companyName: [''],
         organizationType: [''],
-        activityYear: ['2,3', Validators.required],
+        activityYear: ['', Validators.required],
         cnae: [''],
         zipCode: [''],
-        multipleProductionCenter: [false],
+        multipleProductionCenter: [],
         email: [''],
         created_at: [{ value: '', disabled: true }],
         updated_at: [{ value: '', disabled: true }],
@@ -120,10 +122,13 @@ export class OrganGeneralDataComponent implements OnInit {
     getProductionCenters(idEmpresa: number) {
       this.productionCenterService.getCentrosDeProduccionFromOrganizacion(idEmpresa)
         .subscribe((productionCenter:any) => {
-        console.log (productionCenter)
         this.dataSource = new MatTableDataSource<any>(productionCenter)
         })
-    } 
+    }
+
+    compareYears(optionValue: number, selectedValue: { id: number, year: number }): boolean {
+      return optionValue === selectedValue.id;
+    }
 
     onSubmit() { 
       if (this.organizationForm.valid) {
@@ -149,17 +154,6 @@ export class OrganGeneralDataComponent implements OnInit {
       }
     }
 
-    onActivaChange(event: MatCheckboxChange) {
-      console.log(`¿Está seleccionado?: ${event.checked}`);
-      const isChecked = event.checked
-      if (isChecked) {
-        this.organizationForm.get('activa')?.setValue('1');
-      }
-      else {
-        this.organizationForm.get('activa')?.setValue('0');
-      }
-    }
-  
     openDialog(title:string, info:string): void {
       const dialogRef = this.dialog.open(DialogComponent, {
         data: {

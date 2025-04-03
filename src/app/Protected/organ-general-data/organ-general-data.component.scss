@@ -19,6 +19,13 @@ mat-form-field {
   margin-bottom: 20px;
 }
 
+.limites-organizacion {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border: 1px solid green;
+  padding: 1rem;
+}
+
 button {
   width: 100%;
 }

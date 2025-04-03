@@ -32,30 +32,29 @@
       </mat-option>
     </mat-select>
   </mat-form-field>
-  
-  <mat-label>Límites de la organización</mat-label>
-  <mat-checkbox (change)="onMultipleOrgChange($event)">Multi-centro</mat-checkbox>
-  <section>
-    <h3>Seleccionar el/los años de cálculo:</h3>
-    <mat-form-field appearance="fill" formControlName="activityYear" class="form-field">
-      <mat-label>Seleccione uno o varios años</mat-label>
-      <mat-select [(value)]="selectedYears" multiple>
-        <mat-option *ngFor="let year of availableYears" [value]="year.id">
+  <section ngClass="limites-organizacion">
+    <mat-label>Límites de la organización</mat-label>
+    <mat-checkbox (change)="onMultipleOrgChange($event)" formControlName="multipleProductionCenter">Más de un Centro de Producción</mat-checkbox>
+    <section>
+      <h4>Seleccionar los años de cálculo permitidos:</h4>
+      <mat-form-field appearance="fill" formControlName="activityYear" class="form-field">
+        <mat-label>Seleccione uno o varios años</mat-label>
+        <mat-select [(value)]="selectedYears" [compareWith]="compareYears" multiple>
+          <mat-option *ngFor="let year of availableYears" [value]="year.id">
+            {{ year.year }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </section>
+    <section>
+      <h4>Años que se han permitido para el registro de actividad:</h4>
+      <ul>
+        <li *ngFor="let year of selectedYears">
           {{ year.year }}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
+        </li>
+      </ul>
+    </section>
   </section>
-  
-  <section>
-    <h4>Años Seleccionados:</h4>
-    <ul>
-      <li *ngFor="let year of selectedYears">
-        {{ year }}
-      </li>
-    </ul>
-  </section>
-  
   <mat-form-field appearance="fill">
     <mat-label>zipCode</mat-label>
     <input matInput formControlName="zipCode" minlength="5" maxlength="5">
@@ -65,15 +64,15 @@
     <input matInput formControlName="email">
   </mat-form-field>
   <mat-form-field appearance="fill">
-    <mat-label>created_at</mat-label>
+    <mat-label>Se creó el</mat-label>
     <input matInput formControlName="created_at">
   </mat-form-field>
   <mat-form-field appearance="fill">
-    <mat-label>updated_at</mat-label>
+    <mat-label>Se actualizó el</mat-label>
     <input matInput formControlName="updated_at">
   </mat-form-field>
   <mat-form-field appearance="fill">
-    <mat-label>deleted_at</mat-label>
+    <mat-label>Se eliminó el</mat-label>
     <input matInput formControlName="deleted_at">
   </mat-form-field>
   <button mat-raised-button color="primary" type="submit" [disabled]="organizationForm.invalid">Enviar</button>
