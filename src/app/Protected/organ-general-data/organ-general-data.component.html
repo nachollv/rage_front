@@ -60,8 +60,17 @@
     <input matInput formControlName="zipCode" minlength="5" maxlength="5">
   </mat-form-field>
   <mat-form-field appearance="fill">
-    <mat-label>email</mat-label>
+    <mat-label>Email usuario administrador</mat-label>
     <input matInput formControlName="email">
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Mínima validez de la contraseña de los usuarios [por seguridad]</mat-label>
+        <mat-select formControlName="daysPasswordDuration">
+          <mat-option value="30">30 días</mat-option>
+          <mat-option value="45">30 días</mat-option>
+          <mat-option value="60">30 días</mat-option>
+          <mat-option value="75">30 días</mat-option>
+        </mat-select>
   </mat-form-field>
   <mat-form-field appearance="fill">
     <mat-label>Se creó el</mat-label>

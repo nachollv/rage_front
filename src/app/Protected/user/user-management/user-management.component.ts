@@ -26,11 +26,13 @@ export class UserManagementComponent {
   editingIndex: number | null = null; // Índice del usuario en edición
   decodedToken: any;
   actualID: string = ''
-  
+  xxDays: number = 0
+
   constructor(private fb: FormBuilder, 
     private jwtHelper: JwtHelperService, 
     private authService: AuthService,
-    private userService: UserService, private snackBar: MatSnackBar) {
+    private userService: UserService,
+    private snackBar: MatSnackBar) {
     
     this.userForm = this.fb.group({
       nombre: ['', Validators.required],
@@ -43,21 +45,20 @@ export class UserManagementComponent {
     if (token) {
       this.decodedToken = this.jwtHelper.decodeToken(token)
       this.actualID = this.decodedToken.data.id_empresa;
+      this.xxDays = this.decodedToken.data.daysPasswordDuration
       this.getUsersByOrganization(this.actualID);
     }
-    console.log("actual ID: ", this.actualID);
     this.getUsersByOrganization(this.actualID);
   }
 
   getUsersByOrganization(id: string) {
     this.userService.getUsersByOrganization(+id).subscribe(
       (users: User[]) => {
-        this.users = users; // Asignar usuarios si la solicitud es exitosa
+        this.users = users;
         this.showSnackBar('Se han encontrado ' + users.length + ' usuarios para esta organización');
       },
       (error) => {
         console.error('Error al obtener los usuarios de la organización:', error.message); // Registrar el error
-        // Opcional: Mostrar un mensaje de error al usuario
         this.showSnackBar('No se pudieron obtener los usuarios de la organización. Intente más tarde. '+error.message);
       }
     );
@@ -65,13 +66,23 @@ export class UserManagementComponent {
   
   addUser() {
     if (this.userForm.valid) {
-      const newUser: User = { id: Date.now(), ...this.userForm.value };
-      this.users.push(newUser);
-      this.userForm.reset();
-      this.userService.createUser(this.userForm.value)
+      const userData = this.userForm.value
+      userData.organizacion = this.actualID
+      /* Random user password */
+      userData.password = this.userService.generatePassword();
+      userData.fecha_registro = new Date()
+      const fechaConXXDias = new Date(userData.fecha_registro);
+      fechaConXXDias.setDate(fechaConXXDias.getDate() + this.xxDays);
+      userData.caducidad_contrasena = fechaConXXDias
+      console.log("Nueva contraseña generada:", userData.password);
+      this.userService.createUser(userData)
       .subscribe({
         next: (response) => { 
+          const newUser: User = { id: Date.now(), ...this.userForm.value }
+          this.users.push(newUser)
+          this.userForm.reset()
           this.showSnackBar("Registro creado correctamente "+response)
+
           },
         error: (err) => { this.showSnackBar("Error al crear el registro "+err.message) } })
     }
