@@ -36,10 +36,10 @@
     <mat-label>Límites de la organización</mat-label>
     <mat-checkbox (change)="onMultipleOrgChange($event)" formControlName="multipleProductionCenter">Más de un Centro de Producción</mat-checkbox>
     <section>
-      <h4>Seleccionar los años de cálculo permitidos:</h4>
-      <mat-form-field appearance="fill" formControlName="activityYear" class="form-field">
+      <h4>Años de cálculo permitidos:</h4>
+      <mat-form-field appearance="fill" >
         <mat-label>Seleccione uno o varios años</mat-label>
-        <mat-select [(value)]="selectedYears" [compareWith]="compareYears" multiple>
+        <mat-select [(value)]="selectedYears" [compareWith]="compareYears" multiple formControlName="activityYear">
           <mat-option *ngFor="let year of availableYears" [value]="year.id">
             {{ year.year }}
           </mat-option>
@@ -64,12 +64,12 @@
     <input matInput formControlName="email">
   </mat-form-field>
   <mat-form-field appearance="fill">
-    <mat-label>Mínima validez de la contraseña de los usuarios [por seguridad]</mat-label>
+    <mat-label>Duración contraseña usuarios [por seguridad]</mat-label>
         <mat-select formControlName="daysPasswordDuration">
           <mat-option value="30">30 días</mat-option>
-          <mat-option value="45">30 días</mat-option>
-          <mat-option value="60">30 días</mat-option>
-          <mat-option value="75">30 días</mat-option>
+          <mat-option value="45">45 días</mat-option>
+          <mat-option value="60">60 días</mat-option>
+          <mat-option value="75">75 días</mat-option>
         </mat-select>
   </mat-form-field>
   <mat-form-field appearance="fill">

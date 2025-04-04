@@ -2,7 +2,7 @@
   <h2>Gestión de Usuarios</h2>
   <form [formGroup]="userForm" (ngSubmit)="editingIndex === null ? addUser() : updateUser()">
     <mat-form-field appearance="fill">
-      <mat-label>Nombre</mat-label>
+      <mat-label>Nombre del Centro de producción</mat-label>
       <input matInput formControlName="nombre" />
     </mat-form-field>
 
@@ -30,6 +30,7 @@
         <span class="user-column">{{ user.nombre }}</span>
         <span class="user-column">{{ user.email }}</span>
         <span class="user-column">{{ user.rol }}</span>
+        <span class="user-column">{{ user.deleted_at }}</span>
         <button mat-button color="accent" (click)="editUser(i)">Editar</button>
         <button mat-button color="warn" (click)="deleteUser(i)">Eliminar</button>
       </div>

@@ -10,6 +10,7 @@ export interface User {
   nombre: string;
   email: string;
   rol: string;
+  deleted_at: Date | null;
   fecha_registro: Date;
   organizacion: number;
 }
@@ -73,14 +74,13 @@ export class UserManagementComponent {
       const fechaConXXDias = new Date(userData.fecha_registro);
       fechaConXXDias.setDate(fechaConXXDias.getDate() + this.xxDays);
       userData.caducidad_contrasena = fechaConXXDias
-      console.log("Nueva contraseña generada:", userData.password);
       this.userService.createUser(userData)
       .subscribe({
         next: (response) => { 
           const newUser: User = { id: Date.now(), ...this.userForm.value }
           this.users.push(newUser)
           this.userForm.reset()
-          this.showSnackBar("Registro creado correctamente "+response)
+          this.showSnackBar("Información: "+response.message)
 
           },
         error: (err) => { this.showSnackBar("Error al crear el registro "+err.message) } })
@@ -94,14 +94,29 @@ export class UserManagementComponent {
 
   updateUser() {
     if (this.userForm.valid && this.editingIndex !== null) {
-      this.users[this.editingIndex] = { ...this.users[this.editingIndex], ...this.userForm.value };
-      this.editingIndex = null;
-      this.userForm.reset();
+      this.userForm.value.nombre.toUpperCase()
+      this.userService.updateUser(this.users[this.editingIndex].id, this.userForm.value)
+      .subscribe({
+        next: (response) => { 
+          if (this.editingIndex !== null) {
+            this.users[this.editingIndex] = { ...this.userForm.value, id: this.users[this.editingIndex].id };
+          }
+          this.userForm.reset()
+          this.showSnackBar("Información: "+response.message)
+        },
+        error: (err) => { this.showSnackBar("Error al actualizar el registro "+err.message) } 
+      })
     }
   }
 
   deleteUser(index: number) {
-    this.users.splice(index, 1);
+    this.userService.deleteUser(this.users[index].id).subscribe({
+      next: (response) => { 
+        this.users.splice(index, 1)
+        this.showSnackBar("Información: "+response.message)
+      }
+      , error: (err) => { this.showSnackBar("Error al eliminar el registro "+err.message) } 
+    })
   }
 
   private showSnackBar(error: string): void {

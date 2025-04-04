@@ -9,8 +9,8 @@ import { MatSort } from '@angular/material/sort';
   styleUrls: ['./data-table.component.scss']
 })
 export class DataTableComponent implements OnInit {
-  /* cardMode: boolean = true
-  tableMode: boolean = true */
+  @Input() columns: string[] = []
+  @Input() data: any[] = []
   @Input() displayedColumns: string[] = []
   @Input() dataSource : MatTableDataSource<any>
 
@@ -24,15 +24,16 @@ export class DataTableComponent implements OnInit {
   }
 
   ngOnInit() {
-   /*  this.displayedColumns = this.columns;
-    this.dataSource = new MatTableDataSource(this.data); */
-    /* console.log (this.dataSource) */
+  /*   this.dataSource = new MatTableDataSource<any>(this.data) */
+   /*  this.displayedColumns = this.columns */
+   /*  this.dataSource.paginator = this.paginator
+    this.dataSource.sort = this.sort     */
   }
 
-  ngAfterViewInit() {
+/*   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
-  }
+  } */
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;

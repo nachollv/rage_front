@@ -40,7 +40,7 @@ export class LoginComponent implements OnInit {
         this.authService.setRole(this.role)
         this.authService.saveToken(response.token)
 
-        this.showSnackBar("Bienvenido a la aplicación RAGE, un momento...")
+        this.showSnackBar("Bienvenido a la aplicación RAGE, redirigiendo...")
         this.router.navigate(['/dashboard']).then(() => { window.location.reload(); });
       },
       error: (err) => {

@@ -18,7 +18,7 @@ import { MatCheckboxChange } from '@angular/material/checkbox';
 
 export class OrganGeneralDataComponent implements OnInit {
   mustShowDelegations: boolean = false
-  displayedColumns: string[] = ['delegation', 'town', 'address', 'phone', 'edit', 'delete']
+  displayedColumns: string[] = ['nombre', 'email', 'rol', 'caducidad_contrasena', 'ultimo_inicio_sesion']
   dataSource = new MatTableDataSource<any>()
   organizationForm: FormGroup
   organizationTypes: { id: string, name: string }[] = [
@@ -60,7 +60,7 @@ export class OrganGeneralDataComponent implements OnInit {
         cif: [''],
         companyName: [''],
         organizationType: [''],
-        activityYear: ['', Validators.required],
+        activityYear: [null, Validators.required],
         cnae: [''],
         zipCode: [''],
         multipleProductionCenter: [],
@@ -136,8 +136,8 @@ export class OrganGeneralDataComponent implements OnInit {
       if (this.organizationForm.valid) {
         this.organizationService.actualizarOrganizacion(this.organizationForm.get('id')?.value, this.organizationForm.value)
         .subscribe((response: any) => { 
-
-          this.showSnackBar('Información'+'La organización ha sido actualizada correctamente'+response);
+          console.log(response)
+          this.showSnackBar('Información: '+ response.message);
         }, (error: any) => {
           this.showSnackBar('Error'+ 'Ha ocurrido un error al actualizar la organización'+error.message);
         });
@@ -174,7 +174,7 @@ export class OrganGeneralDataComponent implements OnInit {
 
     private showSnackBar(error: string): void {
       this.snackBar.open(error, 'Close', {
-        duration: 1500,
+        duration: 5000,
         verticalPosition: 'bottom',
         horizontalPosition: 'center',
         panelClass: ['custom-snackbar'],
