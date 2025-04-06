@@ -35,20 +35,10 @@ export class OrganGeneralDataComponent implements OnInit {
     objectiveList: string[] = ['Reducción del consumo de energía', 'Minimizar residuos', 'Ahorro de agua', 'Disminución de Emisiones de CO2', 'Aumento del uso de energías renovables'];
     token: string = ''
     organizationID!: number
-    availableYears = [
-      { id: 1, year: 2019 },
-      { id: 2, year: 2020 },
-      { id: 3, year: 2021 },
-      { id: 4, year: 2022 },
-      { id: 5, year: 2023 },
-      { id: 6, year: 2024 },
-      { id: 7, year: 2025 },
-      { id: 8, year: 2026 }
-    ];
-  
+    availableYears: number[] = [];
+
     // Años seleccionados por el usuario
-    selectedYears: { id: number, year: number }[] = [ { id: 5, year: 2023 },
-      { id: 6, year: 2024 }];
+    selectedYears: { id: number, year: number }[] = [ ];
   
     constructor(private fb: FormBuilder, private snackBar: MatSnackBar,
       private jwtHelper: JwtHelperService,
@@ -78,7 +68,8 @@ export class OrganGeneralDataComponent implements OnInit {
         this.token = this.authService.getToken()!
       }
       this.organizationID = this.jwtHelper.decodeToken(this.token).data.id_empresa
-      this.getTheOrganization(this.organizationID)
+      this.getTheOrganization(this.organizationID)   
+      this.getTheActivityYears(this.organizationID)
     }
 
     getTheOrganization(id: number) {
@@ -95,8 +86,7 @@ export class OrganGeneralDataComponent implements OnInit {
             zipCode:theOrganization.zipCode,
             multipleProductionCenter: theOrganization.multipleProductionCenter,
             daysPasswordDuration	: theOrganization.daysPasswordDuration,
-            activityYear: theOrganization.activityYear,
-            /* activityYear: [2, 3], */
+            
             email: theOrganization.email,
             created_at: theOrganization.created_at,
             updated_at: theOrganization.updated_at,
@@ -109,12 +99,6 @@ export class OrganGeneralDataComponent implements OnInit {
           } else {
             this.mustShowDelegations = false;
             this.organizationForm.get('multipleProductionCenter')?.setValue('0')
-          }
-
-          if (theOrganization.activa === '1') {
-            this.organizationForm.get('activa')?.setValue('1')
-          } else {
-            this.organizationForm.get('activa')?.setValue('0')
           }
 
         this.getProductionCenters(theOrganization.id) 
@@ -123,46 +107,22 @@ export class OrganGeneralDataComponent implements OnInit {
         })
     }
 
-    getTheAvtivityYears(id: number) {
+    getTheActivityYears(id: number) {
+      this.organizationService.getActivityYearsByOrganization(id).subscribe(
+        (response: any) => {
+        console.log(response);
 
-      this.organizationService.getOrganizacion(id)
-        .subscribe((theOrganization: any) => {
-          console.log (theOrganization.multipleProductionCenter)
-          const data = {
-            id: theOrganization.id,
-            cif: theOrganization.cif,
-            companyName: theOrganization.companyName,
-            organizationType: theOrganization.organizationType,
-            cnae: theOrganization.cnae,
-            zipCode:theOrganization.zipCode,
-            multipleProductionCenter: theOrganization.multipleProductionCenter,
-            daysPasswordDuration	: theOrganization.daysPasswordDuration,
-            activityYear: theOrganization.activityYear,
-            /* activityYear: [2, 3], */
-            email: theOrganization.email,
-            created_at: theOrganization.created_at,
-            updated_at: theOrganization.updated_at,
-            deleted_at: theOrganization.deleted_at,
-          };
-          this.organizationForm.patchValue(data);
-          if (theOrganization.multipleProductionCenter === '1') {
-            this.mustShowDelegations = true;
-            this.organizationForm.get('multipleProductionCenter')?.setValue('1');
-          } else {
-            this.mustShowDelegations = false;
-            this.organizationForm.get('multipleProductionCenter')?.setValue('0')
-          }
-
-          if (theOrganization.activa === '1') {
-            this.organizationForm.get('activa')?.setValue('1')
-          } else {
-            this.organizationForm.get('activa')?.setValue('0')
-          }
-
-        this.getProductionCenters(theOrganization.id) 
-        }, (error: any) => {
-          this.showSnackBar('Error' + 'Ha ocurrido un error al obtener la organización' + error.message);
-        })
+        this.availableYears = [];
+        for (let year = 2019; year <= 2030; year++) {
+          this.availableYears.push(year);
+        }
+        const selectedYears = response.data.map((year: string) => +year)
+        this.organizationForm.patchValue({ activityYear: selectedYears })
+      },
+    (error: any) => {
+      this.showSnackBar('Error: ' + error.message);
+    }
+    );
     }
 
     getProductionCenters(idEmpresa: number) {
@@ -170,10 +130,6 @@ export class OrganGeneralDataComponent implements OnInit {
         .subscribe((productionCenter:any) => {
         this.dataSource = new MatTableDataSource<any>(productionCenter)
         })
-    }
-
-    compareYears(optionValue: number, selectedValue: { id: number, year: number }): boolean {
-      return optionValue === selectedValue.id;
     }
 
     onSubmit() { 
