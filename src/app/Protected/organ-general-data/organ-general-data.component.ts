@@ -94,7 +94,51 @@ export class OrganGeneralDataComponent implements OnInit {
             cnae: theOrganization.cnae,
             zipCode:theOrganization.zipCode,
             multipleProductionCenter: theOrganization.multipleProductionCenter,
-            activityYear: [2, 3],
+            daysPasswordDuration	: theOrganization.daysPasswordDuration,
+            activityYear: theOrganization.activityYear,
+            /* activityYear: [2, 3], */
+            email: theOrganization.email,
+            created_at: theOrganization.created_at,
+            updated_at: theOrganization.updated_at,
+            deleted_at: theOrganization.deleted_at,
+          };
+          this.organizationForm.patchValue(data);
+          if (theOrganization.multipleProductionCenter === '1') {
+            this.mustShowDelegations = true;
+            this.organizationForm.get('multipleProductionCenter')?.setValue('1');
+          } else {
+            this.mustShowDelegations = false;
+            this.organizationForm.get('multipleProductionCenter')?.setValue('0')
+          }
+
+          if (theOrganization.activa === '1') {
+            this.organizationForm.get('activa')?.setValue('1')
+          } else {
+            this.organizationForm.get('activa')?.setValue('0')
+          }
+
+        this.getProductionCenters(theOrganization.id) 
+        }, (error: any) => {
+          this.showSnackBar('Error' + 'Ha ocurrido un error al obtener la organización' + error.message);
+        })
+    }
+
+    getTheAvtivityYears(id: number) {
+
+      this.organizationService.getOrganizacion(id)
+        .subscribe((theOrganization: any) => {
+          console.log (theOrganization.multipleProductionCenter)
+          const data = {
+            id: theOrganization.id,
+            cif: theOrganization.cif,
+            companyName: theOrganization.companyName,
+            organizationType: theOrganization.organizationType,
+            cnae: theOrganization.cnae,
+            zipCode:theOrganization.zipCode,
+            multipleProductionCenter: theOrganization.multipleProductionCenter,
+            daysPasswordDuration	: theOrganization.daysPasswordDuration,
+            activityYear: theOrganization.activityYear,
+            /* activityYear: [2, 3], */
             email: theOrganization.email,
             created_at: theOrganization.created_at,
             updated_at: theOrganization.updated_at,
