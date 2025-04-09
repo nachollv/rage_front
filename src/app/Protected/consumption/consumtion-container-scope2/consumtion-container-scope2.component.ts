@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent } from '../../../dialog/dialog.component';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ProductioncenterService } from '../../../services/productioncenter.service';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Component({
   selector: 'app-consumtion-container-scope2',
@@ -12,9 +13,12 @@ import { ProductioncenterService } from '../../../services/productioncenter.serv
 export class ConsumtionContainerScope2Component {
   selectedTabIndexscope2: number = 0;
   productionCenterForm: FormGroup;
+  token: string = ''
+  prodCenterID!: number
 
-
-  constructor(public dialog: MatDialog, private productionCenterService: ProductioncenterService,) {
+  constructor(public dialog: MatDialog, private productionCenterService: ProductioncenterService,
+     private jwtHelper: JwtHelperService,
+  ) {
     this.productionCenterForm = new FormBuilder().group({
       calculationYear: [{ value: '2023', disabled: true }],
       productionCenter: [{ value: '2', disabled: true }],
@@ -22,7 +26,8 @@ export class ConsumtionContainerScope2Component {
   }
 
   ngOnInit() {
-    const savedTabIndex = localStorage.getItem('selectedTabIndexscope1');
+    const savedTabIndex = localStorage.getItem('selectedTabIndexscope1')
+    this.prodCenterID = this.jwtHelper.decodeToken(this.token).data.idCentroProduccion
     if (savedTabIndex !== null) {
       this.selectedTabIndexscope2 = +savedTabIndex;
     }
@@ -33,7 +38,6 @@ export class ConsumtionContainerScope2Component {
     this.productionCenterService.getCentroDeProduccionByID(id)
       .subscribe((pCenterItem: any) => {
         this.productionCenterForm.patchValue({
-          culculationYear: '2023',
           productionCenter: pCenterItem.nombre
         })
       })
