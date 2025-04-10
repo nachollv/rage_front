@@ -38,7 +38,7 @@ export class OrganGeneralDataComponent implements OnInit {
     availableYears: number[] = [];
 
     // Años seleccionados por el usuario
-    selectedYears: { id: number, year: number }[] = [ ];
+    selectedYears: { id: number, year: number }[] = [];
   
     constructor(private fb: FormBuilder, private snackBar: MatSnackBar,
       private jwtHelper: JwtHelperService,

@@ -2,8 +2,12 @@
   <mat-icon style="color: #0a470d;">info</mat-icon>{{"consumptions" | translate}}</button> </h1>
   <form [formGroup]="productionCenterForm">
   <mat-form-field appearance="fill">
-    <mat-label>Año de cálculo</mat-label>
-   <input matInput formControlName="calculationYear" placeholder="Ejemplo: 2023">
+      <mat-label>Seleccione el año de cálculo</mat-label>
+      <mat-select formControlName="activityYear">
+        <mat-option *ngFor="let year of availableYears" [value]="year">
+          {{ year }}
+        </mat-option>
+      </mat-select>
   </mat-form-field>
   <mat-form-field appearance="fill">
     <mat-label>Centro de producción</mat-label>

@@ -8,12 +8,13 @@
   </mat-toolbar>
 </header>
 <mat-menu #mainMenu="matMenu">
+  <button mat-menu-item ngClass="rage-menu-item" routerLink="/dashboard">{{'dashboard' | translate}}</button>
+  <hr>
   <section *ngIf="role === 'User'">
     <button mat-menu-item routerLink="scope-one">{{'consumptions' | translate}}</button>
     <button mat-menu-item routerLink="scope-two">{{'emissions' | translate}}</button>
   </section>
   <section *ngIf="role === 'Admin'">
-    <button mat-menu-item ngClass="rage-menu-item" routerLink="/dashboard">{{'dashboard' | translate}}</button>
     <button mat-menu-item ngClass="rage-menu-item" routerLink="/user-management">{{'userManagement' | translate}}</button>
     <button mat-menu-item ngClass="rage-menu-item" routerLink="/organ-gen-data">{{'organizationGeneralData' | translate}}</button>
     <hr>

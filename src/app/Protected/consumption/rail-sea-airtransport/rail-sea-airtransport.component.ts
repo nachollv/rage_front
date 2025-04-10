@@ -18,7 +18,7 @@ export class RailSeaAirtransportComponent implements OnInit {
   ngOnInit(): void {
     this.transportForm = this.fb.group({
       activityYear: [{ value: '2023', disabled: true }],
-      productionCenter: [{value: '2', disabled: true}],
+      productionCenter: [{value: '6', disabled: true}],
       transportType: ['', Validators.required],
       fuelType: ['', Validators.required],
       fuelQuantity: ['', [Validators.required, Validators.min(0)]],

@@ -30,7 +30,7 @@ export class MachineryVehiclesComponent {
   ) {
     this.vehicleForm = this.fb.group({
       calculationYear: [{ value: '2023', disabled: true }],
-      productionCenter: [{ value: '2', disabled: true }],
+      productionCenter: [{ value: '6', disabled: true }],
       vehicleCategory: ['', Validators.required],
       fuelType: ['', Validators.required],
       quantity: ['', [Validators.required, Validators.pattern(/^\d+$/)]],
@@ -48,7 +48,7 @@ export class MachineryVehiclesComponent {
     });
     this.getProductionCenterDetails(this.vehicleForm.get('productionCenter')!.value)
     this.getFuelConsumptions()
-    this.getScopeOneRecords(2023, 2)
+    this.getScopeOneRecords(2023, 6)
 
   }
 
@@ -68,7 +68,7 @@ export class MachineryVehiclesComponent {
       })
   }
 
-  getScopeOneRecords(calculationYear: number = 2023, productionCenter: number = 2, activityType: string = 'machinery') {
+  getScopeOneRecords(calculationYear: number = 2023, productionCenter: number = 6, activityType: string = 'machinery') {
     this.scopeOneRecordsService.getRecordsByFilters(calculationYear, productionCenter, activityType)
       .subscribe({
         next: (registros: any) => {

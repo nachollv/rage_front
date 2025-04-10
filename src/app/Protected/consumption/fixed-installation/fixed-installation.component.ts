@@ -27,8 +27,8 @@ export class FixedInstallationComponent {
       private scopeOneRecordsService: ScopeOneRecordsService,
       private snackBar: MatSnackBar) {
       this.fuelForm = this.fb.group({
-        calculationYear: [{ value: '2023', disabled: true }],
-        productionCenter: [{value: '2', disabled: true}],
+        calculationYear: [{ value: '', disabled: true }],
+        productionCenter: [{value: '', disabled: true}],
         fuelType: ['', Validators.required],
         quantity: ['', [Validators.required, Validators.min(0)]],
         defaultFactor: this.fb.group({
@@ -45,7 +45,7 @@ export class FixedInstallationComponent {
       });
       this.getProductionCenterDetails(this.fuelForm.get('productionCenter')!.value)
       this.getFuelConsumptions(2023)
-      this.getScopeOneRecords(2023, 2)
+      this.getScopeOneRecords(2023, 6)
     }
 
 
@@ -65,7 +65,7 @@ export class FixedInstallationComponent {
         })
     }
 
-    getScopeOneRecords(calculationYear: number = 2023, productionCenter: number = 2, activityType: string = 'fixed') {
+    getScopeOneRecords(calculationYear: number = 2023, productionCenter: number = 6, activityType: string = 'fixed') {
       this.scopeOneRecordsService.getRecordsByFilters(calculationYear, productionCenter, activityType)
         .subscribe({
           next: (registros: any) => {

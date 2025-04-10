@@ -26,7 +26,7 @@ export class FugitiveGasesComponent {
 
     this.emisionesForm = this.fb.group({
       calculationYear: [{ value: '2023', disabled: true }, [Validators.required, Validators.minLength(4), Validators.maxLength(4)]],
-      productionCenter: [{ value: '1', disabled: true }, Validators.required],
+      productionCenter: [{ value: '6', disabled: true }, Validators.required],
       nombre_gas_mezcla: ['', Validators.required],
       formulaQuimica: [{ value: '', disabled: true }, Validators.required],
       pca: [{ value: '', disabled: true }, Validators.required],

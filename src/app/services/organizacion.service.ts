@@ -72,7 +72,7 @@ export class OrganizacionService {
   }
 
   // Obtener los años de actividad por organización
-  getActivityYearsByOrganization(idEmpresa: number): Observable<any> {
-    return this.http.get(`${this.apiUrl}/activityYear/organization/${idEmpresa}`);
+  getActivityYearsByOrganization(organizacionID: number): Observable<any> {
+    return this.http.get(`${this.apiUrl}/activityYear/organization/${organizacionID}`);
   }
 }
