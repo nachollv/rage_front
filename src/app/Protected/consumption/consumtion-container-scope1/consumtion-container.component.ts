@@ -19,9 +19,10 @@ export class ConsumtionContainerComponent {
   selectedTabIndexscope1: number = 0;
   productionCenterForm: FormGroup;
   token: string = ''
-  prodCenterID!: number
+  prodCenterID!: string
   organizacionID!: number
-  availableYears: { id: number, year: number }[] = [];
+  availableYears: string[] = [];
+  currentActivityYear: string = ''
   constructor(public dialog: MatDialog, private fb: FormBuilder,
     private jwtHelper: JwtHelperService,
     private authService: AuthService,
@@ -30,9 +31,9 @@ export class ConsumtionContainerComponent {
     private organizationService: OrganizacionService,
     private translate: TranslationService) {
      this.productionCenterForm = this.fb.group({
-            calculationYear: [{ value: '', disabled: true }],
-            productionCenter: [{value: '', disabled: true}],
-          });
+      activityYear: [{ value: '' }],
+      productionCenter: [{value: '', disabled: true}],
+    });
     }
 
   ngOnInit() {
@@ -44,7 +45,7 @@ export class ConsumtionContainerComponent {
       this.selectedTabIndexscope1 = +savedTabIndex;
     }
     this.getOrganizacionActivityYears( this.organizacionID )
-   /*  this.getProductionCenterDetails( this.prodCenterID ) */
+    this.getProductionCenterDetails( +this.prodCenterID )
   }
 
   getProductionCenterDetails(id:number) {
@@ -60,14 +61,18 @@ export class ConsumtionContainerComponent {
     this.organizationService.getActivityYearsByOrganization(organizacionID)
       .subscribe((years: any) => {
         this.availableYears = years
-        console.log("años: ", this.availableYears)
       })  
    }
 
   onTabChange(index: number) {
     localStorage.setItem('selectedTabIndexscope1', index.toString());
   }
-
+  
+  onYearChange(event: any): void {
+    this.currentActivityYear = event.value; // Almacena el año seleccionado
+    console.log('Año seleccionado:', this.currentActivityYear); // Opcional: para depuración
+  }
+  
   openDialog( title: string, text: string ): void {
     this.translate.getTranslation(text).subscribe((translation: string) => {
       text = translation;

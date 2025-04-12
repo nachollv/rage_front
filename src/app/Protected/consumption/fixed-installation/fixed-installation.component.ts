@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FuelDataService } from '../../../services/fuel-data.service';
 import { MatDialog } from '@angular/material/dialog';
@@ -14,6 +14,8 @@ import { ProductioncenterService } from '../../../services/productioncenter.serv
   styleUrl: './fixed-installation.component.scss'
 })
 export class FixedInstallationComponent {
+    @Input() activityYear: string = ""
+    @Input() productionCenter: string = ""
     displayedColumns: string[] = ['calculationYear', 'productionCenter', 'fuel_type', 'quantity', 'edit', 'delete']
     data = [{ }]
     dataSource = new MatTableDataSource<any>(this.data)
@@ -44,8 +46,8 @@ export class FixedInstallationComponent {
         totalEmissions: [{ value: 0, disabled: true }]
       });
       this.getProductionCenterDetails(this.fuelForm.get('productionCenter')!.value)
-      this.getFuelConsumptions(2023)
-      this.getScopeOneRecords(2023, 6)
+      this.getFuelConsumptions(+this.activityYear)
+      this.getScopeOneRecords(+this.activityYear, +this.productionCenter)
     }
 
 
@@ -58,7 +60,7 @@ export class FixedInstallationComponent {
         })
     }
 
-    getFuelConsumptions(calculationYear: number = 2023) {
+    getFuelConsumptions(calculationYear: number) {
       this.fuelDataService.getByYear(calculationYear)
         .subscribe((fuel:any) => {
         this.fuelTypes = fuel
@@ -87,8 +89,11 @@ export class FixedInstallationComponent {
         this.fuelForm.get('productionCenter')?.value, 
         this.fuelForm.get('quantity')?.value, this.fuelForm.get('fuelType')?.value.id;
         const formValue = this.fuelForm.value
-        formValue.calculationYear = this.fuelForm.get('calculationYear')?.value
-        formValue.productionCenter = this.fuelForm.get('productionCenter')?.value
+/*         formValue.calculationYear = this.fuelForm.get('calculationYear')?.value
+        formValue.productionCenter = this.fuelForm.get('productionCenter')?.value */
+        formValue.calculationYear = this.activityYear
+        formValue.productionCenter = this.productionCenter
+    
         formValue.fuel_type = this.fuelForm.get('fuelType')?.value.id
         formValue.activityType = 'fixed'
         formValue.quantity = this.fuelForm.get('quantity')?.value
@@ -97,7 +102,7 @@ export class FixedInstallationComponent {
           .subscribe(
             (fuel: any) => {
               this.showSnackBar('Éxito:' + fuel);
-              this.getFuelConsumptions()
+              this.getFuelConsumptions(+this.activityYear)
             },
             (error: any) => {
               this.showSnackBar('Error al crear:' + error);

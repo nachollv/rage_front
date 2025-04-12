@@ -3,24 +3,24 @@
   <form [formGroup]="productionCenterForm">
   <mat-form-field appearance="fill">
       <mat-label>Seleccione el año de cálculo</mat-label>
-      <mat-select formControlName="activityYear">
-        <mat-option *ngFor="let year of availableYears" [value]="year">
-          {{ year }}
-        </mat-option>
+      <mat-select formControlName="activityYear" (selectionChange)="onYearChange($event)">
+        <mat-option *ngFor="let year of availableYears[0]" [value]="year">
+        {{ year }}
+      </mat-option>
       </mat-select>
   </mat-form-field>
   <mat-form-field appearance="fill">
     <mat-label>Centro de producción</mat-label>
-    <input matInput formControlName="productionCenter" placeholder="Ejemplo: Zona Norte-Sur">
+    <input matInput formControlName="productionCenter">
   </mat-form-field>
   </form>
 <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start" [(selectedIndex)]="selectedTabIndexscope1" (selectedIndexChange)="onTabChange($event)">
   <mat-tab label="{{'fixedInstallationsFuelConsumption' | translate}}">
     <button mat-menu-item (click)="openDialog('ACLARACIÓN', 'Instalaciones fijas no sujetas a las obligaciones establecidas en la Ley 1/2005, de 9 de marzo ')">
     <mat-icon style="color: #ff9310;">info</mat-icon>{{"fixedInstallationsFuelConsumption" | translate}}</button>
-    <app-fixed-installation></app-fixed-installation>
+    <app-fixed-installation [activityYear]="currentActivityYear" [productionCenter]="prodCenterID"></app-fixed-installation>
   </mat-tab>
-  <mat-tab label="{{'roadTransport'  | translate}}">
+ <!--  <mat-tab label="{{'roadTransport'  | translate}}">
     <button mat-menu-item (click)="openDialog('ACLARACIÓN', 'xxxxxxxxxxxxxxxxxxxxxxxxxxxx')"> 
     <mat-icon style="color: #ff9310;">info</mat-icon>{{"roadTransport" | translate}}</button>
     <app-vehicles></app-vehicles>
@@ -39,5 +39,5 @@
     <button mat-menu-item (click)="openDialog('ACLARACIÓN', 'xxxxxxxxxxxxxxxxxxxxxxxxxxxx')"> 
       <mat-icon style="color: #ff9310;">info</mat-icon>{{"fugitiveEmissions" | translate}}</button>
       <app-fugitive-gases></app-fugitive-gases>
-  </mat-tab>
+  </mat-tab> -->
 </mat-tab-group>
