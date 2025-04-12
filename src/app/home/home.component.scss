@@ -14,6 +14,12 @@ mat-card {
   flex: 1;
 }
 
+mat-card-actions {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
 /* Large devices (laptops/desktops, 992px and up) */
 @media only screen and (max-width: 992px) {
   :host {
