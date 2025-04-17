@@ -33,10 +33,10 @@
     </mat-select>
   </mat-form-field>
   <section ngClass="limites-organizacion">
-    <mat-label>Límites de la organización</mat-label>
+    <h4>Límites de la organización</h4>
     <mat-checkbox (change)="onMultipleOrgChange($event)" formControlName="multipleProductionCenter">Más de un Centro de Producción</mat-checkbox>
     <section>
-      <h4>Años de cálculo permitidos:</h4>
+      <mat-label>Años de cálculo permitidos:</mat-label>
       <mat-form-field appearance="fill" >
         <mat-label>Seleccione uno o varios años</mat-label>
         <mat-select multiple formControlName="activityYear">
@@ -45,6 +45,18 @@
           </mat-option>
         </mat-select>
       </mat-form-field>
+      <mat-form-field>
+        <mat-label>Indique el índice de actividad</mat-label>
+        <mat-select formControlName="activityIndex">
+          <mat-option *ngFor="let item  of activityIndex" [value]="item.id">
+            {{ item.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+     <!--  <mat-form-field>
+        <mat-label>Entre el valor del índice de actividad</mat-label>
+        <input matInput formControlName="activityIndexValue" type="number">
+      </mat-form-field> -->
     </section>
   </section>
   <mat-form-field appearance="fill">

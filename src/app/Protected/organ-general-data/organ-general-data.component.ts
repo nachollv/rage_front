@@ -33,6 +33,7 @@ export class OrganGeneralDataComponent implements OnInit {
   
     sectors: string[] = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
     objectiveList: string[] = ['Reducción del consumo de energía', 'Minimizar residuos', 'Ahorro de agua', 'Disminución de Emisiones de CO2', 'Aumento del uso de energías renovables'];
+    activityIndex: {id:string, name:string}[] = [{id: '1', name: 'Producción anual'}, {id: '1', name: 'Consumo energético'}, {id: '1', name: 'Superficie de las instalaciones'}, {id: '1', name: 'Número de empleados'}, {id: '1', name: 'Facturación'}];
     token: string = ''
     organizationID!: number
     availableYears: number[] = [];
@@ -50,6 +51,8 @@ export class OrganGeneralDataComponent implements OnInit {
         cif: [''],
         companyName: [''],
         organizationType: [''],
+        activityIndex: ['', Validators.required],
+       /*  activityIndexValue: ['', Validators.required], */
         activityYear: [null, Validators.required],
         cnae: [''],
         zipCode: [''],
