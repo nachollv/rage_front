@@ -19,6 +19,7 @@ import { HeaderComponent } from './Protected/header/header.component';
 import { FooterComponent } from './Protected/footer/footer.component';
 /* Angular material components */
 import { MatTabsModule } from '@angular/material/tabs';
+import {MatTooltipModule} from '@angular/material/tooltip';
 import { MatIconModule } from '@angular/material/icon'
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
@@ -100,6 +101,7 @@ export function tokenGetter() {
     AppRoutingModule,
     MatMenuModule,
     MatTabsModule,
+    MatTooltipModule,
     MatIconModule,
     MatTableModule,
     MatPaginatorModule,
