@@ -1,10 +1,9 @@
-  <h1><button mat-menu-item (click)="openDialog (1)"><mat-icon style="color: #0a470d;">info</mat-icon>{{"scope1" | translate}}</button> </h1>
+  <h1><button mat-menu-item (click)="openDialog(1)"><mat-icon style="color: #0a470d;">info</mat-icon>{{"scope1" | translate}}</button> </h1>
   <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start" [(selectedIndex)]="selectedTabIndexscope1" (selectedIndexChange)="onTabChange($event)">
-  <!--   <mat-tab label="{{'fixedInstallationsFuelConsumption' | translate}}">
-      <button mat-menu-item (click)="openDialog(2)">
-      <mat-icon style="color: #ff9310;">info</mat-icon>{{"fixedInstallationsFuelConsumption" | translate}}</button>
+    <mat-tab label="{{'fixedInstallationsFuelConsumption' | translate}}">
+      <button mat-menu-item (click)="openDialog(2)"><mat-icon style="color: #ff9310;">info</mat-icon>{{"fixedInstallationsFuelConsumption" | translate}}</button>
       <app-fixed-installation [activityYear]="currentActivityYear" [productionCenter]="prodCenterID"></app-fixed-installation>
-    </mat-tab> -->
+    </mat-tab>
    <!--  <mat-tab label="{{'roadTransport'  | translate}}">
       <button mat-menu-item (click)="openDialog('ACLARACIÓN', 'xxxxxxxxxxxxxxxxxxxxxxxxxxxx')"> 
       <mat-icon style="color: #ff9310;">info</mat-icon>{{"roadTransport" | translate}}</button>
