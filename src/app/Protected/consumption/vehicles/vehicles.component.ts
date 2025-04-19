@@ -96,38 +96,36 @@ export class MachineryVehiclesComponent  implements OnInit, OnChanges {
       });
   }
 
-  onSubmit() {
-    this.vehicleForm.get('productionCenter')?.value, 
-    this.vehicleForm.get('quantity')?.value, this.vehicleForm.get('fuelType')?.value.id;
-    const formValue = this.vehicleForm.value
-    formValue.calculationYear = this.vehicleForm.get('calculationYear')?.value
-    formValue.productionCenter = this.vehicleForm.get('productionCenter')?.value
-    formValue.vehicle_type = this.vehicleForm.get('vehicleCategory')?.value.id
-    formValue.fuel_type = this.vehicleForm.get('fuelType')?.value.id
-    formValue.activityType = 'machinery'
-    formValue.quantity = this.vehicleForm.get('quantity')?.value
+onSubmit() {
+  this.vehicleForm.get('productionCenter')?.value, 
+  this.vehicleForm.get('quantity')?.value, this.vehicleForm.get('fuelType')?.value.id;
+  const formValue = this.vehicleForm.value
+  formValue.calculationYear = this.vehicleForm.get('calculationYear')?.value
+  formValue.productionCenter = this.vehicleForm.get('productionCenter')?.value
+  formValue.vehicle_type = this.vehicleForm.get('vehicleCategory')?.value.id
+  formValue.fuel_type = this.vehicleForm.get('fuelType')?.value.id
+  formValue.activityType = 'machinery'
+  formValue.quantity = this.vehicleForm.get('quantity')?.value
 
-    this.scopeOneRecordsService.createRecord(formValue)
-      .subscribe(
-        (fuel: any) => {
-          this.showSnackBar('Éxito:' + fuel);
-          this.getFuelConsumptions(this.activityYear)
-        },
-        (error: any) => {
-          this.showSnackBar('Error al crear:' + error);
-        }
-      );
-}
+  this.scopeOneRecordsService.createRecord(formValue)
+    .subscribe(
+      (fuel: any) => {
+        this.showSnackBar('Éxito:' + fuel);
+        this.getFuelConsumptions(this.activityYear)
+      },
+      (error: any) => {
+        this.showSnackBar('Error al crear:' + error);
+    }
+    );
+  }
 
-  setFuelTypes() {
-
-    const machineryData = this.vehicleForm.value
-    console.log (machineryData.vehicleCategory.Categoria)
-    this.vehicleFuelService.getByYearType(2023, machineryData.vehicleCategory.Categoria)
-      .subscribe((fuelTypes:any) => {
-        this.fuelTypes = fuelTypes
-      })
-
+setFuelTypes() {
+  const machineryData = this.vehicleForm.value
+  console.log (machineryData.vehicleCategory.Categoria)
+  this.vehicleFuelService.getByYearType(2023, machineryData.vehicleCategory.Categoria)
+    .subscribe((fuelTypes:any) => {
+      this.fuelTypes = fuelTypes
+    })
 }
 
 setEmissionFactors () {

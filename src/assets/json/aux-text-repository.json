@@ -1,5 +1,27 @@
 [
   {
+  "id": 0,
+  "scope": 1,
+  "scopeTab": 0,
+  "titleCA": "Càlcul de la petjada de carboni",
+  "titleES": "Cálculo de la huella de carbono",
+  "titleEN": "Carbon footprint calculation",
+  "sectionTextCA": "Calcular la petjada de carboni ajuda a una empresa a entendre com afecta el medi ambient. Si una empresa emet molt CO₂ (per la producció, el transport, l’ús d’energia, etc.), conèixer aquesta informació li permet reduir costos, millorar la seva imatge i complir amb les normatives ambientals. Mesurar la petjada de carboni permet a l’empresa: ✅ Estalviar diners optimitzant recursos i energia. ✅ Complir amb la legislació ambiental i evitar sancions. ✅ Millorar la seva reputació demostrant compromís amb la sostenibilitat. ✅ Implementar estratègies ecològiques, com l’ús d’energies renovables. En resum, conèixer el seu impacte permet a l’empresa ser més eficient, responsable i competitiva en un món cada cop més conscienciat amb el medi ambient. 🌍✨ Vols saber com reduir-la? 😃",
+  "sectionTextES": "Calcular la huella de carbono ayuda a una empresa a entender cuánto impacto tiene en el medioambiente. Si una empresa emite mucho CO₂ (por fábricas, transporte, electricidad, etc.), conocer esta información le permite reducir costos, mejorar su imagen y cumplir con regulaciones ambientales. Al medir su huella de carbono, la empresa puede: ✅ Ahorrar dinero optimizando recursos y energía. ✅ Cumplir con leyes ambientales y evitar multas. ✅ Mejorar su reputación mostrando compromiso con la sostenibilidad. ✅ Crear estrategias ecológicas, como usar energías renovables. En pocas palabras, conocer su impacto permite a la empresa ser más eficiente, responsable y competitiva en un mundo donde lo ecológico cada vez importa más. 🌱.",
+  "sectionTextEN": "Calculating the carbon footprint helps a company understand its environmental impact. If a business emits a lot of CO₂ (through production, transportation, energy use, etc.), knowing this allows it to reduce costs, improve its image, and comply with environmental regulations. By measuring its carbon footprint, a company can: ✅ Save money by optimizing resources and energy. ✅ Meet environmental laws and avoid fines. ✅ Enhance its reputation by showing commitment to sustainability. ✅ Implement eco-friendly strategies, such as using renewable energy. In short, understanding its impact helps a company be more efficient, responsible, and competitive in a world that values sustainability more than ever. 🌍✨ Want to know how to reduce it? 😃"
+  },
+  {
+  "id": 9999,
+  "scope": 1,
+  "scopeTab": 0,
+  "titleCA": "Abast 1 i Abast 2",
+  "titleES": "Alcance 1 y Alcance 2",
+  "titleEN": "Scope 1 and Scope 2",
+  "sectionTextCA": "Calcular la petjada de carboni ajuda a una empresa a entendre com afecta el medi ambient. Si una empresa emet molt CO₂ (per la producció, el transport, l’ús d’energia, etc.), conèixer aquesta informació li permet reduir costos, millorar la seva imatge i complir amb les normatives ambientals. Mesurar la petjada de carboni permet a l’empresa: ✅ Estalviar diners optimitzant recursos i energia. ✅ Complir amb la legislació ambiental i evitar sancions. ✅ Millorar la seva reputació demostrant compromís amb la sostenibilitat. ✅ Implementar estratègies ecològiques, com l’ús d’energies renovables. En resum, conèixer el seu impacte permet a l’empresa ser més eficient, responsable i competitiva en un món cada cop més conscienciat amb el medi ambient. 🌍✨ Vols saber com reduir-la? 😃",
+  "sectionTextES": "Calcular la huella de carbono ayuda a una empresa a entender cuánto impacto tiene en el medioambiente. Si una empresa emite mucho CO₂ (por fábricas, transporte, electricidad, etc.), conocer esta información le permite reducir costos, mejorar su imagen y cumplir con regulaciones ambientales. Al medir su huella de carbono, la empresa puede: ✅ Ahorrar dinero optimizando recursos y energía. ✅ Cumplir con leyes ambientales y evitar multas. ✅ Mejorar su reputación mostrando compromiso con la sostenibilidad. ✅ Crear estrategias ecológicas, como usar energías renovables. En pocas palabras, conocer su impacto permite a la empresa ser más eficiente, responsable y competitiva en un mundo donde lo ecológico cada vez importa más. 🌱.",
+  "sectionTextEN": "Calculating the carbon footprint helps a company understand its environmental impact. If a business emits a lot of CO₂ (through production, transportation, energy use, etc.), knowing this allows it to reduce costs, improve its image, and comply with environmental regulations. By measuring its carbon footprint, a company can: ✅ Save money by optimizing resources and energy. ✅ Meet environmental laws and avoid fines. ✅ Enhance its reputation by showing commitment to sustainability. ✅ Implement eco-friendly strategies, such as using renewable energy. In short, understanding its impact helps a company be more efficient, responsible, and competitive in a world that values sustainability more than ever. 🌍✨ Want to know how to reduce it? 😃"
+  },
+  {
     "id": 1,
     "scope": 1,
     "scopeTab": 0,
@@ -12,13 +34,57 @@
   },
   {
     "id": 2,
-    "scope": 2,
+    "scope": 1,
     "scopeTab": 0,
-    "titleCA": "Abast 2",
-    "titleES": "Alcance 2",
-    "titleEN": "Scope 2",
-    "sectionTextCA": "Troba respostes a preguntes freqüents.",
-    "sectionTextES": "Encuentra respuestas a preguntas frecuentes.",
-    "sectionTextEN": "Find answers to frequently asked questions."
+    "titleCA": "Abast 1",
+    "titleES": "Alcance 1",
+    "titleEN": "Scope 1",
+    "sectionTextCA": "Troba respostes a preguntes freqüents 2.",
+    "sectionTextES": "Encuentra respuestas a preguntas frecuentes 2.",
+    "sectionTextEN": "Find answers to frequently asked questions 2."
+  },
+  {
+    "id": 3,
+    "scope": 1,
+    "scopeTab": 0,
+    "titleCA": "Abast 1",
+    "titleES": "Alcance 1",
+    "titleEN": "Scope 1",
+    "sectionTextCA": "Troba respostes a preguntes freqüents 3.",
+    "sectionTextES": "Encuentra respuestas a preguntas frecuentes 3.",
+    "sectionTextEN": "Find answers to frequently asked questions 3."
+  },
+  {
+    "id": 4,
+    "scope": 1,
+    "scopeTab": 0,
+    "titleCA": "Abast 1",
+    "titleES": "Alcance 1",
+    "titleEN": "Scope 1",
+    "sectionTextCA": "Troba respostes a preguntes freqüents 4.",
+    "sectionTextES": "Encuentra respuestas a preguntas frecuentes 4.",
+    "sectionTextEN": "Find answers to frequently asked questions 4."
+  },
+  {
+    "id": 5,
+    "scope": 1,
+    "scopeTab": 0,
+    "titleCA": "Abast 1",
+    "titleES": "Alcance 1",
+    "titleEN": "Scope 1",
+    "sectionTextCA": "Troba respostes a preguntes freqüents 5.",
+    "sectionTextES": "Encuentra respuestas a preguntas frecuentes 5.",
+    "sectionTextEN": "Find answers to frequently asked questions 5."
+  },
+  {
+    "id": 6,
+    "scope": 1,
+    "scopeTab": 0,
+    "titleCA": "Abast 1",
+    "titleES": "Alcance 1",
+    "titleEN": "Scope 1",
+    "sectionTextCA": "Troba respostes a preguntes freqüents 6.",
+    "sectionTextES": "Encuentra respuestas a preguntas frecuentes 6.",
+    "sectionTextEN": "Find answers to frequently asked questions 6."
   }
 ]
