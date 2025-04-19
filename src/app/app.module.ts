@@ -44,7 +44,7 @@ import { ElectricityComponent } from './Protected/consumption/electricity/electr
 import { FixedInstallationComponent } from './Protected/consumption/fixed-installation/fixed-installation.component';
 import { HomeComponent } from './home/home.component';
 import { DialogComponent } from './dialog/dialog.component';
-import { ConsumtionContainerComponent } from './Protected/consumption/consumtion-container-scope1/consumtion-container.component';
+import { ConsumtionContainerScope1Component } from './Protected/consumption/consumtion-container-scope1/consumtion-container-scope1.component';
 import { ConsumtionContainerScope2Component } from './Protected/consumption/consumtion-container-scope2/consumtion-container-scope2.component';
 import { ControlPanelContainerComponent } from './control-panel-container/control-panel-container.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
@@ -56,6 +56,7 @@ import { MachineryComponent } from './Protected/consumption/machinery/machinery.
 import { HeatSteamColdCompAirComponent } from './Protected/consumption/heat-steam-cold-comp-air/heat-steam-cold-comp-air.component';
 import { RailSeaAirtransportComponent } from './Protected/consumption/rail-sea-airtransport/rail-sea-airtransport.component';
 import { UserManagementComponent } from './Protected/user/user-management/user-management.component';
+import { ConsumptionComponent } from './Protected/consumption/consumption.component';
 
 // Función para cargar los archivos de traducción
 export function HttpLoaderFactory(http: HttpClient) {
@@ -81,7 +82,7 @@ export function tokenGetter() {
     FixedInstallationComponent,
     HomeComponent,
     DialogComponent,
-    ConsumtionContainerComponent,
+    ConsumtionContainerScope1Component,
     ConsumtionContainerScope2Component,
     ControlPanelContainerComponent,
     PageNotFoundComponent,
@@ -93,6 +94,7 @@ export function tokenGetter() {
     HeatSteamColdCompAirComponent,
     RailSeaAirtransportComponent,
     UserManagementComponent,
+    ConsumptionComponent,
   ],
   imports: [
     BrowserModule,

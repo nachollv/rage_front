@@ -6,7 +6,7 @@ import { RegisterComponent } from './register/register.component';
 import { OrganGeneralDataComponent } from './Protected/organ-general-data/organ-general-data.component';
 import { ElectricityComponent } from './Protected/consumption/electricity/electricity.component';
 import { HomeComponent } from './home/home.component';
-import { ConsumtionContainerComponent } from './Protected/consumption/consumtion-container-scope1/consumtion-container.component';
+import { ConsumptionComponent } from './Protected/consumption/consumption.component';
 import { ConsumtionContainerScope2Component } from './Protected/consumption/consumtion-container-scope2/consumtion-container-scope2.component';
 import { ControlPanelContainerComponent } from './control-panel-container/control-panel-container.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
@@ -19,8 +19,8 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'sign-up', component: RegisterComponent },
   { path: 'user-management', component: UserManagementComponent, canActivate: [AuthGuard] },
-  { path: 'scope-one', component: ConsumtionContainerComponent, canActivate: [AuthGuard] },
-  { path: 'scope-two', component: ConsumtionContainerScope2Component, canActivate: [AuthGuard] },
+  { path: 'scope/:scope', component: ConsumptionComponent, canActivate: [AuthGuard] },
+  { path: 'scope/:scope', component: ConsumptionComponent, canActivate: [AuthGuard] },
   { path: 'organ-gen-data', component: OrganGeneralDataComponent, canActivate: [AuthGuard] },
   { path: 'dashboard', component: ControlPanelContainerComponent },
   { path: 'electricity-consumption', component: ElectricityComponent, canActivate: [AuthGuard] },

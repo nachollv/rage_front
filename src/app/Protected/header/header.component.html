@@ -11,8 +11,8 @@
   <button mat-menu-item ngClass="rage-menu-item" routerLink="/dashboard">{{'dashboard' | translate}}</button>
   <hr>
   <section *ngIf="role === 'User'">
-    <button mat-menu-item routerLink="scope-one">{{'consumptions' | translate}}</button>
-    <button mat-menu-item routerLink="scope-two">{{'emissions' | translate}}</button>
+    <button mat-menu-item [routerLink]="['/scope', 'one']">{{'scope1' | translate}}</button>
+    <button mat-menu-item [routerLink]="['/scope', 'two']">{{'scope2' | translate}}</button>
   </section>
   <section *ngIf="role === 'Admin'">
     <button mat-menu-item ngClass="rage-menu-item" routerLink="/user-management">{{'userManagement' | translate}}</button>
@@ -22,7 +22,8 @@
   </section>
   <hr>
   <button mat-menu-item (click)="switchLanguage('en')">English</button>
-  <button mat-menu-item (click)="switchLanguage('es')">Español</button>
+  <button mat-menu-item (click)="switchLanguage('ca')">Català</button>
+  <button mat-menu-item (click)="switchLanguage('es')">Castellano</button>
   <hr>
   <button  mat-menu-item ngClass="rage-menu-item" (click)="logout()">{{'logout' | translate}}</button>
 </mat-menu>

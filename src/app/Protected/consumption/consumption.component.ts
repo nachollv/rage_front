@@ -1,31 +1,40 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { DialogComponent } from '../../../dialog/dialog.component';
-import { TranslationService } from '../../../services/translate.service';
-import { AuthService } from '../../../services/auth.service';
-import { ProductioncenterService } from '../../../services/productioncenter.service';
-import { OrganizacionService } from '../../../services/organizacion.service';
+import { ActivatedRoute } from '@angular/router';
+import { DialogComponent } from '../../dialog/dialog.component';
+import { TranslationService } from '../../services/translate.service';
+import { AuthService } from '../../services/auth.service';
+import { ProductioncenterService } from '../../services/productioncenter.service';
+import { OrganizacionService } from '../../services/organizacion.service';
+import { AuxHelpingTextsService } from '../../services/aux-helping-texts.service';
+import { AuxTextDTO } from '../../models/auxText.dto';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
-  selector: 'app-consumtion-container',
-  templateUrl: './consumtion-container.component.html',
-  styleUrl: './consumtion-container.component.scss'
+  selector: 'app-consumption',
+  templateUrl: './consumption.component.html',
+  styleUrl: './consumption.component.scss'
 })
-export class ConsumtionContainerComponent {
-  translatedScopeOneEmissions?: string | undefined;
-  selectedTabIndexscope1: number = 0;
+export class ConsumptionComponent {
   productionCenterForm: FormGroup;
   token: string = ''
   prodCenterID!: string
   organizacionID!: number
   availableYears: string[] = [];
   currentActivityYear: string = ''
+  auxText: AuxTextDTO | undefined
+  title: string = ''
+  text: string = ''
+  scope1: boolean = true
+  scope2: boolean = false
+
   constructor(public dialog: MatDialog, private fb: FormBuilder,
+    private route: ActivatedRoute,
     private jwtHelper: JwtHelperService,
     private authService: AuthService,
+    private auxHelpingTextsService: AuxHelpingTextsService,
     private snackBar: MatSnackBar,
     private productionCenterService: ProductioncenterService,
     private organizationService: OrganizacionService,
@@ -34,19 +43,28 @@ export class ConsumtionContainerComponent {
       activityYear: [{ value: '' }],
       productionCenter: [{value: '', disabled: true}],
     });
-    }
+  }
 
   ngOnInit() {
-    const savedTabIndex = localStorage.getItem('selectedTabIndexscope1')
+/*     const savedTabIndex = localStorage.getItem('selectedTabIndexscope1') */
+this.route.params.subscribe(params => {
+  if (params['scope']==='one') {
+    this.scope1 = true
+    this.scope2 = false
+  }
+  else if (params['scope']==='two') {
+    this.scope1 = false
+    this.scope2 = true
+  }
+});
     this.token = this.authService.getToken() || ''
     this.prodCenterID = this.jwtHelper.decodeToken(this.token).data.id
     this.organizacionID = this.jwtHelper.decodeToken(this.token).data.id_empresa
-    if (savedTabIndex !== null) {
-      this.selectedTabIndexscope1 = +savedTabIndex;
-    }
+
     this.getOrganizacionActivityYears( this.organizacionID )
     this.getProductionCenterDetails( +this.prodCenterID )
   }
+
 
   getProductionCenterDetails(id:number) {
     this.productionCenterService.getCentroDeProduccionByID(id)
@@ -64,24 +82,37 @@ export class ConsumtionContainerComponent {
       })  
    }
 
-  onTabChange(index: number) {
-    localStorage.setItem('selectedTabIndexscope1', index.toString());
-  }
-  
-  onYearChange(event: any): void {
+   onYearChange(event: any): void {
     this.currentActivityYear = event.value; // Almacena el año seleccionado
     console.log('Año seleccionado:', this.currentActivityYear); // Opcional: para depuración
   }
-  
-  openDialog( title: string, text: string ): void {
-    this.translate.getTranslation(text).subscribe((translation: string) => {
-      text = translation;
-      console.log (text)
-    })
+
+   openDialog( id: number ): void {
+    this.auxHelpingTextsService.getAuxTextById(id).subscribe((text: AuxTextDTO | undefined) => {
+      if (text) {
+        this.auxText = text
+
+        if (localStorage.getItem('preferredLang') === 'es') {
+         this.title = text.titleES
+         this.text = text.sectionTextES
+        } else if (localStorage.getItem('preferredLang') === 'ca') {
+          this.title = text.titleCA
+          this.text = text.sectionTextCA
+        } else if (localStorage.getItem('preferredLang') === 'en') {
+          this.title = text.titleEN
+          this.text = text.sectionTextEN
+        } else {
+          console.error('Idioma no soportado')
+        }
+      } else {
+        console.error('Texto auxiliar no encontrado');
+      }
+    });
+
     const dialogRef = this.dialog.open(DialogComponent, {
       data: {
-        title: title,
-        text: text,
+        title: this.title,
+        text: this.text,
         position: 'center'
       },
       width: '450px',
@@ -91,5 +122,4 @@ export class ConsumtionContainerComponent {
       console.log('El dialog se cerró');
     });
   }
-
 }

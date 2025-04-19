@@ -1,30 +1,19 @@
-<h1><button mat-menu-item (click)="openDialog ('ALCANCE 2','emisiones indirectas de GEI asociadas a la generación de electricidad adquirida y 
-consumida por la organización.')"><mat-icon style="color: #0a470d;">info</mat-icon>{{"emissions" | translate}}</button> </h1>
-<form [formGroup]="productionCenterForm">
-  <mat-form-field appearance="fill">
-    <mat-label>Año de cálculo</mat-label>
-   <input matInput formControlName="calculationYear" placeholder="Ejemplo: 2023">
-  </mat-form-field>
-  <mat-form-field appearance="fill">
-    <mat-label>Centro de producción</mat-label>
-    <input matInput formControlName="productionCenter" placeholder="Ejemplo: Zona Norte-Sur">
-  </mat-form-field>
-  </form>
-<mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start"  [(selectedIndex)]="selectedTabIndexscope2" (selectedIndexChange)="onTabChange($event)">
-  <mat-tab label="{{'electricityConsumptionInBuildings' | translate}}">
-    <button mat-menu-item (click)="openDialog('Instalaciones fijas no sujetas a las obligaciones establecidas en la Ley 1/2005, de 9 de marzo ','Descripción...')">
-      <mat-icon style="color: #ff9310;">info</mat-icon>{{"electricityConsumptionInBuildings" | translate}}</button>
-      <app-electricity></app-electricity>
-  </mat-tab>
-  <mat-tab label="{{'electricityConsumptionInVehicles'  | translate}}">
-    <button mat-menu-item (click)="openDialog('Instalaciones fijas no sujetas a las obligaciones establecidas en la Ley 1/2005, de 9 de marzo ','Descripción...')">
-      <mat-icon style="color: #ff9310;">info</mat-icon>{{"electricityConsumptionInVehicles" | translate}}</button>
-      <app-electricity-vehicles></app-electricity-vehicles>
-  </mat-tab>
-
-  <mat-tab label="{{'heatSteamColdCompressedAir'  | translate}}">
-    <button mat-menu-item (click)="openDialog('Instalaciones fijas no sujetas a las obligaciones establecidas en la Ley 1/2005, de 9 de marzo ','Descripción...')">
-      <mat-icon style="color: #ff9310;">info</mat-icon>{{"heatSteamColdCompressedAir" | translate}}</button>
-      <app-heat-steam-cold-comp-air></app-heat-steam-cold-comp-air>
-  </mat-tab>
-</mat-tab-group>
+  <h1><button mat-menu-item (click)="openDialog (2)"><mat-icon style="color: #0a470d;">info</mat-icon>{{"scope2" | translate}}</button> </h1>
+  <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start"  [(selectedIndex)]="selectedTabIndexscope2" (selectedIndexChange)="onTabChange($event)">
+  <!--   <mat-tab label="{{'electricityConsumptionInBuildings' | translate}}">
+      <button mat-menu-item (click)="openDialog('Instalaciones fijas no sujetas a las obligaciones establecidas en la Ley 1/2005, de 9 de marzo ')">
+        <mat-icon style="color: #ff9310;">info</mat-icon>{{"electricityConsumptionInBuildings" | translate}}</button>
+        <app-electricity></app-electricity>
+    </mat-tab>
+    <mat-tab label="{{'electricityConsumptionInVehicles'  | translate}}">
+      <button mat-menu-item (click)="openDialog('Instalaciones fijas no sujetas a las obligaciones establecidas en la Ley 1/2005, de 9 de marzo ')">
+        <mat-icon style="color: #ff9310;">info</mat-icon>{{"electricityConsumptionInVehicles" | translate}}</button>
+        <app-electricity-vehicles></app-electricity-vehicles>
+    </mat-tab>
+  
+    <mat-tab label="{{'heatSteamColdCompressedAir'  | translate}}">
+      <button mat-menu-item (click)="openDialog('Instalaciones fijas no sujetas a las obligaciones establecidas en la Ley 1/2005, de 9 de marzo ')">
+        <mat-icon style="color: #ff9310;">info</mat-icon>{{"heatSteamColdCompressedAir" | translate}}</button>
+        <app-heat-steam-cold-comp-air></app-heat-steam-cold-comp-air>
+    </mat-tab> -->
+  </mat-tab-group>

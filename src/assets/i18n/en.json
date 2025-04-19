@@ -2,16 +2,17 @@
   "HELLO": "Welcome",
   "rageTitle": "Registration and Analysis of Greenhouse Gases",
   "rageTitleShort": "RAGE",
+  "footerTitle": "Carbon footprint measurement",
   "footerContact": "Contact",
   "footerContactEmail": "Email",
-  "footerTitle": "Carbon footprint measurement",
   "initWorkingSession": "Init working session",
 
   "scopeOneEmissions": "are emissions from sources owned or controlled by the organisation. In a very simplified way, they could be understood as emissions released on-site at the place where the activity takes place, e.g. emissions due to the heating system if it is based on the burning of fossil fuels. For example, emissions from combustion in boilers, furnaces, vehicles, etc., which are owned or controlled by the entity concerned. It also includes fugitive emissions (e.g. air conditioning leaks, CH4 leakage from ducts, etc.).",
   "scopeTwoEmissions": "are emissions resulting from the organisation's activities, but occurring at sources owned or controlled by another organisation. An example of an indirect emission is the emission from electricity consumed by an organisation, the emissions of which have been produced at the place where the electricity was generated 3 organisation, the emissions of which have been produced at the place where the electricity was generated.", 
   
-  "consumptions": "DIRECT EMISSIONS (SCOPE 1)",
-  "emissions": "INDIRECT EMISSIONS (SCOPE 2)",
+  "scope1": "DIRECT EMISSIONS (SCOPE 1)",
+  "scope2": "INDIRECT EMISSIONS (SCOPE 2)",
+  
   "electricityOtherEnergies": "Electricity and other energies",
   "fixedInstallationsFuelConsumption": "Fixed Installations",
   "roadTransport": "Road transport",
@@ -19,6 +20,11 @@
   "fuelConsumptionMachinery": "Machinery",
   "heatSteamColdCompressedAir": "Heat, Steam, Cold and Compressed Air",
   "ley_1_2005": "obligaciones establecidas en la Ley 1/2005 de 9 de marzo",
+
+  "activityYear": "Activity year",
+  "activityType": "Activity type",
+  "productionCenter": "Production center",
+  "activitySector": "Activity sector",
 
   "fugitiveEmissions": "Fugitive Emissions",
   "otherGEH": "Actividades que generan otros gases de efecto invernadero",
@@ -39,5 +45,18 @@
   "recoverPassword": "Recover password",
   "send": "Send",
   "cancel": "Cancel",
-  "currentUser": "User"
+  "currentUser": "Actual user",
+
+
+  "allRightsReserved": "All rights reserved",
+
+  
+  "termsAndConditions": "Terms and conditions",
+  "termsAndConditionsText": "The use of this application is subject to the acceptance of the terms and conditions of use. If you do not accept them, you will not be able to use the application.",
+  "privacyPolicy": "Policy of privacy",
+  "cookiesPolicy": "Cookies",
+  "legalNotice": "Legal notice",
+  "aboutUs": "About us",
+  "help": "Help"
+
 }

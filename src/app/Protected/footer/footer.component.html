@@ -1,15 +1,15 @@
 <footer ngClass="footer">
-  <p>&copy; 2025 RAGE. Todos los derechos reservados.</p>
+  <p>&copy; 2025 RAGE. {{"allRightsReserved" | translate}}</p>
   <p>{{"footerTitle" | translate}}</p>
   <p>
-      <a href="/aviso-legal">Aviso Legal</a> |
-      <a href="/ayuda">Ayuda</a> |
-      <a href="/sobre-nosotros">Sobre Nosotros</a>
+      <a href="/aviso-legal">{{"legalNotice" | translate}}</a> |
+      <a href="/ayuda">{{"help" | translate}}</a> |
+      <a href="/sobre-nosotros">{{"aboutUs" | translate}}</a>
   </p>
   <p>
-    {{'currentUser' | translate}}: {{userName}} [{{role}}]
+    {{'currentUser' | translate}}:<br>{{userName}} [{{role}}]
   </p>
   <p>
-    {{'footerContact' | translate}} <a href="mailto:  [email protected]"> [email protected]</a>
+    {{'footerContact' | translate}}<br><a href="mailto:  [email protected]"> [email protected]</a>
   </p>
 </footer>

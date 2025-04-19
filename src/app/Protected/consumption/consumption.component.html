@@ -1,0 +1,21 @@
+<h1><button mat-menu-item (click) = "openDialog(1)">
+
+<!--   <mat-icon style="color: #0a470d;">info</mat-icon>{{"consumptions" | translate}}</button> </h1>
+   -->
+  <form [formGroup]="productionCenterForm">
+    <mat-form-field appearance="fill">
+      <mat-label>{{"activityYear" | translate}}</mat-label>
+      <mat-select formControlName="activityYear" (selectionChange)="onYearChange($event)">
+        <mat-option *ngFor="let year of availableYears[0]" [value]="year">
+        {{ year }}
+      </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>{{"productionCenter" | translate}}</mat-label>
+      <input matInput formControlName="productionCenter">
+    </mat-form-field>
+  </form>
+
+  <app-consumtion-container-scope1 *ngIf="scope1"></app-consumtion-container-scope1>
+  <app-consumtion-container-scope2 *ngIf="scope2"></app-consumtion-container-scope2>

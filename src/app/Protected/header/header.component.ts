@@ -18,6 +18,8 @@ export class HeaderComponent {
   userName: string = '' // Nombre del usuario
   menuItems: string[] = [] // Opciones del menú
   decodedToken: any;
+  scope1:boolean = true
+  scope2:boolean = false
   
     constructor(
     private jwtHelper: JwtHelperService,
@@ -50,6 +52,10 @@ export class HeaderComponent {
     this.translate.use(language)
   }
 
+  switchScope() {
+   this.scope1 = !this.scope1
+  }
+
   goHome () {
     this.router.navigate([''])
   }
@@ -72,7 +78,7 @@ export class HeaderComponent {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('El dialog se cerró');
+      console.log('El diálogo se cerró');
     });
   }
 }
