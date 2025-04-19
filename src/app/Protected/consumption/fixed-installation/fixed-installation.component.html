@@ -1,13 +1,5 @@
 <mat-card>
 <form [formGroup]="fuelForm" (ngSubmit)="onSubmit()">
-  <mat-form-field *ngIf="showField">
-    <mat-label>Año de cálculo</mat-label>
-    <input matInput formControlName="calculationYear">
-  </mat-form-field>
-  <mat-form-field *ngIf="showField">
-    <mat-label>Centro de producción</mat-label>
-    <input matInput formControlName="productionCenter">
-  </mat-form-field>
 
   <mat-form-field>
     <mat-label>Tipo de combustible</mat-label>

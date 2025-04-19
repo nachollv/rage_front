@@ -29,8 +29,8 @@ export class FixedInstallationComponent {
       private scopeOneRecordsService: ScopeOneRecordsService,
       private snackBar: MatSnackBar) {
       this.fuelForm = this.fb.group({
-        calculationYear: [{ value: '', disabled: true }],
-        productionCenter: [{value: '', disabled: true}],
+        calculationYear: [{ value: this.activityYear, disabled: true }],
+        productionCenter: [{value: this.productionCenter, disabled: true}],
         fuelType: ['', Validators.required],
         quantity: ['', [Validators.required, Validators.min(0)]],
         defaultFactor: this.fb.group({
@@ -45,7 +45,7 @@ export class FixedInstallationComponent {
         }),
         totalEmissions: [{ value: 0, disabled: true }]
       });
-      this.getProductionCenterDetails(this.fuelForm.get('productionCenter')!.value)
+
       this.getFuelConsumptions(+this.activityYear)
       this.getScopeOneRecords(+this.activityYear, +this.productionCenter)
     }
@@ -64,6 +64,7 @@ export class FixedInstallationComponent {
       this.fuelDataService.getByYear(calculationYear)
         .subscribe((fuel:any) => {
         this.fuelTypes = fuel
+        console.log ("fuelTypes", this.fuelTypes)
         })
     }
 
