@@ -27,7 +27,7 @@ export class HeaderComponent {
     private authService: AuthService,
     private router: Router, public dialog: MatDialog
     ) {
-    this.translate.setDefaultLang('es');
+    this.translate.setDefaultLang('ca');
   }
 
   ngOnInit(): void {

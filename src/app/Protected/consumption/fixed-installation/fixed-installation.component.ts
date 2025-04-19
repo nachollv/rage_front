@@ -1,4 +1,4 @@
-import { Component, Input, OnInit , OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FuelDataService } from '../../../services/fuel-data.service';
 import { MatDialog } from '@angular/material/dialog';
@@ -50,8 +50,8 @@ export class FixedInstallationComponent implements OnInit, OnChanges {
         totalEmissions: [{ value: 0, disabled: true }]
       });
       
-      this.getFuelConsumptions(+this.activityYear)
-      this.getScopeOneRecords(+this.activityYear, +this.productionCenter)
+      this.getFuelConsumptions(this.activityYear)
+      this.getScopeOneRecords(this.activityYear, this.productionCenter)
     }
 
     ngOnChanges(changes: SimpleChanges): void {
@@ -60,17 +60,8 @@ export class FixedInstallationComponent implements OnInit, OnChanges {
       }
     }
 
-    /* getProductionCenterDetails(id:number) {
-      this.productionCenterService.getCentroDeProduccionByID(id)
-        .subscribe((pCenterItem: any) => {
-          this.fuelForm.patchValue({
-            productionCenter: pCenterItem.nombre
-          })
-        })
-    } */
-
-    getFuelConsumptions(calculationYear: number) {
-      this.fuelDataService.getByYear(calculationYear)
+    getFuelConsumptions(year: number) {
+      this.fuelDataService.getByYear(year)
       .subscribe((fuel:any) => {
         this.fuelTypes = fuel
       })
@@ -110,7 +101,7 @@ export class FixedInstallationComponent implements OnInit, OnChanges {
           .subscribe(
             (fuel: any) => {
               this.showSnackBar('Éxito:' + fuel);
-              this.getFuelConsumptions(+this.activityYear)
+              this.getFuelConsumptions(this.activityYear)
             },
             (error: any) => {
               this.showSnackBar('Error al crear:' + error);

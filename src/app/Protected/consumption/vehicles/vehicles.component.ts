@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { VehiclesFuelConsumptionService } from '../../../services/vehicles-fuel-consumption.service';
 import { MatDialog } from '@angular/material/dialog';
@@ -13,13 +13,15 @@ import { ProductioncenterService } from '../../../services/productioncenter.serv
   templateUrl: './vehicles.component.html',
   styleUrls: ['./vehicles.component.scss']
 })
-export class MachineryVehiclesComponent {
+export class MachineryVehiclesComponent  implements OnInit, OnChanges {
+  @Input() activityYear!: number
+  @Input() productionCenter!: number
     displayedColumns: string[] = ['calculationYear', 'productionCenter', 'vehicle_type','fuel_type', 'quantity', 'edit', 'delete']
       data = [ { }, ]
       dataSource = new MatTableDataSource<any>(this.data)
       vehicleTypes: any[] = []
       fuelTypes: any[] = []
-      vehicleForm: FormGroup;
+      vehicleForm!: FormGroup;
       showField: boolean = false
       
   constructor (private fb: FormBuilder, 
@@ -28,9 +30,12 @@ export class MachineryVehiclesComponent {
     private productionCenterService: ProductioncenterService,
     private snackBar: MatSnackBar
   ) {
+  }
+
+  ngOnInit(): void {
     this.vehicleForm = this.fb.group({
-      calculationYear: [{ value: '2023', disabled: true }],
-      productionCenter: [{ value: '6', disabled: true }],
+      calculationYear: [{ value: this.activityYear, disabled: true }],
+      productionCenter: [{ value: this.productionCenter, disabled: true }],
       vehicleCategory: ['', Validators.required],
       fuelType: ['', Validators.required],
       quantity: ['', [Validators.required, Validators.pattern(/^\d+$/)]],
@@ -46,10 +51,15 @@ export class MachineryVehiclesComponent {
       }),
       totalEmissions: [{ value: '', disabled: true }]
     });
-    this.getProductionCenterDetails(this.vehicleForm.get('productionCenter')!.value)
-    this.getFuelConsumptions()
-    this.getScopeOneRecords(2023, 6)
+    this.getFuelConsumptions(this.activityYear)
+    this.getScopeOneRecords(this.activityYear, this.productionCenter)
+  }
 
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['activityYear'] && !changes['activityYear'].firstChange) {
+
+      this.getScopeOneRecords(this.activityYear, this.productionCenter)
+    }
   }
 
   getProductionCenterDetails(id:number) {
@@ -61,8 +71,8 @@ export class MachineryVehiclesComponent {
       })
   }
 
-  getFuelConsumptions() {
-    this.vehicleFuelService.getByYear(2023)
+  getFuelConsumptions(year: number) {
+    this.vehicleFuelService.getByYear(year)
       .subscribe((fuel:any) => {
       this.vehicleTypes = fuel
       })
@@ -101,7 +111,7 @@ export class MachineryVehiclesComponent {
       .subscribe(
         (fuel: any) => {
           this.showSnackBar('Éxito:' + fuel);
-          this.getFuelConsumptions()
+          this.getFuelConsumptions(this.activityYear)
         },
         (error: any) => {
           this.showSnackBar('Error al crear:' + error);
