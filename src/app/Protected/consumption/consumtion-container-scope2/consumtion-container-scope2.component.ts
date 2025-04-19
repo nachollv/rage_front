@@ -21,8 +21,9 @@ export class ConsumtionContainerScope2Component {
   auxText: AuxTextDTO | undefined
   title: string = ''
   text: string = ''
-  @Input() scope2?: boolean | undefined;
-
+  @Input() selectedActivityYear?: number;
+  @Input() productionCenter?: number;
+  
   constructor (public dialog: MatDialog, private productionCenterService: ProductioncenterService,
     private auxHelpingTextsService: AuxHelpingTextsService,
     private snackBar: MatSnackBar,
@@ -56,7 +57,7 @@ export class ConsumtionContainerScope2Component {
     localStorage.setItem('selectedTabIndexscope2', index.toString());
   }
 
-   openDialog( id: any ): void {
+  openDialog( id: any ): void {
      this.auxHelpingTextsService.getAuxTextById(id).subscribe((text: AuxTextDTO | undefined) => {
        if (text) {
          this.auxText = text
@@ -90,5 +91,5 @@ export class ConsumtionContainerScope2Component {
      dialogRef.afterClosed().subscribe(result => {
        console.log('El dialog se cerró');
      });
-   }
+  }
 }

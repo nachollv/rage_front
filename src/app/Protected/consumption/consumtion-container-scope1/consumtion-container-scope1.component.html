@@ -2,7 +2,7 @@
   <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start" [(selectedIndex)]="selectedTabIndexscope1" (selectedIndexChange)="onTabChange($event)">
     <mat-tab label="{{'fixedInstallationsFuelConsumption' | translate}}">
       <button mat-menu-item (click)="openDialog(2)"><mat-icon style="color: #ff9310;">info</mat-icon>{{"fixedInstallationsFuelConsumption" | translate}}</button>
-      <app-fixed-installation [activityYear]="currentActivityYear" [productionCenter]="prodCenterID"></app-fixed-installation>
+      <app-fixed-installation [activityYear]="selectedActivityYear" [productionCenter]="productionCenter"></app-fixed-installation>
     </mat-tab>
    <!--  <mat-tab label="{{'roadTransport'  | translate}}">
       <button mat-menu-item (click)="openDialog('ACLARACIÓN', 'xxxxxxxxxxxxxxxxxxxxxxxxxxxx')"> 

@@ -17,12 +17,13 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrl: './consumtion-container-scope1.component.scss'
 })
 export class ConsumtionContainerScope1Component {
-  @Input() scope1?: boolean | undefined;
-  translatedScopeOneEmissions?: string | undefined;
+  @Input() selectedActivityYear: number = 0;
+  @Input() productionCenter: number = 0;
+  translatedScopeOneEmissions: string = '';
   selectedTabIndexscope1: number = 0;
-/*   productionCenterForm: FormGroup; */
+
   token: string = ''
-  prodCenterID!: string
+ 
   organizacionID!: number
   availableYears: string[] = [];
   currentActivityYear: string = ''
@@ -47,7 +48,7 @@ export class ConsumtionContainerScope1Component {
   ngOnInit() {
     const savedTabIndex = localStorage.getItem('selectedTabIndexscope1')
     this.token = this.authService.getToken() || ''
-    this.prodCenterID = this.jwtHelper.decodeToken(this.token).data.id
+    this.productionCenter = this.jwtHelper.decodeToken(this.token).data.id
     this.organizacionID = this.jwtHelper.decodeToken(this.token).data.id_empresa
     if (savedTabIndex !== null) {
       this.selectedTabIndexscope1 = +savedTabIndex;

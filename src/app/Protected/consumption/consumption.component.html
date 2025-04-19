@@ -12,5 +12,5 @@
       <input matInput formControlName="productionCenter">
     </mat-form-field>
 </form>
-<app-consumtion-container-scope1 *ngIf="scope1"></app-consumtion-container-scope1>
-<app-consumtion-container-scope2 *ngIf="scope2"></app-consumtion-container-scope2>
+<app-consumtion-container-scope1 *ngIf="scope1" [selectedActivityYear]="selectedActivityYear" [productionCenter]="5"></app-consumtion-container-scope1>
+<app-consumtion-container-scope2 *ngIf="scope2" [selectedActivityYear]="selectedActivityYear" [productionCenter]="5"></app-consumtion-container-scope2>

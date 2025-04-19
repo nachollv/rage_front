@@ -20,8 +20,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class ConsumptionComponent {
   productionCenterForm: FormGroup;
   token: string = ''
-  prodCenterID!: string
-  organizacionID!: number
+  prodCenterID: number = 0
+  organizacionID: number = 0
   availableYears: string[] = [];
   currentActivityYear: string = ''
   auxText: AuxTextDTO | undefined
@@ -29,6 +29,7 @@ export class ConsumptionComponent {
   text: string = ''
   scope1: boolean = true
   scope2: boolean = false
+  selectedActivityYear: number = 0
 
   constructor(public dialog: MatDialog, private fb: FormBuilder,
     private route: ActivatedRoute,
@@ -43,26 +44,25 @@ export class ConsumptionComponent {
       activityYear: [{ value: '' }],
       productionCenter: [{value: '', disabled: true}],
     });
+
   }
 
   ngOnInit() {
-/*     const savedTabIndex = localStorage.getItem('selectedTabIndexscope1') */
-this.route.params.subscribe(params => {
-  if (params['scope']==='one') {
-    this.scope1 = true
-    this.scope2 = false
-  }
-  else if (params['scope']==='two') {
-    this.scope1 = false
-    this.scope2 = true
-  }
-});
-    this.token = this.authService.getToken() || ''
-    this.prodCenterID = this.jwtHelper.decodeToken(this.token).data.id
-    this.organizacionID = this.jwtHelper.decodeToken(this.token).data.id_empresa
-
-    this.getOrganizacionActivityYears( this.organizacionID )
-    this.getProductionCenterDetails( +this.prodCenterID )
+  this.route.params.subscribe(params => {
+    if (params['scope']==='one') {
+      this.scope1 = true
+      this.scope2 = false
+    }
+    else if (params['scope']==='two') {
+      this.scope1 = false
+      this.scope2 = true
+    }
+  });
+  this.token = this.authService.getToken() || ''
+  this.prodCenterID = this.jwtHelper.decodeToken(this.token).data.id
+  this.organizacionID = this.jwtHelper.decodeToken(this.token).data.id_empresa
+  this.getOrganizacionActivityYears( this.organizacionID )
+  this.getProductionCenterDetails( +this.prodCenterID )
   }
 
 
@@ -82,12 +82,11 @@ this.route.params.subscribe(params => {
       })  
    }
 
-   onYearChange(event: any): void {
-    this.currentActivityYear = event.value; // Almacena el año seleccionado
-    console.log('Año seleccionado:', this.currentActivityYear); // Opcional: para depuración
+  onYearChange(event: any): void {
+    this.selectedActivityYear = event.value
   }
 
-   openDialog( id: number ): void {
+  openDialog( id: number ): void {
     this.auxHelpingTextsService.getAuxTextById(id).subscribe((text: AuxTextDTO | undefined) => {
       if (text) {
         this.auxText = text

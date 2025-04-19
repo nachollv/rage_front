@@ -14,8 +14,8 @@ import { ProductioncenterService } from '../../../services/productioncenter.serv
   styleUrl: './fixed-installation.component.scss'
 })
 export class FixedInstallationComponent {
-    @Input() activityYear: string = ""
-    @Input() productionCenter: string = ""
+    @Input() activityYear: number = 0
+    @Input() productionCenter: number = 0
     displayedColumns: string[] = ['calculationYear', 'productionCenter', 'fuel_type', 'quantity', 'edit', 'delete']
     data = [{ }]
     dataSource = new MatTableDataSource<any>(this.data)
