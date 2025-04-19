@@ -1,11 +1,11 @@
-  <h1><button mat-menu-item (click)="openDialog (2)"><mat-icon style="color: #0a470d;">info</mat-icon>{{"scope2" | translate}}</button> </h1>
-  <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start"  [(selectedIndex)]="selectedTabIndexscope2" (selectedIndexChange)="onTabChange($event)">
-  <!--   <mat-tab label="{{'electricityConsumptionInBuildings' | translate}}">
+  <h1><button mat-menu-item (click)="openDialog (2)"><mat-icon style="color: #0a470d;">info</mat-icon>{{"scope2" | translate}}</button></h1>
+  <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start"  [(selectedIndex)]="selectedTabIndexscope2" (selectedIndexChange)="onTabChange($event)" *ngIf = "activityYear">
+    <mat-tab label="{{'electricityConsumptionInBuildings' | translate}}">
       <button mat-menu-item (click)="openDialog('Instalaciones fijas no sujetas a las obligaciones establecidas en la Ley 1/2005, de 9 de marzo ')">
         <mat-icon style="color: #ff9310;">info</mat-icon>{{"electricityConsumptionInBuildings" | translate}}</button>
         <app-electricity></app-electricity>
     </mat-tab>
-    <mat-tab label="{{'electricityConsumptionInVehicles'  | translate}}">
+    <!-- <mat-tab label="{{'electricityConsumptionInVehicles'  | translate}}">
       <button mat-menu-item (click)="openDialog('Instalaciones fijas no sujetas a las obligaciones establecidas en la Ley 1/2005, de 9 de marzo ')">
         <mat-icon style="color: #ff9310;">info</mat-icon>{{"electricityConsumptionInVehicles" | translate}}</button>
         <app-electricity-vehicles></app-electricity-vehicles>

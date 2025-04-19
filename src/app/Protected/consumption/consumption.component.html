@@ -2,9 +2,7 @@
     <mat-form-field appearance="fill">
       <mat-label>{{"activityYear" | translate}}</mat-label>
       <mat-select formControlName="activityYear" (selectionChange)="onYearChange($event)">
-        <mat-option *ngFor="let year of availableYears[0]" [value]="year">
-        {{ year }}
-      </mat-option>
+        <mat-option *ngFor="let year of availableYears[0]" [value]="year">{{ year }}</mat-option>
       </mat-select>
     </mat-form-field>
     <mat-form-field appearance="fill">
@@ -12,5 +10,5 @@
       <input matInput formControlName="productionCenter">
     </mat-form-field>
 </form>
-<app-consumtion-container-scope1 *ngIf="scope1" [selectedActivityYear]="selectedActivityYear" [productionCenter]="prodCenterID"></app-consumtion-container-scope1>
-<app-consumtion-container-scope2 *ngIf="scope2" [selectedActivityYear]="selectedActivityYear" [productionCenter]="prodCenterID"></app-consumtion-container-scope2>
+<app-consumtion-container-scope1 *ngIf="scope1" [activityYear]="selectedActivityYear" [productionCenter]="prodCenterID"></app-consumtion-container-scope1>
+<app-consumtion-container-scope2 *ngIf="scope2" [activityYear]="selectedActivityYear" [productionCenter]="prodCenterID"></app-consumtion-container-scope2>

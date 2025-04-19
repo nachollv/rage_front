@@ -8,7 +8,7 @@ import { ProductioncenterService } from '../../services/productioncenter.service
 import { OrganizacionService } from '../../services/organizacion.service';
 import { AuxHelpingTextsService } from '../../services/aux-helping-texts.service';
 import { AuxTextDTO } from '../../models/auxText.dto';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
@@ -41,10 +41,9 @@ export class ConsumptionComponent {
     private organizationService: OrganizacionService,
     private translate: TranslationService) {
      this.productionCenterForm = this.fb.group({
-      activityYear: [{ value: '' }],
+      activityYear: [{ value: '' }, [Validators.required]],
       productionCenter: [{value: '', disabled: true}],
     });
-
   }
 
   ngOnInit() {

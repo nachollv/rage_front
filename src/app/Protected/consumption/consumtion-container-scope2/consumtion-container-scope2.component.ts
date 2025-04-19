@@ -21,7 +21,7 @@ export class ConsumtionContainerScope2Component {
   auxText: AuxTextDTO | undefined
   title: string = ''
   text: string = ''
-  @Input() selectedActivityYear?: number;
+  @Input() activityYear?: number;
   @Input() productionCenter?: number;
   
   constructor (public dialog: MatDialog, private productionCenterService: ProductioncenterService,

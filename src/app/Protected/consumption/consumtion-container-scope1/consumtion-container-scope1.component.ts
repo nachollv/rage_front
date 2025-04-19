@@ -17,11 +17,10 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrl: './consumtion-container-scope1.component.scss'
 })
 export class ConsumtionContainerScope1Component {
-  @Input() selectedActivityYear: number = 0;
-  @Input() productionCenter: number = 0;
-  translatedScopeOneEmissions: string = '';
-  selectedTabIndexscope1: number = 0;
-
+  @Input() activityYear: number = 0
+  @Input() productionCenter: number = 0
+  translatedScopeOneEmissions: string = ''
+  selectedTabIndexscope1: number = 0
   token: string = ''
  
   organizacionID!: number
@@ -30,7 +29,7 @@ export class ConsumtionContainerScope1Component {
   auxText: AuxTextDTO | undefined
   title: string = ''
   text: string = ''
-
+  
   constructor (public dialog: MatDialog, private fb: FormBuilder,
     private jwtHelper: JwtHelperService,
     private authService: AuthService,
@@ -39,10 +38,11 @@ export class ConsumtionContainerScope1Component {
     /* private productionCenterService: ProductioncenterService,
     private organizationService: OrganizacionService,
     private translate: TranslationService */) {
-   /*   this.productionCenterForm = this.fb.group({
+    /*   this.productionCenterForm = this.fb.group({
       activityYear: [{ value: '' }],
       productionCenter: [{value: '', disabled: true}],
     }); */
+
     }
 
   ngOnInit() {
@@ -53,7 +53,8 @@ export class ConsumtionContainerScope1Component {
     if (savedTabIndex !== null) {
       this.selectedTabIndexscope1 = +savedTabIndex;
     }
-/*     this.getOrganizacionActivityYears( this.organizacionID )
+
+    /* this.getOrganizacionActivityYears( this.organizacionID )
     this.getProductionCenterDetails( +this.prodCenterID ) */
   }
 
@@ -75,11 +76,6 @@ export class ConsumtionContainerScope1Component {
 
   onTabChange(index: number) {
     localStorage.setItem('selectedTabIndexscope1', index.toString());
-  }
-  
-  onYearChange(event: any): void {
-    this.currentActivityYear = event.value; // Almacena el año seleccionado
-    console.log('Año seleccionado:', this.currentActivityYear); // Opcional: para depuración
   }
   
   openDialog( id: number ): void {
