@@ -1,6 +1,5 @@
 <mat-card>
 <form [formGroup]="fuelForm" (ngSubmit)="onSubmit()">
-
   <mat-form-field>
     <mat-label>Tipo de combustible</mat-label>
     <mat-select formControlName="fuelType" (selectionChange)="setEmissionFactors()">

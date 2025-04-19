@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit , OnChanges, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FuelDataService } from '../../../services/fuel-data.service';
 import { MatDialog } from '@angular/material/dialog';
@@ -13,13 +13,13 @@ import { ProductioncenterService } from '../../../services/productioncenter.serv
   templateUrl: './fixed-installation.component.html',
   styleUrl: './fixed-installation.component.scss'
 })
-export class FixedInstallationComponent {
-    @Input() activityYear: number = 0
+export class FixedInstallationComponent implements OnInit, OnChanges {
+    @Input() activityYear!: number
     @Input() productionCenter: number = 0
     displayedColumns: string[] = ['calculationYear', 'productionCenter', 'fuel_type', 'quantity', 'edit', 'delete']
     data = [{ }]
     dataSource = new MatTableDataSource<any>(this.data)
-    fuelForm: FormGroup;
+    fuelForm!: FormGroup;
     fuelTypes: any[] = []
     showField: boolean = false
     
@@ -28,6 +28,10 @@ export class FixedInstallationComponent {
       private productionCenterService: ProductioncenterService,
       private scopeOneRecordsService: ScopeOneRecordsService,
       private snackBar: MatSnackBar) {
+     
+    }
+
+    ngOnInit(): void {
       this.fuelForm = this.fb.group({
         calculationYear: [{ value: this.activityYear, disabled: true }],
         productionCenter: [{value: this.productionCenter, disabled: true}],
@@ -45,27 +49,31 @@ export class FixedInstallationComponent {
         }),
         totalEmissions: [{ value: 0, disabled: true }]
       });
-
+      
       this.getFuelConsumptions(+this.activityYear)
       this.getScopeOneRecords(+this.activityYear, +this.productionCenter)
     }
 
+    ngOnChanges(changes: SimpleChanges): void {
+      if (changes['activityYear'] && !changes['activityYear'].firstChange) {
+        this.getFuelConsumptions(+this.activityYear);
+      }
+    }
 
-    getProductionCenterDetails(id:number) {
+    /* getProductionCenterDetails(id:number) {
       this.productionCenterService.getCentroDeProduccionByID(id)
         .subscribe((pCenterItem: any) => {
           this.fuelForm.patchValue({
             productionCenter: pCenterItem.nombre
           })
         })
-    }
+    } */
 
     getFuelConsumptions(calculationYear: number) {
       this.fuelDataService.getByYear(calculationYear)
-        .subscribe((fuel:any) => {
+      .subscribe((fuel:any) => {
         this.fuelTypes = fuel
-        console.log ("fuelTypes", this.fuelTypes)
-        })
+      })
     }
 
     getScopeOneRecords(calculationYear: number = 2023, productionCenter: number = 6, activityType: string = 'fixed') {
@@ -90,11 +98,10 @@ export class FixedInstallationComponent {
         this.fuelForm.get('productionCenter')?.value, 
         this.fuelForm.get('quantity')?.value, this.fuelForm.get('fuelType')?.value.id;
         const formValue = this.fuelForm.value
-/*         formValue.calculationYear = this.fuelForm.get('calculationYear')?.value
-        formValue.productionCenter = this.fuelForm.get('productionCenter')?.value */
+        formValue.calculationYear = this.fuelForm.get('calculationYear')?.value
+        formValue.productionCenter = this.fuelForm.get('productionCenter')?.value
         formValue.calculationYear = this.activityYear
         formValue.productionCenter = this.productionCenter
-    
         formValue.fuel_type = this.fuelForm.get('fuelType')?.value.id
         formValue.activityType = 'fixed'
         formValue.quantity = this.fuelForm.get('quantity')?.value
@@ -127,7 +134,6 @@ export class FixedInstallationComponent {
     }
 
     onQuantityChange() {
-
       if (this.fuelForm.valid) {
         const fuelData = this.fuelForm.value
         const fuelType = fuelData.fuelType
