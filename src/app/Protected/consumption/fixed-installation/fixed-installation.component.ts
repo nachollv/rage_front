@@ -137,9 +137,9 @@ export class FixedInstallationComponent implements OnInit, OnChanges {
       if (this.fuelForm.valid) {
         const fuelData = this.fuelForm.value
         const fuelType = fuelData.fuelType
-        const CH4_g_ud = parseFloat( fuelType.CH4_g_ud );
+        const CH4_g_ud = parseFloat( fuelType.CH4_g_ud )/1000;
         const CO2_kg_ud = parseFloat( fuelType.CO2_kg_ud );
-        const N2O_g_ud = parseFloat( fuelType.N2O_g_ud );
+        const N2O_g_ud = parseFloat( fuelType.N2O_g_ud )/1000;
         console.log (CO2_kg_ud, CH4_g_ud,  N2O_g_ud)
         console.log('Quantity:', fuelData.quantity* CH4_g_ud, fuelData.quantity*CO2_kg_ud, fuelData.quantity*N2O_g_ud);
         this.fuelForm.get('partialEmissions')?.get('co2')?.setValue(fuelData.quantity * CO2_kg_ud);

@@ -3,14 +3,13 @@
     <mat-tab label="{{'fixedInstallationsFuelConsumption' | translate}}" *ngIf = "activityYear">
       <button mat-menu-item (click)="openDialog(2)"><mat-icon style="color: #ff9310;">info</mat-icon>{{"fixedInstallationsFuelConsumption" | translate}}</button>
       <app-fixed-installation [activityYear]="activityYear" [productionCenter]="productionCenter"></app-fixed-installation>
-    </mat-tab>
-  <!-- 
-    <mat-tab label="{{'roadTransport'  | translate}}">
-      <button mat-menu-item (click)="openDialog('ACLARACIÓN', 'xxxxxxxxxxxxxxxxxxxxxxxxxxxx')"> 
+    </mat-tab> 
+    <mat-tab label="{{'roadTransport' | translate}}" *ngIf = "activityYear">
+      <button mat-menu-item (click)="openDialog(4)"> 
       <mat-icon style="color: #ff9310;">info</mat-icon>{{"roadTransport" | translate}}</button>
       <app-vehicles></app-vehicles>
     </mat-tab>
-    <mat-tab label="{{'railSeaAirTransport'  | translate}}">
+    <!-- <mat-tab label="{{'railSeaAirTransport'  | translate}}">
       <button mat-menu-item (click)="openDialog('ACLARACIÓN', 'xxxxxxxxxxxxxxxxxxxxxxxxxxxx')"> 
       <mat-icon style="color: #ff9310;">info</mat-icon>{{"railSeaAirTransport" | translate}}</button>
       <app-rail-sea-airtransport></app-rail-sea-airtransport>
