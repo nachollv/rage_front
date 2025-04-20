@@ -56,7 +56,6 @@ export class OrganGeneralDataComponent implements OnInit {
         multipleProductionCenter: [],
         email: [''],
         daysPasswordDuration: ['30', Validators.required],
-        
         created_at: [{ value: '', disabled: true }],
         updated_at: [{ value: '', disabled: true }],
         deleted_at: [{ value: '', disabled: true }],
@@ -73,12 +72,11 @@ export class OrganGeneralDataComponent implements OnInit {
     }
 
     getTheOrganization(id: number) {
-
       this.organizationService.getOrganizacion(id)
         .subscribe((theOrganization: any) => {
           console.log (theOrganization.multipleProductionCenter)
           const data = {
-            id: theOrganization.id,
+            id: this.organizationID,
             cif: theOrganization.cif,
             companyName: theOrganization.companyName,
             organizationType: theOrganization.organizationType,
@@ -132,15 +130,15 @@ export class OrganGeneralDataComponent implements OnInit {
 
     onSubmit() {
       if (this.organizationForm.valid) {
-        console.log (this.organizationForm.value)
-        this.organizationService.actualizarOrganizacion(this.organizationForm.get('id')?.value, this.organizationForm.value)
+        this.organizationService.actualizarOrganizacion(this.organizationID, this.organizationForm.value)
         .subscribe((response: any) => { 
           console.log(response)
           this.showSnackBar('Información: '+ response.message);
         }, (error: any) => {
           this.showSnackBar('Error'+ 'Ha ocurrido un error al actualizar la organización'+error.message);
         });
-    }}
+      }
+    }
 
     onMultipleOrgChange(event: MatCheckboxChange) {
       console.log(`¿Está seleccionado?: ${event.checked}`);

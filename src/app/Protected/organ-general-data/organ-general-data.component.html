@@ -55,10 +55,7 @@
           </mat-option>
         </mat-select>
       </mat-form-field>
-     <!--  <mat-form-field>
-        <mat-label>Entre el valor del índice de actividad</mat-label>
-        <input matInput formControlName="activityIndexValue" type="number">
-      </mat-form-field> -->
+
     </section>
   </section>
   <mat-form-field appearance="fill">
@@ -83,13 +80,13 @@
     <input matInput formControlName="created_at">
   </mat-form-field>
   <mat-form-field appearance="fill">
-    <mat-label>Se actualizó el</mat-label>
+    <mat-label>Última modificación</mat-label>
     <input matInput formControlName="updated_at">
   </mat-form-field>
-  <mat-form-field appearance="fill">
+<!--   <mat-form-field appearance="fill">
     <mat-label>Se eliminó el</mat-label>
     <input matInput formControlName="deleted_at">
-  </mat-form-field>
+  </mat-form-field> -->
   <button mat-raised-button color="primary" type="submit" [disabled]="organizationForm.invalid">Enviar</button>
 </form>
 </mat-card>
