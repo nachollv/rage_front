@@ -1,9 +1,9 @@
 <mat-card ngClass="dialog-card" appearance="outlined">
   <mat-card-header mat-dialog-title>
-    <mat-card-title>{{ data.title }}</mat-card-title>
+    <mat-card-title [innerHTML]="data.title"></mat-card-title>
   </mat-card-header>
-  <mat-card-content mat-dialog-content>
-    <p>{{ data.text }}</p>
+  <mat-card-content mat-dialog-content [innerHTML]="data.text">
+<!--     <p>{{ data.text }}</p> -->
   </mat-card-content>
   <mat-card-footer class="dialog-card-footer">
     <button mat-button (click)="onAccept()">Close</button>

@@ -18,7 +18,7 @@ export class HomeComponent {
   constructor( public dialog: MatDialog,
     private auxHelpingTextsService: AuxHelpingTextsService
    ) {
-    this.getAuxText(999)
+    this.getAuxText(0)
    }
 
   openDialog( id: number ): void {
@@ -71,7 +71,7 @@ export class HomeComponent {
         } else {
           console.error('Idioma no soportado')
         }
-        this.homeIntro = this.title+"<br>"+this.text
+        this.homeIntro = "<h3>"+this.title+"</h3><br>"+this.text
       } else {
         console.error('Texto auxiliar no encontrado');
       }
