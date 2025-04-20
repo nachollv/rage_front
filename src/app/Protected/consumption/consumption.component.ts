@@ -61,7 +61,7 @@ export class ConsumptionComponent {
   this.prodCenterID = this.jwtHelper.decodeToken(this.token).data.id
   this.organizacionID = this.jwtHelper.decodeToken(this.token).data.id_empresa
   this.getOrganizacionActivityYears( this.organizacionID )
-  this.getProductionCenterDetails( +this.prodCenterID )
+  this.getProductionCenterDetails( this.prodCenterID )
   }
 
 
