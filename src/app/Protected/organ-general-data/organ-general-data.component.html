@@ -46,10 +46,10 @@
           </mat-option>
         </mat-select>
       </mat-form-field>
-      
+
       <mat-form-field >
         <mat-label matTooltip="el índice de actividad es clave para evaluar la reducción de emisiones en relación con el crecimiento de la empresa, a partir de este índice, calcularemos el ratio. Se pone en relación con lo que la empresa produce o hace" matTooltipPosition="above">Indique el índice de actividad</mat-label>
-        <mat-select formControlName="activityIndex" >
+        <mat-select formControlName="activityIndex">
           <mat-option *ngFor="let item  of activityIndex" [value]="item.id">
             {{ item.name }}
           </mat-option>

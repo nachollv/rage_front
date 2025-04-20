@@ -33,7 +33,7 @@ export class OrganGeneralDataComponent implements OnInit {
   
     sectors: string[] = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
     objectiveList: string[] = ['Reducción del consumo de energía', 'Minimizar residuos', 'Ahorro de agua', 'Disminución de Emisiones de CO2', 'Aumento del uso de energías renovables'];
-    activityIndex: {id:string, name:string}[] = [{id: '1', name: 'Producción anual'}, {id: '1', name: 'Consumo energético'}, {id: '1', name: 'Superficie de las instalaciones'}, {id: '1', name: 'Número de empleados'}, {id: '1', name: 'Facturación'}];
+    activityIndex: {id:string, name:string}[] = [{id: '1', name: 'Producción anual'}, {id: '2', name: 'Consumo energético'}, {id: '3', name: 'Superficie de las instalaciones'}, {id: '4', name: 'Número de empleados'}, {id: '5', name: 'Facturación'}];
     token: string = ''
     organizationID!: number
     availableYears: number[] = []
@@ -85,6 +85,7 @@ export class OrganGeneralDataComponent implements OnInit {
             cnae: theOrganization.cnae,
             zipCode:theOrganization.zipCode,
             multipleProductionCenter: theOrganization.multipleProductionCenter,
+            activityIndex: theOrganization.activityIndex,
             daysPasswordDuration	: theOrganization.daysPasswordDuration,
             
             email: theOrganization.email,
@@ -129,8 +130,9 @@ export class OrganGeneralDataComponent implements OnInit {
         })
     }
 
-    onSubmit() { 
+    onSubmit() {
       if (this.organizationForm.valid) {
+        console.log (this.organizationForm.value)
         this.organizationService.actualizarOrganizacion(this.organizationForm.get('id')?.value, this.organizationForm.value)
         .subscribe((response: any) => { 
           console.log(response)
