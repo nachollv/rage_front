@@ -3,11 +3,16 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent } from '../../dialog/dialog.component';
 import { MatTableDataSource } from '@angular/material/table';
-import { OrganizacionService } from '../../services/organizacion.service';
-import { ProductioncenterService } from '../../services/productioncenter.service';
+
 import { MatSnackBar } from '@angular/material/snack-bar';
+
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { AuthService } from '../../services/auth.service';
+import { OrganizacionService } from '../../services/organizacion.service';
+import { ProductioncenterService } from '../../services/productioncenter.service';
+import { SectorsDTO } from '../../models/sectors.dto';
+import { SectoresEconomicosService } from '../../services/sectores.economicos.service';
+
 import { MatCheckboxChange } from '@angular/material/checkbox';
 
 @Component({
@@ -30,19 +35,20 @@ export class OrganGeneralDataComponent implements OnInit {
     { id: '6', name: 'Entidad sin ánimo de lucro' },
     { id: '7', name: 'Otras' }
   ];
-  
-    sectors: string[] = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
-    objectiveList: string[] = ['Reducción del consumo de energía', 'Minimizar residuos', 'Ahorro de agua', 'Disminución de Emisiones de CO2', 'Aumento del uso de energías renovables'];
-    activityIndex: {id:string, name:string}[] = [{id: '1', name: 'Producción anual'}, {id: '2', name: 'Consumo energético'}, {id: '3', name: 'Superficie de las instalaciones'}, {id: '4', name: 'Número de empleados'}, {id: '5', name: 'Facturación'}];
-    token: string = ''
-    organizationID!: number
-    availableYears: number[] = []
-    selectedYears: number[] = []
+  sectors: SectorsDTO[] = []
+  objectiveList: string[] = ['Reducción del consumo de energía', 'Minimizar residuos', 'Ahorro de agua', 'Disminución de Emisiones de CO2', 'Aumento del uso de energías renovables'];
+  activityIndex: {id:string, name:string}[] = [{id: '1', name: 'Producción anual'}, {id: '2', name: 'Consumo energético'}, {id: '3', name: 'Superficie de las instalaciones'}, {id: '4', name: 'Número de empleados'}, {id: '5', name: 'Facturación'}];
+  token: string = ''
+  organizationID!: number
+  availableYears: number[] = []
+  selectedYears: number[] = []
   
     constructor(private fb: FormBuilder, private snackBar: MatSnackBar,
       private jwtHelper: JwtHelperService,
-      private authService: AuthService, private organizationService: OrganizacionService,
+      private authService: AuthService, 
+      private organizationService: OrganizacionService,
       private productionCenterService: ProductioncenterService,
+      private sectoresEconomicos: SectoresEconomicosService,
       public dialog: MatDialog) {
       this.organizationForm = this.fb.group({
         id: [{ value: '', disabled: true }],
@@ -69,6 +75,7 @@ export class OrganGeneralDataComponent implements OnInit {
       this.organizationID = this.jwtHelper.decodeToken(this.token).data.id_empresa
       this.getTheOrganization(this.organizationID)   
       this.getTheActivityYears(this.organizationID)
+      this.getSectoresEconomicos()
     }
 
     getTheOrganization(id: number) {
@@ -125,6 +132,15 @@ export class OrganGeneralDataComponent implements OnInit {
       this.productionCenterService.getCentrosDeProduccionFromOrganizacion(idEmpresa)
         .subscribe((productionCenter:any) => {
         this.dataSource = new MatTableDataSource<any>(productionCenter)
+        })
+    }
+
+    getSectoresEconomicos() {
+      this.sectoresEconomicos.getSectoresEconomicos()
+        .subscribe((response: SectorsDTO[]) => {
+          this.sectors = response
+        }, (error: any) => {
+          this.showSnackBar('Error' + 'Ha ocurrido un error al obtener los sectores económicos' + error.message);
         })
     }
 

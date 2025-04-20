@@ -27,8 +27,8 @@
   <mat-form-field appearance="fill">
     <mat-label>Sector</mat-label>
     <mat-select formControlName="cnae">
-      <mat-option *ngFor="let sector of sectors" [value]="sector">
-        {{ sector }}
+      <mat-option *ngFor="let sector of sectors" [value]="sector.id">
+        {{ sector.codigo }} - {{ sector.descripcion }}
       </mat-option>
     </mat-select>
   </mat-form-field>
@@ -83,15 +83,10 @@
     <mat-label>Última modificación</mat-label>
     <input matInput formControlName="updated_at">
   </mat-form-field>
-<!--   <mat-form-field appearance="fill">
-    <mat-label>Se eliminó el</mat-label>
-    <input matInput formControlName="deleted_at">
-  </mat-form-field> -->
   <button mat-raised-button color="primary" type="submit" [disabled]="organizationForm.invalid">Enviar</button>
 </form>
 </mat-card>
 
 <section  *ngIf="mustShowDelegations">
-<!--   <button mat-raised-button color="accent">ADD PRODUCTION CENTER</button> -->
   <app-data-table [displayedColumns]="displayedColumns" [dataSource]="dataSource"></app-data-table>
 </section>
