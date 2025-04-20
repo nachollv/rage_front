@@ -1,11 +1,12 @@
 
-:host {
+/* :host {
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  min-height: 100vh;
 }
+ */
 
-app-header, app-footer {
+/* app-header, app-footer {
   flex-shrink: 0;
   max-height: 10vh;
 }
@@ -13,4 +14,5 @@ app-header, app-footer {
 app-body {
   flex-grow: 1;
   overflow: auto;
-}
+} */
+

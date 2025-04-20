@@ -20,10 +20,24 @@ body {
   font-size: 1rem; 
   background: var(--mat-sys-surface);
   color: var(--mat-sys-on-surface);
-  margin: 0;
 }
 
 img {
   max-width: 50%;
   height: auto;
+}
+
+body, html {
+  margin: 0;
+  padding: 0;
+}
+
+app-root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+app-footer {
+  text-align: center;
 }
