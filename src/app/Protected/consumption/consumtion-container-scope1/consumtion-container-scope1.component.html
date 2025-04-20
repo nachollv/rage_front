@@ -1,28 +1,28 @@
   <h1><button mat-menu-item (click)="openDialog(1)"><mat-icon style="color: #0a470d;">info</mat-icon>{{"scope1" | translate}}</button></h1>
   <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start" [(selectedIndex)]="selectedTabIndexscope1" (selectedIndexChange)="onTabChange($event)">
-<!--     <mat-tab label="{{'fixedInstallationsFuelConsumption' | translate}}" *ngIf = "activityYear">
+    <mat-tab label="{{'fixedInstallationsFuelConsumption' | translate}}" *ngIf = "activityYear">
       <button mat-menu-item (click)="openDialog(2)"><mat-icon style="color: #ff9310;">info</mat-icon>{{"fixedInstallationsFuelConsumption" | translate}}</button>
       <app-fixed-installation [activityYear]="activityYear" [productionCenter]="productionCenter"></app-fixed-installation>
-    </mat-tab>  -->
-<!--     <mat-tab label="{{'roadTransport' | translate}}" *ngIf = "activityYear">
+    </mat-tab>
+    <mat-tab label="{{'roadTransport' | translate}}" *ngIf = "activityYear">
       <button mat-menu-item (click)="openDialog(3)"> 
       <mat-icon style="color: #ff9310;">info</mat-icon>{{"roadTransport" | translate}}</button>
       <app-vehicles></app-vehicles>
-    </mat-tab> -->
-<!--     <mat-tab label="{{'railSeaAirTransport'  | translate}}" *ngIf = "activityYear">
+    </mat-tab>
+    <mat-tab label="{{'railSeaAirTransport'  | translate}}" *ngIf = "activityYear">
       <button mat-menu-item (click)="openDialog(4)"> 
       <mat-icon style="color: #ff9310;">info</mat-icon>{{"railSeaAirTransport" | translate}}</button>
       <app-rail-sea-airtransport></app-rail-sea-airtransport>
-    </mat-tab> -->
+    </mat-tab>
     <mat-tab label="{{'fuelConsumptionMachinery'  | translate}}" *ngIf = "activityYear">
       <button mat-menu-item (click)="openDialog(5)"> 
       <mat-icon style="color: #ff9310;">info</mat-icon>{{"fuelConsumptionMachinery" | translate}}</button>
       <app-machinery></app-machinery>
     </mat-tab>
-   <!--  <mat-tab label="{{'fugitiveEmissions'  | translate}}" *ngIf = "activityYear">
+    <mat-tab label="{{'fugitiveEmissions'  | translate}}" *ngIf = "activityYear">
       <button mat-menu-item (click)="openDialog(6)"> 
         <mat-icon style="color: #ff9310;">info</mat-icon>{{"fugitiveEmissions" | translate}}</button>
         <app-fugitive-gases></app-fugitive-gases>
-    </mat-tab> -->
+    </mat-tab>
   </mat-tab-group>
 
