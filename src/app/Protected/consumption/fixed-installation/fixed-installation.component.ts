@@ -13,6 +13,7 @@ import { ProductioncenterService } from '../../../services/productioncenter.serv
   templateUrl: './fixed-installation.component.html',
   styleUrl: './fixed-installation.component.scss'
 })
+
 export class FixedInstallationComponent implements OnInit, OnChanges {
     @Input() activityYear!: number
     @Input() productionCenter: number = 0

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray } from '@angular/forms';
 
 @Component({
@@ -6,17 +6,23 @@ import { FormBuilder, FormGroup, FormArray } from '@angular/forms';
   templateUrl: './machinery.component.html',
   styleUrl: './machinery.component.scss'
 })
-export class MachineryComponent {
+export class MachineryComponent implements OnInit, OnChanges {
 
-  emissionsForm: FormGroup;
+  emissionsForm!: FormGroup;
   showField: boolean = false
   
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder) {}
+
+  ngOnInit(): void { 
     this.emissionsForm = this.fb.group({
       rows: this.fb.array([this.createRow()]), // Inicializa con una fila vacía
     });
   }
-
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['activityYear'] && !changes['activityYear'].firstChange) {
+      //this.getFuelConsumptions(+this.activityYear);
+    }
+  }
   createRow(): FormGroup {
     return this.fb.group({
       productionCenter: [{ value: '6', disabled: true }],
