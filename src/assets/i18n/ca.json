@@ -10,8 +10,9 @@
   "scopeOneEmissions": "son emisiones de fuentes que son propiedad de o están controladas por la organización. De una manera muy simplificada, podrían entenderse como las emisiones liberadas in situ en el lugar donde se produce la actividad, por ejemplo, las emisiones debidas al sistema de calefacción si éste se basa en la quema de combustibles fósiles. Por ejemplo, emisiones provenientes de la combustión en calderas, hornos, vehículos, etc., que son propiedad de o están controladas por la entidad en cuestión. También incluye las emisiones fugitivas (p.ej. fugas de aire acondicionado, fugas de CH4 de conductos, etc.).",
   "scopeTwoEmissions": "son emisiones consecuencia de las actividades de la organización, pero que ocurren en fuentes que son propiedad de o están controladas por otra organización. Un ejemplo de emisión indirecta es la emisión procedente de la electricidad consumida por una organización, cuyas emisiones han sido producidas en el lugar en el que se generó dicha electricidad 3 organización, cuyas emisiones han sido producidas en el lugar en el que se generó dicha electricidad.", 
   
-  "scope1": "EMISSIONS DIRECTES (ABAST 1)",
-  "scope2": "EMISSIONS DIRECTES (ABAST 2)",
+  "scope1": "EMISSIONS DIRECTES",
+  "scope2": "EMISSIONS INDIRECTES",
+
   "electricityOtherEnergies": "Electricitat i altres energies",
   "fixedInstallationsFuelConsumption": "Instalacions fixes",
   "roadTransport": "Transport per carretera",
