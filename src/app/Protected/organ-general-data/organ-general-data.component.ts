@@ -36,10 +36,8 @@ export class OrganGeneralDataComponent implements OnInit {
     activityIndex: {id:string, name:string}[] = [{id: '1', name: 'Producción anual'}, {id: '1', name: 'Consumo energético'}, {id: '1', name: 'Superficie de las instalaciones'}, {id: '1', name: 'Número de empleados'}, {id: '1', name: 'Facturación'}];
     token: string = ''
     organizationID!: number
-    availableYears: number[] = [];
-
-    // Años seleccionados por el usuario
-    selectedYears: { id: number, year: number }[] = [];
+    availableYears: number[] = []
+    selectedYears: number[] = []
   
     constructor(private fb: FormBuilder, private snackBar: MatSnackBar,
       private jwtHelper: JwtHelperService,
@@ -52,7 +50,6 @@ export class OrganGeneralDataComponent implements OnInit {
         companyName: [''],
         organizationType: [''],
         activityIndex: ['', Validators.required],
-       /*  activityIndexValue: ['', Validators.required], */
         activityYear: [null, Validators.required],
         cnae: [''],
         zipCode: [''],
@@ -113,19 +110,16 @@ export class OrganGeneralDataComponent implements OnInit {
     getTheActivityYears(id: number) {
       this.organizationService.getActivityYearsByOrganization(id).subscribe(
         (response: any) => {
-        console.log(response);
-
-        this.availableYears = [];
-        for (let year = 2019; year <= 2030; year++) {
-          this.availableYears.push(year);
+        this.selectedYears = response.map((year: string) => +year);
+        this.availableYears = []
+        for (let year = 2019; year <= 2023; year++) {
+          this.availableYears.push(year)
         }
-        const selectedYears = response.data.map((year: string) => +year)
-        this.organizationForm.patchValue({ activityYear: selectedYears })
+        this.organizationForm.patchValue({ activityYear: this.selectedYears }) 
       },
     (error: any) => {
       this.showSnackBar('Error: ' + error.message);
-    }
-    );
+    });
     }
 
     getProductionCenters(idEmpresa: number) {
