@@ -1,5 +1,6 @@
 <mat-card>
 <form [formGroup]="vehicleForm" (ngSubmit)="onSubmit()">
+  <section ngClass="type-fuel-quantity">
   <mat-form-field appearance="fill">
     <mat-label>Categoría de vehículo</mat-label>
     <mat-select formControlName="vehicleCategory" (selectionChange)="setFuelTypes()">
@@ -21,7 +22,7 @@
     <input matInput formControlName="quantity" type="number" (change)="onQuantityChange()">
     <mat-error *ngIf="vehicleForm.get('quantity')?.invalid">Campo obligatorio y debe ser un número</mat-error>
   </mat-form-field>
-
+</section>
 <section ngClass="emissions">
   <section formGroupName="defaultEmissionFactor">
     <h3>Factores de Emisión por gases</h3>
@@ -60,8 +61,8 @@
   <mat-form-field appearance="fill">
     <input matInput formControlName="totalEmissions">
   </mat-form-field>
-
   <button mat-raised-button color="accent" type="submit">Registrar</button>
 </form>
+
 <app-data-table [displayedColumns]="displayedColumns" [dataSource]="dataSource"></app-data-table>
 </mat-card>

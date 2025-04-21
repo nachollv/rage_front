@@ -1,7 +1,7 @@
 <mat-card>
   <form [formGroup]="transportForm" (ngSubmit)="onSubmit()">
     <section ngClass="form-row"> 
-
+      <section ngClass="type-fuel-quantity">
       <!-- Tipo de transporte -->
       <mat-form-field appearance="fill">
         <mat-label>Tipo de transporte</mat-label>
@@ -25,7 +25,8 @@
         <mat-label>Cantidad combustible (ud)</mat-label>
         <input matInput type="number" formControlName="fuelQuantity" (change)="onQuantityChange()"/>
       </mat-form-field>
-  
+    </section>
+
       <!-- Factores de emisión por defecto -->
       <section formGroupName="defaultEmissionFactor" ngClass="factor-group">
         <mat-form-field appearance="fill">
@@ -70,4 +71,5 @@
       <button mat-raised-button color="accent" type="submit">Enviar</button>
     </section>
   </form>
+  <app-data-table [displayedColumns]="displayedColumns" [dataSource]="dataSource"></app-data-table>
 </mat-card>

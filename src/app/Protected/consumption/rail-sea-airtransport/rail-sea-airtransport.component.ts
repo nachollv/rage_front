@@ -14,7 +14,7 @@ export class RailSeaAirtransportComponent  implements OnInit, OnChanges {
   @Input() productionCenter: number = 0
   transportForm!: FormGroup
   showField: boolean = false
-  displayedColumns: string[] = ['year', 'productionCenter', 'fuel_type', 'quantity', 'edit', 'delete']
+  displayedColumns: string[] = ['year', 'productionCenter', 'fuelType', 'quantity', 'edit', 'delete']
   data = [{ }]
   dataSource = new MatTableDataSource<any>(this.data)
   fuelEmisTypes: any[] = []
@@ -43,7 +43,7 @@ export class RailSeaAirtransportComponent  implements OnInit, OnChanges {
         ch4: [{ value: '', disabled: true }, Validators.required],
         n2o: [{ value: '', disabled: true }, Validators.required]
       }),
-      totalEmissions: [0, Validators.required]
+      totalEmissions: [{ value: '', disabled: true }]
     });
     this.getScopeOneRecords()
   }
@@ -58,10 +58,12 @@ export class RailSeaAirtransportComponent  implements OnInit, OnChanges {
       this.scopeOneRecordsService.getRecordsByFilters(calculationYear, productionCenter, activityType)
         .subscribe({
           next: (registros: any) => {
+            console.log('registros: ', registros.data)
             registros.data.forEach((registro: any) => {
               registro.edit = true
               registro.delete = true
-              registro.fuel_type = this.fuelEmisTypes.find((fuelType: any) => fuelType.id === registro.fuel_type)?.Combustible || 'desconocido'
+              registro.fuelType = this.fuelEmisTypes.find((fuelType: any) => fuelType.id === registro.fuelType)?.Combustible || 'desconocido'
+
             })
             this.dataSource = new MatTableDataSource(registros.data)
             this.showSnackBar('Registros obtenidos transferma: ' + registros.data.length)
