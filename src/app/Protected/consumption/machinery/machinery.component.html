@@ -1,30 +1,27 @@
 <mat-card>
   <form [formGroup]="emissionsForm" (ngSubmit)="onSubmit()">
-    <div *ngFor="let row of rows.controls; let i = index" [formGroupName]="i" class="form-row">
-      <!-- Edificio / Sede -->
-      <mat-form-field  *ngIf="showField">
-        <mat-label>Centro de producción</mat-label>
-        <input matInput formControlName="productionCenter" />
-      </mat-form-field>
+   
+     
+      <section ngClass="type-fuel-quantity">
+        <!-- Tipo de maquinaria -->
+        <mat-form-field appearance="fill">
+          <mat-label>Tipo de maquinaria</mat-label>
+          <input matInput formControlName="machineryType" />
+        </mat-form-field>
   
-      <!-- Tipo de maquinaria -->
-      <mat-form-field appearance="fill">
-        <mat-label>Tipo de maquinaria</mat-label>
-        <input matInput formControlName="machineryType" />
-      </mat-form-field>
+        <!-- Tipo de Combustible o lubricante -->
+        <mat-form-field appearance="fill">
+          <mat-label>Tipo de Combustible o lubricante</mat-label>
+          <input matInput formControlName="fuelType" />
+        </mat-form-field>
   
-      <!-- Tipo de Combustible o lubricante -->
-      <mat-form-field appearance="fill">
-        <mat-label>Tipo de Combustible o lubricante</mat-label>
-        <input matInput formControlName="fuelType" />
-      </mat-form-field>
-  
-      <!-- Cantidad (ud) -->
-      <mat-form-field appearance="fill">
-        <mat-label>Cantidad (ud)</mat-label>
-        <input matInput type="number" formControlName="quantity" (input)="calculateEmissions(i)" />
-      </mat-form-field>
-  
+        <!-- Cantidad (ud) -->
+        <mat-form-field appearance="fill">
+          <mat-label>Cantidad (ud)</mat-label>
+          <input matInput type="number" formControlName="quantity" (input)="calculateEmissions(i)" />
+        </mat-form-field>
+      </section>
+
       <!-- Factores de emisión por defecto -->
       <div formGroupName="defaultEmissionFactor" class="factor-group">
         <mat-form-field appearance="fill">
@@ -62,7 +59,6 @@
         <mat-label>Emisiones totales C (kg CO₂e)</mat-label>
         <input matInput formControlName="totalEmissions"  />
       </mat-form-field>
-    </div>
   
     <!-- Botones -->
     <div class="form-actions">

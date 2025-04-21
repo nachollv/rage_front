@@ -1,28 +1,58 @@
 import { Component, Input, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray } from '@angular/forms';
 
+import { ScopeOneRecordsService } from '../../../services/scope-one-records.service';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
   selector: 'app-machinery',
   templateUrl: './machinery.component.html',
   styleUrl: './machinery.component.scss'
 })
 export class MachineryComponent implements OnInit, OnChanges {
-
+  @Input() activityYear!: number
+  @Input() productionCenter: number = 0
   emissionsForm!: FormGroup;
   showField: boolean = false
   
-  constructor(private fb: FormBuilder) {}
+  constructor( private fb: FormBuilder,
+      private emisionesMaquinariaMarService: EmisionesMaquinariaService,
+      private snackBar: MatSnackBar,
+      private scopeOneRecordsService: ScopeOneRecordsService,
+      ) { }
 
   ngOnInit(): void { 
     this.emissionsForm = this.fb.group({
       rows: this.fb.array([this.createRow()]), // Inicializa con una fila vacía
     });
   }
+
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['activityYear'] && !changes['activityYear'].firstChange) {
-      //this.getFuelConsumptions(+this.activityYear);
+      this.getScopeOneRecords(this.activityYear, this.productionCenter)
     }
   }
+
+    getScopeOneRecords(calculationYear: number = this.activityYear, productionCenter: number = this.productionCenter, activityType: string = 'transferma') {
+        this.scopeOneRecordsService.getRecordsByFilters(calculationYear, productionCenter, activityType)
+          .subscribe({
+            next: (registros: any) => {
+              console.log('registros: ', registros.data)
+              registros.data.forEach((registro: any) => {
+                registro.edit = true
+                registro.delete = true
+                registro.fuelType = this.fuelEmisTypes.find((fuelType: any) => fuelType.id === registro.fuelType)?.Combustible || 'desconocido'
+  
+              })
+              this.dataSource = new MatTableDataSource(registros.data)
+              this.showSnackBar('Registros obtenidos transferma: ' + registros.data.length)
+            },
+            error: (err: any) => {
+              this.showSnackBar('Error al obtener los registros ' + err.messages?.error || err.message)
+            }
+          });
+    }
+
   createRow(): FormGroup {
     return this.fb.group({
       productionCenter: [{ value: '6', disabled: true }],

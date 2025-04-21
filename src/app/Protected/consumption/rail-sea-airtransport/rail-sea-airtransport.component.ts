@@ -4,6 +4,7 @@ import { EmisionesTransFerAerMarService } from '../../../services/emisiones-tran
 import { ScopeOneRecordsService } from '../../../services/scope-one-records.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSnackBar } from '@angular/material/snack-bar';
+
 @Component({
   selector: 'app-rail-sea-airtransport',
   templateUrl: './rail-sea-airtransport.component.html',
@@ -20,7 +21,6 @@ export class RailSeaAirtransportComponent  implements OnInit, OnChanges {
   fuelEmisTypes: any[] = []
 
   constructor( private fb: FormBuilder,
-    
       private emisionesTransFerAerMarService: EmisionesTransFerAerMarService,
       private snackBar: MatSnackBar,
       private scopeOneRecordsService: ScopeOneRecordsService,
