@@ -21,22 +21,22 @@ export class EmisionesTransFerAerMarService {
   }
 
   getEmisionById(id: number): Observable<any> {
-    return this.http.get(`${this.apiUrl}/${id}`).pipe(catchError(this.handleError));
+    return this.http.get(`${this.apiUrl}/emisionescombustiblestransportefermar/${id}`).pipe(catchError(this.handleError));
   }
 
   createEmision(emision: any): Observable<any> {
-    return this.http.post(this.apiUrl, emision).pipe(catchError(this.handleError));
+    return this.http.post(`${this.apiUrl}/emisionescombustiblestransportefermar/create`, emision).pipe(catchError(this.handleError));
   }
 
   updateEmision(id: number, emision: any): Observable<any> {
-    return this.http.put(`${this.apiUrl}/${id}`, emision).pipe(catchError(this.handleError));
+    return this.http.put(`${this.apiUrl}/emisionescombustiblestransportefermar/update/${id}`, emision).pipe(catchError(this.handleError));
   }
 
   deleteEmision(id: number): Observable<any> {
-    return this.http.delete(`${this.apiUrl}/${id}`).pipe(catchError(this.handleError));
+    return this.http.delete(`${this.apiUrl}/emisionescombustiblestransportefermar/delete/${id}`).pipe(catchError(this.handleError));
   }
 
   getEmisionesByYear(year: number): Observable<any> {
-    return this.http.get(`${this.apiUrl}/year/${year}`).pipe(catchError(this.handleError));
+    return this.http.get(`${this.apiUrl}/emisionescombustiblestransportefermar/year/${year}`).pipe(catchError(this.handleError));
   }
 }
