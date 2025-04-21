@@ -1,19 +1,9 @@
 <mat-card>
 <form [formGroup]="vehicleForm" (ngSubmit)="onSubmit()">
-  <mat-form-field *ngIf="showField">
-    <mat-label>Año de cálculo</mat-label>
-    <input matInput formControlName="calculationYear">
-  </mat-form-field>
-  <mat-form-field *ngIf="showField">
-    <mat-label>Centro de producción</mat-label>
-    <input matInput formControlName="productionCenter">
-    <mat-error *ngIf="vehicleForm.get('building')?.invalid">Campo obligatorio</mat-error>
-  </mat-form-field>
-
   <mat-form-field appearance="fill">
     <mat-label>Categoría de vehículo</mat-label>
     <mat-select formControlName="vehicleCategory" (selectionChange)="setFuelTypes()">
-      <mat-option *ngFor="let vehicle of vehicleTypes" [value]="vehicle">{{ vehicle.Categoria }}</mat-option>
+      <mat-option *ngFor="let category of vehicleCategories" [value]="category">{{ category.Categoria }}</mat-option>
     </mat-select>
     <mat-error *ngIf="vehicleForm.get('vehicleCategory')?.invalid">Campo obligatorio</mat-error>
   </mat-form-field>

@@ -27,10 +27,14 @@
 
   "ley_1_2005": "obligaciones establecidas en la Ley 1/2005 de 9 de marzo",
 
-  "fugitiveEmissions": "Emisiones Fugitivas",
+
   "otherGEH": "Actividades que generan otros gases de efecto invernadero",
   "processEmissions": "Emisiones de proceso",
   "emissionFactors": "Factores de emisión",
+  "fuelEmissions": "Emisiones de combustibles",
+  "fuelEmissionsTransportRailSeaAir": "Emisiones de combustibles en el transporte ferroviario, marítimo y aéreo",
+  "electricalEmissions": "Emisiones eléctricas",
+  "fugitiveEmissions": "Emisiones Fugitivas",
   "organizationGeneralData": "Datos generales de la organización",
   "electricityConsumptionInBuildings": "Consumo eléctrico en edificios",
   "electricityConsumptionInVehicles": "Consumo eléctrico en vehículos",

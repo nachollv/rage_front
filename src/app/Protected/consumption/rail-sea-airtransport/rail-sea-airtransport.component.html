@@ -1,30 +1,23 @@
 <mat-card>
   <form [formGroup]="transportForm" (ngSubmit)="onSubmit()">
     <section ngClass="form-row"> 
-      <!-- Edificio / Sede -->
-          <mat-form-field *ngIf="showField">
-            <mat-label>Año de cálculo</mat-label>
-           <input matInput formControlName="activityYear" placeholder="Ejemplo: 2023">
-          </mat-form-field>
-          <mat-form-field *ngIf="showField">
-            <mat-label>Centro de producción</mat-label>
-            <input matInput formControlName="productionCenter" placeholder="Ejemplo: Zona Norte">
-          </mat-form-field>
-  
+
       <!-- Tipo de transporte -->
       <mat-form-field appearance="fill">
         <mat-label>Tipo de transporte</mat-label>
-        <mat-select formControlName="transportType">
-          <mat-option value="01">Transporte ferroviario</mat-option>
-          <mat-option value="02">Transporte marítimo</mat-option>
-          <mat-option value="03">Transporte aéreo</mat-option>
+        <mat-select formControlName="transportType" (selectionChange)="onTransportChange()">
+          <mat-option value="Ferrocarril">Transporte ferroviario</mat-option>
+          <mat-option value="Marítimo">Transporte marítimo</mat-option>
+          <mat-option value="Aéreo">Transporte aéreo</mat-option>
         </mat-select>
       </mat-form-field>
   
       <!-- Tipo de Combustible -->
       <mat-form-field appearance="fill">
-        <mat-label>Tipo de Combustible</mat-label>
-        <input matInput formControlName="fuelType" />
+        <mat-label>Combustible</mat-label>
+        <mat-select formControlName="fuelType">
+          <mat-option *ngFor="let fuelEmis of fuelEmisTypes" [value]="fuelEmis">{{ fuelEmis }}</mat-option>
+        </mat-select>
       </mat-form-field>
   
       <!-- Cantidad combustible (ud) -->

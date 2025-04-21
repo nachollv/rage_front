@@ -6,7 +6,6 @@ import { DialogComponent } from '../../../dialog/dialog.component';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ScopeOneRecordsService } from '../../../services/scope-one-records.service';
-import { ProductioncenterService } from '../../../services/productioncenter.service';
 
 @Component({
   selector: 'app-fixed-installation',
@@ -17,7 +16,7 @@ import { ProductioncenterService } from '../../../services/productioncenter.serv
 export class FixedInstallationComponent implements OnInit, OnChanges {
     @Input() activityYear!: number
     @Input() productionCenter: number = 0
-    displayedColumns: string[] = ['calculationYear', 'productionCenter', 'fuel_type', 'quantity', 'edit', 'delete']
+    displayedColumns: string[] = ['year', 'productionCenter', 'fuel_type', 'quantity', 'edit', 'delete']
     data = [{ }]
     dataSource = new MatTableDataSource<any>(this.data)
     fuelForm!: FormGroup;
@@ -26,15 +25,12 @@ export class FixedInstallationComponent implements OnInit, OnChanges {
     
     constructor(private fb: FormBuilder, public dialog: MatDialog,
       private fuelDataService: FuelDataService,
-      private productionCenterService: ProductioncenterService,
       private scopeOneRecordsService: ScopeOneRecordsService,
-      private snackBar: MatSnackBar) {
-     
-    }
+      private snackBar: MatSnackBar) { }
 
     ngOnInit(): void {
       this.fuelForm = this.fb.group({
-        calculationYear: [{ value: this.activityYear, disabled: true }],
+        year: [{ value: this.activityYear, disabled: true }],
         productionCenter: [{value: this.productionCenter, disabled: true}],
         fuelType: ['', Validators.required],
         quantity: ['', [Validators.required, Validators.min(0)]],
@@ -50,14 +46,14 @@ export class FixedInstallationComponent implements OnInit, OnChanges {
         }),
         totalEmissions: [{ value: 0, disabled: true }]
       });
-      
+
       this.getFuelConsumptions(this.activityYear)
       this.getScopeOneRecords(this.activityYear, this.productionCenter)
     }
 
     ngOnChanges(changes: SimpleChanges): void {
       if (changes['activityYear'] && !changes['activityYear'].firstChange) {
-        this.getFuelConsumptions(+this.activityYear);
+        this.getFuelConsumptions(this.activityYear);
       }
     }
 
@@ -68,7 +64,7 @@ export class FixedInstallationComponent implements OnInit, OnChanges {
       })
     }
 
-    getScopeOneRecords(calculationYear: number = 2023, productionCenter: number = 6, activityType: string = 'fixed') {
+    getScopeOneRecords(calculationYear: number = this.activityYear, productionCenter: number = this.productionCenter, activityType: string = 'fixed') {
       this.scopeOneRecordsService.getRecordsByFilters(calculationYear, productionCenter, activityType)
         .subscribe({
           next: (registros: any) => {
@@ -81,31 +77,26 @@ export class FixedInstallationComponent implements OnInit, OnChanges {
             this.showSnackBar('Registros obtenidos fixed: ' + registros.data.length)
           },
           error: (err: any) => {
-            this.showSnackBar('Error al obtener los registros: ' + err)
+            this.showSnackBar('Error al obtener los registros ' + err.messages?.error || err.message)
           }
         });
     }
     
     onSubmit() {
-        this.fuelForm.get('productionCenter')?.value, 
-        this.fuelForm.get('quantity')?.value, this.fuelForm.get('fuelType')?.value.id;
         const formValue = this.fuelForm.value
-        formValue.calculationYear = this.fuelForm.get('calculationYear')?.value
-        formValue.productionCenter = this.fuelForm.get('productionCenter')?.value
-        formValue.calculationYear = this.activityYear
+        formValue.year = this.activityYear
         formValue.productionCenter = this.productionCenter
         formValue.fuel_type = this.fuelForm.get('fuelType')?.value.id
         formValue.activityType = 'fixed'
         formValue.quantity = this.fuelForm.get('quantity')?.value
-
         this.scopeOneRecordsService.createRecord(formValue)
           .subscribe(
             (fuel: any) => {
-              this.showSnackBar('Éxito:' + fuel);
+              this.showSnackBar(fuel.message)
               this.getFuelConsumptions(this.activityYear)
             },
             (error: any) => {
-              this.showSnackBar('Error al crear:' + error);
+              this.showSnackBar('Error al crear:' + error)
             }
           );
     }

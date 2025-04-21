@@ -1,24 +1,35 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ProductioncenterService } from '../../../services/productioncenter.service';
-
+import { EmisionesTransFerAerMarService } from '../../../services/emisiones-trans-feraermar.service';
+import { ScopeOneRecordsService } from '../../../services/scope-one-records.service';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
   selector: 'app-rail-sea-airtransport',
   templateUrl: './rail-sea-airtransport.component.html',
   styleUrl: './rail-sea-airtransport.component.scss'
 })
-export class RailSeaAirtransportComponent implements OnInit {
+export class RailSeaAirtransportComponent  implements OnInit, OnChanges {
+  @Input() activityYear!: number
+  @Input() productionCenter: number = 0
   transportForm!: FormGroup
   showField: boolean = false
+  displayedColumns: string[] = ['year', 'productionCenter', 'fuel_type', 'quantity', 'edit', 'delete']
+  data = [{ }]
+  dataSource = new MatTableDataSource<any>(this.data)
+  fuelEmisTypes: any[] = []
 
-  constructor(  private fb: FormBuilder, 
-                private productionCenterService: ProductioncenterService 
-            ) { }
+  constructor( private fb: FormBuilder,
+    
+      private emisionesTransFerAerMarService: EmisionesTransFerAerMarService,
+      private snackBar: MatSnackBar,
+      private scopeOneRecordsService: ScopeOneRecordsService,
+      ) { }
 
   ngOnInit(): void {
     this.transportForm = this.fb.group({
-      activityYear: [{ value: '2023', disabled: true }],
-      productionCenter: [{value: '6', disabled: true}],
+      year: [{ value: this.activityYear, disabled: true }],
+      productionCenter: [{value: this.productionCenter, disabled: true}],
       transportType: ['', Validators.required],
       fuelType: ['', Validators.required],
       fuelQuantity: ['', [Validators.required, Validators.min(0)]],
@@ -34,16 +45,40 @@ export class RailSeaAirtransportComponent implements OnInit {
       }),
       totalEmissions: [0, Validators.required]
     });
-    this.getProductionCenterDetails(this.transportForm.get('productionCenter')!.value)
+    this.getFuelEmissions(this.activityYear)
+    this.getScopeOneRecords()
   }
 
-  getProductionCenterDetails(id:number) {
-    this.productionCenterService.getCentroDeProduccionByID(id)
-      .subscribe((pCenterItem: any) => {
-        this.transportForm.patchValue({
-          productionCenter: pCenterItem.nombre
-        })
-      })
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['activityYear'] && !changes['activityYear'].firstChange) {
+      this.getScopeOneRecords(this.activityYear, this.productionCenter)
+    }
+  }
+
+  getFuelEmissions(year: number) {
+    this.emisionesTransFerAerMarService.getEmisionesByYear(year)
+    .subscribe((emissions:any) => {
+      this.fuelEmisTypes = emissions
+      console.log('Emisiones de combustibles:', this.fuelEmisTypes)
+    })
+  }
+
+  getScopeOneRecords(calculationYear: number = this.activityYear, productionCenter: number = this.productionCenter, activityType: string = 'transfermaraer') {
+      this.scopeOneRecordsService.getRecordsByFilters(calculationYear, productionCenter, activityType)
+        .subscribe({
+          next: (registros: any) => {
+            registros.data.forEach((registro: any) => {
+              registro.edit = true
+              registro.delete = true
+              registro.fuel_type = this.fuelEmisTypes.find((fuelType: any) => fuelType.id === registro.fuel_type)?.Combustible || 'desconocido'
+            })
+            this.dataSource = new MatTableDataSource(registros.data)
+            this.showSnackBar('Registros obtenidos fixed: ' + registros.data.length)
+          },
+          error: (err: any) => {
+            this.showSnackBar('Error al obtener los registros ' + err.messages?.error || err.message)
+          }
+        });
   }
 
   calculateEmissions(): void {
@@ -71,6 +106,19 @@ export class RailSeaAirtransportComponent implements OnInit {
 
   onSubmit(): void {
     console.log(this.transportForm.value);
+  }
+
+  onTransportChange(): void {
+    const tipoSeleccionado = this.transportForm.get('transportType')?.value;
+  }
+
+  private showSnackBar(msg: string): void {
+    this.snackBar.open(msg, 'Close', {
+      duration: 15000,
+      verticalPosition: 'top',
+      horizontalPosition: 'center',
+      panelClass: ['custom-snackbar'],
+    });
   }
 }
 

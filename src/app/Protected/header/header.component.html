@@ -18,7 +18,7 @@
     <button mat-menu-item ngClass="rage-menu-item" routerLink="/user-management">{{'userManagement' | translate}}</button>
     <button mat-menu-item ngClass="rage-menu-item" routerLink="/organ-gen-data">{{'organizationGeneralData' | translate}}</button>
     <hr>
-    <button mat-menu-item ngClass="rage-menu-item">{{'emissionFactors' | translate}}</button>
+    <button mat-menu-item [matMenuTriggerFor]="emissions" ngClass="rage-menu-item">{{'emissionFactors' | translate}}</button>
   </section>
   <hr>
   <button mat-menu-item (click)="switchLanguage('en')">English</button>
@@ -28,13 +28,9 @@
   <button  mat-menu-item ngClass="rage-menu-item" (click)="logout()">{{'logout' | translate}}</button>
 </mat-menu>
 
-<mat-menu #consumptions="matMenu">
-  <button mat-menu-item routerLink="fixed-installation">{{'fixedInstallationsFuelConsumption' | translate}}</button>
-  <button mat-menu-item>{{'fuelConsumptionVeniclesMachinery' | translate}}</button>
-  <button mat-menu-item>{{'fugitiveEmissions' | translate}}</button>
-  <button mat-menu-item>{{'processEmissions' | translate}}</button>
-</mat-menu>
-
 <mat-menu #emissions="matMenu">
-  <button mat-menu-item class="example-menu-bar-item" routerLink="/electricity-consumption">{{'electricityOtherEnergies' | translate}}</button>
+  <button mat-menu-item routerLink="fuel-emission-maintenance">{{'fuelEmissions' | translate}}</button>
+  <button mat-menu-item routerLink="fuel-emission-transport-maintenance">{{'fuelEmissionsTransportRailSeaAir' | translate}}</button>
+  <button mat-menu-item routerLink="electrical-emission-maintenance">{{'electricalEmissions' | translate}}</button>
+  <button mat-menu-item routerLink="fugitive-emission-maintenance">{{'fugitiveEmissions' | translate}}</button>
 </mat-menu>

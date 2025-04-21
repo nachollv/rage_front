@@ -16,10 +16,10 @@ import { ProductioncenterService } from '../../../services/productioncenter.serv
 export class MachineryVehiclesComponent  implements OnInit, OnChanges {
   @Input() activityYear!: number
   @Input() productionCenter!: number
-    displayedColumns: string[] = ['calculationYear', 'productionCenter', 'vehicle_type','fuel_type', 'quantity', 'edit', 'delete']
+    displayedColumns: string[] = ['year', 'productionCenter', 'fuelType', 'quantity', 'edit', 'delete']
       data = [ { }, ]
       dataSource = new MatTableDataSource<any>(this.data)
-      vehicleTypes: any[] = []
+      vehicleCategories: any[] = []
       fuelTypes: any[] = []
       vehicleForm!: FormGroup;
       showField: boolean = false
@@ -34,8 +34,8 @@ export class MachineryVehiclesComponent  implements OnInit, OnChanges {
 
   ngOnInit(): void {
     this.vehicleForm = this.fb.group({
-      calculationYear: [{ value: this.activityYear, disabled: true }],
-      productionCenter: [{ value: this.productionCenter, disabled: true }],
+      year: [{ value: this.activityYear }],
+      productionCenter: [{ value: this.productionCenter }],
       vehicleCategory: ['', Validators.required],
       fuelType: ['', Validators.required],
       quantity: ['', [Validators.required, Validators.pattern(/^\d+$/)]],
@@ -52,12 +52,11 @@ export class MachineryVehiclesComponent  implements OnInit, OnChanges {
       totalEmissions: [{ value: '', disabled: true }]
     });
     this.getFuelConsumptions(this.activityYear)
-    this.getScopeOneRecords(this.activityYear, this.productionCenter)
+    this.getScopeOneRecords (this.activityYear, this.productionCenter)
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['activityYear'] && !changes['activityYear'].firstChange) {
-
       this.getScopeOneRecords(this.activityYear, this.productionCenter)
     }
   }
@@ -74,11 +73,11 @@ export class MachineryVehiclesComponent  implements OnInit, OnChanges {
   getFuelConsumptions(year: number) {
     this.vehicleFuelService.getByYear(year)
       .subscribe((fuel:any) => {
-      this.vehicleTypes = fuel
+      this.vehicleCategories = fuel
       })
   }
 
-  getScopeOneRecords(calculationYear: number = 2023, productionCenter: number = 6, activityType: string = 'machinery') {
+  getScopeOneRecords(calculationYear: number = this.activityYear, productionCenter: number = this.productionCenter, activityType: string = 'machinery') {
     this.scopeOneRecordsService.getRecordsByFilters(calculationYear, productionCenter, activityType)
       .subscribe({
         next: (registros: any) => {
@@ -96,35 +95,32 @@ export class MachineryVehiclesComponent  implements OnInit, OnChanges {
       });
   }
 
-onSubmit() {
-  this.vehicleForm.get('productionCenter')?.value, 
-  this.vehicleForm.get('quantity')?.value, this.vehicleForm.get('fuelType')?.value.id;
-  const formValue = this.vehicleForm.value
-  formValue.calculationYear = this.vehicleForm.get('calculationYear')?.value
-  formValue.productionCenter = this.vehicleForm.get('productionCenter')?.value
-  formValue.vehicle_type = this.vehicleForm.get('vehicleCategory')?.value.id
-  formValue.fuel_type = this.vehicleForm.get('fuelType')?.value.id
-  formValue.activityType = 'machinery'
-  formValue.quantity = this.vehicleForm.get('quantity')?.value
+  onSubmit() {
+    const formValue = this.vehicleForm.value
+    formValue.year = this.activityYear
+    formValue.productionCenter = this.productionCenter
+    formValue.fuelType = this.vehicleForm.get('fuelType')?.value.id
+    formValue.activityType = 'machinery'
+    formValue.quantity = this.vehicleForm.get('quantity')?.value
 
-  this.scopeOneRecordsService.createRecord(formValue)
-    .subscribe(
-      (fuel: any) => {
-        this.showSnackBar('Éxito:' + fuel);
-        this.getFuelConsumptions(this.activityYear)
-      },
-      (error: any) => {
-        this.showSnackBar('Error al crear:' + error);
-    }
-    );
+    this.scopeOneRecordsService.createRecord(formValue)
+      .subscribe(
+        (fuel: any) => {
+          this.showSnackBar('Éxito:' + fuel);
+          this.getFuelConsumptions(this.activityYear)
+        },
+        (error: any) => {
+          this.showSnackBar('Error al crear:' + error);
+      }
+      );
   }
 
-setFuelTypes() {
-  const machineryData = this.vehicleForm.value
-  console.log (machineryData.vehicleCategory.Categoria)
-  this.vehicleFuelService.getByYearType(2023, machineryData.vehicleCategory.Categoria)
-    .subscribe((fuelTypes:any) => {
-      this.fuelTypes = fuelTypes
+  setFuelTypes() {
+    const vehicleData = this.vehicleForm.value
+    console.log ("tipo de vehículo: ", vehicleData.vehicleCategory)
+    this.vehicleFuelService.getByYearType(this.activityYear, vehicleData.vehicleCategory.Categoria)
+      .subscribe((fuelTypes:any) => {
+        this.fuelTypes = fuelTypes
     })
 }
 
