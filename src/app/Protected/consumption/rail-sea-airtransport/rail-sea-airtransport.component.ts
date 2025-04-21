@@ -63,7 +63,7 @@ export class RailSeaAirtransportComponent  implements OnInit, OnChanges {
     })
   }
 
-  getScopeOneRecords(calculationYear: number = this.activityYear, productionCenter: number = this.productionCenter, activityType: string = 'transfermaraer') {
+  getScopeOneRecords(calculationYear: number = this.activityYear, productionCenter: number = this.productionCenter, activityType: string = 'transferma') {
       this.scopeOneRecordsService.getRecordsByFilters(calculationYear, productionCenter, activityType)
         .subscribe({
           next: (registros: any) => {
@@ -73,7 +73,7 @@ export class RailSeaAirtransportComponent  implements OnInit, OnChanges {
               registro.fuel_type = this.fuelEmisTypes.find((fuelType: any) => fuelType.id === registro.fuel_type)?.Combustible || 'desconocido'
             })
             this.dataSource = new MatTableDataSource(registros.data)
-            this.showSnackBar('Registros obtenidos fixed: ' + registros.data.length)
+            this.showSnackBar('Registros obtenidos transferma: ' + registros.data.length)
           },
           error: (err: any) => {
             this.showSnackBar('Error al obtener los registros ' + err.messages?.error || err.message)
