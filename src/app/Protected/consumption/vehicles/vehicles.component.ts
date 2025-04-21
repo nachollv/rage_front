@@ -108,6 +108,7 @@ export class MachineryVehiclesComponent  implements OnInit, OnChanges {
         (fuel: any) => {
           this.showSnackBar('Éxito:' + fuel);
           this.getFuelConsumptions(this.activityYear)
+          this.vehicleForm.reset()
         },
         (error: any) => {
           this.showSnackBar('Error al crear:' + error);
@@ -117,7 +118,6 @@ export class MachineryVehiclesComponent  implements OnInit, OnChanges {
 
   setFuelTypes() {
     const vehicleData = this.vehicleForm.value
-    console.log ("tipo de vehículo: ", vehicleData.vehicleCategory)
     this.vehicleFuelService.getByYearType(this.activityYear, vehicleData.vehicleCategory.Categoria)
       .subscribe((fuelTypes:any) => {
         this.fuelTypes = fuelTypes
@@ -146,8 +146,6 @@ onQuantityChange() {
     const CH4_g_ud = parseFloat( fuelType.CH4_g_ud );
     const CO2_kg_ud = parseFloat( fuelType.CO2_kg_ud );
     const N2O_g_ud = parseFloat( fuelType.N2O_g_ud );
-    console.log (CO2_kg_ud, CH4_g_ud,  N2O_g_ud)
-    console.log('Quantity:', fuelData.quantity* CH4_g_ud, fuelData.quantity*CO2_kg_ud, fuelData.quantity*N2O_g_ud);
     this.vehicleForm.get('partialEmissions')?.get('co2')?.setValue(fuelData.quantity * CO2_kg_ud);
     this.vehicleForm.get('partialEmissions')?.get('ch4')?.setValue(fuelData.quantity * CH4_g_ud);
     this.vehicleForm.get('partialEmissions')?.get('n2o')?.setValue(fuelData.quantity * N2O_g_ud);

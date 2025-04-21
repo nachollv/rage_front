@@ -34,18 +34,17 @@ export class RailSeaAirtransportComponent  implements OnInit, OnChanges {
       fuelType: ['', Validators.required],
       fuelQuantity: ['', [Validators.required, Validators.min(0)]],
       defaultEmissionFactor: this.fb.group({
-        co2: [0, Validators.required],
-        ch4: [0, Validators.required],
-        n2o: [0, Validators.required]
+        co2: [{ value: '', disabled: true }, Validators.required],
+        ch4: [{ value: '', disabled: true }, Validators.required],
+        n2o: [{ value: '', disabled: true }, Validators.required]
       }),
       partialEmissions: this.fb.group({
-        co2: [0, Validators.required],
-        ch4: [0, Validators.required],
-        n2o: [0, Validators.required]
+        co2: [{ value: '', disabled: true }, Validators.required],
+        ch4: [{ value: '', disabled: true }, Validators.required],
+        n2o: [{ value: '', disabled: true }, Validators.required]
       }),
       totalEmissions: [0, Validators.required]
     });
-    this.getFuelEmissions(this.activityYear)
     this.getScopeOneRecords()
   }
 
@@ -53,14 +52,6 @@ export class RailSeaAirtransportComponent  implements OnInit, OnChanges {
     if (changes['activityYear'] && !changes['activityYear'].firstChange) {
       this.getScopeOneRecords(this.activityYear, this.productionCenter)
     }
-  }
-
-  getFuelEmissions(year: number) {
-    this.emisionesTransFerAerMarService.getEmisionesByYear(year)
-    .subscribe((emissions:any) => {
-      this.fuelEmisTypes = emissions
-      console.log('Emisiones de combustibles:', this.fuelEmisTypes)
-    })
   }
 
   getScopeOneRecords(calculationYear: number = this.activityYear, productionCenter: number = this.productionCenter, activityType: string = 'transferma') {
@@ -81,35 +72,69 @@ export class RailSeaAirtransportComponent  implements OnInit, OnChanges {
         });
   }
 
-  calculateEmissions(): void {
+
+  onSubmit(): void {
     const formValue = this.transportForm.value
-    const quantity = formValue.get('fuelQuantity')?.value;
-    const defaultFactors = formValue.get('defaultEmissionFactor')?.value;
-    const partialEmissions = formValue.get('partialEmissions') as FormGroup;
+    formValue.year = this.activityYear
+    formValue.productionCenter = this.productionCenter
+    formValue.fuelType = this.transportForm.get('fuelType')?.value.id
+    formValue.activityType = 'machinery'
+    formValue.quantity = this.transportForm.get('quantity')?.value
 
-    if (quantity && defaultFactors) {
-      const co2 = quantity * defaultFactors.co2;
-      const ch4 = quantity * defaultFactors.ch4;
-      const n2o = quantity * defaultFactors.n2o;
+    this.scopeOneRecordsService.createRecord(formValue)
+      .subscribe(
+        (fuel: any) => {
+          this.showSnackBar('Éxito:' + fuel);
+          this.getScopeOneRecords(this.activityYear, this.productionCenter, 'transferma')
+          this.transportForm.reset()
+        },
+        (error: any) => {
+          this.showSnackBar('Error al crear:' + error);
+      }
+      );
+  }
 
-      partialEmissions.get('co2')?.setValue(co2.toFixed(2));
-      partialEmissions.get('ch4')?.setValue(ch4.toFixed(2));
-      partialEmissions.get('n2o')?.setValue(n2o.toFixed(2));
+  onTransportChange(selectedTransport: string): void {
+    this.getFuelEmissions(this.activityYear, selectedTransport)
+  }
 
-      const total = co2 + ch4 / 1000 + n2o / 1000; // Conversión de CH₄ y N₂O a kg CO₂e
-      formValue.get('totalEmissions')?.setValue(total.toFixed(2));
-    } else {
-      partialEmissions.reset();
-      formValue.get('totalEmissions')?.setValue('');
+  setEmissionFactors () {
+    const fuelData = this.transportForm.value
+    const fuelType = fuelData.fuelType
+    const CO2_kg_ud = parseFloat(fuelType.CO2_kg_ud).toFixed(3);
+    const CH4_g_ud =  parseFloat(fuelType.CH4_g_ud).toFixed(3);
+    const N2O_g_ud =  parseFloat(fuelType.N2O_g_ud).toFixed(3);
+    this.transportForm.get('defaultEmissionFactor')?.get('co2')?.setValue(CO2_kg_ud);
+    this.transportForm.get('defaultEmissionFactor')?.get('ch4')?.setValue(CH4_g_ud);
+    this.transportForm.get('defaultEmissionFactor')?.get('n2o')?.setValue(N2O_g_ud);
+    this.transportForm.get('partialEmissions')?.get('co2')?.setValue(fuelData.quantity *  parseFloat(CO2_kg_ud));
+    this.transportForm.get('partialEmissions')?.get('ch4')?.setValue(fuelData.quantity * parseFloat(CH4_g_ud));
+    this.transportForm.get('partialEmissions')?.get('n2o')?.setValue(fuelData.quantity * parseFloat(N2O_g_ud));
+    this.transportForm.get('totalEmissions')?.setValue(fuelData.quantity * parseFloat(CO2_kg_ud)+fuelData.quantity * parseFloat(CH4_g_ud)+fuelData.quantity * parseFloat(N2O_g_ud))
+  }
+
+  onQuantityChange() {
+    if (this.transportForm.valid) {
+      const fuelData = this.transportForm.value
+      const fuelType = fuelData.fuelType
+      const CH4_g_ud = parseFloat( fuelType.CH4_g_ud );
+      const CO2_kg_ud = parseFloat( fuelType.CO2_kg_ud );
+      const N2O_g_ud = parseFloat( fuelType.N2O_g_ud );
+      this.transportForm.get('partialEmissions')?.get('co2')?.setValue(fuelData.fuelQuantity * CO2_kg_ud);
+      this.transportForm.get('partialEmissions')?.get('ch4')?.setValue(fuelData.fuelQuantity * CH4_g_ud);
+      this.transportForm.get('partialEmissions')?.get('n2o')?.setValue(fuelData.fuelQuantity * N2O_g_ud);
+      this.transportForm.get('totalEmissions')?.setValue(fuelData.fuelQuantity * CO2_kg_ud+fuelData.fuelQuantity * CH4_g_ud+fuelData.fuelQuantity * N2O_g_ud)
     }
   }
 
-  onSubmit(): void {
-    console.log(this.transportForm.value);
-  }
-
-  onTransportChange(): void {
-    const tipoSeleccionado = this.transportForm.get('transportType')?.value;
+  getFuelEmissions(year: number, selectedTransport: string) {
+    this.fuelEmisTypes = [] // Reiniciar el array de tipos de combustible
+    this.emisionesTransFerAerMarService.getEmisionesByYear(year)
+    .subscribe((emissions:any) => {
+      this.fuelEmisTypes = emissions
+      console.log("tipos de emisiones: ",this.fuelEmisTypes)
+      this.fuelEmisTypes = this.fuelEmisTypes.filter((fuelType: any) => fuelType.Categoria === selectedTransport)
+    })
   }
 
   private showSnackBar(msg: string): void {
