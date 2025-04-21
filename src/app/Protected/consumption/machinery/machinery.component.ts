@@ -14,9 +14,12 @@ export class MachineryComponent implements OnInit, OnChanges {
   @Input() productionCenter: number = 0
   emissionsForm!: FormGroup;
   showField: boolean = false
-  
+  displayedColumns: string[] = ['year', 'productionCenter', 'fuelType', 'quantity', 'edit', 'delete']
+  data = [{ }]
+  dataSource = new MatTableDataSource<any>(this.data)
+
   constructor( private fb: FormBuilder,
-      private emisionesMaquinariaMarService: EmisionesMaquinariaService,
+     /*  private emisionesMaquinariaMarService: EmisionesMaquinariaService, */
       private snackBar: MatSnackBar,
       private scopeOneRecordsService: ScopeOneRecordsService,
       ) { }
@@ -41,7 +44,7 @@ export class MachineryComponent implements OnInit, OnChanges {
               registros.data.forEach((registro: any) => {
                 registro.edit = true
                 registro.delete = true
-                registro.fuelType = this.fuelEmisTypes.find((fuelType: any) => fuelType.id === registro.fuelType)?.Combustible || 'desconocido'
+                registro.fuelType = this.machineryEmisTypes.find((fuelType: any) => fuelType.id === registro.fuelType)?.Combustible || 'desconocido'
   
               })
               this.dataSource = new MatTableDataSource(registros.data)
@@ -111,5 +114,14 @@ export class MachineryComponent implements OnInit, OnChanges {
 
   onSubmit(): void {
     console.log(this.emissionsForm.value);
+  }
+
+  private showSnackBar(msg: string): void {
+    this.snackBar.open(msg, 'Close', {
+      duration: 15000,
+      verticalPosition: 'top',
+      horizontalPosition: 'center',
+      panelClass: ['custom-snackbar'],
+    });
   }
 }
