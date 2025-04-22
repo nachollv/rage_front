@@ -16,7 +16,7 @@ import { ProductioncenterService } from '../../../services/productioncenter.serv
 export class MachineryVehiclesComponent  implements OnInit, OnChanges {
   @Input() activityYear!: number
   @Input() productionCenter!: number
-    displayedColumns: string[] = ['year', 'equipmentType', 'fuelType', 'quantity', 'edit', 'delete']
+    displayedColumns: string[] = ['year', 'categoria', 'fuelType', 'quantity', 'updated_at', 'edit', 'delete']
       data = [ { }, ]
       dataSource = new MatTableDataSource<any>(this.data)
       vehicleCategories: any[] = []
@@ -84,13 +84,13 @@ export class MachineryVehiclesComponent  implements OnInit, OnChanges {
           this.vehicleFuelService.getByYear(this.activityYear)
           .subscribe((fuelTypes:any) => {
             this.fuelTypes = fuelTypes
-            console.log("fuelTypes: ", fuelTypes)
-            console.log("registros: ", registros.data)
             registros.data.forEach((registro: any) => {
               registro.edit = true
               registro.delete = true
-              console.log("registro: ", registro.fuelType)
-              /* registro.fuelType = this.fuelTypes.find((fuelItem: any) => fuelItem.id === registro.fuelType)?.Combustible || 'desconocido'; */
+              const matchedFuel = this.fuelTypes.find((fuelItem: any) => fuelItem.id === registro.fuelType);
+              registro.fuelType = matchedFuel?.FuelType || 'desconocido';
+              registro.categoria = matchedFuel?.Categoria || 'desconocido';
+              //registro.fuelType = this.fuelTypes.find((fuelItem: any) => fuelItem.id === registro.fuelType)?.FuelType || 'desconocido';
             })      
           })
           this.dataSource = new MatTableDataSource(registros.data)

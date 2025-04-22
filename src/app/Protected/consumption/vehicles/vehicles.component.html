@@ -12,7 +12,7 @@
   <mat-form-field appearance="fill">
     <mat-label>Tipo de Combustible</mat-label>
     <mat-select formControlName="fuelType" (selectionChange)="setEmissionFactors()">
-      <mat-option *ngFor="let fuel of fuelTypes" [value]="fuel">{{ fuel.Combustible }}</mat-option>
+      <mat-option *ngFor="let fuel of fuelTypes" [value]="fuel">{{ fuel.FuelType }}</mat-option>
     </mat-select>
     <mat-error *ngIf="vehicleForm.get('fuelType')?.invalid">Campo obligatorio</mat-error>
   </mat-form-field>
