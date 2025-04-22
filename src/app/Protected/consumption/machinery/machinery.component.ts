@@ -14,7 +14,7 @@ export class MachineryComponent implements OnInit, OnChanges {
   @Input() productionCenter: number = 0
   emissionsForm!: FormGroup;
   showField: boolean = false
-  displayedColumns: string[] = ['year', 'fuelType', 'machineryType', 'quantity', 'updated_at', 'edit', 'delete']
+  displayedColumns: string[] = ['year', 'categoria', 'fuelType', 'quantity', 'updated_at', 'edit', 'delete']
   data = [{ }]
   dataSource = new MatTableDataSource<any>(this.data)
   fuelEmisTypes: any[] = []
@@ -63,9 +63,11 @@ export class MachineryComponent implements OnInit, OnChanges {
                 registros.data.forEach((registro: any) => {
                   registro.edit = true
                   registro.delete = true
-                  registro.fuelType = this.fuelEmisTypes.find((fuelItem: any) => fuelItem.id === registro.fuelType)?.FuelType || 'desconocido';
+                  //registro.fuelType = this.fuelEmisTypes.find((fuelItem: any) => fuelItem.id === registro.fuelType)?.FuelType || 'desconocido';
+                  const matchedFuel = this.fuelEmisTypes.find((fuelItem: any) => fuelItem.id === registro.fuelType);
+                  registro.fuelType = matchedFuel?.FuelType || 'desconocido';
+                  registro.categoria = matchedFuel?.Categoria || 'desconocido';
                 })
-
                 this.dataSource = new MatTableDataSource(registros.data)
                 this.showSnackBar('Registros obtenidos maquinaria: ' + registros.data.length)
               })

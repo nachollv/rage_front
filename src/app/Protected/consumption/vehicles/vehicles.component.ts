@@ -90,11 +90,12 @@ export class MachineryVehiclesComponent  implements OnInit, OnChanges {
               const matchedFuel = this.fuelTypes.find((fuelItem: any) => fuelItem.id === registro.fuelType);
               registro.fuelType = matchedFuel?.FuelType || 'desconocido';
               registro.categoria = matchedFuel?.Categoria || 'desconocido';
-              //registro.fuelType = this.fuelTypes.find((fuelItem: any) => fuelItem.id === registro.fuelType)?.FuelType || 'desconocido';
-            })      
+            })
+            this.dataSource = new MatTableDataSource(registros.data)
+            this.showSnackBar('Registros obtenidos fixed: ' + registros.data.length)            
           })
-          this.dataSource = new MatTableDataSource(registros.data)
-          this.showSnackBar('Registros obtenidos fixed: ' + registros.data.length)
+         /*  this.dataSource = new MatTableDataSource(registros.data)
+          this.showSnackBar('Registros obtenidos fixed: ' + registros.data.length) */
         },
         error: (err: any) => {
           this.showSnackBar('Error al obtener los registros: ' + err)

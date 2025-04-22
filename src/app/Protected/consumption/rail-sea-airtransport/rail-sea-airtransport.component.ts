@@ -58,20 +58,21 @@ export class RailSeaAirtransportComponent  implements OnInit, OnChanges {
       this.scopeOneRecordsService.getRecordsByFilters(calculationYear, productionCenter, activityType)
         .subscribe({
           next: (registros: any) => {
-            console.log('registros: ', registros.data)
-            registros.data.forEach((registro: any) => {
-              registro.edit = true
-              registro.delete = true
-              const matchedFuel = this.fuelEmisTypes.find((fuelItem: any) => fuelItem.id === registro.fuelType);
-/*               registro.fuelType = matchedFuel?.FuelType || 'desconocido';
-              registro.categoria = matchedFuel?.Categoria || 'desconocido'; */
-              registro.fuelType = matchedFuel?.FuelType || registro.fuelType;
-              registro.categoria = matchedFuel?.Categoria || registro.categoria;
-              //registro.fuelType = this.fuelEmisTypes.find((fuelType: any) => fuelType.id === registro.fuelType)?.Combustible || 'desconocido'
-
-            })
+            this.emisionesTransFerAerMarService.getEmisionesByYear(calculationYear)
+            .subscribe((emissions:any) => {
+              this.fuelEmisTypes = emissions
+              registros.data.forEach((registro: any) => {
+                registro.edit = true
+                registro.delete = true
+                const matchedFuel = this.fuelEmisTypes.find((fuelItem: any) => fuelItem.id === registro.fuelType);
+                registro.fuelType = matchedFuel?.FuelType || 'desconocido';
+                registro.categoria = matchedFuel?.Categoria || 'desconocido';
+              })
             this.dataSource = new MatTableDataSource(registros.data)
             this.showSnackBar('Registros obtenidos transferma: ' + registros.data.length)
+            })
+           /*  this.dataSource = new MatTableDataSource(registros.data)
+            this.showSnackBar('Registros obtenidos transferma: ' + registros.data.length) */
           },
           error: (err: any) => {
             this.showSnackBar('Error al obtener los registros ' + err.messages?.error || err.message)
