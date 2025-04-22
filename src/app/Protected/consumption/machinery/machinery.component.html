@@ -14,7 +14,9 @@
         <!-- Tipo de Combustible o lubricante -->
         <mat-form-field appearance="fill">
           <mat-label>Tipo de Combustible o lubricante</mat-label>
-          <input matInput formControlName="fuelType" />
+          <mat-select formControlName="fuelType"  (selectionChange)="setEmissionFactors()">
+            <mat-option *ngFor="let fuelEmis of fuelEmisTypes" [value]="fuelEmis">{{ fuelEmis.Combustible }}</mat-option>
+          </mat-select>
         </mat-form-field>
   
         <!-- Cantidad (ud) -->

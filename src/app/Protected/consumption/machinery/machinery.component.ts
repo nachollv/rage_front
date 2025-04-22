@@ -74,12 +74,9 @@ export class MachineryComponent implements OnInit, OnChanges {
 
   onSubmit(): void {
     const formValue = this.emissionsForm.value
-    /* formValue.machineryType = this.emissionsForm.get('machineryType')?.value */
     formValue.year = this.activityYear
     formValue.productionCenter = this.productionCenter
-    /* formValue.fuelType = formValue.fuelType.id */
     formValue.activityType = 'machinery'
-    /* formValue.quantity = this.emissionsForm.get('quantity')?.value */
     console.log("formValue: ", formValue)
 
     this.scopeOneRecordsService.createRecord(formValue)
@@ -121,6 +118,21 @@ export class MachineryComponent implements OnInit, OnChanges {
       console.log("tipos de emisiones: ",this.fuelEmisTypes)
       this.fuelEmisTypes = this.fuelEmisTypes.filter((fuelType: any) => fuelType.Categoria === selectedTransport)
     })
+  }
+
+  setEmissionFactors () {
+    const fuelData = this.emissionsForm.value
+    const fuelType = fuelData.fuelType
+    const CO2_kg_ud = parseFloat(fuelType.CO2_kg_ud).toFixed(3);
+    const CH4_g_ud = parseFloat(fuelType.CH4_g_ud).toFixed(3);
+    const N2O_g_ud = parseFloat(fuelType.N2O_g_ud).toFixed(3);
+    this.emissionsForm.get('defaultEmissionFactor')?.get('co2')?.setValue(CO2_kg_ud);
+    this.emissionsForm.get('defaultEmissionFactor')?.get('ch4')?.setValue(CH4_g_ud);
+    this.emissionsForm.get('defaultEmissionFactor')?.get('n2o')?.setValue(N2O_g_ud);
+    this.emissionsForm.get('partialEmissions')?.get('co2')?.setValue(fuelData.quantity *  parseFloat(CO2_kg_ud));
+    this.emissionsForm.get('partialEmissions')?.get('ch4')?.setValue(fuelData.quantity * parseFloat(CH4_g_ud));
+    this.emissionsForm.get('partialEmissions')?.get('n2o')?.setValue(fuelData.quantity * parseFloat(N2O_g_ud));
+    this.emissionsForm.get('totalEmissions')?.setValue(fuelData.quantity * parseFloat(CO2_kg_ud)+fuelData.quantity * parseFloat(CH4_g_ud)+fuelData.quantity * parseFloat(N2O_g_ud))
   }
 
   private showSnackBar(msg: string): void {
