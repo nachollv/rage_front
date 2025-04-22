@@ -1,15 +1,13 @@
 <mat-card>
   <form [formGroup]="emissionsForm" (ngSubmit)="onSubmit()">
-   
-     
       <section ngClass="type-fuel-quantity">
         <!-- Tipo de maquinaria -->
         <mat-form-field appearance="fill">
           <mat-label>Tipo de maquinaria</mat-label>
           <mat-select formControlName="machineryType" (selectionChange)="onMachineryChange($event.value)">
-            <mat-option value="Ferrocarril">Maquinaria agrícola</mat-option>
-            <mat-option value="Marítimo">Maquinaria forestal</mat-option>
-            <mat-option value="Aéreo">Maquinaria comercial, institucional e industrial</mat-option>
+            <mat-option value="Agrícola">Maquinaria agrícola</mat-option>
+            <mat-option value="Forestal">Maquinaria forestal</mat-option>
+            <mat-option value="Comercial, institucional e industrial">Maquinaria comercial, institucional e industrial</mat-option>
           </mat-select>
         </mat-form-field>
   
@@ -27,7 +25,7 @@
       </section>
 
       <!-- Factores de emisión por defecto -->
-      <div formGroupName="defaultEmissionFactor" class="factor-group">
+      <section formGroupName="defaultEmissionFactor" class="factor-group">
         <mat-form-field appearance="fill">
           <mat-label>kg CO₂/ud</mat-label>
           <input matInput type="number" formControlName="co2" />
@@ -40,10 +38,10 @@
           <mat-label>g N₂O/ud</mat-label>
           <input matInput type="number" formControlName="n2o" />
         </mat-form-field>
-      </div>
+      </section>
   
       <!-- Emisiones parciales -->
-      <div formGroupName="partialEmissions" class="emissions-group">
+      <section formGroupName="partialEmissions" class="emissions-group">
         <mat-form-field appearance="fill">
           <mat-label>kg CO₂</mat-label>
           <input matInput formControlName="co2"  />
@@ -56,7 +54,7 @@
           <mat-label>g N₂O</mat-label>
           <input matInput formControlName="n2o"  />
         </mat-form-field>
-      </div>
+      </section>
   
       <!-- Emisiones totales -->
       <mat-form-field appearance="fill">
@@ -66,9 +64,8 @@
   
     <!-- Botones -->
     <div class="form-actions">
-      <button mat-raised-button color="primary" type="button" (click)="addRow()">Agregar Fila</button>
       <button mat-raised-button color="accent" type="submit">Enviar</button>
     </div>
   </form>
-  
+  <app-data-table [displayedColumns]="displayedColumns" [dataSource]="dataSource"></app-data-table>
 </mat-card>

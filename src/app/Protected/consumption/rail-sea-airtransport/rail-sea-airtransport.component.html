@@ -1,6 +1,5 @@
 <mat-card>
   <form [formGroup]="transportForm" (ngSubmit)="onSubmit()">
-    <section ngClass="form-row"> 
       <section ngClass="type-fuel-quantity">
       <!-- Tipo de transporte -->
       <mat-form-field appearance="fill">
@@ -64,8 +63,6 @@
         <mat-label>Emisiones Totales (tnCO<sub>2</sub>eq) [CO<sub>2</sub>eq: CO<sub>2</sub>+CH<sub>4</sub>+N<sub>2</sub>O]</mat-label>
         <input matInput formControlName="totalEmissions"  />
       </mat-form-field>
-    </section>
-  
     <!-- Botones -->
     <section ngClass="form-actions">
       <button mat-raised-button color="accent" type="submit">Enviar</button>
