@@ -6,7 +6,7 @@
       </button>
     </section>
     <mat-card-title>CALCULADORA DE
-      HUELLA DE CARBONO DE ORGANIZACIÓN</mat-card-title>
+      HUELLA DE CARBONO DE UNA ORGANIZACIÓN</mat-card-title>
     <mat-card-subtitle>
       <h2>EMISIONES DIRECTAS</h2>
       <h2>EMISIONES INDIRECTAS POR LA COMPRA DE ELECTRICIDAD Y DE OTRAS ENERGÍAS</h2>
@@ -14,8 +14,8 @@
   </mat-card-header>
   
   <mat-card-content>
-    <article [innerHTML]="homeIntro">
-    </article>
+    <article  [innerHTML]="'homeIntro' | translate"></article>
+    <article [innerHTML]="'sectionText' | translate"></article>
   </mat-card-content>
   <mat-card-actions>
     <button mat-button routerLink="login">{{'login' | translate}}</button>
