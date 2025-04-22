@@ -63,7 +63,6 @@ export class MachineryComponent implements OnInit, OnChanges {
                 registros.data.forEach((registro: any) => {
                   registro.edit = true
                   registro.delete = true
-                  //registro.fuelType = this.fuelEmisTypes.find((fuelItem: any) => fuelItem.id === registro.fuelType)?.FuelType || 'desconocido';
                   const matchedFuel = this.fuelEmisTypes.find((fuelItem: any) => fuelItem.id === registro.fuelType);
                   registro.fuelType = matchedFuel?.FuelType || 'desconocido';
                   registro.categoria = matchedFuel?.Categoria || 'desconocido';

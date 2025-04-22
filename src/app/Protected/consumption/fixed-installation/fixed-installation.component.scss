@@ -27,7 +27,11 @@ button {
   margin-top: 1rem; // Agregar espacio encima del botón
 }
 
-
+.type-fuel-quantity {
+  display: grid;
+  grid-template-columns: 33% 33% 33%;
+  gap: 1rem;
+}
 // Opcional: Estilos personalizados para el estado de error
 mat-error {
   color: #d32f2f; // Color rojo para mensajes de error
