@@ -115,8 +115,8 @@ export class MachineryComponent implements OnInit, OnChanges {
     this.emisionesMachineryService.getEmisionesByYear(year)
     .subscribe((emissions:any) => {
       this.fuelEmisTypes = emissions
-      console.log("tipos de emisiones: ",this.fuelEmisTypes)
-      this.fuelEmisTypes = this.fuelEmisTypes.filter((fuelType: any) => fuelType.Categoria === selectedTransport)
+      console.log("fuelEmisTypes: ", this.fuelEmisTypes)
+      this.fuelEmisTypes = this.fuelEmisTypes.filter((fuelType: any) => fuelType.UsageType === selectedTransport)
     })
   }
 
