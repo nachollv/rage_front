@@ -57,14 +57,28 @@ export class MachineryComponent implements OnInit, OnChanges {
         this.scopeOneRecordsService.getRecordsByFilters(calculationYear, productionCenter, activityType)
           .subscribe({
             next: (registros: any) => {
-              registros.data.forEach((registro: any) => {
+              this.emisionesMachineryService.getEmisionesByYear(calculationYear)
+              .subscribe((emissions:any) => {
+                this.fuelEmisTypes = emissions
+                registros.data.forEach((registro: any) => {
+                  registro.edit = true
+                  registro.delete = true
+                  registro.fuelType = this.fuelEmisTypes.find((fuelType: any) => fuelType.id === registro.fuelType)?.FuelType || 'desconocido';
+  
+                })
+                this.dataSource = new MatTableDataSource(registros.data)
+                this.showSnackBar('Registros obtenidos transferma: ' + registros.data.length)
+              })
+
+/*               registros.data.forEach((registro: any) => {
+                console.log ("registro: ", this.fuelEmisTypes, this.fuelEmisTypes.find((fuelType: any) => fuelType.id === registro.fuelType))
                 registro.edit = true
                 registro.delete = true
-                //registro.fuelType = this.machineryEmisTypes.find((fuelType: any) => fuelType.id === registro.fuelType)?.Combustible || 'desconocido'
-  
+                registro.fuelType = this.fuelEmisTypes.find((fuelType: any) => fuelType.id === registro.fuelType)?.FuelType || 'desconocido';
+
               })
               this.dataSource = new MatTableDataSource(registros.data)
-              this.showSnackBar('Registros obtenidos transferma: ' + registros.data.length)
+              this.showSnackBar('Registros obtenidos transferma: ' + registros.data.length) */
             },
             error: (err: any) => {
               this.showSnackBar('Error al obtener los registros ' + err.messages?.error || err.message)
