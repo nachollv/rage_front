@@ -59,13 +59,13 @@ export class HomeComponent {
   getAuxText(id:number) {
     this.auxHelpingTextsService.getAuxTextById(id).subscribe((text: AuxTextDTO | undefined) => {
       if (text) {
-        if (localStorage.getItem('preferredLang') === 'es-ES') {
+        if (localStorage.getItem('preferredLang') === 'es-ES' || localStorage.getItem('preferredLang') === 'es') {
          this.title = text.titleES
          this.text = text.sectionTextES
-        } else if (localStorage.getItem('preferredLang') === 'ca-ES') {
+        } else if (localStorage.getItem('preferredLang') === 'ca-ES' || localStorage.getItem('preferredLang') === 'ca') {
           this.title = text.titleCA
           this.text = text.sectionTextCA
-        } else if (localStorage.getItem('preferredLang') === 'en-EN') {
+        } else if (localStorage.getItem('preferredLang') === 'en-EN' || localStorage.getItem('preferredLang') === 'en') {
           this.title = text.titleEN
           this.text = text.sectionTextEN
         } else {

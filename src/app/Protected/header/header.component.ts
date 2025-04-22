@@ -27,7 +27,14 @@ export class HeaderComponent {
     private authService: AuthService,
     private router: Router, public dialog: MatDialog
     ) {
-    this.translate.setDefaultLang('ca');
+      this.translate.setDefaultLang('es-ES'); // Establece el idioma por defecto
+      const preferredLang = localStorage.getItem('preferredLang');
+      if (preferredLang) {
+        this.translate.use(preferredLang); // Cambia el idioma según la preferencia del usuario
+      } else {
+        this.translate.use('es-ES'); // Si no hay preferencia, usa el idioma por defecto
+      }
+      this.translate.setDefaultLang('es-ES'); // Establece el idioma por defecto
   }
 
   ngOnInit(): void {
@@ -49,6 +56,8 @@ export class HeaderComponent {
   }
 
   switchLanguage(language: string) {
+    localStorage.setItem('preferredLang', language)
+    this.translate.setDefaultLang(language);
     this.translate.use(language)
   }
 
