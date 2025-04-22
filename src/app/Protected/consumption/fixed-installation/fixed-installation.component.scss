@@ -29,6 +29,18 @@ button {
 
 .type-fuel-quantity {
   display: grid;
+  grid-template-columns: 50% 50%;
+  gap: 1rem; // Espaciado entre los campos de "consumos"
+}
+
+.factor-group, .emissions-group {
+  display: grid;
+  grid-template-columns: 33% 33% 33%;
+  gap: 1rem; // Espaciado entre los campos de "consumos"
+}
+
+.type-fuel-quantity {
+  display: grid;
   grid-template-columns: 33% 33% 33%;
   gap: 1rem;
 }

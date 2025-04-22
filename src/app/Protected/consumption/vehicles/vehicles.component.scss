@@ -16,12 +16,7 @@ mat-form-field {
   margin-bottom: 20px;
 }
 
-.emissions {
-  display: grid;
-  grid-template-columns: 50% 50%;
-}
-
-.type-fuel-quantity{
+.type-fuel-quantity, .factor-group, .emissions-group {
   display: grid;
   grid-template-columns: 33% 33% 33%;
   gap: 1rem; // Espaciado entre los campos de "consumos"

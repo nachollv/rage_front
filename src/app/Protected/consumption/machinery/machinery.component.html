@@ -27,6 +27,7 @@
       </section>
 
       <!-- Factores de emisión por defecto -->
+      <h3>Factores de Emisión por gases</h3>
       <section formGroupName="defaultEmissionFactor" class="factor-group">
         <mat-form-field appearance="fill">
           <mat-label>kg CO₂/ud</mat-label>
@@ -43,6 +44,7 @@
       </section>
   
       <!-- Emisiones parciales -->
+      <h3>Emisiones Parciales</h3>
       <section formGroupName="partialEmissions" class="emissions-group">
         <mat-form-field appearance="fill">
           <mat-label>kg CO₂</mat-label>
@@ -59,8 +61,9 @@
       </section>
   
       <!-- Emisiones totales -->
-      <mat-form-field appearance="fill">
-        <mat-label>Emisiones totales C (kg CO₂e)</mat-label>
+      <h3>Emisiones Totales (tnCO<sub>2</sub>eq) [CO<sub>2</sub>eq: CO<sub>2</sub>+CH<sub>4</sub>+N<sub>2</sub>O]</h3>
+      <mat-form-field>
+        <mat-label>(tnCO<sub>2</sub>eq)</mat-label>
         <input matInput formControlName="totalEmissions"  />
       </mat-form-field>
       <button mat-raised-button color="accent" type="submit" [disabled]="!emissionsForm.valid">Registrar</button>

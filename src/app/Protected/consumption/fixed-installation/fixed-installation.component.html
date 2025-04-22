@@ -12,9 +12,9 @@
     <input matInput type="number" formControlName="quantity" (change)="onQuantityChange()">
   </mat-form-field>
   </section>
-  <section ngClass="emissions">
-    <section formGroupName="defaultFactor">
-      <h3>Factores de Emisión por gases</h3>
+  <h3>Factores de Emisión por gases</h3>
+  <section formGroupName="defaultFactor" ngClass="factor-group">
+      
       <mat-form-field>
         <mat-label>kg CO<sub>2</sub>/ud</mat-label>
         <input matInput type="number" formControlName="fe_co2">
@@ -27,10 +27,10 @@
         <mat-label>g N<sub>2</sub>O/ud</mat-label>
         <input matInput type="number" formControlName="fe_n2o">
       </mat-form-field>
-    </section>
-  
-    <section formGroupName="partialEmissions">
-      <h3>Emisiones Parciales</h3>
+  </section>
+  <h3>Emisiones Parciales</h3>
+  <section formGroupName="partialEmissions" ngClass="emissions-group">
+      
       <mat-form-field>
         <mat-label>kg CO<sub>2</sub></mat-label>
         <input matInput type="number" formControlName="co2">
@@ -43,13 +43,11 @@
         <mat-label>g N<sub>2</sub>O</mat-label>
         <input matInput type="number" formControlName="n2o">
       </mat-form-field>
-    </section>
   </section>
- 
 
   <h3>Emisiones Totales (tnCO<sub>2</sub>eq) [CO<sub>2</sub>eq: CO<sub>2</sub>+CH<sub>4</sub>+N<sub>2</sub>O]</h3>
   <mat-form-field>
-    <mat-label>kg CO<sub>2</sub>e</mat-label>
+    <mat-label>(tnCO<sub>2</sub>eq)</mat-label>
     <input matInput type="number" formControlName="totalEmissions">
   </mat-form-field>
 

@@ -23,9 +23,9 @@
     <mat-error *ngIf="vehicleForm.get('quantity')?.invalid">Campo obligatorio y debe ser un número</mat-error>
   </mat-form-field>
 </section>
-<section ngClass="emissions">
-  <section formGroupName="defaultEmissionFactor">
-    <h3>Factores de Emisión por gases</h3>
+<h3>Factores de Emisión por gases</h3>
+  <section formGroupName="defaultEmissionFactor" ngClass="factor-group">
+   
     <mat-form-field appearance="fill">
       <mat-label>Factor de emisión (kg CO2/ud)</mat-label>
       <input matInput formControlName="co2" type="number">
@@ -40,8 +40,9 @@
     </mat-form-field>
   </section>
 
-  <section formGroupName="partialEmissions">
-    <h3>Emisiones Parciales</h3>
+  <h3>Emisiones Parciales</h3>
+  <section formGroupName="partialEmissions" ngClass="emissions-group">
+   
     <mat-form-field appearance="fill">
       <mat-label>Emisiones parciales (kg CO2)</mat-label>
       <input matInput formControlName="co2">
@@ -55,10 +56,10 @@
       <input matInput formControlName="n2o">
     </mat-form-field>
   </section>
-</section>
 
-<h3>Emisiones Totales (tnCO<sub>2</sub>eq) [CO<sub>2</sub>eq: CO<sub>2</sub>+CH<sub>4</sub>+N<sub>2</sub>O]</h3>
-  <mat-form-field appearance="fill">
+  <h3>Emisiones Totales (tnCO<sub>2</sub>eq) [CO<sub>2</sub>eq: CO<sub>2</sub>+CH<sub>4</sub>+N<sub>2</sub>O]</h3>
+  <mat-form-field>
+    <mat-label>(tnCO<sub>2</sub>eq)</mat-label>
     <input matInput formControlName="totalEmissions">
   </mat-form-field>
   <button mat-raised-button color="accent" type="submit" [disabled]="!vehicleForm.valid">Registrar</button>
