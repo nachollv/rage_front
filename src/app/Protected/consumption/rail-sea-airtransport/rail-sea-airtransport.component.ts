@@ -69,10 +69,8 @@ export class RailSeaAirtransportComponent  implements OnInit, OnChanges {
                 registro.categoria = matchedFuel?.Categoria || 'desconocido';
               })
             this.dataSource = new MatTableDataSource(registros.data)
-            this.showSnackBar('Registros obtenidos transferma: ' + registros.data.length)
+            //this.showSnackBar('Registros obtenidos transferma: ' + registros.data.length)
             })
-           /*  this.dataSource = new MatTableDataSource(registros.data)
-            this.showSnackBar('Registros obtenidos transferma: ' + registros.data.length) */
           },
           error: (err: any) => {
             this.showSnackBar('Error al obtener los registros ' + err.messages?.error || err.message)

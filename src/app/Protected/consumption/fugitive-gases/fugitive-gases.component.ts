@@ -59,7 +59,7 @@ export class FugitiveGasesComponent implements OnInit, OnChanges {
       .subscribe((registrosleak:any) => {
         this.dataSource = new MatTableDataSource(registrosleak.data)
       this.dataSource.paginator = null
-      this.showSnackBar('Registros leak obtenidos: ' + registrosleak.length)
+      //this.showSnackBar('Registros leak obtenidos: ' + registrosleak.length)
       })
   }
 

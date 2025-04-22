@@ -68,15 +68,18 @@ export class FixedInstallationComponent implements OnInit, OnChanges {
       this.scopeOneRecordsService.getRecordsByFilters(calculationYear, productionCenter, activityType)
         .subscribe({
           next: (registros: any) => {
-            registros.data.forEach((registro: any) => {
-              registro.edit = true
-              registro.delete = true
-              console.log('Registro:', registro.fuelType)
-              console.log('Combustible:', this.fuelTypes)
-              registro.fuelType = this.fuelTypes.find((itemFuel: any) => itemFuel.id === registro.fuelType)?.Combustible || 'desconocido'
+            this.fuelDataService.getByYear(calculationYear)
+            .subscribe((fuel:any) => {
+              this.fuelTypes = fuel
+              registros.data.forEach((registro: any) => {
+                registro.edit = true
+                registro.delete = true
+                const matchedFuel = this.fuelTypes.find((fuelItem: any) => fuelItem.id === registro.fuelType);
+                registro.fuelType = matchedFuel?.Combustible || 'desconocido';
+              })
+              this.dataSource = new MatTableDataSource(registros.data)
+              //this.showSnackBar('Registros obtenidos fixed: ' + registros.data.length)
             })
-            this.dataSource = new MatTableDataSource(registros.data)
-            this.showSnackBar('Registros obtenidos fixed: ' + registros.data.length)
           },
           error: (err: any) => {
             this.showSnackBar('Error al obtener los registros ' + err.messages?.error || err.message)

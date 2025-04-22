@@ -92,10 +92,8 @@ export class MachineryVehiclesComponent  implements OnInit, OnChanges {
               registro.categoria = matchedFuel?.Categoria || 'desconocido';
             })
             this.dataSource = new MatTableDataSource(registros.data)
-            this.showSnackBar('Registros obtenidos fixed: ' + registros.data.length)            
+            //this.showSnackBar('Registros obtenidos fixed: ' + registros.data.length)            
           })
-         /*  this.dataSource = new MatTableDataSource(registros.data)
-          this.showSnackBar('Registros obtenidos fixed: ' + registros.data.length) */
         },
         error: (err: any) => {
           this.showSnackBar('Error al obtener los registros: ' + err)
