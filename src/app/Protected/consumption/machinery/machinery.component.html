@@ -6,7 +6,11 @@
         <!-- Tipo de maquinaria -->
         <mat-form-field appearance="fill">
           <mat-label>Tipo de maquinaria</mat-label>
-          <input matInput formControlName="machineryType" />
+          <mat-select formControlName="machineryType" (selectionChange)="onMachineryChange($event.value)">
+            <mat-option value="Ferrocarril">Maquinaria agrícola</mat-option>
+            <mat-option value="Marítimo">Maquinaria forestal</mat-option>
+            <mat-option value="Aéreo">Maquinaria comercial, institucional e industrial</mat-option>
+          </mat-select>
         </mat-form-field>
   
         <!-- Tipo de Combustible o lubricante -->
@@ -18,7 +22,7 @@
         <!-- Cantidad (ud) -->
         <mat-form-field appearance="fill">
           <mat-label>Cantidad (ud)</mat-label>
-          <input matInput type="number" formControlName="quantity" (input)="calculateEmissions()" />
+          <input matInput type="number" formControlName="quantity" (input)="onQuantityChange()" />
         </mat-form-field>
       </section>
 
