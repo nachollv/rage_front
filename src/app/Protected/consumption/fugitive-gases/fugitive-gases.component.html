@@ -1,14 +1,5 @@
 <mat-card>
 <form [formGroup]="emisionesForm" (ngSubmit)="onSubmit()">
-  <mat-form-field *ngIf="showField">
-    <mat-label>Año de cálculo</mat-label>
-    <input matInput formControlName="calculationYear">
-  </mat-form-field>
-  <mat-form-field *ngIf="showField">
-    <mat-label>Centro de producción</mat-label>
-    <input matInput formControlName="productionCenter" placeholder="Ej. Edificio 1" />
-  </mat-form-field>
-
   <mat-form-field>
     <mat-label>Nombre del gas o de la mezcla</mat-label>
     <mat-select formControlName="nombre_gas_mezcla" placeholder="Introduce el nombre del gas o mezcla" (selectionChange)="setPCAAndChemicalFormula()">
@@ -44,6 +35,5 @@
 
   <button mat-raised-button color="accent" type="submit" [disabled]="emisionesForm.invalid">Enviar</button>
 </form>
-</mat-card>
 <app-data-table [displayedColumns]="displayedColumns" [dataSource]="dataSource"></app-data-table>
-
+</mat-card>

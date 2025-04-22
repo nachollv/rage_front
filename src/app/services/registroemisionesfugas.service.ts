@@ -7,9 +7,7 @@ import { catchError } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class RegistroemisionesFugasService {
-  //private apiUrl = 'https://pre.tramits.idi.es/public/index.php/auth';
   private apiUrl = 'https://rage.industrialocalsostenible.com/public/index.php';
-
 
   constructor(private http: HttpClient) {}
 
@@ -32,6 +30,13 @@ export class RegistroemisionesFugasService {
     return this.http.get<any>(`${this.apiUrl}/registroemisionesfugas/${id}`).pipe(
       catchError(this.handleError)
     );
+  }
+
+  // Leer un registro por año de cálculo, centro de producción
+  getRegistroByFilters(calculationYear: number, productionCenter: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/registroemisionesfugas/activityYear/${calculationYear}/productionCenter/${productionCenter}`)
+    .pipe(
+      catchError(this.handleError))
   }
 
   // Actualizar un registro

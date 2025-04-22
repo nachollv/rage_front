@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { LeakrefrigerantgasesService } from '../../../services/leakrefrigerantgases.service';
 import { RegistroemisionesFugasService } from '../../../services/registroemisionesfugas.service';
@@ -12,21 +12,24 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   templateUrl: './fugitive-gases.component.html',
   styleUrl: './fugitive-gases.component.scss'
 })
-export class FugitiveGasesComponent {
-  displayedColumns: string[] = ['calculationYear', 'productionCenter', 'nombre_gas_mezcla', 'capacidad_equipo', 'recarga_equipo', 'created_at', 'updated_at', 'edit', 'delete']
+export class FugitiveGasesComponent implements OnInit, OnChanges {
+  @Input() activityYear: number = 0
+  @Input() productionCenter: number = 0
+  displayedColumns: string[] = ['year', 'nombre_gas_mezcla', 'capacidad_equipo', 'recarga_equipo', 'updated_at', 'edit', 'delete']
   data = [{ }]
   dataSource = new MatTableDataSource<any>(this.data)
-  emisionesForm: FormGroup;
+  emisionesForm!: FormGroup;
   gasTypes: any[] = []
   showField: boolean = false
 
   constructor(private fb: FormBuilder, private leakGases: LeakrefrigerantgasesService, 
-    private registerLeak: RegistroemisionesFugasService, private dialog: MatDialog,
-    private snackBar: MatSnackBar) {
+    private registerLeakService: RegistroemisionesFugasService, private dialog: MatDialog,
+    private snackBar: MatSnackBar) {  }
 
+  ngOnInit(): void { 
     this.emisionesForm = this.fb.group({
-      calculationYear: [{ value: '2023', disabled: true }, [Validators.required, Validators.minLength(4), Validators.maxLength(4)]],
-      productionCenter: [{ value: '6', disabled: true }, Validators.required],
+      calculationYear: [{ value: this.activityYear, disabled: true }, [Validators.required, Validators.minLength(4), Validators.maxLength(4)]],
+      productionCenter: [{ value: this.productionCenter, disabled: true }, Validators.required],
       nombre_gas_mezcla: ['', Validators.required],
       formulaQuimica: [{ value: '', disabled: true }, Validators.required],
       pca: [{ value: '', disabled: true }, Validators.required],
@@ -38,6 +41,12 @@ export class FugitiveGasesComponent {
     this.getregistros()
   }
 
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['activityYear'] && !changes['activityYear'].firstChange) {
+      this.getregistros()
+    }
+  }
+
   getGases() {
     this.leakGases.getAll()
       .subscribe((gases:any) => {
@@ -46,9 +55,10 @@ export class FugitiveGasesComponent {
   }
 
   getregistros() {
-    this.registerLeak.getRegistros()
+    this.registerLeakService.getRegistroByFilters(this.activityYear, this.productionCenter)
       .subscribe((registrosleak:any) => {
-      this.dataSource = new MatTableDataSource(registrosleak)
+        this.dataSource = new MatTableDataSource(registrosleak.data)
+      this.dataSource.paginator = null
       this.showSnackBar('Registros leak obtenidos: ' + registrosleak.length)
       })
   }
@@ -92,7 +102,7 @@ export class FugitiveGasesComponent {
     formValue.nombre_gas_mezcla = formValue.nombre_gas_mezcla.Nombre;
     console.log(formValue)
 
-     this.registerLeak.createRegistro(formValue).subscribe({
+     this.registerLeakService.createRegistro(formValue).subscribe({
       next: (response) => { 
         this.showSnackBar("Registro creado correctamente "+response)
         this.getregistros()},
