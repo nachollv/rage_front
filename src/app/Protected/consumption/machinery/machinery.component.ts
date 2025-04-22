@@ -69,16 +69,6 @@ export class MachineryComponent implements OnInit, OnChanges {
                 this.dataSource = new MatTableDataSource(registros.data)
                 this.showSnackBar('Registros obtenidos transferma: ' + registros.data.length)
               })
-
-/*               registros.data.forEach((registro: any) => {
-                console.log ("registro: ", this.fuelEmisTypes, this.fuelEmisTypes.find((fuelType: any) => fuelType.id === registro.fuelType))
-                registro.edit = true
-                registro.delete = true
-                registro.fuelType = this.fuelEmisTypes.find((fuelType: any) => fuelType.id === registro.fuelType)?.FuelType || 'desconocido';
-
-              })
-              this.dataSource = new MatTableDataSource(registros.data)
-              this.showSnackBar('Registros obtenidos transferma: ' + registros.data.length) */
             },
             error: (err: any) => {
               this.showSnackBar('Error al obtener los registros ' + err.messages?.error || err.message)
