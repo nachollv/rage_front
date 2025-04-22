@@ -64,7 +64,6 @@ export class MachineryComponent implements OnInit, OnChanges {
                   registro.edit = true
                   registro.delete = true
                   registro.fuelType = this.fuelEmisTypes.find((fuelItem: any) => fuelItem.id === registro.fuelType)?.FuelType || 'desconocido';
-  
                 })
 
                 this.dataSource = new MatTableDataSource(registros.data)

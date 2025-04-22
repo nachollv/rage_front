@@ -3,10 +3,10 @@
   <section ngClass="type-fuel-quantity">
   <mat-form-field appearance="fill">
     <mat-label>Categoría de vehículo</mat-label>
-    <mat-select formControlName="vehicleCategory" (selectionChange)="setFuelTypes()">
+    <mat-select formControlName="equipmentType" (selectionChange)="setFuelTypes()">
       <mat-option *ngFor="let category of vehicleCategories" [value]="category">{{ category.Categoria }}</mat-option>
     </mat-select>
-    <mat-error *ngIf="vehicleForm.get('vehicleCategory')?.invalid">Campo obligatorio</mat-error>
+    <mat-error *ngIf="vehicleForm.get('equipmentType')?.invalid">Campo obligatorio</mat-error>
   </mat-form-field>
 
   <mat-form-field appearance="fill">

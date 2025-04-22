@@ -16,7 +16,7 @@ import { ProductioncenterService } from '../../../services/productioncenter.serv
 export class MachineryVehiclesComponent  implements OnInit, OnChanges {
   @Input() activityYear!: number
   @Input() productionCenter!: number
-    displayedColumns: string[] = ['year', 'productionCenter', 'fuelType', 'quantity', 'edit', 'delete']
+    displayedColumns: string[] = ['year', 'equipmentType', 'fuelType', 'quantity', 'edit', 'delete']
       data = [ { }, ]
       dataSource = new MatTableDataSource<any>(this.data)
       vehicleCategories: any[] = []
@@ -36,7 +36,7 @@ export class MachineryVehiclesComponent  implements OnInit, OnChanges {
     this.vehicleForm = this.fb.group({
       year: [{ value: this.activityYear }],
       productionCenter: [{ value: this.productionCenter }],
-      vehicleCategory: ['', Validators.required],
+      equipmentType: ['', Validators.required],
       fuelType: ['', Validators.required],
       quantity: ['', [Validators.required, Validators.pattern(/^\d+$/)]],
       defaultEmissionFactor: this.fb.group({
@@ -77,14 +77,21 @@ export class MachineryVehiclesComponent  implements OnInit, OnChanges {
       })
   }
 
-  getScopeOneRecords(calculationYear: number = this.activityYear, productionCenter: number = this.productionCenter, activityType: string = 'machinery') {
+  getScopeOneRecords(calculationYear: number = this.activityYear, productionCenter: number = this.productionCenter, activityType: string = 'vehicles') {
     this.scopeOneRecordsService.getRecordsByFilters(calculationYear, productionCenter, activityType)
       .subscribe({
         next: (registros: any) => {
-          registros.data.forEach((registro: any) => {
-            registro.edit = true
-            registro.delete = true
-            registro.fuel_type = this.fuelTypes.find((fuelType: any) => fuelType.id === registro.fuel_type)?.Combustible || 'desconocido'
+          this.vehicleFuelService.getByYear(this.activityYear)
+          .subscribe((fuelTypes:any) => {
+            this.fuelTypes = fuelTypes
+            console.log("fuelTypes: ", fuelTypes)
+            console.log("registros: ", registros.data)
+            registros.data.forEach((registro: any) => {
+              registro.edit = true
+              registro.delete = true
+              console.log("registro: ", registro.fuelType)
+              /* registro.fuelType = this.fuelTypes.find((fuelItem: any) => fuelItem.id === registro.fuelType)?.Combustible || 'desconocido'; */
+            })      
           })
           this.dataSource = new MatTableDataSource(registros.data)
           this.showSnackBar('Registros obtenidos fixed: ' + registros.data.length)
@@ -100,9 +107,9 @@ export class MachineryVehiclesComponent  implements OnInit, OnChanges {
     formValue.year = this.activityYear
     formValue.productionCenter = this.productionCenter
     formValue.fuelType = this.vehicleForm.get('fuelType')?.value.id
-    formValue.activityType = 'machinery'
+    formValue.activityType = 'vehicles'
     formValue.quantity = this.vehicleForm.get('quantity')?.value
-
+    console.log("formValue: ", formValue)
     this.scopeOneRecordsService.createRecord(formValue)
       .subscribe(
         (fuel: any) => {
@@ -118,7 +125,7 @@ export class MachineryVehiclesComponent  implements OnInit, OnChanges {
 
   setFuelTypes() {
     const vehicleData = this.vehicleForm.value
-    this.vehicleFuelService.getByYearType(this.activityYear, vehicleData.vehicleCategory.Categoria)
+    this.vehicleFuelService.getByYearType(this.activityYear, vehicleData.equipmentType.Categoria)
       .subscribe((fuelTypes:any) => {
         this.fuelTypes = fuelTypes
     })
