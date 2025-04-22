@@ -21,6 +21,7 @@ export class ConsumptionComponent {
   productionCenterForm: FormGroup;
   token: string = ''
   prodCenterID: number = 0
+  prodCenterName: string = ''
   organizacionID: number = 0
   availableYears: string[] = [];
   currentActivityYear: string = ''
@@ -42,7 +43,7 @@ export class ConsumptionComponent {
     private translate: TranslationService) {
      this.productionCenterForm = this.fb.group({
       activityYear: [{ value: '' }, [Validators.required]],
-      productionCenter: [{value: '', disabled: true}],
+      /* productionCenter: [{value: '', disabled: true}], */
     });
   }
 
@@ -68,9 +69,10 @@ export class ConsumptionComponent {
   getProductionCenterDetails(id:number) {
     this.productionCenterService.getCentroDeProduccionByID(id)
       .subscribe((pCenterItem: any) => {
-        this.productionCenterForm.patchValue({
+        this.prodCenterName = pCenterItem.nombre
+        /* this.productionCenterForm.patchValue({
           productionCenter: pCenterItem.nombre
-        })
+        }) */
       })
   }
 

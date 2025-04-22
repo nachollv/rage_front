@@ -15,14 +15,14 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrl: './consumtion-container-scope2.component.scss'
 })
 export class ConsumtionContainerScope2Component {
+  @Input() activityYear: number = 0
+  @Input() productionCenter: number = 0
   selectedTabIndexscope2: number = 0;
   productionCenterForm: FormGroup;
   token: string = ''
   auxText: AuxTextDTO | undefined
   title: string = ''
   text: string = ''
-  @Input() activityYear?: number;
-  @Input() productionCenter?: number;
   
   constructor (public dialog: MatDialog, private productionCenterService: ProductioncenterService,
     private auxHelpingTextsService: AuxHelpingTextsService,

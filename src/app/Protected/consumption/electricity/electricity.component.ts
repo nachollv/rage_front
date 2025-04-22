@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent } from '../../../dialog/dialog.component';
@@ -9,9 +9,11 @@ import { MatTableDataSource } from '@angular/material/table';
   templateUrl: './electricity.component.html',
   styleUrl: './electricity.component.scss'
 })
-export class ElectricityComponent {
+export class ElectricityComponent implements OnInit, OnChanges {
+  @Input() activityYear!: number
+  @Input() productionCenter: number = 0
   showField: boolean = false
-  displayedColumns: string[] = ['calculationYear', 'productionCenter', '01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', 'edit', 'delete']
+  displayedColumns: string[] = ['year', '01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', 'edit', 'delete']
   data = [
     { delegation: 'Central', year: 2024, '01': 25, '02': 34.25, '03': '23.54', '04': 45.345, '05': 45.345, '06': 45.345, '07': 45.345, '08': 45.345, '09': 45.345, '10': 45.345, '11': 45.345, edit: true, delete: true},
     { delegation: 'Felanitx', year: 2024, '01': 25, '02': 34.25, '03': '23.54', '04': 45.345, '05': 45.345, '06': 45.345, '07': 45.345, '08': 45.345, '09': 45.345, '10': 45.345, '11': 45.345, edit: true, delete: true },
@@ -21,9 +23,14 @@ export class ElectricityComponent {
     { delegation: 'Pollença', year: 2024, '01': 25, '02': 34.25, '03': '23.54', '04': 45.345, '05': 45.345, '06': 45.345, '07': 45.345, '08': 45.345, '09': 45.345, '10': 45.345, '11': 45.345, edit: true, delete: true }
   ];
   dataSource = new MatTableDataSource<any>(this.data)
-  buildingElecConsumption: FormGroup;
+  buildingElecConsumption!: FormGroup;
   
     constructor(private fb: FormBuilder, public dialog: MatDialog) {
+
+    }
+
+    
+    ngOnInit(): void {
       this.buildingElecConsumption = this.fb.group({
         productionCenter: [{ value: 2, disabled: true }],
         activityYear: [{ value: 2025, disabled: true }],
@@ -34,6 +41,15 @@ export class ElectricityComponent {
         gdo: ['', [Validators.required]]
         })
       });
+
+      /* this.getFuelConsumptions(this.activityYear)
+      this.getScopeOneRecords(this.activityYear, this.productionCenter) */
+    }
+
+    ngOnChanges(changes: SimpleChanges): void {
+      if (changes['activityYear'] && !changes['activityYear'].firstChange) {
+       /*  this.getFuelConsumptions(this.activityYear); */
+      }
     }
   
     onSubmit() {
