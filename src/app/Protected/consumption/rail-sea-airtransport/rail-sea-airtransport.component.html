@@ -63,10 +63,7 @@
         <mat-label>Emisiones Totales (tnCO<sub>2</sub>eq) [CO<sub>2</sub>eq: CO<sub>2</sub>+CH<sub>4</sub>+N<sub>2</sub>O]</mat-label>
         <input matInput formControlName="totalEmissions"  />
       </mat-form-field>
-    <!-- Botones -->
-    <section ngClass="form-actions">
-      <button mat-raised-button color="accent" type="submit">Enviar</button>
-    </section>
+      <button mat-raised-button color="accent" type="submit" [disabled]="!transportForm.valid">Registrar</button>
   </form>
   <app-data-table [displayedColumns]="displayedColumns" [dataSource]="dataSource"></app-data-table>
 </mat-card>

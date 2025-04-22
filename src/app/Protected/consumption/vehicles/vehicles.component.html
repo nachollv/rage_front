@@ -61,8 +61,7 @@
   <mat-form-field appearance="fill">
     <input matInput formControlName="totalEmissions">
   </mat-form-field>
-  <button mat-raised-button color="accent" type="submit">Registrar</button>
+  <button mat-raised-button color="accent" type="submit" [disabled]="!vehicleForm.valid">Registrar</button>
 </form>
-
 <app-data-table [displayedColumns]="displayedColumns" [dataSource]="dataSource"></app-data-table>
 </mat-card>
