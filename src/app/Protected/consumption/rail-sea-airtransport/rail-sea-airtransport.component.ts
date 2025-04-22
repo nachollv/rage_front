@@ -15,7 +15,7 @@ export class RailSeaAirtransportComponent  implements OnInit, OnChanges {
   @Input() productionCenter: number = 0
   transportForm!: FormGroup
   showField: boolean = false
-  displayedColumns: string[] = ['year', 'productionCenter', 'fuelType', 'quantity', 'edit', 'delete']
+  displayedColumns: string[] = ['year', 'fuelType', 'quantity', 'updated_at', 'edit', 'delete']
   data = [{ }]
   dataSource = new MatTableDataSource<any>(this.data)
   fuelEmisTypes: any[] = []
