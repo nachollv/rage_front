@@ -16,7 +16,7 @@ import { ScopeOneRecordsService } from '../../../services/scope-one-records.serv
 export class FixedInstallationComponent implements OnInit, OnChanges {
     @Input() activityYear!: number
     @Input() productionCenter: number = 0
-    displayedColumns: string[] = ['year', 'fuel_type', 'quantity', 'updated_at', 'edit', 'delete']
+    displayedColumns: string[] = ['year', 'fuelType', 'quantity', 'updated_at', 'edit', 'delete']
     data = [{ }]
     dataSource = new MatTableDataSource<any>(this.data)
     fuelForm!: FormGroup;
@@ -71,7 +71,9 @@ export class FixedInstallationComponent implements OnInit, OnChanges {
             registros.data.forEach((registro: any) => {
               registro.edit = true
               registro.delete = true
-              registro.fuel_type = this.fuelTypes.find((itemFuel: any) => itemFuel.id === registro.fuelType)?.Combustible || 'desconocido'
+              console.log('Registro:', registro.fuelType)
+              console.log('Combustible:', this.fuelTypes)
+              registro.fuelType = this.fuelTypes.find((itemFuel: any) => itemFuel.id === registro.fuelType)?.Combustible || 'desconocido'
             })
             this.dataSource = new MatTableDataSource(registros.data)
             this.showSnackBar('Registros obtenidos fixed: ' + registros.data.length)
