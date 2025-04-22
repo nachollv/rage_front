@@ -9,8 +9,8 @@ import { AuxTextDTO } from '../models/auxText.dto';
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
-export class HomeComponent {
 
+export class HomeComponent {
   auxText: AuxTextDTO | undefined
   homeIntro: string = ''
   title: string = ''
@@ -25,17 +25,17 @@ export class HomeComponent {
     this.auxHelpingTextsService.getAuxTextById(id).subscribe((text: AuxTextDTO | undefined) => {
       if (text) {
         this.auxText = text
-        if (localStorage.getItem('preferredLang') === 'es') {
+        if (localStorage.getItem('preferredLang') === 'es-ES') {
          this.title = text.titleES
          this.text = text.sectionTextES
-        } else if (localStorage.getItem('preferredLang') === 'ca') {
+        } else if (localStorage.getItem('preferredLang') === 'ca-ES') {
           this.title = text.titleCA
           this.text = text.sectionTextCA
-        } else if (localStorage.getItem('preferredLang') === 'en') {
+        } else if (localStorage.getItem('preferredLang') === 'en-EN') {
           this.title = text.titleEN
           this.text = text.sectionTextEN
         } else {
-          console.error('Idioma no soportado')
+          console.error('Idioma no soportado....')
         }
       } else {
         console.error('Texto auxiliar no encontrado');
@@ -59,13 +59,13 @@ export class HomeComponent {
   getAuxText(id:number) {
     this.auxHelpingTextsService.getAuxTextById(id).subscribe((text: AuxTextDTO | undefined) => {
       if (text) {
-        if (localStorage.getItem('preferredLang') === 'es') {
+        if (localStorage.getItem('preferredLang') === 'es-ES') {
          this.title = text.titleES
          this.text = text.sectionTextES
-        } else if (localStorage.getItem('preferredLang') === 'ca') {
+        } else if (localStorage.getItem('preferredLang') === 'ca-ES') {
           this.title = text.titleCA
           this.text = text.sectionTextCA
-        } else if (localStorage.getItem('preferredLang') === 'en') {
+        } else if (localStorage.getItem('preferredLang') === 'en-EN') {
           this.title = text.titleEN
           this.text = text.sectionTextEN
         } else {
