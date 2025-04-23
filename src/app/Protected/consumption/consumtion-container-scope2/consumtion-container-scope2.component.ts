@@ -18,7 +18,7 @@ export class ConsumtionContainerScope2Component {
   @Input() activityYear: number = 0
   @Input() productionCenter: number = 0
   selectedTabIndexscope2: number = 0;
-  productionCenterForm: FormGroup;
+  /* productionCenterForm: FormGroup; */
   token: string = ''
   auxText: AuxTextDTO | undefined
   title: string = ''
@@ -29,29 +29,28 @@ export class ConsumtionContainerScope2Component {
     private snackBar: MatSnackBar,
      private jwtHelper: JwtHelperService,
   ) {
-    this.productionCenterForm = new FormBuilder().group({
+    /* this.productionCenterForm = new FormBuilder().group({
       calculationYear: [{ value: '2023', disabled: true }],
       productionCenter: [{ value: '2', disabled: true }],
-    });
+    }); */
   }
 
   ngOnInit() {
-    const savedTabIndex = localStorage.getItem('selectedTabIndexscope1')
-   /*  this.prodCenterID = this.jwtHelper.decodeToken(this.token).data.idCentroProduccion */
+    const savedTabIndex = localStorage.getItem('selectedTabIndexscope2')
     if (savedTabIndex !== null) {
       this.selectedTabIndexscope2 = +savedTabIndex;
     }
-    this.getProductionCenterDetails(this.productionCenterForm.get('productionCenter')!.value)
+    /* this.getProductionCenterDetails(this.productionCenterForm.get('productionCenter')!.value) */
   }
 
-  getProductionCenterDetails(id:number) {
+ /*  getProductionCenterDetails(id:number) {
     this.productionCenterService.getCentroDeProduccionByID(id)
       .subscribe((pCenterItem: any) => {
         this.productionCenterForm.patchValue({
           productionCenter: pCenterItem.nombre
         })
       })
-  }
+  } */
 
   onTabChange(index: number) {
     localStorage.setItem('selectedTabIndexscope2', index.toString());
