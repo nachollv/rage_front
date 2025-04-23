@@ -5,3 +5,23 @@ section {
   border-radius: 1rem;
   padding: 1rem;
 }
+
+canvas {
+  border: 1px solid #000;
+  border-radius: 1rem;
+  margin: 0 auto;
+  display: block;
+}
+
+.scope1 {
+  background-color: #f0f8ff;
+  border: 1px solid #0000ff;
+  border-radius: 1rem;  
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+    gap: 1rem;
+}
+.scope2 {
+  background-color: #faebd7;
+}
