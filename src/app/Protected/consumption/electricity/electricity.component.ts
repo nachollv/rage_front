@@ -94,9 +94,9 @@ export class ElectricityComponent implements OnInit, OnChanges {
         consumosGroup.get('activityData')?.valueChanges.subscribe({
           next: (activityData) => {
             const factorMixElectrico = consumosGroup.get('factorMixElectrico')?.value || 0;
-            const fe_co2 = consumosGroup.get('fe_co2')?.value || 0;
-
-            const emisionesCO2e = activityData * factorMixElectrico * fe_co2 / 1000; // Convertir a toneladas
+            let fe_co2 = +factorMixElectrico === 0.302 ? 1.0 : consumosGroup.get('fe_co2')?.value;
+            console.log('Factor mix electrico:', factorMixElectrico, fe_co2);
+            const emisionesCO2e = activityData * factorMixElectrico * fe_co2 / 1000
             this.buildingElecConsumption.get('emisionesCO2e')?.setValue(emisionesCO2e.toFixed(3));
           },
           error: (err) => console.error('Error en el cálculo de emisiones:', err)
@@ -109,8 +109,6 @@ export class ElectricityComponent implements OnInit, OnChanges {
         console.log(this.buildingElecConsumption.value);
       }
     }
-
-
 
     openDialog(): void {
         const dialogRef = this.dialog.open(DialogComponent, {

@@ -1,5 +1,5 @@
 <mat-card>
-  <form [formGroup]="energyForm" (ngSubmit)="onSubmit()" class="form-container">
+  <form [formGroup]="heatSteamColdAirForm" (ngSubmit)="onSubmit()" class="form-container">
   
     <!-- Tipo de energía -->
     <div class="form-group">
@@ -40,7 +40,7 @@
   
     <!-- Botones -->
     <div class="button-group">
-      <button mat-raised-button color="accent" type="submit">Enviar</button>
+      <button mat-raised-button color="accent" type="submit" [disabled]="heatSteamColdAirForm.invalid">Registrar</button>
     </div>
   </form>
   <app-data-table [displayedColumns]="displayedColumns" [dataSource]="dataSource"></app-data-table>
