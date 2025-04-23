@@ -34,6 +34,14 @@
   </mat-form-field>
   <section ngClass="limites-organizacion">
     <h4>Límites de la organización</h4>
+    <mat-form-field appearance="fill">
+      <mat-label>Comercializadora</mat-label>
+      <mat-select formControlName="comercializadora">
+        <mat-option *ngFor="let comercializadora of comercializadorasElectricas" [value]="comercializadora">
+          {{ comercializadora.Comercializadora }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
     <mat-checkbox (change)="onMultipleOrgChange($event)" formControlName="multipleProductionCenter">Más de un Centro de Producción</mat-checkbox>
     <section>
       <mat-label matTooltip="Es recomendable, al menos, seleccionar tres años de cálculo">Años de cálculo permitidos:</mat-label>

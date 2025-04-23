@@ -14,6 +14,7 @@ import { SectorsDTO } from '../../models/sectors.dto';
 import { SectoresEconomicosService } from '../../services/sectores.economicos.service';
 import { activityIndexDTO } from '../../models/activityIndex.dto';
 import { MatCheckboxChange } from '@angular/material/checkbox';
+import { EmisionesElectricasEdificiosService } from '../../services/emisiones-electricas-edificios.service';
 
 @Component({
   selector: 'app-organ-general-data',
@@ -26,6 +27,7 @@ export class OrganGeneralDataComponent implements OnInit {
   displayedColumns: string[] = ['nombre', 'email', 'rol', 'caducidad_contrasena', 'ultimo_inicio_sesion']
   dataSource = new MatTableDataSource<any>()
   organizationForm: FormGroup
+  comercializadorasElectricas: any[] = []
   organizationTypes: { id: string, name: string }[] = [
     { id: '1', name: 'Micro' },
     { id: '2', name: 'Pequeña' },
@@ -46,6 +48,7 @@ export class OrganGeneralDataComponent implements OnInit {
     constructor(private fb: FormBuilder, private snackBar: MatSnackBar,
       private jwtHelper: JwtHelperService,
       private authService: AuthService, 
+      private emisionesElectricasservice: EmisionesElectricasEdificiosService,
       private organizationService: OrganizacionService,
       private productionCenterService: ProductioncenterService,
       private sectoresEconomicos: SectoresEconomicosService,
@@ -55,6 +58,7 @@ export class OrganGeneralDataComponent implements OnInit {
         cif: [''],
         companyName: [''],
         organizationType: [''],
+        comercializadora: [''],
         activityIndex: ['', Validators.required],
         activityYear: [null, Validators.required],
         cnae: [''],
@@ -76,6 +80,7 @@ export class OrganGeneralDataComponent implements OnInit {
       this.getTheOrganization(this.organizationID)   
       this.getTheActivityYears(this.organizationID)
       this.getSectoresEconomicos()
+      this.getAllEmisionesbyYear(2023)
     }
 
     getTheOrganization(id: number) {
@@ -111,6 +116,17 @@ export class OrganGeneralDataComponent implements OnInit {
         }, (error: any) => {
           this.showSnackBar('Error' + 'Ha ocurrido un error al obtener la organización' + error.message);
         })
+    }
+
+    getAllEmisionesbyYear(year:number): void {
+      this.emisionesElectricasservice.getByYear(year).subscribe({
+        next: (data) => {
+          this.comercializadorasElectricas = data;
+        },
+        error: (error) => {
+          console.error('Error al obtener las emisiones:', error);
+        }
+      });
     }
 
     getTheActivityYears(id: number) {
