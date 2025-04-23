@@ -1,5 +1,6 @@
-<form [formGroup]="vehiclesElectricity" (ngSubmit)="onSubmit()">
-      <mat-card>
+<mat-card>
+  <form [formGroup]="vehiclesElectricity" (ngSubmit)="onSubmit()">
+
       <mat-card-content>      
         <mat-form-field appearance="fill">
           <mat-label>Periodo factura</mat-label>
@@ -70,9 +71,10 @@
             </mat-error>
           </mat-form-field>
           
-        </mat-card-content>
-      </mat-card>
-  <button mat-raised-button color="primary" type="submit" [disabled]="vehiclesElectricity.invalid">Enviar</button>
+      </mat-card-content>
+   
+    <button mat-raised-button color="primary" type="submit" [disabled]="vehiclesElectricity.invalid">Enviar</button>
+  </form>
   <app-data-table [displayedColumns]="displayedColumns" [dataSource]="dataSource"></app-data-table>
-</form>
+</mat-card>
 
