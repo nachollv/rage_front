@@ -18,6 +18,7 @@
         <mat-option value="12">Diciembre</mat-option>
       </mat-select>
     </mat-form-field>
+
     <section formGroupName="consumos">
     
     <mat-form-field appearance="fill">
@@ -37,16 +38,7 @@
         <mat-option value="1.000">No</mat-option>
       </mat-select>
     </mat-form-field>
-    <mat-form-field class="full-width">
-      <mat-label>Factor Mix eléct. (kg CO2e/kWh)</mat-label>
-      <input matInput type="number" placeholder="Factor Mix eléctrico" formControlName="factorMixElectrico" />
-      <mat-error *ngIf="buildingElecConsumption.get('factorMixElectrico')?.hasError('required')">
-        Este campo es obligatorio
-      </mat-error>
-      <mat-error *ngIf="buildingElecConsumption.get('factorMixElectrico')?.hasError('min')">
-        El factor debe ser mayor o igual a 0
-      </mat-error>
-    </mat-form-field>
+    
     <mat-form-field appearance="fill">
       <mat-label>Dato de consumo (kWh)</mat-label>
       <input matInput formControlName="activityData" type="text">
@@ -57,6 +49,19 @@
         {{ "El formato debe ser un número con hasta dos decimales" | translate }}
       </mat-error>
     </mat-form-field>
+
+    <mat-form-field class="full-width">
+      <mat-label>Factor Mix eléct. (kg CO2e/kWh)</mat-label>
+      <input matInput type="number" placeholder="Factor Mix eléctrico" formControlName="factorMixElectrico" />
+      <mat-error *ngIf="buildingElecConsumption.get('factorMixElectrico')?.hasError('required')">
+        Este campo es obligatorio
+      </mat-error>
+      <mat-error *ngIf="buildingElecConsumption.get('factorMixElectrico')?.hasError('min')">
+        El factor debe ser mayor o igual a 0
+      </mat-error>
+    </mat-form-field>
+
+    
 
   </section>
 
