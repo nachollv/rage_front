@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Chart, registerables  } from 'chart.js';
+import { Chart, ChartTypeRegistry, registerables  } from 'chart.js';
 import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Component({
@@ -18,21 +18,21 @@ export class ControlPanelContainerComponent implements OnInit {
 
   ngOnInit():void {
     Chart.register(...registerables);
-    this.fixedInstChart();
-    this.roadTranspChart();
-    this.railSeaAirChart();
-    this.machineryChart();
-    this.fugitiveEmissChart();
-    this.electricityBuildings();
-    this.electricityVehicles();
-    this.heatSteamColdCompAir();
+    this.fixedInstChart('line');
+    this.roadTranspChart('bar');
+    this.railSeaAirChart('line');
+    this.machineryChart('bar');
+    this.fugitiveEmissChart('line');
+    this.electricityBuildings('line');
+    this.electricityVehicles('bar');
+    this.heatSteamColdCompAir('line');
   }
 
-  fixedInstChart(): void {
+  fixedInstChart(chartType: keyof ChartTypeRegistry): void {
     const ctx = document.getElementById('fixedInstChart') as HTMLCanvasElement;
     new Chart(ctx, {
 
-      type: 'bar',
+      type: chartType,
       data: {
         labels: [
           'January',
@@ -97,10 +97,10 @@ export class ControlPanelContainerComponent implements OnInit {
       }
     });
   }
-  roadTranspChart(): void {
+  roadTranspChart(chartType: keyof ChartTypeRegistry): void {
     const ctx = document.getElementById('roadTranspChart') as HTMLCanvasElement;
     new Chart(ctx, {
-      type: 'bar',
+      type: chartType,
       data: {
         labels: [
           'January',
@@ -165,10 +165,10 @@ export class ControlPanelContainerComponent implements OnInit {
     }
     });
   }
-  railSeaAirChart(): void {
+  railSeaAirChart(chartType: keyof ChartTypeRegistry): void {
     const ctx = document.getElementById('railSeaAirChart') as HTMLCanvasElement;
     new Chart(ctx, {
-      type: 'bar',
+      type: chartType,
       data: {
         labels: [
           'January',
@@ -233,10 +233,10 @@ export class ControlPanelContainerComponent implements OnInit {
     }
     });
   }
-  machineryChart(): void {
+  machineryChart(chartType: keyof ChartTypeRegistry): void {
     const ctx = document.getElementById('machineryChart') as HTMLCanvasElement;
     new Chart(ctx, {
-      type: 'bar',
+      type: chartType,
       data: {
         labels: [
           'January',
@@ -301,10 +301,10 @@ export class ControlPanelContainerComponent implements OnInit {
     }
     });
   }
-  fugitiveEmissChart(): void {
+  fugitiveEmissChart(chartType: keyof ChartTypeRegistry): void {
     const ctx = document.getElementById('fugitiveEmissChart') as HTMLCanvasElement;
     new Chart(ctx, {
-      type: 'bar',
+      type: chartType,
       data: {
         labels: [
           'January',
@@ -371,10 +371,10 @@ export class ControlPanelContainerComponent implements OnInit {
   }
 
 
-  electricityBuildings(): void {
+  electricityBuildings(chartType: keyof ChartTypeRegistry): void {
     const ctx = document.getElementById('electricityBuildings') as HTMLCanvasElement;
     new Chart(ctx, {
-      type: 'bar',
+      type: chartType,
       data: {
         labels: [
           'January',
@@ -439,10 +439,10 @@ export class ControlPanelContainerComponent implements OnInit {
     }
     });
   }
-  electricityVehicles(): void {
+  electricityVehicles(chartType: keyof ChartTypeRegistry): void {
     const ctx = document.getElementById('electricityVehicles') as HTMLCanvasElement;
     new Chart(ctx, {
-      type: 'bar',
+      type: chartType,
       data: {
         labels: [
           'January',
@@ -507,10 +507,10 @@ export class ControlPanelContainerComponent implements OnInit {
     }
     });
   }
-  heatSteamColdCompAir(): void {
+  heatSteamColdCompAir(chartType: keyof ChartTypeRegistry): void {
     const ctx = document.getElementById('heatSteamColdCompAir') as HTMLCanvasElement;
     new Chart(ctx, {
-      type: 'bar',
+      type: chartType,
       data: {
         labels: [
           'January',
