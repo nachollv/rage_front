@@ -16,7 +16,7 @@ export class HomeComponent {
   homeIntro: string = ''
   title: string = ''
   text: string = ''
-  preferredLang: string = localStorage.getItem('preferredLang') || 'es-ES'
+  preferredLang: string = localStorage.getItem('preferredLang') || 'es'
   constructor( public dialog: MatDialog,
     private auxHelpingTextsService: AuxHelpingTextsService
    ) {

@@ -21,8 +21,7 @@ export class FixedInstallationComponent implements OnInit, OnChanges {
     dataSource = new MatTableDataSource<any>(this.data)
     fuelForm!: FormGroup;
     fuelTypes: any[] = []
-    showField: boolean = false
-    
+
     constructor(private fb: FormBuilder, public dialog: MatDialog,
       private fuelDataService: FuelDataService,
       private scopeOneRecordsService: ScopeOneRecordsService,

@@ -32,8 +32,9 @@ export class ElectricityVehiclesComponent {
         productionCenter: [{ value: this.productionCenter, disabled: true }],
         periodoFactura: ['', Validators.required],
         consumos: this.fb.group({
-        comercializadora: ['', [Validators.required]],
-        activityData: ['', [Validators.required, Validators.pattern(/^\d+(\.\d{2})?$/)]],
+          comercializadora: ['', [Validators.required]],
+          activityData: ['', [Validators.required, Validators.pattern(/^\d+(\.\d{2})?$/)]],
+          factorMixElectrico : ['', [Validators.required, Validators.pattern(/^\d+(\.\d{2})?$/)]],
         gdo: ['', [Validators.required]]}),
         factorMixElectrico: [{ value: '', disabled: true }],
         emisionesCO2e: [{ value: 0, disabled: true }]
