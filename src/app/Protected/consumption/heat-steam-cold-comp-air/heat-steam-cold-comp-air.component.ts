@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, Input, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { DialogComponent } from '../../../dialog/dialog.component';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-heat-steam-cold-comp-air',
@@ -7,14 +9,16 @@ import { FormBuilder, FormGroup } from '@angular/forms';
   styleUrls: ['./heat-steam-cold-comp-air.component.scss']
 })
 export class HeatSteamColdCompAirComponent {
+  @Input() activityYear!: number
+  @Input() productionCenter: number = 0
   energyForm: FormGroup;
   showField: boolean = false
   
   constructor(private fb: FormBuilder) {
     // Estructura del formulario reactivo
     this.energyForm = this.fb.group({
-      calculationYear: [{ value: '2023', disabled: true }], // Año de cálculo (campo deshabilitado)
-      productionCenter: [{ value: '2', disabled: true }], // Centro de producción (campo deshabilitado)
+      calculationYear: [{ value: this.activityYear, disabled: true }], // Año de cálculo (campo deshabilitado)
+      productionCenter: [{ value: this.productionCenter, disabled: true }], // Centro de producción (campo deshabilitado)
       energyType: [''], // Tipo de energía
       consumption: [''], // Consumo (kWh)
       emissionFactor: [''], // Factor de emisión (kg CO2e/kWh)

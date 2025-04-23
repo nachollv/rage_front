@@ -2,16 +2,6 @@
  
 <form [formGroup]="buildingElecConsumption" (ngSubmit)="onSubmit()">
 
-  <mat-form-field  *ngIf="showField">
-    <mat-label>Año de cálculo</mat-label>
-    <input matInput formControlName="activityYear" placeholder="Ejemplo: 2023">
-  </mat-form-field>
-  
-  <mat-form-field  *ngIf="showField">
-    <mat-label>Centro de producción</mat-label>
-    <input matInput formControlName="productionCenter" placeholder="Ejemplo: Zona Norte">
-  </mat-form-field>
-
   <mat-form-field appearance="fill">
     <mat-label>Periodo factura</mat-label>
     <mat-select formControlName="periodoFactura">

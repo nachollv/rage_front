@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent } from '../../../dialog/dialog.component';
@@ -10,14 +10,16 @@ import { MatTableDataSource } from '@angular/material/table';
   styleUrl: './electricity-vehicles.component.scss'
 })
 export class ElectricityVehiclesComponent {
+  @Input() activityYear!: number
+  @Input() productionCenter: number = 0
   vehiclesElectricity: FormGroup;
   showField: boolean = false
   
     constructor(private fb: FormBuilder, public dialog: MatDialog) {
 
     this.vehiclesElectricity = this.fb.group({
-        productionCenter: [{ value: 2, disabled: true }],
-        activityYear: [{ value: 2023, disabled: true }],
+        activityYear: [{ value: this.activityYear, disabled: true }],
+        productionCenter: [{ value: this.productionCenter, disabled: true }],
         periodoFactura: ['', Validators.required],
         consumos: this.fb.group({
         comercializadora: ['', [Validators.required]],
