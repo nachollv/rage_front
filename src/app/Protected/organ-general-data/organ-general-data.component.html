@@ -36,7 +36,7 @@
     <h4>Límites de la organización</h4>
     <mat-form-field appearance="fill">
       <mat-label>Comercializadora</mat-label>
-      <mat-select formControlName="comercializadora">
+      <mat-select formControlName="comercializadora" multiple>
         <mat-option *ngFor="let comercializadora of comercializadorasElectricas" [value]="comercializadora">
           {{ comercializadora.Comercializadora }}
         </mat-option>
