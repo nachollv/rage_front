@@ -1,27 +1,20 @@
-section {
-  max-width: 90%;
-  margin: 1rem auto;
-  border: 1px solid green;
-  border-radius: 1rem;
-  padding: 1rem;
-}
-
-canvas {
-  border: 1px solid #000;
-  border-radius: 1rem;
-  margin: 0 auto;
-  display: block;
+.scope1, .scope2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); // Tres columnas de igual ancho
+  gap: 1rem; // Espaciado uniforme entre columnas y filas
+  width: auto; // Ocupa todo el ancho del contenedor padre
+  box-sizing: border-box; // Asegura un cálculo correcto del ancho
+  margin: 1rem; // Espacio entre las dos secciones
+  padding: 1rem; // Espacio interno para el contenido
+  border-radius: 8px; // Bordes redondeados para un aspecto más suave
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); // Sombra sutil para profundidad
+  border: 1px solid #ccc; // Borde sutil para separación
 }
 
 .scope1 {
   background-color: #f0f8ff;
-  border: 1px solid #0000ff;
-  border-radius: 1rem;  
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  grid-template-rows: 1fr 1fr;
-    gap: 1rem;
 }
 .scope2 {
-  background-color: #faebd7;
+  background-color: #f5f5dc;  
 }
+

@@ -21,8 +21,11 @@ export class ControlPanelContainerComponent implements OnInit {
     this.fixedInstChart();
     this.roadTranspChart();
     this.railSeaAirChart();
-    this.MachineryChart();
-    this.FugitiveEmissChart();
+    this.machineryChart();
+    this.fugitiveEmissChart();
+    this.electricityBuildings();
+    this.electricityVehicles();
+    this.heatSteamColdCompAir();
   }
 
   fixedInstChart(): void {
@@ -67,8 +70,8 @@ export class ControlPanelContainerComponent implements OnInit {
       }]
   },
       options: {
-       responsive: true,
-         /* maintainAspectRatio: false, */
+      /*  responsive: true,
+         maintainAspectRatio: true,  */
         plugins: {  
           legend: {
             position: 'top',
@@ -134,17 +137,32 @@ export class ControlPanelContainerComponent implements OnInit {
           order: 1
       }]
   },
-      options: {
-        scales: {
-          y: {
-            beginAtZero: true,
-            stacked: true
-          },
-          x: {
-            stacked: true
-          }
+  options: {
+    /*  responsive: true,
+       maintainAspectRatio: true,  */
+      plugins: {  
+        legend: {
+          position: 'top',
+        },
+        title: {
+          display: true,
+          text: 'Transporte por carretera - Emissions and Objectives'
+        }
+      },
+      interaction: {  
+        mode: 'index',
+        intersect: false,
+      },
+      scales: {
+        y: {
+          beginAtZero: true,
+          stacked: true
+        },
+        x: {
+          stacked: true
         }
       }
+    }
     });
   }
   railSeaAirChart(): void {
@@ -187,21 +205,36 @@ export class ControlPanelContainerComponent implements OnInit {
           order: 1
       }]
   },
-      options: {
-        scales: {
-          y: {
-            beginAtZero: true,
-            stacked: true
-          },
-          x: {
-            stacked: true
-          }
+  options: {
+    /*  responsive: true,
+       maintainAspectRatio: true,  */
+      plugins: {  
+        legend: {
+          position: 'top',
+        },
+        title: {
+          display: true,
+          text: 'Transporte ferroviario, marítimo, aéreo - Emissions and Objectives'
+        }
+      },
+      interaction: {  
+        mode: 'index',
+        intersect: false,
+      },
+      scales: {
+        y: {
+          beginAtZero: true,
+          stacked: true
+        },
+        x: {
+          stacked: true
         }
       }
+    }
     });
   }
-  MachineryChart(): void {
-    const ctx = document.getElementById('MachineryChart') as HTMLCanvasElement;
+  machineryChart(): void {
+    const ctx = document.getElementById('machineryChart') as HTMLCanvasElement;
     new Chart(ctx, {
       type: 'bar',
       data: {
@@ -240,21 +273,36 @@ export class ControlPanelContainerComponent implements OnInit {
           order: 1
       }]
   },
-      options: {
-        scales: {
-          y: {
-            beginAtZero: true,
-            stacked: true
-          },
-          x: {
-            stacked: true
-          }
+  options: {
+    /*  responsive: true,
+       maintainAspectRatio: true,  */
+      plugins: {  
+        legend: {
+          position: 'top',
+        },
+        title: {
+          display: true,
+          text: 'Maquinaria - Emissions and Objectives'
+        }
+      },
+      interaction: {  
+        mode: 'index',
+        intersect: false,
+      },
+      scales: {
+        y: {
+          beginAtZero: true,
+          stacked: true
+        },
+        x: {
+          stacked: true
         }
       }
+    }
     });
-  } 
-  FugitiveEmissChart(): void {
-    const ctx = document.getElementById('FugitiveEmissChart') as HTMLCanvasElement;
+  }
+  fugitiveEmissChart(): void {
+    const ctx = document.getElementById('fugitiveEmissChart') as HTMLCanvasElement;
     new Chart(ctx, {
       type: 'bar',
       data: {
@@ -293,28 +341,239 @@ export class ControlPanelContainerComponent implements OnInit {
           order: 1
       }]
   },
-      options: {
-        scales: {
-          y: {
-            beginAtZero: true,
-            stacked: true
-          },
-          x: {
-            stacked: true
-          }
+  options: {
+    /*  responsive: true,
+       maintainAspectRatio: true,  */
+      plugins: {  
+        legend: {
+          position: 'top',
+        },
+        title: {
+          display: true,
+          text: 'Emisiones fugitivas - Emissions and Objectives'
+        }
+      },
+      interaction: {  
+        mode: 'index',
+        intersect: false,
+      },
+      scales: {
+        y: {
+          beginAtZero: true,
+          stacked: true
+        },
+        x: {
+          stacked: true
         }
       }
+    }
     });
-  }  
+  }
 
 
-  
-
-
-  
-
-
-  
-
+  electricityBuildings(): void {
+    const ctx = document.getElementById('electricityBuildings') as HTMLCanvasElement;
+    new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: [
+          'January',
+          'February',
+          'March',
+          'April'
+        ],
+        datasets: [{
+          label: 'Consumption',
+          data: [10, 20, 30, 40],
+          backgroundColor: [
+            'rgba(255, 0, 0, 0.8)', // Rojo vivo
+            'rgba(54, 162, 235, 0.8)', // Azul vivo
+            'rgba(255, 206, 86, 0.8)', // Amarillo vivo
+            'rgba(0, 255, 0, 0.8)'  // Verde vivo
+          ],
+          borderColor: [
+            'rgba(255, 99, 132, 1)',
+            'rgba(54, 162, 235, 1)',
+            'rgba(255, 206, 86, 1)',
+            'rgba(75, 192, 192, 1)'
+          ],
+          borderWidth: 1,
+          // this dataset is drawn below
+          order: 2
+      }, {
+          label: 'Objectives',
+          data: [10, 15, 19, 17],
+          type: 'line',
+          backgroundColor: 'rgba(153, 102, 255, 0.8)', // Púrpura vivo
+          borderColor: 'rgba(153, 102, 255, 1)',
+          borderWidth: 2,
+          // this dataset is drawn on top
+          order: 1
+      }]
+  },
+  options: {
+    /*  responsive: true,
+       maintainAspectRatio: true,  */
+      plugins: {  
+        legend: {
+          position: 'top',
+        },
+        title: {
+          display: true,
+          text: 'Consumo eléctrico en edificios - Emissions and Objectives'
+        }
+      },
+      interaction: {  
+        mode: 'index',
+        intersect: false,
+      },
+      scales: {
+        y: {
+          beginAtZero: true,
+          stacked: true
+        },
+        x: {
+          stacked: true
+        }
+      }
+    }
+    });
+  }
+  electricityVehicles(): void {
+    const ctx = document.getElementById('electricityVehicles') as HTMLCanvasElement;
+    new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: [
+          'January',
+          'February',
+          'March',
+          'April'
+        ],
+        datasets: [{
+          label: 'Consumption',
+          data: [10, 20, 30, 40],
+          backgroundColor: [
+            'rgba(255, 0, 0, 0.8)', // Rojo vivo
+            'rgba(54, 162, 235, 0.8)', // Azul vivo
+            'rgba(255, 206, 86, 0.8)', // Amarillo vivo
+            'rgba(0, 255, 0, 0.8)'  // Verde vivo
+          ],
+          borderColor: [
+            'rgba(255, 99, 132, 1)',
+            'rgba(54, 162, 235, 1)',
+            'rgba(255, 206, 86, 1)',
+            'rgba(75, 192, 192, 1)'
+          ],
+          borderWidth: 1,
+          // this dataset is drawn below
+          order: 2
+      }, {
+          label: 'Objectives',
+          data: [10, 15, 19, 17],
+          type: 'line',
+          backgroundColor: 'rgba(153, 102, 255, 0.8)', // Púrpura vivo
+          borderColor: 'rgba(153, 102, 255, 1)',
+          borderWidth: 2,
+          // this dataset is drawn on top
+          order: 1
+      }]
+  },
+  options: {
+    /*  responsive: true,
+       maintainAspectRatio: true,  */
+      plugins: {  
+        legend: {
+          position: 'top',
+        },
+        title: {
+          display: true,
+          text: 'Consumo eléctrico en vehículos - Emissions and Objectives'
+        }
+      },
+      interaction: {  
+        mode: 'index',
+        intersect: false,
+      },
+      scales: {
+        y: {
+          beginAtZero: true,
+          stacked: true
+        },
+        x: {
+          stacked: true
+        }
+      }
+    }
+    });
+  }
+  heatSteamColdCompAir(): void {
+    const ctx = document.getElementById('heatSteamColdCompAir') as HTMLCanvasElement;
+    new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: [
+          'January',
+          'February',
+          'March',
+          'April'
+        ],
+        datasets: [{
+          label: 'Consumption',
+          data: [10, 20, 30, 40],
+          backgroundColor: [
+            'rgba(255, 0, 0, 0.8)', // Rojo vivo
+            'rgba(54, 162, 235, 0.8)', // Azul vivo
+            'rgba(255, 206, 86, 0.8)', // Amarillo vivo
+            'rgba(0, 255, 0, 0.8)'  // Verde vivo
+          ],
+          borderColor: [
+            'rgba(255, 99, 132, 1)',
+            'rgba(54, 162, 235, 1)',
+            'rgba(255, 206, 86, 1)',
+            'rgba(75, 192, 192, 1)'
+          ],
+          borderWidth: 1,
+          // this dataset is drawn below
+          order: 2
+      }, {
+          label: 'Objectives',
+          data: [10, 15, 19, 17],
+          type: 'line',
+          backgroundColor: 'rgba(153, 102, 255, 0.8)', // Púrpura vivo
+          borderColor: 'rgba(153, 102, 255, 1)',
+          borderWidth: 2,
+          // this dataset is drawn on top
+          order: 1
+      }]
+  },
+  options: {
+    /*  responsive: true,
+       maintainAspectRatio: true,  */
+      plugins: {  
+        legend: {
+          position: 'top',
+        },
+        title: {
+          display: true,
+          text: 'Calor, vapor, frío y aire comprimido - Emissions and Objectives'
+        }
+      },
+      interaction: {  
+        mode: 'index',
+        intersect: false,
+      },
+      scales: {
+        y: {
+          beginAtZero: true,
+          stacked: true
+        },
+        x: {
+          stacked: true
+        }
+      }
+    }
+    });
+  }
 }
 

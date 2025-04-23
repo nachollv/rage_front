@@ -1,16 +1,35 @@
-<section ngClass="scope1"></section>
-  <canvas id="fixedInstChart"></canvas>
-  <canvas id="roadTranspChart"></canvas>
-  <canvas id="railSeaAirChart"></canvas>
-  <canvas id="MachineryChart"></canvas>
-  <canvas id="FugitiveEmissChart"></canvas>
-<section>
+<h2>Emisiones directas (Alcance 1)</h2>
+<section ngClass="scope1">
+  <article style="width: 600px; height: 400px;">
+    <canvas id="fixedInstChart"></canvas>
+  </article>
+  <article style="width: 600px; height: 400px;">
+    <canvas id="roadTranspChart"></canvas>
+  </article>
+  <article style="width: 600px; height: 400px;">
+    <canvas id="railSeaAirChart"></canvas>
+  </article>
+  <article style="width: 600px; height: 400px;">
+    <canvas id="machineryChart"></canvas>
+  </article>
+  <article style="width: 600px; height: 400px;">
+    <canvas id="fugitiveEmissChart"></canvas>
+  </article>
+</section>
+<h2>Emisiones indirectas (Alcance 2)</h2>
   
 <section  ngClass="scope2">
-  <canvas id="myBarChart"></canvas>
-  <canvas id="myBarChart"></canvas>
-  <canvas id="myBarChart"></canvas>
+  <article style="width: 600px; height: 400px;">
+    <canvas id="electricityBuildings"></canvas>
+  </article>
+  <article style="width: 600px; height: 400px;">
+    <canvas id="electricityVehicles"></canvas>
+  </article>
+  <article style="width: 600px; height: 400px;">
+    <canvas id="heatSteamColdCompAir"></canvas>
+  </article>
 </section>
+
 <section>
   <app-data-table></app-data-table>
 </section>
