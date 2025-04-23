@@ -59,7 +59,7 @@ export class ControlPanelContainerComponent implements OnInit {
           // this dataset is drawn below
           order: 2
       }, {
-          label: 'Objectives',
+          label: 'Points',
           data: [10, 15, 19, 17],
           type: 'line',
           backgroundColor: 'rgba(153, 102, 255, 0.8)', // Púrpura vivo
@@ -78,7 +78,7 @@ export class ControlPanelContainerComponent implements OnInit {
           },
           title: {
             display: true,
-            text: 'Fixed Installations - Emissions and Objectives'
+            text: 'Fixed Installations - Emissions and Points'
           }
         },
         interaction: {  
@@ -127,7 +127,7 @@ export class ControlPanelContainerComponent implements OnInit {
           // this dataset is drawn below
           order: 2
       }, {
-          label: 'Objectives',
+          label: 'Points',
           data: [10, 15, 19, 17],
           type: 'line',
           backgroundColor: 'rgba(153, 102, 255, 0.8)', // Púrpura vivo
@@ -146,7 +146,7 @@ export class ControlPanelContainerComponent implements OnInit {
         },
         title: {
           display: true,
-          text: 'Transporte por carretera - Emissions and Objectives'
+          text: 'Transporte por carretera - Emissions and Points'
         }
       },
       interaction: {  
@@ -195,7 +195,7 @@ export class ControlPanelContainerComponent implements OnInit {
           // this dataset is drawn below
           order: 2
       }, {
-          label: 'Objectives',
+          label: 'Points',
           data: [10, 15, 19, 17],
           type: 'line',
           backgroundColor: 'rgba(153, 102, 255, 0.8)', // Púrpura vivo
@@ -214,7 +214,7 @@ export class ControlPanelContainerComponent implements OnInit {
         },
         title: {
           display: true,
-          text: 'Transporte ferroviario, marítimo, aéreo - Emissions and Objectives'
+          text: 'Transporte ferroviario, marítimo, aéreo - Emissions and Points'
         }
       },
       interaction: {  
@@ -263,7 +263,7 @@ export class ControlPanelContainerComponent implements OnInit {
           // this dataset is drawn below
           order: 2
       }, {
-          label: 'Objectives',
+          label: 'Points',
           data: [10, 15, 19, 17],
           type: 'line',
           backgroundColor: 'rgba(153, 102, 255, 0.8)', // Púrpura vivo
@@ -282,7 +282,7 @@ export class ControlPanelContainerComponent implements OnInit {
         },
         title: {
           display: true,
-          text: 'Maquinaria - Emissions and Objectives'
+          text: 'Maquinaria - Emissions and Points'
         }
       },
       interaction: {  
@@ -331,7 +331,7 @@ export class ControlPanelContainerComponent implements OnInit {
           // this dataset is drawn below
           order: 2
       }, {
-          label: 'Objectives',
+          label: 'Points',
           data: [10, 15, 19, 17],
           type: 'line',
           backgroundColor: 'rgba(153, 102, 255, 0.8)', // Púrpura vivo
@@ -350,7 +350,7 @@ export class ControlPanelContainerComponent implements OnInit {
         },
         title: {
           display: true,
-          text: 'Emisiones fugitivas - Emissions and Objectives'
+          text: 'Emisiones fugitivas - Emissions and Points'
         }
       },
       interaction: {  
@@ -401,7 +401,7 @@ export class ControlPanelContainerComponent implements OnInit {
           // this dataset is drawn below
           order: 2
       }, {
-          label: 'Objectives',
+          label: 'Points',
           data: [10, 15, 19, 17],
           type: 'line',
           backgroundColor: 'rgba(153, 102, 255, 0.8)', // Púrpura vivo
@@ -420,7 +420,7 @@ export class ControlPanelContainerComponent implements OnInit {
         },
         title: {
           display: true,
-          text: 'Consumo eléctrico en edificios - Emissions and Objectives'
+          text: 'Consumo eléctrico en edificios - Emissions and Points'
         }
       },
       interaction: {  
@@ -469,7 +469,7 @@ export class ControlPanelContainerComponent implements OnInit {
           // this dataset is drawn below
           order: 2
       }, {
-          label: 'Objectives',
+          label: 'Points',
           data: [10, 15, 19, 17],
           type: 'line',
           backgroundColor: 'rgba(153, 102, 255, 0.8)', // Púrpura vivo
@@ -488,7 +488,7 @@ export class ControlPanelContainerComponent implements OnInit {
         },
         title: {
           display: true,
-          text: 'Consumo eléctrico en vehículos - Emissions and Objectives'
+          text: 'Consumo eléctrico en vehículos - Emissions and Points'
         }
       },
       interaction: {  
@@ -537,7 +537,7 @@ export class ControlPanelContainerComponent implements OnInit {
           // this dataset is drawn below
           order: 2
       }, {
-          label: 'Objectives',
+          label: 'Points',
           data: [10, 15, 19, 17],
           type: 'line',
           backgroundColor: 'rgba(153, 102, 255, 0.8)', // Púrpura vivo
@@ -556,7 +556,7 @@ export class ControlPanelContainerComponent implements OnInit {
         },
         title: {
           display: true,
-          text: 'Calor, vapor, frío y aire comprimido - Emissions and Objectives'
+          text: 'Calor, vapor, frío y aire comprimido - Emissions and Points'
         }
       },
       interaction: {  
