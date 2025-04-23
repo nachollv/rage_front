@@ -39,14 +39,19 @@ export class ElectricityComponent implements OnInit, OnChanges {
         activityYear: [{ value: this.activityYear, disabled: true }],
         productionCenter: [{ value: this.productionCenter, disabled: true }],
         periodoFactura: ['', Validators.required],
+
         consumos: this.fb.group({
         comercializadora: ['', [Validators.required]],
+        fe_co2: [{ value: null, disabled: true }],
         activityData: ['', [Validators.required, Validators.pattern(/^\d+(\.\d{2})?$/)]],
-        factorMixElectrico : ['', [Validators.required, Validators.pattern(/^\d+(\.\d{2})?$/)]],
+        factorMixElectrico : [{ value: 0, disabled: true }, [Validators.required, Validators.pattern(/^\d+(\.\d{2})?$/)]],
         gdo: ['', [Validators.required]]
-        })
+        }),
+        
+        emisionesCO2e: [{ value: 0, disabled: true }] 
       });
-      this.getAllEmisionesbyYear(this.activityYear);
+      this.getAllEmisionesbyYear(this.activityYear)
+      this.setupListeners()
     }
 
     ngOnChanges(changes: SimpleChanges): void {
@@ -66,12 +71,46 @@ export class ElectricityComponent implements OnInit, OnChanges {
         }
       });
     }
+
+    onComercializadoraChange(comercializadora: any): void {
+      const consumosGroup = this.buildingElecConsumption.get('consumos') as FormGroup;
+      if (consumosGroup) {
+        consumosGroup.get('fe_co2')?.setValue(comercializadora.kg_CO2_kWh);
+      }
+    }
+
+    onGdoChange(value: string): void {
+      const consumosGroup = this.buildingElecConsumption.get('consumos') as FormGroup;
+      if (consumosGroup) {
+        consumosGroup.get('factorMixElectrico')?.setValue(value);
+      }
+    } 
+    
+    
+    setupListeners(): void {
+      const consumosGroup = this.buildingElecConsumption.get('consumos') as FormGroup;
+  
+      if (consumosGroup) {
+        consumosGroup.get('activityData')?.valueChanges.subscribe({
+          next: (activityData) => {
+            const factorMixElectrico = consumosGroup.get('factorMixElectrico')?.value || 0;
+            const fe_co2 = consumosGroup.get('fe_co2')?.value || 0;
+
+            const emisionesCO2e = activityData * factorMixElectrico * fe_co2 / 1000; // Convertir a toneladas
+            this.buildingElecConsumption.get('emisionesCO2e')?.setValue(emisionesCO2e.toFixed(3));
+          },
+          error: (err) => console.error('Error en el cálculo de emisiones:', err)
+        });
+      }
+    }
   
     onSubmit() {
       if (this.buildingElecConsumption.valid) {
         console.log(this.buildingElecConsumption.value);
       }
     }
+
+
 
     openDialog(): void {
         const dialogRef = this.dialog.open(DialogComponent, {
