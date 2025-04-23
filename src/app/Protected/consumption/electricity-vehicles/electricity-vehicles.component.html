@@ -72,5 +72,6 @@
         </mat-card-content>
       </mat-card>
   <button mat-raised-button color="primary" type="submit" [disabled]="vehiclesElectricity.invalid">Enviar</button>
+  <app-data-table [displayedColumns]="displayedColumns" [dataSource]="dataSource"></app-data-table>
 </form>
-<app-data-table></app-data-table>
+

@@ -12,7 +12,7 @@ import { MatTableDataSource } from '@angular/material/table';
 export class ElectricityComponent implements OnInit, OnChanges {
   @Input() activityYear!: number
   @Input() productionCenter: number = 0
-  showField: boolean = false
+
   displayedColumns: string[] = ['year', '01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', 'delete']
   data = [
     { delegation: 'Central', year: 2024, '01': 25, '02': 34.25, '03': '23.54', '04': 45.345, '05': 45.345, '06': 45.345, '07': 45.345, '08': 45.345, '09': 45.345, '10': 45.345, '11': 45.345, edit: true, delete: true},
