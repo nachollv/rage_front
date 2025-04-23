@@ -18,12 +18,12 @@ export class ElectricityComponent implements OnInit, OnChanges {
 
   displayedColumns: string[] = ['year', '01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', 'delete']
   data = [
-    { delegation: 'Central', year: 2024, '01': 25, '02': 34.25, '03': '23.54', '04': 45.345, '05': 45.345, '06': 45.345, '07': 45.345, '08': 45.345, '09': 45.345, '10': 45.345, '11': 45.345, edit: true, delete: true},
-    { delegation: 'Felanitx', year: 2024, '01': 25, '02': 34.25, '03': '23.54', '04': 45.345, '05': 45.345, '06': 45.345, '07': 45.345, '08': 45.345, '09': 45.345, '10': 45.345, '11': 45.345, edit: true, delete: true },
-    { delegation: 'Manacor', year: 2024, '01': 25, '02': 34.25, '03': '23.54', '04': 45.345, '05': 45.345, '06': 45.345, '07': 45.345, '08': 45.345, '09': 45.345, '10': 45.345, '11': 45.345, edit: true, delete: true },  
-    { delegation: 'Calvià', year: 2024, '01': 25, '02': 34.25, '03': '23.54', '04': 45.345, '05': 45.345, '06': 45.345, '07': 45.345, '08': 45.345, '09': 45.345, '10': 45.345, '11': 45.345, edit: false, delete: true },
-    { delegation: 'Andraitx', year: 2024, '01': 25, '02': 34.25, '03': '23.54', '04': 45.345, '05': 45.345, '06': 45.345, '07': 45.345, '08': 45.345, '09': 45.345, '10': 45.345, '11': 45.345, edit: true, delete: true },
-    { delegation: 'Pollença', year: 2024, '01': 25, '02': 34.25, '03': '23.54', '04': 45.345, '05': 45.345, '06': 45.345, '07': 45.345, '08': 45.345, '09': 45.345, '10': 45.345, '11': 45.345, edit: true, delete: true }
+    { delegation: 'Central', year: 2023, '01': 25, '02': 34.25, '03': '23.54', '04': 45.345, '05': 45.345, '06': 45.345, '07': 45.345, '08': 45.345, '09': 45.345, '10': 45.345, '11': 45.345, edit: true, delete: true},
+    { delegation: 'Felanitx', year: 2023, '01': 25, '02': 34.25, '03': '23.54', '04': 45.345, '05': 45.345, '06': 45.345, '07': 45.345, '08': 45.345, '09': 45.345, '10': 45.345, '11': 45.345, edit: true, delete: true },
+    { delegation: 'Manacor', year: 2023, '01': 25, '02': 34.25, '03': '23.54', '04': 45.345, '05': 45.345, '06': 45.345, '07': 45.345, '08': 45.345, '09': 45.345, '10': 45.345, '11': 45.345, edit: true, delete: true },  
+    { delegation: 'Calvià', year: 2023, '01': 25, '02': 34.25, '03': '23.54', '04': 45.345, '05': 45.345, '06': 45.345, '07': 45.345, '08': 45.345, '09': 45.345, '10': 45.345, '11': 45.345, edit: false, delete: true },
+    { delegation: 'Andraitx', year: 2023, '01': 25, '02': 34.25, '03': '23.54', '04': 45.345, '05': 45.345, '06': 45.345, '07': 45.345, '08': 45.345, '09': 45.345, '10': 45.345, '11': 45.345, edit: true, delete: true },
+    { delegation: 'Pollença', year: 2023, '01': 25, '02': 34.25, '03': '23.54', '04': 45.345, '05': 45.345, '06': 45.345, '07': 45.345, '08': 45.345, '09': 45.345, '10': 45.345, '11': 45.345, edit: true, delete: true }
   ];
   dataSource = new MatTableDataSource<any>(this.data)
   buildingElecConsumption!: FormGroup;
@@ -85,25 +85,34 @@ export class ElectricityComponent implements OnInit, OnChanges {
         consumosGroup.get('factorMixElectrico')?.setValue(value);
       }
     } 
-    
-    
-    setupListeners(): void {
-      const consumosGroup = this.buildingElecConsumption.get('consumos') as FormGroup;
-  
-      if (consumosGroup) {
-        consumosGroup.get('activityData')?.valueChanges.subscribe({
-          next: (activityData) => {
+
+      setupListeners(): void {
+        const consumosGroup = this.buildingElecConsumption.get('consumos') as FormGroup;
+      
+        if (consumosGroup) {
+          // Función para calcular emisiones
+          const calculateEmisionesCO2e = () => {
+            const activityData = consumosGroup.get('activityData')?.value || 0;
             const factorMixElectrico = consumosGroup.get('factorMixElectrico')?.value || 0;
-            let fe_co2 = +factorMixElectrico === 0.302 ? 1.0 : consumosGroup.get('fe_co2')?.value;
-            console.log('Factor mix electrico:', factorMixElectrico, fe_co2);
-            const emisionesCO2e = activityData * factorMixElectrico * fe_co2 / 1000
+            const fe_co2 = +factorMixElectrico === 0.302 ? 1.0 : consumosGroup.get('fe_co2')?.value || 0;
+            const emisionesCO2e = (activityData * factorMixElectrico * fe_co2) / 1000;
+      
             this.buildingElecConsumption.get('emisionesCO2e')?.setValue(emisionesCO2e.toFixed(3));
-          },
-          error: (err) => console.error('Error en el cálculo de emisiones:', err)
-        });
+          };
+      
+          // Observadores para recalcular emisiones al cambiar cualquier campo relevante
+          const relevantFields = ['activityData', 'comercializadora', 'gdo', 'factorMixElectrico', 'fe_co2'];
+      
+          relevantFields.forEach((fieldName) => {
+            consumosGroup.get(fieldName)?.valueChanges.subscribe({
+              next: () => calculateEmisionesCO2e(),
+              error: (err) => console.error(`Error en el campo ${fieldName}:`, err),
+            });
+          });
+        }
       }
-    }
-  
+      
+         
     onSubmit() {
       if (this.buildingElecConsumption.valid) {
         console.log(this.buildingElecConsumption.value);
