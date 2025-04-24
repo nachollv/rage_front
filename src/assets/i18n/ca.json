@@ -14,7 +14,11 @@
   "scopeTwoEmissions": "son emisiones consecuencia de las actividades de la organización, pero que ocurren en fuentes que son propiedad de o están controladas por otra organización. Un ejemplo de emisión indirecta es la emisión procedente de la electricidad consumida por una organización, cuyas emisiones han sido producidas en el lugar en el que se generó dicha electricidad 3 organización, cuyas emisiones han sido producidas en el lugar en el que se generó dicha electricidad.", 
   
   "scope1": "EMISSIONS DIRECTES",
+  "scope1_1": "(Abast 1)",
+
   "scope2": "EMISSIONS INDIRECTES",
+  "scope2_2": "(Abast 2)",
+
 
   "electricityOtherEnergies": "Electricitat i altres energies",
   "fixedInstallationsFuelConsumption": "Instalacions fixes",

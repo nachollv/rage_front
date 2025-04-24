@@ -18,7 +18,7 @@
   </mat-form-field>
 
   <mat-form-field appearance="fill">
-    <mat-label>Cantidad (ud)</mat-label>
+    <mat-label>Dato de actividad (ud)</mat-label>
     <input matInput formControlName="quantity" type="number" (change)="onQuantityChange()">
     <mat-error *ngIf="vehicleForm.get('quantity')?.invalid">Campo obligatorio y debe ser un número</mat-error>
   </mat-form-field>

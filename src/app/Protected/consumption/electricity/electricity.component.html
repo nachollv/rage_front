@@ -40,8 +40,8 @@
     </mat-form-field>
 
     <mat-form-field appearance="fill">
-      <mat-label>Dato de consumo (kWh)</mat-label>
-      <input matInput formControlName="activityData" type="text">
+      <mat-label>Dato de actividad (kWh)</mat-label>
+      <input matInput formControlName="activityData" type="number">
       <mat-error *ngIf="buildingElecConsumption.get('activityData')?.hasError('required')">
         {{ "Este campo es obligatorio" | translate }}
       </mat-error>
