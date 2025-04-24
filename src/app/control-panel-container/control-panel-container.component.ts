@@ -68,7 +68,7 @@ export class ControlPanelContainerComponent implements OnInit {
           },
           title: {
             display: true,
-            text: 'Fixed Installations - Emisions and objective'
+            text: 'Fixed Installations - Emissions and objective'
           }
         },
         interaction: {  
@@ -127,7 +127,7 @@ export class ControlPanelContainerComponent implements OnInit {
       },
       title: {
         display: true,
-        text: 'Transporte por carretera - Emisions and objective'
+        text: 'Transporte por carretera - Emissions and objective'
       }
     },
     scales: {
@@ -175,7 +175,7 @@ export class ControlPanelContainerComponent implements OnInit {
         },
         title: {
           display: true,
-          text: 'Transporte ferroviario, marítimo, aéreo - Emisions and objective'
+          text: 'Transporte ferroviario, marítimo, aéreo - Emissions and objective'
         }
       },
       interaction: {  
@@ -229,7 +229,7 @@ export class ControlPanelContainerComponent implements OnInit {
       },
       title: {
         display: true,
-        text: 'Maquinaria - Emisions and objective'
+        text: 'Maquinaria - Emissions and objective'
       }
     },
     scales: {
@@ -277,7 +277,7 @@ export class ControlPanelContainerComponent implements OnInit {
         },
         title: {
           display: true,
-          text: 'Emisiones fugitivas - Emisions and objective'
+          text: 'Emisiones fugitivas - Emissions and objective'
         }
       },
       interaction: {  
@@ -337,7 +337,7 @@ export class ControlPanelContainerComponent implements OnInit {
         },
         title: {
           display: true,
-          text: 'Consumo eléctrico en edificios - Emisions and objective'
+          text: 'Consumo eléctrico en edificios - Emissions and objective'
         }
       },
       interaction: {  
@@ -395,7 +395,7 @@ export class ControlPanelContainerComponent implements OnInit {
         },
         title: {
           display: true,
-          text: 'Consumo eléctrico en vehículos - Emisions and objective'
+          text: 'Consumo eléctrico en vehículos - Emissions and objective'
         }
       },
       interaction: {  
@@ -459,7 +459,7 @@ export class ControlPanelContainerComponent implements OnInit {
         },
         title: {
           display: true,
-          text: 'Calor, vapor, frío y aire comprimido - Emisions and objective'
+          text: 'Calor, vapor, frío y aire comprimido - Emissions and objective'
         }
       },
       interaction: {  
