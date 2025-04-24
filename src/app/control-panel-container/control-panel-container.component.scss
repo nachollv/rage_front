@@ -37,7 +37,10 @@ article {
   }
   article {
     margin: auto;
-    max-width: 600px;
-
+    max-width: 100%;
   }
+  canvas {
+    display: block; /* Asegura que el canvas sea tratado como un bloque */
+    max-width: 90%; /* El ancho máximo será el del contenedor */
+    height: auto; /* Ajusta la altura proporcionalmente */}
 }

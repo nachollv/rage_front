@@ -329,8 +329,8 @@ export class ControlPanelContainerComponent implements OnInit {
       }]
   },
   options: {
-    /*  responsive: true,
-       maintainAspectRatio: true,  */
+      responsive: true,
+      maintainAspectRatio: true,
       plugins: {  
         legend: {
           position: 'top',
@@ -370,18 +370,8 @@ export class ControlPanelContainerComponent implements OnInit {
         datasets: [{
           label: 'Emissions',
           data: [10, 20, 30, 40],
-          backgroundColor: [
-            'rgba(255, 0, 0, 0.8)', // Rojo vivo
-            'rgba(54, 162, 235, 0.8)', // Azul vivo
-            'rgba(255, 206, 86, 0.8)', // Amarillo vivo
-            'rgba(0, 255, 0, 0.8)'  // Verde vivo
-          ],
-          borderColor: [
-            'rgba(255, 99, 132, 1)',
-            'rgba(54, 162, 235, 1)',
-            'rgba(255, 206, 86, 1)',
-            'rgba(75, 192, 192, 1)'
-          ],
+          backgroundColor: '#555555', // Gris oscuro
+          borderColor: '#555555',
           borderWidth: 1,
           // this dataset is drawn below
           order: 2
@@ -397,8 +387,8 @@ export class ControlPanelContainerComponent implements OnInit {
       }]
   },
   options: {
-    /*  responsive: true,
-       maintainAspectRatio: true,  */
+      responsive: true,
+      maintainAspectRatio: true,
       plugins: {  
         legend: {
           position: 'top',
@@ -461,8 +451,8 @@ export class ControlPanelContainerComponent implements OnInit {
       }]
   },
   options: {
-    /*  responsive: true,
-       maintainAspectRatio: true,  */
+      responsive: true,
+      maintainAspectRatio: true,
       plugins: {  
         legend: {
           position: 'top',
