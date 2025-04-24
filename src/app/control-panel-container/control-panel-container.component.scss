@@ -11,10 +11,28 @@
   border: 1px solid #ccc; // Borde sutil para separación
 }
 
-.scope1 {
+.scope1 article {
   background-color: #333;
 }
-.scope2 {
-  background-color: #f5f5dc;  
+.scope2 article {
+  background-color: #666;
 }
 
+article {
+  width: 100%; 
+  max-width: 992px;
+  height: auto;
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (max-width: 992px) {
+  .scope1, .scope2 {
+    grid-template-columns: repeat(1, 1fr); // Una columna de ancho completo
+    gap: 0.5rem; // Espaciado reducido entre columnas y filas
+  }
+  article {
+    margin: auto;
+    max-width: 600px;
+
+  }
+}

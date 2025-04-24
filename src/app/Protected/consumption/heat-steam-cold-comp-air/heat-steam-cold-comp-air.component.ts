@@ -27,13 +27,15 @@ export class HeatSteamColdCompAirComponent {
   constructor(private fb: FormBuilder) {
     // Estructura del formulario reactivo
     this.heatSteamColdAirForm = this.fb.group({
-      //calculationYear: [{ value: this.activityYear, disabled: true }], // Año de cálculo (campo deshabilitado)
-      //productionCenter: [{ value: this.productionCenter, disabled: true }], // Centro de producción (campo deshabilitado)
+      periodoFactura: ['', Validators.required],
+      consumos: this.fb.group({
       energyType: ['', [Validators.required]], // Tipo de energía
-      consumption: ['', [Validators.required]], // Consumo (kWh)
+      activityData: ['', [Validators.required]], // Consumo (kWh)
       emissionFactor: [{ value: 1, disabled: true }], // Factor de emisión (kg CO2e/kWh)
-      emissions: [{ value: '', disabled: true }] // Emisiones calculadas (campo deshabilitado)
+      }),
+      emisionesCO2e: [{ value: 0, disabled: true }] // Emisiones (kg CO2e)
     });
+    this.setupListeners()
   }
 
   // Método para calcular emisiones
@@ -46,6 +48,31 @@ export class HeatSteamColdCompAirComponent {
       this.heatSteamColdAirForm.get('emissions')?.setValue(emissions.toFixed(2)); // Actualización del campo "emisiones"
     } else {
       this.heatSteamColdAirForm.get('emissions')?.setValue(''); // Resetea el valor si no hay datos válidos
+    }
+  }
+
+  setupListeners(): void {
+    const consumosGroup = this.heatSteamColdAirForm.get('consumos') as FormGroup;
+  
+    if (consumosGroup) {
+      // Función para calcular emisiones
+      const calculateEmisionesCO2e = () => {
+        const activityData = consumosGroup.get('activityData')?.value || 0;
+        const emissionFactor = consumosGroup.get('emissionFactor')?.value || 0;
+        const emisionesCO2e = (activityData * emissionFactor) / 1000;
+  
+        this.heatSteamColdAirForm.get('emisionesCO2e')?.setValue(emisionesCO2e.toFixed(3));
+      };
+  
+      // Observadores para recalcular emisiones al cambiar cualquier campo relevante
+      const relevantFields = ['activityData', 'energyType'];
+  
+      relevantFields.forEach((fieldName) => {
+        consumosGroup.get(fieldName)?.valueChanges.subscribe({
+          next: () => calculateEmisionesCO2e(),
+          error: (err) => console.error(`Error en el campo ${fieldName}:`, err),
+        });
+      });
     }
   }
 
