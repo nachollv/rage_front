@@ -35,17 +35,18 @@ export class ElectricityVehiclesComponent {
   }
   ngOnInit(): void {
     this.vehiclesElectricity = this.fb.group({
-        activityYear: [{ value: this.activityYear, disabled: true }],
-        productionCenter: [{ value: this.productionCenter, disabled: true }],
         periodoFactura: ['', Validators.required],
         consumos: this.fb.group({
           comercializadora: ['', [Validators.required]],
+          fe_co2: [{ value: null, disabled: true }],
           activityData: ['', [Validators.required, Validators.pattern(/^\d+(\.\d{2})?$/)]],
-          factorMixElectrico : ['', [Validators.required, Validators.pattern(/^\d+(\.\d{2})?$/)]],
-        gdo: ['', [Validators.required]]}),
-        factorMixElectrico: [{ value: '', disabled: true }],
-        emisionesCO2e: [{ value: 0, disabled: true }]
+          factorMixElectrico : [{ value: 0, disabled: true }, [Validators.required, Validators.pattern(/^\d+(\.\d{2})?$/)]],
+          gdo: ['', [Validators.required]]
+        }),
+        emisionesCO2e: [{ value: 0, disabled: true }] 
       });
+      this.getAllEmisionesbyYear(this.activityYear)
+      this.setupListeners()
   }
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['activityYear'] && !changes['activityYear'].firstChange) {
