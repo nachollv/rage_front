@@ -45,15 +45,15 @@ export class ControlPanelContainerComponent implements OnInit {
           label: 'Emissions',
           data: [10, 20, 30, 40],
           backgroundColor: '#B22222', // Verde bosque
-          borderColor: '#333333',
+          borderColor: '#B22222',
           borderWidth: 1,  // this dataset is drawn below
           order: 2
         }, {
           label: 'Objective',
           data: [10, 15, 19, 17],
           type: 'line',
-          backgroundColor: '#FF6347', // Naranja quemado
-          borderColor: '#FF6347',
+          backgroundColor: '#2E8B57', // Púrpura vivo
+          borderColor: '#2E8B57',
           borderWidth: 1,
           // this dataset is drawn on top
           order: 1
@@ -102,7 +102,7 @@ export class ControlPanelContainerComponent implements OnInit {
           label: 'Emissions',
           data: [10, 20, 30, 40],
           backgroundColor: '#B22222', // Verde bosque
-          borderColor: '#333333',
+          borderColor: '#B22222',
           borderWidth: 1,  // this dataset is drawn below
           // this dataset is drawn below
           order: 2
@@ -152,15 +152,15 @@ export class ControlPanelContainerComponent implements OnInit {
           label: 'Emissions',
           data: [10, 20, 30, 40],
           backgroundColor: '#B22222', // Verde bosque
-          borderColor: '#333333',
+          borderColor: '#B22222',
           borderWidth: 1,  // this dataset is drawn below
           order: 2
       }, {
           label: 'Objective',
           data: [10, 15, 19, 17],
           type: 'line',
-          backgroundColor: '#FF6347', // Naranja quemado
-          borderColor: '#FF6347',
+          backgroundColor: '#2E8B57', // Púrpura vivo
+          borderColor: '#2E8B57',
           borderWidth: 1,
           // this dataset is drawn on top
           order: 1
@@ -204,7 +204,7 @@ export class ControlPanelContainerComponent implements OnInit {
       label: 'Emissions',
       data: [10, 20, 30, 40],
       backgroundColor: '#B22222', // Verde bosque
-      borderColor: '#333333',
+      borderColor: '#B22222',
       borderWidth: 1,  // this dataset is drawn below
       // this dataset is drawn below
       order: 2
@@ -254,15 +254,15 @@ export class ControlPanelContainerComponent implements OnInit {
           label: 'Emissions',
           data: [10, 20, 30, 40],
           backgroundColor: '#B22222', // Verde bosque
-          borderColor: '#333333',
+          borderColor: '#B22222',
           borderWidth: 1,  // this dataset is drawn below
           order: 2
       }, {
           label: 'Objective',
           data: [10, 15, 19, 17],
           type: 'line',
-          backgroundColor: '#FF6347', // Naranja quemado
-          borderColor: '#FF6347',
+          backgroundColor: '#2E8B57', // Púrpura vivo
+          borderColor: '#2E8B57',
           borderWidth: 1,
           // this dataset is drawn on top
           order: 1
