@@ -12,16 +12,21 @@
 }
 
 .scope1 article {
-  background-color: #333;
+  background-color: #B0C4DE; /* Color principal para emisiones directas */
+  padding: 16px;
+  border-radius: 8px; /* Opcional: esquinas redondeadas */
 }
 .scope2 article {
-  background-color: #666;
+  background-color: #ecdb79; /* Color sugerido para emisiones indirectas */
+  padding: 16px;
+  border-radius: 8px; /* Opcional: esquinas redondeadas */
 }
 
 article {
   width: 100%; 
-  max-width: 992px;
+  max-width: 600px;
   height: auto;
+  margin: auto;
 }
 
 /* Large devices (laptops/desktops, 992px and up) */
