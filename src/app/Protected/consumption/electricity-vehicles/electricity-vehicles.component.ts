@@ -4,13 +4,14 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent } from '../../../dialog/dialog.component';
 import { MatTableDataSource } from '@angular/material/table';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-electricity-vehicles',
   templateUrl: './electricity-vehicles.component.html',
   styleUrl: './electricity-vehicles.component.scss'
 })
-export class ElectricityVehiclesComponent {
+export class ElectricityVehiclesComponent implements OnInit, OnChanges{
   @Input() activityYear!: number
   @Input() productionCenter: number = 0
   comercializadorasElectricas: any[] = []
@@ -28,7 +29,6 @@ export class ElectricityVehiclesComponent {
   dataSource = new MatTableDataSource<any>(this.data)
   vehiclesElectricity!: FormGroup;
 
-  
   constructor(private fb: FormBuilder, 
     private emisionesElectricasservice: EmisionesElectricasEdificiosService,
     public dialog: MatDialog) {
@@ -43,6 +43,9 @@ export class ElectricityVehiclesComponent {
           factorMixElectrico : [{ value: 0, disabled: true }, [Validators.required, Validators.pattern(/^\d+(\.\d{2})?$/)]],
           gdo: ['', [Validators.required]]
         }),
+        gdo:[0],
+        electricityTradingCompany: [0],
+        activityType: ['electricity-vehicles'],
         emisionesCO2e: [{ value: 0, disabled: true }] 
       });
       this.getAllEmisionesbyYear(this.activityYear)

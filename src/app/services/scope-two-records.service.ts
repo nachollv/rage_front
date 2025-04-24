@@ -6,7 +6,7 @@ import { catchError } from 'rxjs/operators';
 @Injectable({
   providedIn: 'root'
 })
-export class ElectricityConsumptionService {
+export class ScopeTwoRecordsService {
   private apiUrl = 'https://rage.industrialocalsostenible.com/public/index.php';
 
   constructor(private http: HttpClient) {}
@@ -39,8 +39,8 @@ export class ElectricityConsumptionService {
     );
   }
 
-    // Obtener registros por calculationYear y productionCenter
-    getRecordsByFilters(activityYear: number, productionCenter: number, activityType: string): Observable<any> {
+  // Obtener registros por calculationYear y productionCenter
+  getRecordsByFilters(activityYear: number, productionCenter: number, activityType: string): Observable<any> {
       return this.http.get<any>(`${this.apiUrl}/scopetworecords/activityYear/${activityYear}/productionCenter/${productionCenter}/activityType/${activityType}`, {
     }).pipe(
       catchError(this.handleError)
@@ -50,21 +50,21 @@ export class ElectricityConsumptionService {
 
   // Crear un nuevo registro
   createConsumption(data: any): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/scopetworecords`, data).pipe(
+    return this.http.post<any>(`${this.apiUrl}/scopetworecords/create`, data).pipe(
       catchError(this.handleError)
     );
   }
 
   // Actualizar un registro por ID
   updateConsumption(id: number, data: any): Observable<any> {
-    return this.http.put<any>(`${this.apiUrl}/scopetworecords/${id}`, data).pipe(
+    return this.http.put<any>(`${this.apiUrl}/scopetworecords/update/${id}`, data).pipe(
       catchError(this.handleError)
     );
   }
 
   // Eliminar un registro por ID
   deleteConsumption(id: number): Observable<any> {
-    return this.http.delete<any>(`${this.apiUrl}/scopetworecords/${id}`).pipe(
+    return this.http.delete<any>(`${this.apiUrl}/scopetworecords/delete/${id}`).pipe(
       catchError(this.handleError)
     );
   }

@@ -1,7 +1,10 @@
 import { Component, Input, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DialogComponent } from '../../../dialog/dialog.component';
+import { ScopeTwoRecordsService } from '../../../services/scope-two-records.service';
 import { MatTableDataSource } from '@angular/material/table';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { EmisionesElectricasEdificiosService } from '../../../services/emisiones-electricas-edificios.service';
 
 @Component({
   selector: 'app-heat-steam-cold-comp-air',
@@ -21,11 +24,16 @@ export class HeatSteamColdCompAirComponent {
     { year: 2024, '01': 25, '02': 34.25, '03': '23.54', '04': 45.345, '05': 45.345, '06': 45.345, '07': 45.345, '08': 45.345, '09': 45.345, '10': 45.345, '11': 45.345, edit: true, delete: true }
   ];
   dataSource = new MatTableDataSource<any>(this.data)
-  heatSteamColdAirForm: FormGroup;
+  heatSteamColdAirForm!: FormGroup;
 
-  
-  constructor(private fb: FormBuilder) {
-    // Estructura del formulario reactivo
+  constructor(private fb: FormBuilder, 
+    private snackBar: MatSnackBar,
+     private emisionesElectricasservice: EmisionesElectricasEdificiosService,
+    private scopeTWoRecordsService: ScopeTwoRecordsService) {
+
+  }
+
+  ngOnInit(): void {
     this.heatSteamColdAirForm = this.fb.group({
       periodoFactura: ['', Validators.required],
       consumos: this.fb.group({
@@ -33,11 +41,30 @@ export class HeatSteamColdCompAirComponent {
       activityData: ['', [Validators.required]], // Consumo (kWh)
       emissionFactor: [{ value: 1, disabled: true }], // Factor de emisión (kg CO2e/kWh)
       }),
+      activityType: ['heatSteamColdAir'], // Tipo de actividadºº
       emisionesCO2e: [{ value: 0, disabled: true }] // Emisiones (kg CO2e)
     });
     this.setupListeners()
+    this.getScopeTwoRecords()
   }
 
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['activityYear'] && !changes['activityYear'].firstChange) {
+      //this.getAllEmisionesbyYear(this.activityYear);
+    }
+  }
+
+  getScopeTwoRecords() {
+    this.scopeTWoRecordsService.getRecordsByFilters(this.activityYear, this.productionCenter, 'heatSteamColdAir').subscribe({
+      next: (data) => {
+        console.log('Datos obtenidos:', data); // Imprime los datos obtenidos
+        this.dataSource.data = data; // Asigna los datos a la fuente de datos de la tabla
+      },
+      error: (error) => {
+        console.error('Error al obtener los registros:', error); // Manejo de errores
+      }
+    });
+  }
   // Método para calcular emisiones
   calculateEmissions(): void {
     const consumption = this.heatSteamColdAirForm.get('consumption')?.value; // Consumo ingresado
@@ -78,6 +105,27 @@ export class HeatSteamColdCompAirComponent {
 
   // Método para manejar el envío del formulario
   onSubmit(): void {
-    console.log(this.heatSteamColdAirForm.value); // Imprime los valores del formulario en la consola
+    const formValue = this.heatSteamColdAirForm.value
+    formValue.year = this.activityYear
+    formValue.productionCenter = this.productionCenter
+    this.heatSteamColdAirForm.markAllAsTouched(); // Marca todos los campos como tocados para mostrar errores de validación
+    this.scopeTWoRecordsService.createConsumption(this.heatSteamColdAirForm.value).subscribe({
+      next: (response) => { 
+        this.showSnackBar('Registro creado:'+ response); // Imprime la respuesta del servidor
+        this.getScopeTwoRecords(); // Actualiza la tabla después de crear un nuevo registro
+      },
+      error: (error) => {   
+        this.showSnackBar('Error al crear el registro: '+ error); // Manejo de errores
+      }
+    });
+  }
+
+  private showSnackBar(msg: string): void {
+    this.snackBar.open(msg, 'Close', {
+      duration: 15000,
+      verticalPosition: 'top',
+      horizontalPosition: 'center',
+      panelClass: ['custom-snackbar'],
+    });
   }
 }

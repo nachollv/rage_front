@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent } from '../../../dialog/dialog.component';
 import { MatTableDataSource } from '@angular/material/table';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-electricity',
@@ -33,7 +34,6 @@ export class ElectricityComponent implements OnInit, OnChanges {
       public dialog: MatDialog) {
     }
 
-    
     ngOnInit(): void {
       this.buildingElecConsumption = this.fb.group({
         periodoFactura: ['', Validators.required],
@@ -44,6 +44,7 @@ export class ElectricityComponent implements OnInit, OnChanges {
           factorMixElectrico : [{ value: 0, disabled: true }, [Validators.required, Validators.pattern(/^\d+(\.\d{2})?$/)]],
           gdo: ['', [Validators.required]]
         }),
+        activityType: ['electricity'],
         emisionesCO2e: [{ value: 0, disabled: true }] 
       });
       this.getAllEmisionesbyYear(this.activityYear)

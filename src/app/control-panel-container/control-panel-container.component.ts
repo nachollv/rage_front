@@ -52,8 +52,8 @@ export class ControlPanelContainerComponent implements OnInit {
           label: 'Objective',
           data: [10, 15, 19, 17],
           type: 'line',
-          backgroundColor: '#2E8B57', // Púrpura vivo
-          borderColor: '#2E8B57',
+          backgroundColor: '#008000', // Púrpura vivo
+          borderColor: '#008000',
           borderWidth: 1,
           // this dataset is drawn on top
           order: 1
@@ -110,8 +110,8 @@ export class ControlPanelContainerComponent implements OnInit {
           label: 'Objective',
           data: [10, 15, 19, 17],
           type: 'line',
-          backgroundColor: '#2E8B57', // Púrpura vivo
-          borderColor: '#2E8B57',
+          backgroundColor: '#008000', // Púrpura vivo
+          borderColor: '#008000',
           borderWidth: 2,
           // this dataset is drawn on top
           order: 1
@@ -159,8 +159,8 @@ export class ControlPanelContainerComponent implements OnInit {
           label: 'Objective',
           data: [10, 15, 19, 17],
           type: 'line',
-          backgroundColor: '#2E8B57', // Púrpura vivo
-          borderColor: '#2E8B57',
+          backgroundColor: '#008000', // Púrpura vivo
+          borderColor: '#008000',
           borderWidth: 1,
           // this dataset is drawn on top
           order: 1
@@ -212,8 +212,8 @@ export class ControlPanelContainerComponent implements OnInit {
       label: 'Objective',
       data: [10, 15, 19, 17],
       type: 'line',
-      backgroundColor: '#2E8B57', // Púrpura vivo
-      borderColor: '#2E8B57',
+      backgroundColor: '#008000', // Púrpura vivo
+      borderColor: '#008000',
       borderWidth: 2,
       // this dataset is drawn on top
       order: 1
@@ -261,8 +261,8 @@ export class ControlPanelContainerComponent implements OnInit {
           label: 'Objective',
           data: [10, 15, 19, 17],
           type: 'line',
-          backgroundColor: '#2E8B57', // Púrpura vivo
-          borderColor: '#2E8B57',
+          backgroundColor: '#008000', // Púrpura vivo
+          borderColor: '#008000',
           borderWidth: 1,
           // this dataset is drawn on top
           order: 1
@@ -321,8 +321,8 @@ export class ControlPanelContainerComponent implements OnInit {
           label: 'Objective',
           data: [10, 15, 19, 17],
           type: 'line',
-          backgroundColor: '#2E8B57', // Naranja quemado
-          borderColor: '#2E8B57',
+          backgroundColor: '#008000', // Naranja quemado
+          borderColor: '#008000',
           borderWidth: 1,
           // this dataset is drawn on top
           order: 1
@@ -379,8 +379,8 @@ export class ControlPanelContainerComponent implements OnInit {
           label: 'Objective',
           data: [10, 15, 19, 17],
           type: 'line',
-          backgroundColor: '#2E8B57', // Púrpura vivo
-          borderColor: '#2E8B57',
+          backgroundColor: '#008000', // Púrpura vivo
+          borderColor: '#008000',
           borderWidth: 2,
           // this dataset is drawn on top
           order: 1
@@ -443,8 +443,8 @@ export class ControlPanelContainerComponent implements OnInit {
           label: 'Objective',
           data: [10, 15, 19, 17],
           type: 'line',
-          backgroundColor: '#2E8B57', // Púrpura vivo
-          borderColor: '#2E8B57',
+          backgroundColor: '#008000', // Púrpura vivo
+          borderColor: '#008000',
           borderWidth: 2,
           // this dataset is drawn on top
           order: 1

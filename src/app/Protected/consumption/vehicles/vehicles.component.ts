@@ -105,6 +105,7 @@ export class MachineryVehiclesComponent  implements OnInit, OnChanges {
     const formValue = this.vehicleForm.value
     formValue.year = this.activityYear
     formValue.productionCenter = this.productionCenter
+    formValue.equipmentType = this.vehicleForm.get('equipmentType')?.value.id
     formValue.fuelType = this.vehicleForm.get('fuelType')?.value.id
     formValue.activityType = 'vehicles'
     formValue.quantity = this.vehicleForm.get('quantity')?.value
@@ -128,7 +129,7 @@ export class MachineryVehiclesComponent  implements OnInit, OnChanges {
       .subscribe((fuelTypes:any) => {
         this.fuelTypes = fuelTypes
     })
-}
+  }
 
 setEmissionFactors () {
   const fuelData = this.vehicleForm.value
