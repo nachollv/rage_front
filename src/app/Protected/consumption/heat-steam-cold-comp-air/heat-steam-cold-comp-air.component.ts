@@ -41,7 +41,6 @@ export class HeatSteamColdCompAirComponent {
       activityData: ['', [Validators.required]], // Consumo (kWh)
       emissionFactor: [{ value: 1, disabled: true }], // Factor de emisión (kg CO2e/kWh)
       }),
-      activityType: ['heatSteamColdAir'], // Tipo de actividadºº
       emisionesCO2e: [{ value: 0, disabled: true }] // Emisiones (kg CO2e)
     });
     this.setupListeners()
@@ -109,6 +108,8 @@ export class HeatSteamColdCompAirComponent {
     const formValue = this.heatSteamColdAirForm.value
     formValue.year = this.activityYear
     formValue.productionCenter = this.productionCenter
+    formValue.electricityTradingCompany = 0 // No hay comercializadora para este formulario
+    formValue.gdo = 0.00 // No hay GDO para este formulario
     this.heatSteamColdAirForm.markAllAsTouched(); // Marca todos los campos como tocados para mostrar errores de validación
     this.scopeTWoRecordsService.createConsumption(this.heatSteamColdAirForm.value).subscribe({
       next: (response) => { 

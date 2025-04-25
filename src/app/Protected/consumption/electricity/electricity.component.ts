@@ -44,7 +44,6 @@ export class ElectricityComponent implements OnInit, OnChanges {
           factorMixElectrico : [{ value: 0, disabled: true }, [Validators.required, Validators.pattern(/^\d+(\.\d{2})?$/)]],
           gdo: ['', [Validators.required]]
         }),
-        activityType: ['electricity'],
         emisionesCO2e: [{ value: 0, disabled: true }] 
       });
       this.getAllEmissionsbyYear(this.activityYear)

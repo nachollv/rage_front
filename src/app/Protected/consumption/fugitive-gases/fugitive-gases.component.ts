@@ -99,6 +99,7 @@ export class FugitiveGasesComponent implements OnInit, OnChanges {
     formValue.recarga_equipo = parseFloat(formValue.recarga_equipo).toFixed(2);
     formValue.calculationYear = calculationYearValue;
     formValue.productionCenter = productionCenterValue;
+    formValue.activityType = 'fugitive-gases'
     formValue.nombre_gas_mezcla = formValue.nombre_gas_mezcla.Nombre;
     console.log(formValue)
 

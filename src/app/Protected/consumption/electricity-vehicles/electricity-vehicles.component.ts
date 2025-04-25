@@ -45,7 +45,6 @@ export class ElectricityVehiclesComponent implements OnInit, OnChanges{
         }),
         gdo:[0],
         electricityTradingCompany: [0],
-        activityType: ['electricity-vehicles'],
         emisionesCO2e: [{ value: 0, disabled: true }] 
       });
       this.getAllEmisionesbyYear(this.activityYear)

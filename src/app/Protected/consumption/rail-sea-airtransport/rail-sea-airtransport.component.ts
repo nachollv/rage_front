@@ -85,7 +85,7 @@ export class RailSeaAirtransportComponent  implements OnInit, OnChanges {
     formValue.year = this.activityYear
     formValue.productionCenter = this.productionCenter
     formValue.fuelType = this.transportForm.get('fuelType')?.value.id
-    formValue.activityType = 'machinery'
+    formValue.activityType = 'rail-sea-air-transport'
     formValue.quantity = this.transportForm.get('quantity')?.value
 
     this.scopeOneRecordsService.createRecord(formValue)
@@ -126,10 +126,6 @@ export class RailSeaAirtransportComponent  implements OnInit, OnChanges {
       const CH4_g_ud = parseFloat( fuelType.CH4_g_ud );
       const CO2_kg_ud = parseFloat( fuelType.CO2_kg_ud );
       const N2O_g_ud = parseFloat( fuelType.N2O_g_ud );
-      console.log('CH4_g_ud: ', CH4_g_ud)
-      console.log('CO2_kg_ud: ', CO2_kg_ud)
-      console.log('N2O_g_ud: ', N2O_g_ud)
-      console.log (fuelData.fuelQuantity * CO2_kg_ud, fuelData.fuelQuantity * CH4_g_ud, fuelData.fuelQuantity * N2O_g_ud)
       this.transportForm.get('partialEmissions')?.get('co2')?.setValue(fuelData.fuelQuantity * CO2_kg_ud);
       this.transportForm.get('partialEmissions')?.get('ch4')?.setValue(fuelData.fuelQuantity * CH4_g_ud);
       this.transportForm.get('partialEmissions')?.get('n2o')?.setValue(fuelData.fuelQuantity * N2O_g_ud);

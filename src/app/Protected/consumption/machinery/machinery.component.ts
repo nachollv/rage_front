@@ -148,9 +148,6 @@ export class MachineryComponent implements OnInit, OnChanges {
     const CH4_g_l = parseFloat( fuelType.CH4_g_l  || 0).toFixed(3);
     const CO2_kg_l = parseFloat( fuelType.CO2_kg_l  || 0).toFixed(3);
     const N2O_g_l = parseFloat( fuelType.N2O_g_l  || 0).toFixed(3);
-    console.log('CH4_g_l: ', CH4_g_l)
-    console.log('CO2_kg_l: ', CO2_kg_l)
-    console.log('N2O_g_l: ', N2O_g_l)
     this.emissionsForm.get('partialEmissions')?.get('co2')?.setValue(fuelData.activityData * parseFloat(CO2_kg_l));
     this.emissionsForm.get('partialEmissions')?.get('ch4')?.setValue(fuelData.activityData * parseFloat(CH4_g_l));
     this.emissionsForm.get('partialEmissions')?.get('n2o')?.setValue(fuelData.activityData * parseFloat(N2O_g_l));
