@@ -38,16 +38,16 @@ export class MachineryVehiclesComponent  implements OnInit, OnChanges {
       productionCenter: [{ value: this.productionCenter }],
       equipmentType: ['', Validators.required],
       fuelType: ['', Validators.required],
-      quantity: ['', [Validators.required, Validators.pattern(/^\d+$/)]],
+      quantity: [0, [Validators.required, Validators.pattern(/^\d+$/)]],
       defaultEmissionFactor: this.fb.group({
-        co2: [{ value: '', disabled: true }, Validators.required],
-        ch4: [{ value: '', disabled: true }, Validators.required],
-        n2o: [{ value: '', disabled: true }, Validators.required]
+        co2: [{ value: 0, disabled: true }],
+        ch4: [{ value: 0, disabled: true }],
+        n2o: [{ value: 0, disabled: true }]
       }),
       partialEmissions: this.fb.group({
-        co2: [{ value: '', disabled: true }],
-        ch4: [{ value: '', disabled: true }],
-        n2o: [{ value: '', disabled: true }]
+        co2: [{ value: 0, disabled: true }],
+        ch4: [{ value: 0, disabled: true }],
+        n2o: [{ value: 0, disabled: true }]
       }),
       totalEmissions: [{ value: '', disabled: true }]
     });
@@ -128,6 +128,7 @@ export class MachineryVehiclesComponent  implements OnInit, OnChanges {
     this.vehicleFuelService.getByYearType(this.activityYear, vehicleData.equipmentType.Categoria)
       .subscribe((fuelTypes:any) => {
         this.fuelTypes = fuelTypes
+        console.log('emissions: ', this.fuelTypes)
     })
   }
 

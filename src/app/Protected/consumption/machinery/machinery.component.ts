@@ -45,6 +45,7 @@ export class MachineryComponent implements OnInit, OnChanges {
            totalEmissions: [{ value: '', disabled: true }]
          });
          this.getScopeOneRecords()
+         this.setupValueChangeListeners();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -75,6 +76,46 @@ export class MachineryComponent implements OnInit, OnChanges {
               this.showSnackBar('Error al obtener los registros ' + err.messages?.error || err.message)
             }
           });
+  }
+
+  setupValueChangeListeners(): void {
+    // Listener para fuelType
+    this.emissionsForm.get('fuelType')?.valueChanges.subscribe((selectedFuel) => {
+      if (selectedFuel) {
+        this.setEmissionFactors();
+        this.calculateEmissions();
+      }
+    });
+
+    // Listener para quantity
+    this.emissionsForm.get('quantity')?.valueChanges.subscribe(() => {
+      this.calculateEmissions();
+    });
+
+    // Listener para machineryType (puedes agregar lógica específica si es necesario)
+    this.emissionsForm.get('machineryType')?.valueChanges.subscribe(() => {
+      this.calculateEmissions();
+    });
+  }
+
+  calculateEmissions(): void {
+    const quantity = this.emissionsForm.get('quantity')?.value || 0;
+    const defaultEmissionFactorGroup = this.emissionsForm.get('defaultEmissionFactor');
+    const partialEmissionsGroup = this.emissionsForm.get('partialEmissions');
+
+    if (defaultEmissionFactorGroup && partialEmissionsGroup) {
+      const co2 = quantity * parseFloat(defaultEmissionFactorGroup.get('co2')?.value || 0);
+      const ch4 = quantity * parseFloat(defaultEmissionFactorGroup.get('ch4')?.value || 0);
+      const n2o = quantity * parseFloat(defaultEmissionFactorGroup.get('n2o')?.value || 0);
+
+      partialEmissionsGroup.get('co2')?.setValue(co2.toFixed(3));
+      partialEmissionsGroup.get('ch4')?.setValue(ch4.toFixed(3));
+      partialEmissionsGroup.get('n2o')?.setValue(n2o.toFixed(3));
+
+      // Calcula emisiones totales en toneladas de CO2 equivalente
+      const totalEmissions = co2 + (ch4 / 1000) * 25 + (n2o / 1000) * 298;
+      this.emissionsForm.get('totalEmissions')?.setValue(totalEmissions.toFixed(3));
+    }
   }
 
   onSubmit(): void {
@@ -120,7 +161,7 @@ export class MachineryComponent implements OnInit, OnChanges {
     this.emisionesMachineryService.getEmisionesByYear(year)
     .subscribe((emissions:any) => {
       this.fuelEmisTypes = emissions
-      this.fuelEmisTypes = this.fuelEmisTypes.filter((fuelType: any) => fuelType.UsageType === selectedTransport)
+      this.fuelEmisTypes = this.fuelEmisTypes.filter((fuelType: any) => fuelType.Categoria === selectedTransport)
     })
   }
 
@@ -128,12 +169,12 @@ export class MachineryComponent implements OnInit, OnChanges {
     const fuelData = this.emissionsForm.value
     const fuelType = fuelData.fuelType
     const CO2_kg_ud = parseFloat(fuelType.CO2_kg_ud).toFixed(3);
-    const CH4_g_ud = parseFloat(fuelType.CH4_g_ud).toFixed(3);
-    const N2O_g_ud = parseFloat(fuelType.N2O_g_ud).toFixed(3);
+    const CH4_g_ud =  parseFloat(fuelType.CH4_g_ud).toFixed(3);
+    const N2O_g_ud =  parseFloat(fuelType.N2O_g_ud).toFixed(3);
     this.emissionsForm.get('defaultEmissionFactor')?.get('co2')?.setValue(CO2_kg_ud);
     this.emissionsForm.get('defaultEmissionFactor')?.get('ch4')?.setValue(CH4_g_ud);
     this.emissionsForm.get('defaultEmissionFactor')?.get('n2o')?.setValue(N2O_g_ud);
-    this.emissionsForm.get('partialEmissions')?.get('co2')?.setValue(fuelData.quantity *  parseFloat(CO2_kg_ud));
+    this.emissionsForm.get('partialEmissions')?.get('co2')?.setValue(fuelData.quantity * parseFloat(CO2_kg_ud));
     this.emissionsForm.get('partialEmissions')?.get('ch4')?.setValue(fuelData.quantity * parseFloat(CH4_g_ud));
     this.emissionsForm.get('partialEmissions')?.get('n2o')?.setValue(fuelData.quantity * parseFloat(N2O_g_ud));
     this.emissionsForm.get('totalEmissions')?.setValue(fuelData.quantity * parseFloat(CO2_kg_ud)+fuelData.quantity * parseFloat(CH4_g_ud)+fuelData.quantity * parseFloat(N2O_g_ud))

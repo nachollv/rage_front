@@ -40,7 +40,7 @@ export class ElectricityComponent implements OnInit, OnChanges {
         consumos: this.fb.group({
           comercializadora: ['', [Validators.required]],
           fe_co2: [{ value: null, disabled: true }],
-          activityData: ['', [Validators.required, Validators.pattern(/^\d+(\.\d{2})?$/)]],
+          activityData: [[Validators.required, Validators.pattern(/^\d+(\.\d{2})?$/)]],
           factorMixElectrico : [{ value: 0, disabled: true }, [Validators.required, Validators.pattern(/^\d+(\.\d{2})?$/)]],
           gdo: ['', [Validators.required]]
         }),
