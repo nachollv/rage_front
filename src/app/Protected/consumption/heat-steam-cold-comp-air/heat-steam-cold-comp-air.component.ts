@@ -36,6 +36,18 @@ export class HeatSteamColdCompAirComponent {
   ngOnInit(): void {
     this.heatSteamColdAirForm = this.fb.group({
       periodoFactura: ['', Validators.required],
+      '01': [0],
+      '02': [0],
+      '03': [0],
+      '04': [0],
+      '05': [0],  
+      '06': [0],
+      '07': [0],
+      '08': [0],
+      '09': [0],
+      '10': [0],
+      '11': [0],
+      '12': [0],
       consumos: this.fb.group({
       energyType: ['', [Validators.required]], // Tipo de energía
       activityData: ['', [Validators.required]], // Consumo (kWh)
@@ -66,12 +78,13 @@ export class HeatSteamColdCompAirComponent {
   }
   // Método para calcular emisiones
   calculateEmissions(): void {
-    const consumption = this.heatSteamColdAirForm.get('consumption')?.value; // Consumo ingresado
-    console.log('Consumo:', consumption); // Imprime el consumo ingresado
+    const consumosGroup = this.heatSteamColdAirForm.get('consumos') as FormGroup;
+    const activityData = consumosGroup.get('activityData')?.value; // activityData ingresado
+    console.log('activityData:', activityData); // Imprime el activityData ingresado
     const emissionFactor = this.heatSteamColdAirForm.get('emissionFactor')?.value; // Factor de emisión ingresado
 
-    if (consumption && emissionFactor) {
-      const emissions = consumption * emissionFactor; // Cálculo de emisiones
+    if (activityData && emissionFactor) {
+      const emissions = activityData * emissionFactor; // Cálculo de emisiones
       this.heatSteamColdAirForm.get('emissions')?.setValue(emissions.toFixed(2)); // Actualización del campo "emisiones"
     } else {
       this.heatSteamColdAirForm.get('emissions')?.setValue(''); // Resetea el valor si no hay datos válidos
@@ -108,12 +121,53 @@ export class HeatSteamColdCompAirComponent {
     const formValue = this.heatSteamColdAirForm.value
     formValue.year = this.activityYear
     formValue.productionCenter = this.productionCenter
+    formValue.activityType = 'heatSteamColdAir' // Tipo de actividad
     formValue.electricityTradingCompany = 0 // No hay comercializadora para este formulario
     formValue.gdo = 0.00 // No hay GDO para este formulario
+    switch (formValue.periodoFactura) {
+      case '01':
+        formValue['01'] = formValue.consumos.activityData
+        break;
+      case '02':          
+        formValue['02'] = formValue.consumos.activityData
+        break;
+      case '03':
+        formValue['03'] = formValue.consumos.activityData
+        break;
+      case '04':
+        formValue['04'] = formValue.consumos.activityData
+        break;
+      case '05':
+        formValue['05'] = formValue.consumos.activityData
+        break;
+      case '06':
+        formValue['06'] = formValue.consumos.activityData
+        break;
+      case '07':
+        formValue['07'] = formValue.consumos.activityData
+        break;
+      case '08':
+        formValue['08'] = formValue.consumos.activityData
+        break;
+      case '09':  
+        formValue['09'] = formValue.consumos.activityData
+        break;
+      case '10':
+        formValue['10'] = formValue.consumos.activityData   
+        break;
+      case '11':
+        formValue['11'] = formValue.consumos.activityData   
+        break;
+      case '12':
+        formValue['12'] = formValue.consumos.activityData   
+        break;
+      default:      
+        break;
+    }
     this.heatSteamColdAirForm.markAllAsTouched(); // Marca todos los campos como tocados para mostrar errores de validación
     this.scopeTWoRecordsService.createConsumption(this.heatSteamColdAirForm.value).subscribe({
       next: (response) => { 
-        this.showSnackBar('Registro creado:'+ response); // Imprime la respuesta del servidor
+        this.showSnackBar('Registro creado de actividad creado correctamente!'); // Imprime la respuesta del servidor
         this.getScopeTwoRecords(); // Actualiza la tabla después de crear un nuevo registro
       },
       error: (error) => {   
