@@ -44,10 +44,18 @@ button {
   grid-template-columns: 33% 33% 33%;
   gap: 1rem;
 }
-// Opcional: Estilos personalizados para el estado de error
-mat-error {
-  color: #d32f2f; // Color rojo para mensajes de error
-  font-size: 0.875rem;
+.gas-emission {
+  font-size: 2rem;
+  color: #000!important;
+  font-weight: bolder;
+  padding: 1rem;
+
+}
+
+.tnCo2eq {
+  background-color: burlywood;
+  width: 150px;
+  border-radius: 1rem;
 }
 
 // Estilo adicional para el contenedor de consumos
