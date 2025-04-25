@@ -84,7 +84,7 @@ export class ElectricityComponent implements OnInit, OnChanges {
       }
     } 
 
-      setupListeners(): void {
+    setupListeners(): void {
         const consumosGroup = this.buildingElecConsumption.get('consumos') as FormGroup;
       
         if (consumosGroup) {

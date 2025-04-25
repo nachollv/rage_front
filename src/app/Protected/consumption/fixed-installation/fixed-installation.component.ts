@@ -16,7 +16,7 @@ import { ScopeOneRecordsService } from '../../../services/scope-one-records.serv
 export class FixedInstallationComponent implements OnInit, OnChanges {
     @Input() activityYear!: number
     @Input() productionCenter: number = 0
-    displayedColumns: string[] = ['year', 'fuelType', 'quantity', 'updated_at', 'edit', 'delete']
+    displayedColumns: string[] = ['year', 'fuelType', 'activityData', 'updated_at', 'edit', 'delete']
     data = [{ }]
     dataSource = new MatTableDataSource<any>(this.data)
     fuelForm!: FormGroup;
@@ -32,7 +32,8 @@ export class FixedInstallationComponent implements OnInit, OnChanges {
         year: [{ value: this.activityYear, disabled: true }],
         productionCenter: [{value: this.productionCenter, disabled: true}],
         fuelType: ['', Validators.required],
-        quantity: ['', [Validators.required, Validators.min(0)]],
+        activityData: ['', [Validators.required, Validators.min(0)]],
+
         defaultFactor: this.fb.group({
           fe_co2: [{ value: null, disabled: true }],
           fe_ch4: [{ value: null, disabled: true }],
@@ -48,6 +49,7 @@ export class FixedInstallationComponent implements OnInit, OnChanges {
 
       this.getFuelConsumptions(this.activityYear)
       this.getScopeOneRecords(this.activityYear, this.productionCenter)
+      this.setupValueChangeListeners()
     }
 
     ngOnChanges(changes: SimpleChanges): void {
@@ -85,6 +87,22 @@ export class FixedInstallationComponent implements OnInit, OnChanges {
           }
         });
     }
+
+// Configuración de los listeners para recalcular valores
+setupValueChangeListeners(): void {
+  // Listener para fuelType
+  this.fuelForm.get('fuelType')?.valueChanges.subscribe((selectedFuel) => {
+    if (selectedFuel) {
+      this.setEmissionFactors();
+      this.calculateEmissions();
+    }
+  });
+
+  // Listener para activityData
+  this.fuelForm.get('activityData')?.valueChanges.subscribe(() => {
+    this.calculateEmissions();
+  });
+}
     
     onSubmit() {
         const formValue = this.fuelForm.value
@@ -92,7 +110,7 @@ export class FixedInstallationComponent implements OnInit, OnChanges {
         formValue.productionCenter = this.productionCenter
         formValue.fuel_type = this.fuelForm.get('fuelType')?.value.id
         formValue.activityType = 'fixed'
-        formValue.quantity = this.fuelForm.get('quantity')?.value
+        formValue.activityData = this.fuelForm.get('activityData')?.value
         this.scopeOneRecordsService.createRecord(formValue)
           .subscribe(
             (fuel: any) => {
@@ -115,28 +133,33 @@ export class FixedInstallationComponent implements OnInit, OnChanges {
         this.fuelForm.get('defaultFactor')?.get('fe_ch4')?.setValue(CH4_g_ud);
         this.fuelForm.get('defaultFactor')?.get('fe_n2o')?.setValue(N2O_g_ud);
 
-        this.fuelForm.get('partialEmissions')?.get('co2')?.setValue(fuelData.quantity *  parseFloat(CO2_kg_ud));
-        this.fuelForm.get('partialEmissions')?.get('ch4')?.setValue(fuelData.quantity * parseFloat(CH4_g_ud));
-        this.fuelForm.get('partialEmissions')?.get('n2o')?.setValue(fuelData.quantity * parseFloat(N2O_g_ud));
+        this.fuelForm.get('partialEmissions')?.get('co2')?.setValue(fuelData.activityData *  parseFloat(CO2_kg_ud));
+        this.fuelForm.get('partialEmissions')?.get('ch4')?.setValue(fuelData.activityData * parseFloat(CH4_g_ud));
+        this.fuelForm.get('partialEmissions')?.get('n2o')?.setValue(fuelData.activityData * parseFloat(N2O_g_ud));
       
-        this.fuelForm.get('totalEmissions')?.setValue(fuelData.quantity * parseFloat(CO2_kg_ud)+fuelData.quantity * parseFloat(CH4_g_ud)+fuelData.quantity * parseFloat(N2O_g_ud))
+        this.fuelForm.get('totalEmissions')?.setValue(fuelData.activityData * parseFloat(CO2_kg_ud)+fuelData.activityData * parseFloat(CH4_g_ud)+fuelData.activityData * parseFloat(N2O_g_ud))
     }
 
-    onQuantityChange() {
-      if (this.fuelForm.valid) {
-        const fuelData = this.fuelForm.value
-        const fuelType = fuelData.fuelType
-        const CH4_g_ud = parseFloat( fuelType.CH4_g_ud )/1000;
-        const CO2_kg_ud = parseFloat( fuelType.CO2_kg_ud );
-        const N2O_g_ud = parseFloat( fuelType.N2O_g_ud )/1000;
-        console.log (CO2_kg_ud, CH4_g_ud,  N2O_g_ud)
-        console.log('Quantity:', fuelData.quantity* CH4_g_ud, fuelData.quantity*CO2_kg_ud, fuelData.quantity*N2O_g_ud);
-        this.fuelForm.get('partialEmissions')?.get('co2')?.setValue(fuelData.quantity * CO2_kg_ud);
-        this.fuelForm.get('partialEmissions')?.get('ch4')?.setValue(fuelData.quantity * CH4_g_ud);
-        this.fuelForm.get('partialEmissions')?.get('n2o')?.setValue(fuelData.quantity * N2O_g_ud);
-        this.fuelForm.get('totalEmissions')?.setValue(fuelData.quantity * CO2_kg_ud+fuelData.quantity * CH4_g_ud+fuelData.quantity * N2O_g_ud)
+    calculateEmissions(): void {
+      const activityData = this.fuelForm.get('activityData')?.value || 0;
+      const defaultFactorGroup = this.fuelForm.get('defaultFactor');
+      const partialEmissionsGroup = this.fuelForm.get('partialEmissions');
+  
+      if (defaultFactorGroup && partialEmissionsGroup) {
+        const co2 = activityData * parseFloat(defaultFactorGroup.get('fe_co2')?.value || 0);
+        const ch4 = activityData * parseFloat(defaultFactorGroup.get('fe_ch4')?.value || 0);
+        const n2o = activityData * parseFloat(defaultFactorGroup.get('fe_n2o')?.value || 0);
+  
+        partialEmissionsGroup.get('co2')?.setValue(co2.toFixed(3));
+        partialEmissionsGroup.get('ch4')?.setValue(ch4.toFixed(3));
+        partialEmissionsGroup.get('n2o')?.setValue(n2o.toFixed(3));
+  
+        // Calcula emisiones totales en toneladas de CO2 equivalente
+        const totalEmissions = co2 + (ch4 / 1000) * 25 + (n2o / 1000) * 298;
+        this.fuelForm.get('totalEmissions')?.setValue(totalEmissions.toFixed(3));
       }
     }
+
 
     openDialog(title:string, text: string): void {
       const dialogRef = this.dialog.open(DialogComponent, {

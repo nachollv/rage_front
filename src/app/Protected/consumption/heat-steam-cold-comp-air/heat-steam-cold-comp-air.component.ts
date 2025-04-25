@@ -68,6 +68,7 @@ export class HeatSteamColdCompAirComponent {
   // Método para calcular emisiones
   calculateEmissions(): void {
     const consumption = this.heatSteamColdAirForm.get('consumption')?.value; // Consumo ingresado
+    console.log('Consumo:', consumption); // Imprime el consumo ingresado
     const emissionFactor = this.heatSteamColdAirForm.get('emissionFactor')?.value; // Factor de emisión ingresado
 
     if (consumption && emissionFactor) {

@@ -9,7 +9,7 @@
   </mat-form-field>
   <mat-form-field>
     <mat-label>Dato de actividad (ud)</mat-label>
-    <input matInput type="number" formControlName="quantity" (change)="onQuantityChange()">
+    <input matInput type="number" formControlName="activityData" >
   </mat-form-field>
   </section>
   <h3>Factores de Emisión por gases</h3>
@@ -46,7 +46,7 @@
   <h3>Emisiones Totales (tnCO<sub>2</sub>eq) [CO<sub>2</sub>eq: CO<sub>2</sub>+CH<sub>4</sub>+N<sub>2</sub>O]</h3>
   <mat-form-field>
     <mat-label>(tnCO<sub>2</sub>eq)</mat-label>
-    <input matInput type="text" formControlName="totalEmissions" ngClass="gas-emission tnCo2eq">
+    <input matInput formControlName="totalEmissions" ngClass="gas-emission tnCo2eq">
   </mat-form-field>
 
   <button mat-raised-button color="accent" type="submit" [disabled]="!fuelForm.valid">Registrar</button>
