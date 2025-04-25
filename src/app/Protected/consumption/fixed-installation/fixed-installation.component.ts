@@ -33,7 +33,6 @@ export class FixedInstallationComponent implements OnInit, OnChanges {
         productionCenter: [{value: this.productionCenter, disabled: true}],
         fuelType: ['', Validators.required],
         activityData: ['', [Validators.required, Validators.min(0)]],
-
         defaultFactor: this.fb.group({
           fe_co2: [{ value: null, disabled: true }],
           fe_ch4: [{ value: null, disabled: true }],
@@ -159,7 +158,6 @@ setupValueChangeListeners(): void {
         this.fuelForm.get('totalEmissions')?.setValue(totalEmissions.toFixed(3));
       }
     }
-
 
     openDialog(title:string, text: string): void {
       const dialogRef = this.dialog.open(DialogComponent, {
