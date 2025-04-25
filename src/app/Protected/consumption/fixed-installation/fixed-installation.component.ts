@@ -78,7 +78,6 @@ export class FixedInstallationComponent implements OnInit, OnChanges {
                 registro.fuelType = matchedFuel?.Combustible || 'desconocido';
               })
               this.dataSource = new MatTableDataSource(registros.data)
-              //this.showSnackBar('Registros obtenidos fixed: ' + registros.data.length)
             })
           },
           error: (err: any) => {

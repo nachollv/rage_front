@@ -1,4 +1,5 @@
 import { Component, Input, OnInit, OnChanges, SimpleChanges } from '@angular/core';
+import { ScopeTwoRecordsService } from '../../../services/scope-two-records.service';
 import { EmisionesElectricasEdificiosService } from '../../../services/emisiones-electricas-edificios.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
@@ -16,27 +17,22 @@ export class ElectricityVehiclesComponent implements OnInit, OnChanges{
   @Input() productionCenter: number = 0
   comercializadorasElectricas: any[] = []
   errorMessage: string = ''
-
-  displayedColumns: string[] = ['year', '01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', 'delete']
-  data = [
-    { delegation: 'Central', year: 2023, '01': 25, '02': 34.25, '03': '23.54', '04': 45.345, '05': 45.345, '06': 45.345, '07': 45.345, '08': 45.345, '09': 45.345, '10': 45.345, '11': 45.345, edit: true, delete: true},
-    { delegation: 'Felanitx', year: 2023, '01': 25, '02': 34.25, '03': '23.54', '04': 45.345, '05': 45.345, '06': 45.345, '07': 45.345, '08': 45.345, '09': 45.345, '10': 45.345, '11': 45.345, edit: true, delete: true },
-    { delegation: 'Manacor', year: 2023, '01': 25, '02': 34.25, '03': '23.54', '04': 45.345, '05': 45.345, '06': 45.345, '07': 45.345, '08': 45.345, '09': 45.345, '10': 45.345, '11': 45.345, edit: true, delete: true },  
-    { delegation: 'Calvià', year: 2023, '01': 25, '02': 34.25, '03': '23.54', '04': 45.345, '05': 45.345, '06': 45.345, '07': 45.345, '08': 45.345, '09': 45.345, '10': 45.345, '11': 45.345, edit: false, delete: true },
-    { delegation: 'Andraitx', year: 2023, '01': 25, '02': 34.25, '03': '23.54', '04': 45.345, '05': 45.345, '06': 45.345, '07': 45.345, '08': 45.345, '09': 45.345, '10': 45.345, '11': 45.345, edit: true, delete: true },
-    { delegation: 'Pollença', year: 2023, '01': 25, '02': 34.25, '03': '23.54', '04': 45.345, '05': 45.345, '06': 45.345, '07': 45.345, '08': 45.345, '09': 45.345, '10': 45.345, '11': 45.345, edit: true, delete: true }
-  ];
+  displayedColumns: string[] = ['year', 'periodoFactura', 'energyType', 'activityData', 'updated_at', 'delete']
+  data = [{}]; 
   dataSource = new MatTableDataSource<any>(this.data)
   vehiclesElectricity!: FormGroup;
 
   constructor(private fb: FormBuilder, 
+    private scopeTWoRecordsService: ScopeTwoRecordsService,
     private emisionesElectricasservice: EmisionesElectricasEdificiosService,
+    private snackBar: MatSnackBar,
     public dialog: MatDialog) {
   }
   ngOnInit(): void {
     this.vehiclesElectricity = this.fb.group({
         periodoFactura: ['', Validators.required],
         consumos: this.fb.group({
+          energyType: [''], // Tipo de energía
           comercializadora: ['', [Validators.required]],
           fe_co2: [{ value: null, disabled: true }],
           activityData: ['', [Validators.required, Validators.pattern(/^\d+(\.\d{2})?$/)]],
@@ -47,22 +43,42 @@ export class ElectricityVehiclesComponent implements OnInit, OnChanges{
         electricityTradingCompany: [0],
         emisionesCO2e: [{ value: 0, disabled: true }] 
       });
-      this.getAllEmisionesbyYear(this.activityYear)
+      this.getScopeTwoRecords()
+      this.getAllEmissionsbyYear(this.activityYear)
       this.setupListeners()
   }
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['activityYear'] && !changes['activityYear'].firstChange) {
-      this.getAllEmisionesbyYear(this.activityYear);
+      this.getAllEmissionsbyYear(this.activityYear);
     }
   }
-  getAllEmisionesbyYear(year:number): void {
+  getAllEmissionsbyYear(year:number): void {
     this.emisionesElectricasservice.getByYear(year).subscribe({
       next: (data) => {
         this.comercializadorasElectricas = data;
+        console.log('Emisiones obtenidas:', this.comercializadorasElectricas);
       },
       error: (error) => {
         this.errorMessage = error.message;
         console.error('Error al obtener las emisiones:', error);
+      }
+    });
+  }
+
+  getScopeTwoRecords() {
+    this.scopeTWoRecordsService.getRecordsByFilters(this.activityYear, this.productionCenter, 'electricityVehicles')
+    .subscribe({
+      next: (data: any) => {
+        data.data.forEach((record: any) => {
+          record.periodoFactura = record.periodoFactura.split('T')[0]; // Formato de fecha
+          record.updated_at = record.updated_at.split('T')[0]; // Formato de fecha
+          record.activityData = record.activityData + " kWh" // Formato de número
+          record.delete = true
+        });
+        this.dataSource.data = data.data; // Asigna los datos a la fuente de datos de la tabla
+      },
+      error: (error) => {
+        console.error('Error al obtener los registros:', error); // Manejo de errores
       }
     });
   }
@@ -83,7 +99,6 @@ export class ElectricityVehiclesComponent implements OnInit, OnChanges{
 
   setupListeners(): void {
     const consumosGroup = this.vehiclesElectricity.get('consumos') as FormGroup;
-  
     if (consumosGroup) {
       // Función para calcular emisiones
       const calculateEmisionesCO2e = () => {
@@ -109,10 +124,34 @@ export class ElectricityVehiclesComponent implements OnInit, OnChanges{
 
   // Método para enviar el formulario
   onSubmit() {
-    if (this.vehiclesElectricity.valid) {
-      console.log('Formulario válido:', this.vehiclesElectricity.value);
-    } else {
-      console.log('Formulario no válido');
-    }
+    const formValue = this.vehiclesElectricity.value
+    console.log('Form Value:', formValue); // Imprime el valor del formulario
+
+    formValue.year = this.activityYear
+    formValue.productionCenter = this.productionCenter
+    formValue.activityType = 'electricityVehicles' // Tipo de actividad
+    formValue.periodoFactura = formValue.periodoFactura // Asigna el periodo de factura
+    this.vehiclesElectricity.markAllAsTouched(); // Marca todos los campos como tocados para mostrar errores de validación
+    this.scopeTWoRecordsService.createConsumption(this.vehiclesElectricity.value).subscribe({
+      next: (response) => { 
+        this.showSnackBar('Registro creado de actividad creado correctamente!'); // Imprime la respuesta del servidor
+        this.getScopeTwoRecords(); // Actualiza la tabla después de crear un nuevo registro
+        this.dataSource.data.push(response); // Agrega el nuevo registro a la tabla
+        this.dataSource._updateChangeSubscription(); // Actualiza la fuente de datos de la tabla
+        this.vehiclesElectricity.reset(); // Resetea el formulario después de enviar
+      },
+      error: (error) => {   
+        this.showSnackBar('Error al crear el registro: '+ error); // Manejo de errores
+      }
+    });
+  }
+
+  private showSnackBar(msg: string): void {
+    this.snackBar.open(msg, 'Close', {
+      duration: 15000,
+      verticalPosition: 'top',
+      horizontalPosition: 'center',
+      panelClass: ['custom-snackbar'],
+    });
   }
 }

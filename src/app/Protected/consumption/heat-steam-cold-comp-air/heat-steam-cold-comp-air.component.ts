@@ -14,21 +14,13 @@ import { EmisionesElectricasEdificiosService } from '../../../services/emisiones
 export class HeatSteamColdCompAirComponent {
   @Input() activityYear!: number
   @Input() productionCenter: number = 0
-  displayedColumns: string[] = ['year', 'M01', 'M02', 'M03', 'M04', 'M05', 'M06', 'M07', 'M08', 'M09', 'M10', 'M11', 'M12', 'delete']
-  data = [
-    { year: 2024, '01': 25, '02': 34.25, '03': '23.54', '04': 45.345, '05': 45.345, '06': 45.345, '07': 45.345, '08': 45.345, '09': 45.345, '10': 45.345, '11': 45.345, edit: true, delete: true},
-    { year: 2024, '01': 25, '02': 34.25, '03': '23.54', '04': 45.345, '05': 45.345, '06': 45.345, '07': 45.345, '08': 45.345, '09': 45.345, '10': 45.345, '11': 45.345, edit: true, delete: true },
-    { year: 2024, '01': 25, '02': 34.25, '03': '23.54', '04': 45.345, '05': 45.345, '06': 45.345, '07': 45.345, '08': 45.345, '09': 45.345, '10': 45.345, '11': 45.345, edit: true, delete: true },  
-    { year: 2024, '01': 25, '02': 34.25, '03': '23.54', '04': 45.345, '05': 45.345, '06': 45.345, '07': 45.345, '08': 45.345, '09': 45.345, '10': 45.345, '11': 45.345, edit: false, delete: true },
-    { year: 2024, '01': 25, '02': 34.25, '03': '23.54', '04': 45.345, '05': 45.345, '06': 45.345, '07': 45.345, '08': 45.345, '09': 45.345, '10': 45.345, '11': 45.345, edit: true, delete: true },
-    { year: 2024, '01': 25, '02': 34.25, '03': '23.54', '04': 45.345, '05': 45.345, '06': 45.345, '07': 45.345, '08': 45.345, '09': 45.345, '10': 45.345, '11': 45.345, edit: true, delete: true }
-  ];
+  displayedColumns: string[] = ['year', 'periodoFactura', 'energyType', 'activityData', 'updated_at', 'delete']
+  data = [{}];
   dataSource = new MatTableDataSource<any>(this.data)
   heatSteamColdAirForm!: FormGroup;
 
   constructor(private fb: FormBuilder, 
     private snackBar: MatSnackBar,
-     private emisionesElectricasservice: EmisionesElectricasEdificiosService,
     private scopeTWoRecordsService: ScopeTwoRecordsService) {
 
   }
@@ -36,18 +28,6 @@ export class HeatSteamColdCompAirComponent {
   ngOnInit(): void {
     this.heatSteamColdAirForm = this.fb.group({
       periodoFactura: ['', Validators.required],
-      'M01': [0],
-      'M02': [0],
-      'M03': [0],
-      'M04': [0],
-      'M05': [0],  
-      'M06': [0],
-      'M07': [0],
-      'M08': [0],
-      'M09': [0],
-      'M10': [0],
-      'M11': [0],
-      'M12': [0],
       consumos: this.fb.group({
       energyType: ['', [Validators.required]], // Tipo de energía
       activityData: ['', [Validators.required]], // Consumo (kWh)
@@ -61,15 +41,21 @@ export class HeatSteamColdCompAirComponent {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['activityYear'] && !changes['activityYear'].firstChange) {
-      //this.getAllEmisionesbyYear(this.activityYear);
+      this.getScopeTwoRecords();
     }
   }
 
   getScopeTwoRecords() {
-    this.scopeTWoRecordsService.getRecordsByFilters(this.activityYear, this.productionCenter, 'heatSteamColdAir').subscribe({
-      next: (data) => {
-        console.log('Datos obtenidos:', data); // Imprime los datos obtenidos
-        this.dataSource.data = data; // Asigna los datos a la fuente de datos de la tabla
+    this.scopeTWoRecordsService.getRecordsByFilters(this.activityYear, this.productionCenter, 'heatSteamColdAir')
+    .subscribe({
+      next: (data: any) => {
+        data.data.forEach((record: any) => {
+          record.periodoFactura = record.periodoFactura.split('T')[0]; // Formato de fecha
+          record.updated_at = record.updated_at.split('T')[0]; // Formato de fecha
+          record.activityData = record.activityData + " kWh" // Formato de número
+          record.delete = true
+        });
+        this.dataSource.data = data.data; // Asigna los datos a la fuente de datos de la tabla
       },
       error: (error) => {
         console.error('Error al obtener los registros:', error); // Manejo de errores
@@ -124,51 +110,15 @@ export class HeatSteamColdCompAirComponent {
     formValue.activityType = 'heatSteamColdAir' // Tipo de actividad
     formValue.electricityTradingCompany = 0 // No hay comercializadora para este formulario
     formValue.gdo = 0.00 // No hay GDO para este formulario
-    switch (formValue.periodoFactura) {
-      case 'M01':
-        formValue['M01'] = formValue.consumos.activityData
-        break;
-      case 'M02':          
-        formValue['M02'] = formValue.consumos.activityData
-        break;
-      case 'M03':
-        formValue['M03'] = formValue.consumos.activityData
-        break;
-      case 'M04':
-        formValue['M04'] = formValue.consumos.activityData
-        break;
-      case 'M05':
-        formValue['M05'] = formValue.consumos.activityData
-        break;
-      case 'M06':
-        formValue['M06'] = formValue.consumos.activityData
-        break;
-      case 'M07':
-        formValue['M07'] = formValue.consumos.activityData
-        break;
-      case 'M08':
-        formValue['M08'] = formValue.consumos.activityData
-        break;
-      case 'M09':  
-        formValue['M09'] = formValue.consumos.activityData
-        break;
-      case 'M10':
-        formValue['M10'] = formValue.consumos.activityData   
-        break;
-      case 'M11':
-        formValue['M11'] = formValue.consumos.activityData   
-        break;
-      case 'M12':
-        formValue['M12'] = formValue.consumos.activityData   
-        break;
-      default:      
-        break;
-    }
+    formValue.periodoFactura = formValue.periodoFactura // Asigna el periodo de factura
     this.heatSteamColdAirForm.markAllAsTouched(); // Marca todos los campos como tocados para mostrar errores de validación
     this.scopeTWoRecordsService.createConsumption(this.heatSteamColdAirForm.value).subscribe({
       next: (response) => { 
         this.showSnackBar('Registro creado de actividad creado correctamente!'); // Imprime la respuesta del servidor
         this.getScopeTwoRecords(); // Actualiza la tabla después de crear un nuevo registro
+        this.dataSource.data.push(response); // Agrega el nuevo registro a la tabla
+        this.dataSource._updateChangeSubscription(); // Actualiza la fuente de datos de la tabla
+        this.heatSteamColdAirForm.reset(); // Resetea el formulario después de enviar
       },
       error: (error) => {   
         this.showSnackBar('Error al crear el registro: '+ error); // Manejo de errores
