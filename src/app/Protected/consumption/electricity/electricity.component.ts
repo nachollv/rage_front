@@ -47,20 +47,21 @@ export class ElectricityComponent implements OnInit, OnChanges {
         activityType: ['electricity'],
         emisionesCO2e: [{ value: 0, disabled: true }] 
       });
-      this.getAllEmisionesbyYear(this.activityYear)
+      this.getAllEmissionsbyYear(this.activityYear)
       this.setupListeners()
     }
 
     ngOnChanges(changes: SimpleChanges): void {
       if (changes['activityYear'] && !changes['activityYear'].firstChange) {
-        this.getAllEmisionesbyYear(this.activityYear);
+        this.getAllEmissionsbyYear(this.activityYear);
       }
     }
 
-    getAllEmisionesbyYear(year:number): void {
+    getAllEmissionsbyYear(year:number): void {
       this.emisionesElectricasservice.getByYear(year).subscribe({
         next: (data) => {
           this.comercializadorasElectricas = data;
+          console.log('Emisiones obtenidas:', this.comercializadorasElectricas);
         },
         error: (error) => {
           this.errorMessage = error.message;
