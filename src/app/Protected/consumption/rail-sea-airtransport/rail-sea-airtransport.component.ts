@@ -121,17 +121,19 @@ export class RailSeaAirtransportComponent  implements OnInit, OnChanges {
   }
 
   onQuantityChange() {
-    if (this.transportForm.valid) {
       const fuelData = this.transportForm.value
       const fuelType = fuelData.fuelType
       const CH4_g_ud = parseFloat( fuelType.CH4_g_ud );
       const CO2_kg_ud = parseFloat( fuelType.CO2_kg_ud );
       const N2O_g_ud = parseFloat( fuelType.N2O_g_ud );
+      console.log('CH4_g_ud: ', CH4_g_ud)
+      console.log('CO2_kg_ud: ', CO2_kg_ud)
+      console.log('N2O_g_ud: ', N2O_g_ud)
+      console.log (fuelData.fuelQuantity * CO2_kg_ud, fuelData.fuelQuantity * CH4_g_ud, fuelData.fuelQuantity * N2O_g_ud)
       this.transportForm.get('partialEmissions')?.get('co2')?.setValue(fuelData.fuelQuantity * CO2_kg_ud);
       this.transportForm.get('partialEmissions')?.get('ch4')?.setValue(fuelData.fuelQuantity * CH4_g_ud);
       this.transportForm.get('partialEmissions')?.get('n2o')?.setValue(fuelData.fuelQuantity * N2O_g_ud);
       this.transportForm.get('totalEmissions')?.setValue(fuelData.fuelQuantity * CO2_kg_ud+fuelData.fuelQuantity * CH4_g_ud+fuelData.fuelQuantity * N2O_g_ud)
-    }
   }
 
   getFuelEmissions(year: number, selectedTransport: string) {
