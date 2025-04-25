@@ -138,7 +138,6 @@ export class RailSeaAirtransportComponent  implements OnInit, OnChanges {
     this.emisionesTransFerAerMarService.getEmisionesByYear(year)
     .subscribe((emissions:any) => {
       this.fuelEmisTypes = emissions
-      console.log("tipos de emisiones: ",this.fuelEmisTypes)
       this.fuelEmisTypes = this.fuelEmisTypes.filter((fuelType: any) => fuelType.Categoria === selectedTransport)
     })
   }

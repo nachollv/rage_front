@@ -1,6 +1,6 @@
 <mat-card>
   <form [formGroup]="transportForm" (ngSubmit)="onSubmit()">
-      <section ngClass="type-fuel-quantity">
+    <section ngClass="type-fuel-quantity">
       <!-- Tipo de transporte -->
       <mat-form-field appearance="fill">
         <mat-label>Tipo de transporte</mat-label>
@@ -15,7 +15,7 @@
       <mat-form-field appearance="fill">
         <mat-label>Combustible</mat-label>
         <mat-select formControlName="fuelType"  (selectionChange)="setEmissionFactors()">
-          <mat-option *ngFor="let fuelEmis of fuelEmisTypes" [value]="fuelEmis">{{ fuelEmis.Combustible }}</mat-option>
+          <mat-option *ngFor="let fuelEmis of fuelEmisTypes" [value]="fuelEmis">{{ fuelEmis.FuelType }}</mat-option>
         </mat-select>
       </mat-form-field>
   
