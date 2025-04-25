@@ -14,7 +14,7 @@ export class MachineryComponent implements OnInit, OnChanges {
   @Input() productionCenter: number = 0
   emissionsForm!: FormGroup;
   showField: boolean = false
-  displayedColumns: string[] = ['year', 'categoria', 'fuelType', 'quantity', 'updated_at', 'edit', 'delete']
+  displayedColumns: string[] = ['year', 'categoria', 'fuelType', 'activityData', 'updated_at', 'edit', 'delete']
   data = [{ }]
   dataSource = new MatTableDataSource<any>(this.data)
   fuelEmisTypes: any[] = []
@@ -31,16 +31,16 @@ export class MachineryComponent implements OnInit, OnChanges {
            productionCenter: [{value: this.productionCenter, disabled: true}],
            machineryType: ['', Validators.required],
            fuelType: ['', Validators.required],
-           quantity: ['', [Validators.required, Validators.min(0)]],
+           activityData: [0, [Validators.required, Validators.min(0)]],
            defaultEmissionFactor: this.fb.group({
-             co2: [{ value: '', disabled: true }, Validators.required],
-             ch4: [{ value: '', disabled: true }, Validators.required],
-             n2o: [{ value: '', disabled: true }, Validators.required]
+             co2: [{ value: 0, disabled: true }, Validators.required],
+             ch4: [{ value: 0, disabled: true }, Validators.required],
+             n2o: [{ value: 0, disabled: true }, Validators.required]
            }),
            partialEmissions: this.fb.group({
-             co2: [{ value: '', disabled: true }, Validators.required],
-             ch4: [{ value: '', disabled: true }, Validators.required],
-             n2o: [{ value: '', disabled: true }, Validators.required]
+             co2: [{ value: 0, disabled: true }, Validators.required],
+             ch4: [{ value: 0, disabled: true }, Validators.required],
+             n2o: [{ value: 0, disabled: true }, Validators.required]
            }),
            totalEmissions: [{ value: '', disabled: true }]
          });
@@ -87,8 +87,8 @@ export class MachineryComponent implements OnInit, OnChanges {
       }
     });
 
-    // Listener para quantity
-    this.emissionsForm.get('quantity')?.valueChanges.subscribe(() => {
+    // Listener para activityData
+    this.emissionsForm.get('activityData')?.valueChanges.subscribe(() => {
       this.calculateEmissions();
     });
 
@@ -99,14 +99,14 @@ export class MachineryComponent implements OnInit, OnChanges {
   }
 
   calculateEmissions(): void {
-    const quantity = this.emissionsForm.get('quantity')?.value || 0;
+    const activityData = this.emissionsForm.get('activityData')?.value || 0;
     const defaultEmissionFactorGroup = this.emissionsForm.get('defaultEmissionFactor');
     const partialEmissionsGroup = this.emissionsForm.get('partialEmissions');
 
     if (defaultEmissionFactorGroup && partialEmissionsGroup) {
-      const co2 = quantity * parseFloat(defaultEmissionFactorGroup.get('co2')?.value || 0);
-      const ch4 = quantity * parseFloat(defaultEmissionFactorGroup.get('ch4')?.value || 0);
-      const n2o = quantity * parseFloat(defaultEmissionFactorGroup.get('n2o')?.value || 0);
+      const co2 = activityData * parseFloat(defaultEmissionFactorGroup.get('co2')?.value || 0);
+      const ch4 = activityData * parseFloat(defaultEmissionFactorGroup.get('ch4')?.value || 0);
+      const n2o = activityData * parseFloat(defaultEmissionFactorGroup.get('n2o')?.value || 0);
 
       partialEmissionsGroup.get('co2')?.setValue(co2.toFixed(3));
       partialEmissionsGroup.get('ch4')?.setValue(ch4.toFixed(3));
@@ -142,18 +142,23 @@ export class MachineryComponent implements OnInit, OnChanges {
     this.getFuelEmissions(this.activityYear, selectedMachinery)
   }
 
-  onQuantityChange() {
-    if (this.emissionsForm.valid) {
-      const fuelData = this.emissionsForm.value
-      const fuelType = fuelData.fuelType
-      const CH4_g_ud = parseFloat( fuelType.CH4_g_ud );
-      const CO2_kg_ud = parseFloat( fuelType.CO2_kg_ud );
-      const N2O_g_ud = parseFloat( fuelType.N2O_g_ud );
-      this.emissionsForm.get('partialEmissions')?.get('co2')?.setValue(fuelData.quantity * CO2_kg_ud);
-      this.emissionsForm.get('partialEmissions')?.get('ch4')?.setValue(fuelData.quantity * CH4_g_ud);
-      this.emissionsForm.get('partialEmissions')?.get('n2o')?.setValue(fuelData.quantity * N2O_g_ud);
-      this.emissionsForm.get('totalEmissions')?.setValue(fuelData.quantity * CO2_kg_ud+fuelData.quantity * CH4_g_ud+fuelData.quantity * N2O_g_ud)
-    }
+  onActivityDataChange() {
+    const fuelData = this.emissionsForm.value
+    const fuelType = fuelData.fuelType
+    const CH4_g_l = parseFloat( fuelType.CH4_g_l  || 0).toFixed(3);
+    const CO2_kg_l = parseFloat( fuelType.CO2_kg_l  || 0).toFixed(3);
+    const N2O_g_l = parseFloat( fuelType.N2O_g_l  || 0).toFixed(3);
+    console.log('CH4_g_l: ', CH4_g_l)
+    console.log('CO2_kg_l: ', CO2_kg_l)
+    console.log('N2O_g_l: ', N2O_g_l)
+    this.emissionsForm.get('partialEmissions')?.get('co2')?.setValue(fuelData.activityData * parseFloat(CO2_kg_l));
+    this.emissionsForm.get('partialEmissions')?.get('ch4')?.setValue(fuelData.activityData * parseFloat(CH4_g_l));
+    this.emissionsForm.get('partialEmissions')?.get('n2o')?.setValue(fuelData.activityData * parseFloat(N2O_g_l));
+    this.emissionsForm.get('totalEmissions')?.setValue(
+      fuelData.activityData * parseFloat(CO2_kg_l) +
+      fuelData.activityData * parseFloat(CH4_g_l) +
+      fuelData.activityData * parseFloat(N2O_g_l)
+    );
   }
 
   getFuelEmissions(year: number, selectedTransport: string) {
@@ -161,6 +166,7 @@ export class MachineryComponent implements OnInit, OnChanges {
     this.emisionesMachineryService.getEmisionesByYear(year)
     .subscribe((emissions:any) => {
       this.fuelEmisTypes = emissions
+      console.log('emissions: ', this.fuelEmisTypes)
       this.fuelEmisTypes = this.fuelEmisTypes.filter((fuelType: any) => fuelType.Categoria === selectedTransport)
     })
   }
@@ -168,16 +174,16 @@ export class MachineryComponent implements OnInit, OnChanges {
   setEmissionFactors () {
     const fuelData = this.emissionsForm.value
     const fuelType = fuelData.fuelType
-    const CO2_kg_ud = parseFloat(fuelType.CO2_kg_ud).toFixed(3);
-    const CH4_g_ud =  parseFloat(fuelType.CH4_g_ud).toFixed(3);
-    const N2O_g_ud =  parseFloat(fuelType.N2O_g_ud).toFixed(3);
-    this.emissionsForm.get('defaultEmissionFactor')?.get('co2')?.setValue(CO2_kg_ud);
-    this.emissionsForm.get('defaultEmissionFactor')?.get('ch4')?.setValue(CH4_g_ud);
-    this.emissionsForm.get('defaultEmissionFactor')?.get('n2o')?.setValue(N2O_g_ud);
-    this.emissionsForm.get('partialEmissions')?.get('co2')?.setValue(fuelData.quantity * parseFloat(CO2_kg_ud));
-    this.emissionsForm.get('partialEmissions')?.get('ch4')?.setValue(fuelData.quantity * parseFloat(CH4_g_ud));
-    this.emissionsForm.get('partialEmissions')?.get('n2o')?.setValue(fuelData.quantity * parseFloat(N2O_g_ud));
-    this.emissionsForm.get('totalEmissions')?.setValue(fuelData.quantity * parseFloat(CO2_kg_ud)+fuelData.quantity * parseFloat(CH4_g_ud)+fuelData.quantity * parseFloat(N2O_g_ud))
+    const CO2_kg_l = parseFloat(fuelType.CO2_kg_l).toFixed(3);
+    const CH4_g_l =  parseFloat(fuelType.CH4_g_l).toFixed(3);
+    const N2O_g_l =  parseFloat(fuelType.N2O_g_l).toFixed(3);
+    this.emissionsForm.get('defaultEmissionFactor')?.get('co2')?.setValue(CO2_kg_l);
+    this.emissionsForm.get('defaultEmissionFactor')?.get('ch4')?.setValue(CH4_g_l);
+    this.emissionsForm.get('defaultEmissionFactor')?.get('n2o')?.setValue(N2O_g_l);
+    this.emissionsForm.get('partialEmissions')?.get('co2')?.setValue(fuelData.activityData * parseFloat(CO2_kg_l));
+    this.emissionsForm.get('partialEmissions')?.get('ch4')?.setValue(fuelData.activityData * parseFloat(CH4_g_l));
+    this.emissionsForm.get('partialEmissions')?.get('n2o')?.setValue(fuelData.activityData * parseFloat(N2O_g_l));
+    this.emissionsForm.get('totalEmissions')?.setValue(fuelData.activityData * parseFloat(CO2_kg_l)+fuelData.activityData * parseFloat(CH4_g_l)+fuelData.activityData * parseFloat(N2O_g_l))
   }
 
   private showSnackBar(msg: string): void {
