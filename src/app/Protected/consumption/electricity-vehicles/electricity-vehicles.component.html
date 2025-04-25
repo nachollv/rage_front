@@ -52,12 +52,12 @@
           
           <mat-form-field>
             <mat-label>Factor de emisión kg CO<sub>2</sub>/kWh</mat-label>
-            <input matInput type="number" formControlName="fe_co2">
+            <input matInput formControlName="fe_co2" ngClass="gas-emission">
           </mat-form-field>
           
           <mat-form-field class="full-width">
             <mat-label>Factor Mix eléct. (kg CO2e/kWh)</mat-label>
-            <input matInput type="number" placeholder="Factor Mix eléctrico" formControlName="factorMixElectrico" />
+            <input matInput placeholder="Factor Mix eléctrico" formControlName="factorMixElectrico" ngClass="gas-emission"/>
             <mat-error *ngIf="vehiclesElectricity.get('factorMixElectrico')?.hasError('required')">
               Este campo es obligatorio
             </mat-error>
@@ -67,20 +67,9 @@
           </mat-form-field>
         </section>
 
-<!--           <mat-form-field class="full-width">
-            <mat-label>Factor Mix eléct. (kg CO2e/kWh)</mat-label>
-            <input matInput type="number" placeholder="Factor Mix eléctrico" formControlName="factorMixElectrico" />
-            <mat-error *ngIf="vehiclesElectricity.get('factorMixElectrico')?.hasError('required')">
-              Este campo es obligatorio
-            </mat-error>
-            <mat-error *ngIf="vehiclesElectricity.get('factorMixElectrico')?.hasError('min')">
-              El factor debe ser mayor o igual a 0
-            </mat-error>
-          </mat-form-field> -->
-
           <mat-form-field class="full-width">
             <mat-label>Emisiones Totales (tnCO<sub>2</sub>eq)</mat-label>
-            <input matInput type="number" placeholder="Emisiones generadas" formControlName="emisionesCO2e" />
+            <input matInput placeholder="Emisiones generadas" formControlName="emisionesCO2e" ngClass="gas-emission tnCo2eq"/>
             <mat-error *ngIf="vehiclesElectricity.get('emisiones')?.hasError('required')">
               Este campo es obligatorio
             </mat-error>

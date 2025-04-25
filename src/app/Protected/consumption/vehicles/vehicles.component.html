@@ -28,15 +28,15 @@
    
     <mat-form-field appearance="fill">
       <mat-label>Factor de emisión (kg CO2/ud)</mat-label>
-      <input matInput formControlName="co2" type="number">
+      <input matInput formControlName="co2" ngClass="gas-emission">
     </mat-form-field>
     <mat-form-field appearance="fill">
       <mat-label>Factor de emisión (g CH4/ud)</mat-label>
-      <input matInput formControlName="ch4" type="number">
+      <input matInput formControlName="ch4" ngClass="gas-emission">
     </mat-form-field>
     <mat-form-field appearance="fill">
       <mat-label>Factor de emisión (g N2O/ud)</mat-label>
-      <input matInput formControlName="n2o" type="number">
+      <input matInput formControlName="n2o" ngClass="gas-emission">
     </mat-form-field>
   </section>
 
@@ -45,22 +45,22 @@
    
     <mat-form-field appearance="fill">
       <mat-label>Emisiones parciales (kg CO2)</mat-label>
-      <input matInput formControlName="co2">
+      <input matInput formControlName="co2" ngClass="gas-emission">
     </mat-form-field>
     <mat-form-field appearance="fill">
       <mat-label>Emisiones parciales (g CH4)</mat-label>
-      <input matInput formControlName="ch4">
+      <input matInput formControlName="ch4" ngClass="gas-emission">
     </mat-form-field>
     <mat-form-field appearance="fill">
       <mat-label>Emisiones parciales (g N2O)</mat-label>
-      <input matInput formControlName="n2o">
+      <input matInput formControlName="n2o" ngClass="gas-emission">
     </mat-form-field>
   </section>
 
   <h3>Emisiones Totales (tnCO<sub>2</sub>eq) [CO<sub>2</sub>eq: CO<sub>2</sub>+CH<sub>4</sub>+N<sub>2</sub>O]</h3>
   <mat-form-field>
     <mat-label>(tnCO<sub>2</sub>eq)</mat-label>
-    <input matInput formControlName="totalEmissions">
+    <input matInput formControlName="totalEmissions" ngClass="gas-emission tnCo2eq">
   </mat-form-field>
   <button mat-raised-button color="accent" type="submit" [disabled]="!vehicleForm.valid">Registrar</button>
 </form>

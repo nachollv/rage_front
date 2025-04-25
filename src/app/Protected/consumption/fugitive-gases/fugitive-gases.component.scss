@@ -32,3 +32,17 @@ section {
   display: grid;
   grid-template-columns: 1fr 1fr;
 }
+
+.gas-emission {
+  font-size: 2rem;
+  color: #000!important;
+  font-weight: bolder;
+  padding: 1rem;
+
+}
+
+.tnCo2eq {
+  background-color: burlywood;
+  width: 150px;
+  border-radius: 1rem;
+}

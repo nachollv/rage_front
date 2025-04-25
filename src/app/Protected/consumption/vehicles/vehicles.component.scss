@@ -28,6 +28,20 @@ button {
   margin-top: 1rem; // Agregar espacio encima del botón
 }
 
+.gas-emission {
+  font-size: 2rem;
+  color: #000!important;
+  font-weight: bolder;
+  padding: 1rem;
+
+}
+
+.tnCo2eq {
+  background-color: burlywood;
+  width: 150px;
+  border-radius: 1rem;
+}
+
 [formGroupName="consumos"] {
   display: flex;
   gap: 1rem; // Espaciado entre los campos de "consumos"

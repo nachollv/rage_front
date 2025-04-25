@@ -27,3 +27,17 @@ button {
   grid-template-columns: 33% 33% 33%;
   gap: 1rem; // Espaciado entre los campos de "consumos"
 }
+
+.gas-emission {
+  font-size: 2rem;
+  color: #000!important;
+  font-weight: bolder;
+  padding: 1rem;
+
+}
+
+.tnCo2eq {
+  background-color: burlywood;
+  width: 150px;
+  border-radius: 1rem;
+}

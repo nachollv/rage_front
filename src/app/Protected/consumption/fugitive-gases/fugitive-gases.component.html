@@ -9,12 +9,12 @@
   <section>
     <mat-form-field>
       <mat-label>Fórmula química</mat-label>
-      <input matInput formControlName="formulaQuimica" placeholder="Ej. HFC-41" />
+      <input matInput formControlName="formulaQuimica" ngClass="gas-emission"/>
     </mat-form-field>
   
     <mat-form-field>
       <mat-label>PCA</mat-label>
-      <input matInput type="number" formControlName="pca" placeholder="Ej. 1.0" />
+      <input matInput formControlName="pca" ngClass="gas-emission"/>
     </mat-form-field>
   </section>
   <section>
@@ -31,7 +31,7 @@
   <h3>Emisiones Totales (tnCO<sub>2</sub>eq) [CO<sub>2</sub>eq: CO<sub>2</sub>+CH<sub>4</sub>+N<sub>2</sub>O]</h3>
   <mat-form-field>
     <mat-label>(tnCO<sub>2</sub>eq)</mat-label>
-    <input matInput type="number" formControlName="emisionesCO2e" />
+    <input matInput formControlName="emisionesCO2e" ngClass="gas-emission tnCo2eq"/>
   </mat-form-field>
 
   <button mat-raised-button color="accent" type="submit" [disabled]="emisionesForm.invalid">Registrar</button>

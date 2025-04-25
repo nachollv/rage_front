@@ -31,15 +31,15 @@
       <section formGroupName="defaultEmissionFactor" class="factor-group">
         <mat-form-field appearance="fill">
           <mat-label>kg CO₂/ud</mat-label>
-          <input matInput type="number" formControlName="co2" />
+          <input matInput formControlName="co2" ngClass="gas-emission"/>
         </mat-form-field>
         <mat-form-field appearance="fill">
           <mat-label>g CH₄/ud</mat-label>
-          <input matInput type="number" formControlName="ch4" />
+          <input matInput formControlName="ch4" ngClass="gas-emission"/>
         </mat-form-field>
         <mat-form-field appearance="fill">
           <mat-label>g N₂O/ud</mat-label>
-          <input matInput type="number" formControlName="n2o" />
+          <input matInput formControlName="n2o" ngClass="gas-emission"/>
         </mat-form-field>
       </section>
   
@@ -48,15 +48,15 @@
       <section formGroupName="partialEmissions" class="emissions-group">
         <mat-form-field appearance="fill">
           <mat-label>kg CO₂</mat-label>
-          <input matInput formControlName="co2"  />
+          <input matInput formControlName="co2"  ngClass="gas-emission"/>
         </mat-form-field>
         <mat-form-field appearance="fill">
           <mat-label>g CH₄</mat-label>
-          <input matInput formControlName="ch4"  />
+          <input matInput formControlName="ch4"  ngClass="gas-emission"/>
         </mat-form-field>
         <mat-form-field appearance="fill">
           <mat-label>g N₂O</mat-label>
-          <input matInput formControlName="n2o"  />
+          <input matInput formControlName="n2o"  ngClass="gas-emission"/>
         </mat-form-field>
       </section>
   
@@ -64,7 +64,7 @@
       <h3>Emisiones Totales (tnCO<sub>2</sub>eq) [CO<sub>2</sub>eq: CO<sub>2</sub>+CH<sub>4</sub>+N<sub>2</sub>O]</h3>
       <mat-form-field>
         <mat-label>(tnCO<sub>2</sub>eq)</mat-label>
-        <input matInput formControlName="totalEmissions"  />
+        <input matInput formControlName="totalEmissions"  ngClass="gas-emission tnCo2eq" />
       </mat-form-field>
       <button mat-raised-button color="accent" type="submit" [disabled]="!emissionsForm.valid">Registrar</button>
   </form>
