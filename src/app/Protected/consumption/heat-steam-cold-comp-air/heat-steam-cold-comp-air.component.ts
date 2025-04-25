@@ -14,7 +14,7 @@ import { EmisionesElectricasEdificiosService } from '../../../services/emisiones
 export class HeatSteamColdCompAirComponent {
   @Input() activityYear!: number
   @Input() productionCenter: number = 0
-  displayedColumns: string[] = ['year', '01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', 'delete']
+  displayedColumns: string[] = ['year', 'M01', 'M02', 'M03', 'M04', 'M05', 'M06', 'M07', 'M08', 'M09', 'M10', 'M11', 'M12', 'delete']
   data = [
     { year: 2024, '01': 25, '02': 34.25, '03': '23.54', '04': 45.345, '05': 45.345, '06': 45.345, '07': 45.345, '08': 45.345, '09': 45.345, '10': 45.345, '11': 45.345, edit: true, delete: true},
     { year: 2024, '01': 25, '02': 34.25, '03': '23.54', '04': 45.345, '05': 45.345, '06': 45.345, '07': 45.345, '08': 45.345, '09': 45.345, '10': 45.345, '11': 45.345, edit: true, delete: true },
@@ -36,18 +36,18 @@ export class HeatSteamColdCompAirComponent {
   ngOnInit(): void {
     this.heatSteamColdAirForm = this.fb.group({
       periodoFactura: ['', Validators.required],
-      '01': [0],
-      '02': [0],
-      '03': [0],
-      '04': [0],
-      '05': [0],  
-      '06': [0],
-      '07': [0],
-      '08': [0],
-      '09': [0],
-      '10': [0],
-      '11': [0],
-      '12': [0],
+      'M01': [0],
+      'M02': [0],
+      'M03': [0],
+      'M04': [0],
+      'M05': [0],  
+      'M06': [0],
+      'M07': [0],
+      'M08': [0],
+      'M09': [0],
+      'M10': [0],
+      'M11': [0],
+      'M12': [0],
       consumos: this.fb.group({
       energyType: ['', [Validators.required]], // Tipo de energía
       activityData: ['', [Validators.required]], // Consumo (kWh)
@@ -125,41 +125,41 @@ export class HeatSteamColdCompAirComponent {
     formValue.electricityTradingCompany = 0 // No hay comercializadora para este formulario
     formValue.gdo = 0.00 // No hay GDO para este formulario
     switch (formValue.periodoFactura) {
-      case '01':
-        formValue['01'] = formValue.consumos.activityData
+      case 'M01':
+        formValue['M01'] = formValue.consumos.activityData
         break;
-      case '02':          
-        formValue['02'] = formValue.consumos.activityData
+      case 'M02':          
+        formValue['M02'] = formValue.consumos.activityData
         break;
-      case '03':
-        formValue['03'] = formValue.consumos.activityData
+      case 'M03':
+        formValue['M03'] = formValue.consumos.activityData
         break;
-      case '04':
-        formValue['04'] = formValue.consumos.activityData
+      case 'M04':
+        formValue['M04'] = formValue.consumos.activityData
         break;
-      case '05':
-        formValue['05'] = formValue.consumos.activityData
+      case 'M05':
+        formValue['M05'] = formValue.consumos.activityData
         break;
-      case '06':
-        formValue['06'] = formValue.consumos.activityData
+      case 'M06':
+        formValue['M06'] = formValue.consumos.activityData
         break;
-      case '07':
-        formValue['07'] = formValue.consumos.activityData
+      case 'M07':
+        formValue['M07'] = formValue.consumos.activityData
         break;
-      case '08':
-        formValue['08'] = formValue.consumos.activityData
+      case 'M08':
+        formValue['M08'] = formValue.consumos.activityData
         break;
-      case '09':  
-        formValue['09'] = formValue.consumos.activityData
+      case 'M09':  
+        formValue['M09'] = formValue.consumos.activityData
         break;
-      case '10':
-        formValue['10'] = formValue.consumos.activityData   
+      case 'M10':
+        formValue['M10'] = formValue.consumos.activityData   
         break;
-      case '11':
-        formValue['11'] = formValue.consumos.activityData   
+      case 'M11':
+        formValue['M11'] = formValue.consumos.activityData   
         break;
-      case '12':
-        formValue['12'] = formValue.consumos.activityData   
+      case 'M12':
+        formValue['M12'] = formValue.consumos.activityData   
         break;
       default:      
         break;
