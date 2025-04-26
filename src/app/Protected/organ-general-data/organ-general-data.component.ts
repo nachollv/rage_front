@@ -97,7 +97,7 @@ export class OrganGeneralDataComponent implements OnInit {
           this.selectedelectricityTradingCompany = theOrganization.configuracion[0].electricityTradingCompany;
           let selectedelectricityTradingCompanyArray = this.selectedelectricityTradingCompany.split(", ").map(Number);
           const data = {
-            id: this.organizationID,
+            id: theOrganization.organizacion.id,
             cif: theOrganization.organizacion.cif,
             companyName: theOrganization.organizacion.companyName,
             organizationType: theOrganization.organizacion.organizationType,
@@ -128,7 +128,7 @@ export class OrganGeneralDataComponent implements OnInit {
           }
           this.organizationForm.patchValue({ activityYear: selectedyearsArray }) 
           this.organizationForm.patchValue({ comercializadora: selectedelectricityTradingCompanyArray })
-        this.getProductionCenters(theOrganization.id) 
+        this.getProductionCenters(theOrganization.organizacion.id) 
         }, (error: any) => {
           this.showSnackBar('Error' + 'Ha ocurrido un error al obtener la organización' + error.message);
         })
