@@ -62,7 +62,7 @@ export class OrganGeneralDataComponent implements OnInit {
         cif: [''],
         companyName: [''],
         organizationType: [''],
-        comercializadora: [''],
+        comercializadora: [null],
         activityIndex: ['', Validators.required],
         activityRanquing: ['', Validators.required],
         activityYear: [null, Validators.required],
@@ -82,8 +82,7 @@ export class OrganGeneralDataComponent implements OnInit {
         this.token = this.authService.getToken()!
       }
       this.organizationID = this.jwtHelper.decodeToken(this.token).data.id_empresa
-      this.getTheOrganization(this.organizationID)   
-      this.getTheActivityYears(this.organizationID)
+      this.getTheOrganization(this.organizationID)
       this.getSectoresEconomicos()
       this.getAllEmisionesbyYear(2023)
     }
@@ -95,7 +94,7 @@ export class OrganGeneralDataComponent implements OnInit {
           this.selectedYears = theOrganization.configuracion[0].activityYears;
           let selectedyearsArray = this.selectedYears.split(", ").map(Number);
           this.selectedelectricityTradingCompany = theOrganization.configuracion[0].electricityTradingCompany;
-          let selectedelectricityTradingCompanyArray = this.selectedelectricityTradingCompany.split(", ").map(Number);
+          let selectedelectricityTradingCompanyArray = this.selectedelectricityTradingCompany.split(", ").map(String);
           const data = {
             id: theOrganization.organizacion.id,
             cif: theOrganization.organizacion.cif,
@@ -120,6 +119,7 @@ export class OrganGeneralDataComponent implements OnInit {
             this.mustShowDelegations = false;
             this.organizationForm.get('multipleProductionCenter')?.setValue('0')
           }
+          console.log("selected years: ", selectedyearsArray, Array.isArray(selectedyearsArray))
           console.log("selected electricityTradingCompany: ", selectedelectricityTradingCompanyArray, Array.isArray(selectedelectricityTradingCompanyArray))
 
           this.availableYears = []
@@ -145,25 +145,11 @@ export class OrganGeneralDataComponent implements OnInit {
       });
     }
 
-    getTheActivityYears(id: number) {
-/*       this.organizationService.getActivityYearsByOrganization(id).subscribe(
-        (response: any) => {
-        this.selectedYears = response.map((year: string) => +year); */
-        /* console.log("selected activityYear: ", this.selectedYears) */
-       /*  this.availableYears = []
-        for (let year = 2019; year <= 2023; year++) {
-          this.availableYears.push(year)
-        }
-        this.organizationForm.patchValue({ activityYear: this.selectedYears })  */
-      /* },
-    (error: any) => {
-      this.showSnackBar('Error: ' + error.message);
-    }); */
-    }
-
     getProductionCenters(idEmpresa: number) {
       this.productionCenterService.getCentrosDeProduccionFromOrganizacion(idEmpresa)
         .subscribe((productionCenter:any) => {
+          console.log('Centros de producción:', productionCenter)
+      
         this.dataSource = new MatTableDataSource<any>(productionCenter)
         })
     }
