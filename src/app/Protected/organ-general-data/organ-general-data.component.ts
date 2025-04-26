@@ -67,7 +67,7 @@ export class OrganGeneralDataComponent implements OnInit {
         cnae: [''],
         zipCode: [''],
         multipleProductionCenter: [],
-        email: [''],
+        email: [{ value: '', disabled: true }],
         daysPasswordDuration: ['30', Validators.required],
         created_at: [{ value: '', disabled: true }],
         updated_at: [{ value: '', disabled: true }],
