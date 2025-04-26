@@ -41,11 +41,13 @@ export class OrganGeneralDataComponent implements OnInit {
   sectors: SectorsDTO[] = []
   objectiveList: string[] = ['Reducción del consumo de energía', 'Minimizar residuos', 'Ahorro de agua', 'Disminución de Emisiones de CO2', 'Aumento del uso de energías renovables'];
   activityIndex: activityIndexDTO[] = [{id: '1', name: 'Producción anual'}, {id: '2', name: 'Consumo energético'}, {id: '3', name: 'Superficie de las instalaciones'}, {id: '4', name: 'Número de empleados'}, {id: '5', name: 'Facturación'}];
-  activityRanquing: activityranquingDTO[] = [{id: '1', name: 'cantidad de datos registrados'}, {id: '1', name: 'calidad de los datos registrados'}, {id: '1', name: 'frecuencia de actualización del registro'}];
+  activityRanquing: activityranquingDTO[] = [{id: '1', name: 'cantidad de datos registrados'}, {id: '2', name: 'calidad de los datos registrados'}, {id: '3', name: 'frecuencia de actualización del registro'}];
   token: string = ''
   organizationID!: number
   availableYears: number[] = []
-  selectedYears: number[] = []
+  selectedYears: string = ''
+  selectedelectricityTradingCompany: string = ''
+
   
     constructor(private fb: FormBuilder, private snackBar: MatSnackBar,
       private jwtHelper: JwtHelperService,
@@ -89,22 +91,26 @@ export class OrganGeneralDataComponent implements OnInit {
     getTheOrganization(id: number) {
       this.organizationService.getOrganizacion(id)
         .subscribe((theOrganization: any) => {
-          console.log (theOrganization.multipleProductionCenter)
+          
+          this.selectedYears = theOrganization.configuracion[0].activityYears;
+          let selectedyearsArray = this.selectedYears.split(", ").map(Number);
+          this.selectedelectricityTradingCompany = theOrganization.configuracion[0].electricityTradingCompany;
+          let selectedelectricityTradingCompanyArray = this.selectedelectricityTradingCompany.split(", ").map(Number);
           const data = {
             id: this.organizationID,
-            cif: theOrganization.cif,
-            companyName: theOrganization.companyName,
-            organizationType: theOrganization.organizationType,
-            cnae: theOrganization.cnae,
-            zipCode:theOrganization.zipCode,
-            multipleProductionCenter: theOrganization.multipleProductionCenter,
-            activityIndex: theOrganization.activityIndex,
-            daysPasswordDuration	: theOrganization.daysPasswordDuration,
-            
-            email: theOrganization.email,
-            created_at: theOrganization.created_at,
-            updated_at: theOrganization.updated_at,
-            deleted_at: theOrganization.deleted_at,
+            cif: theOrganization.organizacion.cif,
+            companyName: theOrganization.organizacion.companyName,
+            organizationType: theOrganization.organizacion.organizationType,
+            cnae: theOrganization.organizacion.cnae,
+            zipCode:theOrganization.organizacion.zipCode,
+            multipleProductionCenter: theOrganization.organizacion.multipleProductionCenter,
+            activityIndex: theOrganization.configuracion[0].activityIndex,
+            activityRanquing: theOrganization.configuracion[0].activityRanquing,
+            daysPasswordDuration: theOrganization.organizacion.daysPasswordDuration,
+            email: theOrganization.organizacion.email,
+            created_at: theOrganization.organizacion.created_at,
+            updated_at: theOrganization.organizacion.updated_at,
+            deleted_at: theOrganization.organizacion.deleted_at,
           };
           this.organizationForm.patchValue(data);
           if (theOrganization.multipleProductionCenter === '1') {
@@ -114,7 +120,14 @@ export class OrganGeneralDataComponent implements OnInit {
             this.mustShowDelegations = false;
             this.organizationForm.get('multipleProductionCenter')?.setValue('0')
           }
+          console.log("selected electricityTradingCompany: ", selectedelectricityTradingCompanyArray, Array.isArray(selectedelectricityTradingCompanyArray))
 
+          this.availableYears = []
+          for (let year = 2019; year <= 2023; year++) {
+            this.availableYears.push(year)
+          }
+          this.organizationForm.patchValue({ activityYear: selectedyearsArray }) 
+          this.organizationForm.patchValue({ comercializadora: selectedelectricityTradingCompanyArray })
         this.getProductionCenters(theOrganization.id) 
         }, (error: any) => {
           this.showSnackBar('Error' + 'Ha ocurrido un error al obtener la organización' + error.message);
@@ -133,18 +146,19 @@ export class OrganGeneralDataComponent implements OnInit {
     }
 
     getTheActivityYears(id: number) {
-      this.organizationService.getActivityYearsByOrganization(id).subscribe(
+/*       this.organizationService.getActivityYearsByOrganization(id).subscribe(
         (response: any) => {
-        this.selectedYears = response.map((year: string) => +year);
-        this.availableYears = []
+        this.selectedYears = response.map((year: string) => +year); */
+        /* console.log("selected activityYear: ", this.selectedYears) */
+       /*  this.availableYears = []
         for (let year = 2019; year <= 2023; year++) {
           this.availableYears.push(year)
         }
-        this.organizationForm.patchValue({ activityYear: this.selectedYears }) 
-      },
+        this.organizationForm.patchValue({ activityYear: this.selectedYears })  */
+      /* },
     (error: any) => {
       this.showSnackBar('Error: ' + error.message);
-    });
+    }); */
     }
 
     getProductionCenters(idEmpresa: number) {

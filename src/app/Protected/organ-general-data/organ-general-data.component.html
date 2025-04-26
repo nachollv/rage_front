@@ -38,7 +38,7 @@
       <mat-label>Comercializadora</mat-label>
       <mat-select formControlName="comercializadora" multiple>
         <mat-option *ngFor="let comercializadora of comercializadorasElectricas" [value]="comercializadora.id">
-          {{ comercializadora.nombreComercial }}
+         {{ comercializadora.nombreComercial }}
         </mat-option>
       </mat-select>
     </mat-form-field>
@@ -68,7 +68,7 @@
         <mat-label matTooltip="el ranquing de sostenibilidad le permitirá fomentar el uso de esta herramienta entre sus centros de producción" matTooltipPosition="above">Ranquing de sostenibilidad</mat-label>
         <mat-select formControlName="activityRanquing">
           <mat-option *ngFor="let item  of activityRanquing" [value]="item.id">
-            {{ item.name }}
+           {{ item.name }}
           </mat-option>
         </mat-select>
       </mat-form-field>
