@@ -1,3 +1,17 @@
+<!-- Filtro por activityYear al inicio -->
+<section>
+  <h2>{{ 'filter_by_year' | translate }}</h2>
+  <form [formGroup]="filterForm" (ngSubmit)="onYearFilterSubmit()">
+    <div>
+      <label for="activityYear">{{ 'activity_year' | translate }}:</label>
+      <select id="activityYear" formControlName="activityYear">
+        <option *ngFor="let year of availableYears" [value]="year">{{ year }}</option>
+      </select>
+    </div>
+    <button type="submit">{{ 'apply_filter' | translate }}</button>
+  </form>
+</section>
+
 <h2>{{'scope1' | translate}} {{'scope1_1' | translate}}</h2>
 <section ngClass="scope1">
   <article >
@@ -15,7 +29,7 @@
   <article >
     <canvas id="fugitiveEmissChart"></canvas>
   </article>
-  <app-data-table [displayedColumns]="displayedColumns" [dataSource]="dataSourceScope1"></app-data-table>
+  <app-data-table [displayedColumns]="displayedColumnsScope1" [dataSource]="dataSourceScope1"></app-data-table>
 </section>
 <section>>
 <h2>{{'scope2' | translate}} {{'scope2_2' | translate}}</h2>
@@ -29,5 +43,5 @@
   <article >
     <canvas id="heatSteamColdCompAir"></canvas>
   </article>
-  <app-data-table [displayedColumns]="displayedColumns" [dataSource]="dataSourceScope2"></app-data-table>
+  <app-data-table [displayedColumns]="displayedColumnsScope2" [dataSource]="dataSourceScope2"></app-data-table>
 </section>

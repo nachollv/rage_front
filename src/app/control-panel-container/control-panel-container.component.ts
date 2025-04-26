@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { Chart, ChartTypeRegistry, registerables  } from 'chart.js';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { ScopeOneRecordsService } from '../services/scope-one-records.service';
@@ -14,6 +15,8 @@ import { MatTableDataSource } from '@angular/material/table';
 
 
 export class ControlPanelContainerComponent implements OnInit {
+  filterForm!: FormGroup; // Formulario reactivo
+  availableYears: number[] = [2021, 2022, 2023, 2024]; // Años disponibles
   viewUserMenu: boolean = true
   role: string = '' // Rol del usuario
   userName: string = '' // Nombre del usuario
@@ -24,26 +27,33 @@ export class ControlPanelContainerComponent implements OnInit {
   prodCenterID: number = 0 // ID del centro de producción
   scopeOneRecords: any[] = [] // Lista de registros de Scope 1
   scopeTwoRecords: any[] = [] // Lista de registros de Scope 2
-  displayedColumns: string[] = ['year', 'fuelType', 'activityData', 'updated_at', 'edit', 'delete']
+  displayedColumnsScope1: string[] = ['year', 'equipmentType', 'fuelType', 'quantity', 'activityType', 'updated_at']
+  displayedColumnsScope2: string[] = ['year', 'periodoFactura', 'activityData', 'activityType', 'electricityTradingCompany', 'gdo', 'energyType', 'updated_at']
+
   data = [{ }]
   dataSourceScope1 = new MatTableDataSource<any>(this.data)
   dataSourceScope2 = new MatTableDataSource<any>(this.data)
 
   constructor(
+    private fb: FormBuilder,
     private authService: AuthService,
     private jwtHelper: JwtHelperService,
     private scopeOneRecordsService: ScopeOneRecordsService,
     private scopeTwoRecordsService: ScopeTwoRecordsService) {}
 
   ngOnInit():void {
+    this.filterForm = this.fb.group({
+      activityYear: [new Date().getFullYear()], // Por defecto, el año actual
+    });
+
     this.token = this.authService.getToken() || ''
     if (this.token === '') {
       this.prodCenterID = this.jwtHelper.decodeToken(this.token).data.id
       this.organizacionID = this.jwtHelper.decodeToken(this.token).data.id_empresa
     } 
     Chart.register(...registerables);
-    this.getScopeOneRecords()
-    this.getScopeTwoRecords()
+    this.getScopeOneRecords(this.filterForm.value.activityYear)
+    this.getScopeTwoRecords(this.filterForm.value.activityYear)
 /*     this.fixedInstChart('line'); */
     this.roadTranspChart('bar');
     this.railSeaAirChart('line');
@@ -55,8 +65,18 @@ export class ControlPanelContainerComponent implements OnInit {
     this.heatSteamColdCompAir('line');
   }
 
-  getScopeOneRecords(): void {
-    this.scopeOneRecordsService.getRecordsByFilters(this.activityYear).subscribe(
+  onYearFilterSubmit(): void {
+    // Obtener el valor seleccionado del formulario
+    const activityYear = this.filterForm.value.activityYear;
+
+    // Lógica para filtrar los datos por año
+    console.log('Filtrar por año:', activityYear);
+    this.getScopeOneRecords(activityYear)
+    this.getScopeTwoRecords(activityYear)
+  }
+
+  getScopeOneRecords(activityYear:number): void {
+    this.scopeOneRecordsService.getRecordsByFilters(activityYear).subscribe(
       (response: any) => {
         this.scopeOneRecords = response.data;
         console.log('Scope 1 Records:', this.scopeOneRecords);
@@ -68,8 +88,8 @@ export class ControlPanelContainerComponent implements OnInit {
       }
     );
   }
-  getScopeTwoRecords(): void {
-    this.scopeTwoRecordsService.getRecordsByFilters(this.activityYear).subscribe(
+  getScopeTwoRecords(activityYear:number): void {
+    this.scopeTwoRecordsService.getRecordsByFilters(activityYear).subscribe(
       (response: any) => {
         this.scopeTwoRecords = response.data;
         console.log('Scope 2 Records:', this.scopeTwoRecords);
