@@ -3,13 +3,14 @@
   color: #000!important;
   font-weight: bolder;
   padding: 1rem;
-
+  width: 150px;
+  border-radius: 1rem;
+  background-color: #f0f0f0;
 }
 
 .tnCo2eq {
   background-color: burlywood;
-  width: 150px;
-  border-radius: 1rem;
+
 }
 
 button {
@@ -19,11 +20,6 @@ button {
 }
 
 
-// Opcional: Estilos personalizados para el estado de error
-mat-error {
-  color: #d32f2f; // Color rojo para mensajes de error
-  font-size: 0.875rem;
-}
 
 // Estilo adicional para el contenedor de consumos
 [formGroupName="consumos"] {

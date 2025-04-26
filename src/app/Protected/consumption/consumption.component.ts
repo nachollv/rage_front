@@ -80,6 +80,8 @@ export class ConsumptionComponent {
     this.organizationService.getActivityYearsByOrganization(organizacionID)
       .subscribe((years: any) => {
         this.availableYears = years
+        this.availableYears = ['2020', '2021', '2022', '2023']
+        console.log('Años de actividad:', this.availableYears)
       })  
    }
 

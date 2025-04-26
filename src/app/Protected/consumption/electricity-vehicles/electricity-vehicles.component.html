@@ -55,7 +55,7 @@
             <input matInput formControlName="fe_co2" ngClass="gas-emission">
           </mat-form-field>
           
-          <mat-form-field class="full-width">
+          <mat-form-field ngClass="full-width">
             <mat-label>Factor Mix eléct. (kg CO2e/kWh)</mat-label>
             <input matInput placeholder="Factor Mix eléctrico" formControlName="factorMixElectrico" ngClass="gas-emission"/>
             <mat-error *ngIf="vehiclesElectricity.get('factorMixElectrico')?.hasError('required')">

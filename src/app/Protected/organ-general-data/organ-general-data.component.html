@@ -37,8 +37,8 @@
     <mat-form-field appearance="fill">
       <mat-label>Comercializadora</mat-label>
       <mat-select formControlName="comercializadora" multiple>
-        <mat-option *ngFor="let comercializadora of comercializadorasElectricas" [value]="comercializadora">
-          {{ comercializadora.Comercializadora }}
+        <mat-option *ngFor="let comercializadora of comercializadorasElectricas" [value]="comercializadora.id">
+          {{ comercializadora.nombreComercial }}
         </mat-option>
       </mat-select>
     </mat-form-field>
@@ -47,7 +47,7 @@
       <mat-label matTooltip="Es recomendable, al menos, seleccionar tres años de cálculo">Años de cálculo permitidos:</mat-label>
       
       <mat-form-field appearance="fill" >
-        <mat-label>Seleccione uno o varios años</mat-label>
+        <mat-label>Seleccione hasta tres años</mat-label>
         <mat-select multiple formControlName="activityYear">
           <mat-option *ngFor="let year of availableYears" [value]="year">
             {{ year }}
