@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Chart, ChartTypeRegistry, registerables  } from 'chart.js';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { ScopeOneRecordsService } from '../services/scope-one-records.service';
+import { ScopeTwoRecordsService } from '../services/scope-two-records.service';
+import { AuthService } from '../services/auth.service';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-control-panel-container',
@@ -12,24 +16,73 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 export class ControlPanelContainerComponent implements OnInit {
   viewUserMenu: boolean = true
   role: string = '' // Rol del usuario
-  constructor(private jwtHelper: JwtHelperService, ) {
-  
-  }
+  userName: string = '' // Nombre del usuario
+  userId: number = 0 // ID del usuario
+  organizacionID: number = 0 // ID de la organización
+  activityYear: number = new Date().getFullYear()-2; // Año de actividad asignado por defecto
+  token: string = '' // Token del usuario
+  prodCenterID: number = 0 // ID del centro de producción
+  scopeOneRecords: any[] = [] // Lista de registros de Scope 1
+  scopeTwoRecords: any[] = [] // Lista de registros de Scope 2
+  displayedColumns: string[] = ['year', 'fuelType', 'activityData', 'updated_at', 'edit', 'delete']
+  data = [{ }]
+  dataSourceScope1 = new MatTableDataSource<any>(this.data)
+  dataSourceScope2 = new MatTableDataSource<any>(this.data)
+
+  constructor(
+    private authService: AuthService,
+    private jwtHelper: JwtHelperService,
+    private scopeOneRecordsService: ScopeOneRecordsService,
+    private scopeTwoRecordsService: ScopeTwoRecordsService) {}
 
   ngOnInit():void {
+    this.token = this.authService.getToken() || ''
+    if (this.token === '') {
+      this.prodCenterID = this.jwtHelper.decodeToken(this.token).data.id
+      this.organizacionID = this.jwtHelper.decodeToken(this.token).data.id_empresa
+    } 
     Chart.register(...registerables);
-    this.fixedInstChart('line');
+    this.getScopeOneRecords()
+    this.getScopeTwoRecords()
+/*     this.fixedInstChart('line'); */
     this.roadTranspChart('bar');
     this.railSeaAirChart('line');
     this.machineryChart('bar');
     this.fugitiveEmissChart('line');
 
-    this.electricityBuildings('line');
+   /*  this.electricityBuildings('line'); */
     this.electricityVehicles('bar');
     this.heatSteamColdCompAir('line');
   }
 
-  fixedInstChart(chartType: keyof ChartTypeRegistry): void {
+  getScopeOneRecords(): void {
+    this.scopeOneRecordsService.getRecordsByFilters(this.activityYear).subscribe(
+      (data: any[]) => {
+        this.scopeOneRecords = data;
+        console.log('Scope 1 Records:', this.scopeOneRecords);
+       /*  this.dataSourceScope1 = new MatTableDataSource(this.scopeOneRecords) */
+        this.fixedInstChart('line', this.scopeOneRecords);
+      },
+      (error) => {
+        console.error('Error fetching Scope 1 records:', error);
+      }
+    );
+  }
+  getScopeTwoRecords(): void {
+    this.scopeTwoRecordsService.getRecordsByFilters(this.activityYear).subscribe(
+      (data: any[]) => {
+        this.scopeTwoRecords = data;
+        console.log('Scope 2 Records:', this.scopeTwoRecords);
+      /*   this.dataSourceScope2 = new MatTableDataSource(this.scopeTwoRecords) */
+        this.electricityBuildings('line', this.scopeTwoRecords);
+      },
+      (error) => {
+        console.error('Error fetching Scope 2 records:', error);
+      }
+    );
+  }
+
+  fixedInstChart(chartType: keyof ChartTypeRegistry, scop1Data: any): void {
     const ctx = document.getElementById('fixedInstChart') as HTMLCanvasElement;
     new Chart(ctx, {
 
@@ -49,21 +102,21 @@ export class ControlPanelContainerComponent implements OnInit {
         ],
         datasets: [{
           label: 'Emissions',
-          data: [10, 20, 30, 40],
+          data: scop1Data,
           backgroundColor: '#B22222', // Verde bosque
           borderColor: '#B22222',
           borderWidth: 1,  // this dataset is drawn below
-          order: 2
-        }, {
+          order: 1
+        }/* , {
           label: 'Objective',
           data: [10, 15, 19, 17],
           type: 'line',
-          backgroundColor: '#008000', // Púrpura vivo
+          backgroundColor: '#008000',
           borderColor: '#008000',
-          borderWidth: 1,
+          borderWidth: 1, */
           // this dataset is drawn on top
-          order: 1
-      }]
+          /* order: 1 */
+      /* }*/] 
   },
       options: {
       /*  responsive: true,
@@ -331,7 +384,7 @@ export class ControlPanelContainerComponent implements OnInit {
   }
 
 
-  electricityBuildings(chartType: keyof ChartTypeRegistry): void {
+  electricityBuildings(chartType: keyof ChartTypeRegistry, scop2Data: any): void {
     const ctx = document.getElementById('electricityBuildings') as HTMLCanvasElement;
     new Chart(ctx, {
       type: chartType,
@@ -350,22 +403,22 @@ export class ControlPanelContainerComponent implements OnInit {
         ],
         datasets: [{
           label: 'Emissions',
-          data: [10, 20, 30, 40],
-          backgroundColor: '#555555', // Gris oscuro
+          data: scop2Data,
+          backgroundColor: '#555555', 
           borderColor: '#555555',
           borderWidth: 1,
           // this dataset is drawn below
-          order: 2
-      }, {
-          label: 'Objective',
+          order: 1
+      }/* , { */
+          /* label: 'Objective',
           data: [10, 15, 19, 17],
           type: 'line',
-          backgroundColor: '#008000', // Naranja quemado
+          backgroundColor: '#008000', 
           borderColor: '#008000',
-          borderWidth: 1,
+          borderWidth: 1, */
           // this dataset is drawn on top
-          order: 1
-      }]
+          /* order: 1 */
+      /* } */]
   },
   options: {
       responsive: true,

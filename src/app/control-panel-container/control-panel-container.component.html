@@ -15,9 +15,10 @@
   <article >
     <canvas id="fugitiveEmissChart"></canvas>
   </article>
+  <app-data-table [displayedColumns]="displayedColumns" [dataSource]="dataSourceScope1"></app-data-table>
 </section>
+<section>>
 <h2>{{'scope2' | translate}} {{'scope2_2' | translate}}</h2>
-  
 <section  ngClass="scope2">
   <article >
     <canvas id="electricityBuildings"></canvas>
@@ -28,9 +29,5 @@
   <article >
     <canvas id="heatSteamColdCompAir"></canvas>
   </article>
+  <app-data-table [displayedColumns]="displayedColumns" [dataSource]="dataSourceScope2"></app-data-table>
 </section>
-
-<section>
-  <app-data-table></app-data-table>
-</section>
-
