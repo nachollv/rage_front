@@ -1,4 +1,4 @@
-export class activityRanquingDTO {
+export class activityranquingDTO {
   id: string = '' 
   name: string = ''
 }
