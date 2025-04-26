@@ -2,15 +2,16 @@
 <section>
   <h2>{{ 'filter_by_year' | translate }}</h2>
   <form [formGroup]="filterForm" (ngSubmit)="onYearFilterSubmit()">
-    <div>
-      <label for="activityYear">{{ 'activity_year' | translate }}:</label>
-      <select id="activityYear" formControlName="activityYear">
-        <option *ngFor="let year of availableYears" [value]="year">{{ year }}</option>
-      </select>
-    </div>
-    <button type="submit">{{ 'apply_filter' | translate }}</button>
+    <mat-form-field appearance="fill">
+      <mat-label>{{ 'activity_year' | translate }}</mat-label>
+      <mat-select id="activityYear" formControlName="activityYear">
+        <mat-option *ngFor="let year of availableYears" [value]="year">{{ year }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <button mat-raised-button color="primary" type="submit">{{ 'apply_filter' | translate }}</button>
   </form>
 </section>
+
 
 <h2>{{'scope1' | translate}} {{'scope1_1' | translate}}</h2>
 <section ngClass="scope1">
