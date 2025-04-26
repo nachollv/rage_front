@@ -64,6 +64,15 @@
         </mat-select>
       </mat-form-field>
 
+      <mat-form-field >
+        <mat-label matTooltip="el ranquing de sostenibilidad le permitirá fomentar el uso de esta herramienta entre sus centros de producción" matTooltipPosition="above">Ranquing de sostenibilidad</mat-label>
+        <mat-select formControlName="activityRanquing">
+          <mat-option *ngFor="let item  of activityRanquing" [value]="item.id">
+            {{ item.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
     </section>
   </section>
   <mat-form-field appearance="fill">
