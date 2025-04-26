@@ -57,10 +57,10 @@ export class ControlPanelContainerComponent implements OnInit {
 
   getScopeOneRecords(): void {
     this.scopeOneRecordsService.getRecordsByFilters(this.activityYear).subscribe(
-      (data: any[]) => {
-        this.scopeOneRecords = data;
+      (response: any) => {
+        this.scopeOneRecords = response.data;
         console.log('Scope 1 Records:', this.scopeOneRecords);
-       /*  this.dataSourceScope1 = new MatTableDataSource(this.scopeOneRecords) */
+        this.dataSourceScope1 = new MatTableDataSource(this.scopeOneRecords) 
         this.fixedInstChart('line', this.scopeOneRecords);
       },
       (error) => {
@@ -70,10 +70,10 @@ export class ControlPanelContainerComponent implements OnInit {
   }
   getScopeTwoRecords(): void {
     this.scopeTwoRecordsService.getRecordsByFilters(this.activityYear).subscribe(
-      (data: any[]) => {
-        this.scopeTwoRecords = data;
+      (response: any) => {
+        this.scopeTwoRecords = response.data;
         console.log('Scope 2 Records:', this.scopeTwoRecords);
-      /*   this.dataSourceScope2 = new MatTableDataSource(this.scopeTwoRecords) */
+        this.dataSourceScope2 = new MatTableDataSource(this.scopeTwoRecords)
         this.electricityBuildings('line', this.scopeTwoRecords);
       },
       (error) => {
