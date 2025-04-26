@@ -4,6 +4,7 @@ import { UserService } from '../../../services/user.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { AuthService } from '../../../services/auth.service';
+import { MatTableDataSource } from '@angular/material/table';
 
 export interface User {
   id: number;
@@ -28,6 +29,9 @@ export class UserManagementComponent {
   decodedToken: any;
   actualID: string = ''
   xxDays: number = 0
+    displayedColumns: string[] = ['nombre', 'email', 'rol', 'ultimo_inicio_sesion', 'updated_at', 'edit', 'delete']
+    data = [{ }]
+    dataSource = new MatTableDataSource<any>(this.data)
 
   constructor(private fb: FormBuilder, 
     private jwtHelper: JwtHelperService, 
@@ -55,8 +59,14 @@ export class UserManagementComponent {
   getUsersByOrganization(id: string) {
     this.userService.getUsersByOrganization(+id).subscribe(
       (users: User[]) => {
-        this.users = users;
+        this.users = users
+        console.log(this.users)
+        this.users.forEach((registro: any) => {
+          registro.edit = true
+          registro.delete = true
+        this.dataSource = new MatTableDataSource(this.users)
         this.showSnackBar('Se han encontrado ' + users.length + ' usuarios para esta organización');
+        })
       },
       (error) => {
         console.error('Error al obtener los usuarios de la organización:', error.message); // Registrar el error
