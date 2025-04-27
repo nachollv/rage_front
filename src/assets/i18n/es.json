@@ -17,6 +17,9 @@
   "scope2": "EMISIONES INDIRECTAS",
   "scope2_2": "(Alcance 2)",
 
+  "filter_by_year": "Filtrar por año",
+  "filter_by_activity": "Filtrar por actividad",
+
   "electricityOtherEnergies": "Electricidad y otras energías",
   "fixedInstallationsFuelConsumption": "Instalaciones fijas",
   "roadTransport": "Transporte por carretera",

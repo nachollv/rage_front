@@ -15,10 +15,11 @@
   
   "scope1": "EMISSIONS DIRECTES",
   "scope1_1": "(Abast 1)",
-
   "scope2": "EMISSIONS INDIRECTES",
   "scope2_2": "(Abast 2)",
 
+  "filter_by_year": "Filtrar per any",
+  "filter_by_activity": "Filtrar per activitat",
 
   "electricityOtherEnergies": "Electricitat i altres energies",
   "fixedInstallationsFuelConsumption": "Instalacions fixes",

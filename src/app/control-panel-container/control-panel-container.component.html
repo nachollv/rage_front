@@ -3,7 +3,7 @@
   <h2>{{ 'filter_by_year' | translate }}</h2>
   <form [formGroup]="filterForm" (ngSubmit)="onYearFilterSubmit()">
     <mat-form-field appearance="fill">
-      <mat-label>{{ 'activity_year' | translate }}</mat-label>
+      <mat-label>{{ 'activityYear' | translate }}</mat-label>
       <mat-select id="activityYear" formControlName="activityYear">
         <mat-option *ngFor="let year of availableYears" [value]="year">{{ year }}</mat-option>
       </mat-select>
