@@ -28,7 +28,7 @@ export class ControlPanelContainerComponent implements OnInit {
   prodCenterID: number = 0 // ID del centro de producción
   scopeOneRecords: any[] = [] // Lista de registros de Scope 1
   scopeTwoRecords: any[] = [] // Lista de registros de Scope 2
-  displayedColumnsScope1: string[] = ['year', 'equipmentType', 'fuelType', 'quantity', 'activityType', 'updated_at']
+  displayedColumnsScope1: string[] = ['year', 'periodoFactura', 'equipmentType', 'fuelType', 'quantity', 'activityType', 'updated_at']
   displayedColumnsScope2: string[] = ['year', 'periodoFactura', 'activityData', 'activityType', 'electricityTradingCompany', 'gdo', 'energyType', 'updated_at']
 
   data = [{ }]
