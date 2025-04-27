@@ -64,9 +64,6 @@ export class ControlPanelContainerComponent implements OnInit {
     Chart.register(...registerables);
     this.getScopeOneRecords(this.filterForm.value.activityYear)
     this.getScopeTwoRecords(this.filterForm.value.activityYear)
-
-    this.electricityVehicles('bar');
-    this.heatSteamColdCompAir('line');
   }
 
   onYearFilterChange(event: any): void {
@@ -79,7 +76,6 @@ export class ControlPanelContainerComponent implements OnInit {
       this.scopeOneRecordsService.getRecordsByFilters(activityYear).subscribe(
           (response: any) => {
             this.scopeOneRecords = response.data;
-              console.log('Scope 1 Records:', this.scopeOneRecords);
               if (this.scopeOneRecords.length > 0) {
                 this.dataSourceScope1 = new MatTableDataSource(this.scopeOneRecords);
                 this.fixedInstChart('line', this.scopeOneRecords.filter((record: any) => record.activityType === 'fixed'));
@@ -106,16 +102,20 @@ export class ControlPanelContainerComponent implements OnInit {
     this.scopeTwoRecordsService.getRecordsByFilters(activityYear).subscribe(
       (response: any) => {
         this.scopeTwoRecords = response.data;
-        console.log('Scope 2 Records:', this.scopeTwoRecords);
-        this.dataSourceScope2 = new MatTableDataSource(this.scopeTwoRecords)
-        this.electricityBuildings('line', this.scopeTwoRecords);
+        if (this.scopeTwoRecords.length > 0) {
+          this.dataSourceScope2 = new MatTableDataSource(this.scopeTwoRecords);
+          this.electricityBuildings('bar', this.scopeTwoRecords.filter((record: any) => record.activityType === 'electricityBuildings'));
+          this.electricityVehicles('line', this.scopeTwoRecords.filter((record: any) => record.activityType === 'electricityVehicles'));
+          this.heatSteamColdCompAir('bar', this.scopeTwoRecords.filter((record: any) => record.activityType === 'heatSteamColdCompAir'));
+        } else {
+          this.showSnackBar('No hay registros con activityType "electricityBuildings".');
+          this.dataSourceScope2 = new MatTableDataSource<any>([]);
+        }
       },
       (error) => {
           if (error.status === 404 && error.messages?.error === "No se encontraron registros con los parámetros proporcionados.") {
-             /*  console.error('No se encontraron registros:', error); */
               this.showSnackBar('No se encontraron registros con los parámetros proporcionados.');
           } else {
-           /*    console.error('Error fetching Scope 1 records:', error); */
               this.showSnackBar('Error al obtener registros de Alcance 2.');
           }
       }
@@ -416,7 +416,16 @@ export class ControlPanelContainerComponent implements OnInit {
 
   electricityBuildings(chartType: keyof ChartTypeRegistry, scop2Data: any): void {
     const ctx = document.getElementById('electricityBuildings') as HTMLCanvasElement;
-    new Chart(ctx, {
+    const monthlyData = new Array(12).fill(0); // Inicializar con 12 meses en 0
+    scop2Data.forEach((dataObject: any) => {
+      const monthIndex = parseInt(dataObject.periodoFactura.replace('M', '')) - 1; // Obtener índice del mes
+      monthlyData[monthIndex] += parseFloat(dataObject.quantity); // Asignar cantidad al mes correspondiente
+    });
+
+    if (this.chartInstanceElectricityBuildings) {
+        this.chartInstanceElectricityBuildings.destroy();
+    }
+    this.chartInstanceElectricityBuildings = new Chart(ctx, {
       type: chartType,
       data: {
         labels: [
@@ -433,22 +442,12 @@ export class ControlPanelContainerComponent implements OnInit {
         ],
         datasets: [{
           label: 'Emissions',
-          data: scop2Data,
+          data: monthlyData,
           backgroundColor: '#555555', 
           borderColor: '#555555',
           borderWidth: 1,
-          // this dataset is drawn below
           order: 1
-      }/* , { */
-          /* label: 'Objective',
-          data: [10, 15, 19, 17],
-          type: 'line',
-          backgroundColor: '#008000', 
-          borderColor: '#008000',
-          borderWidth: 1, */
-          // this dataset is drawn on top
-          /* order: 1 */
-      /* } */]
+      }]
   },
   options: {
       responsive: true,
@@ -478,9 +477,18 @@ export class ControlPanelContainerComponent implements OnInit {
     }
     });
   }
-  electricityVehicles(chartType: keyof ChartTypeRegistry): void {
+  electricityVehicles(chartType: keyof ChartTypeRegistry, scop2Data: any): void {
     const ctx = document.getElementById('electricityVehicles') as HTMLCanvasElement;
-    new Chart(ctx, {
+    const monthlyData = new Array(12).fill(0); // Inicializar con 12 meses en 0
+    scop2Data.forEach((dataObject: any) => {
+      const monthIndex = parseInt(dataObject.periodoFactura.replace('M', '')) - 1; // Obtener índice del mes
+      monthlyData[monthIndex] += parseFloat(dataObject.quantity); // Asignar cantidad al mes correspondiente
+    });
+
+    if (this.chartInstanceElectricityVehicles) {
+        this.chartInstanceElectricityVehicles.destroy();
+    }
+    this.chartInstanceElectricityVehicles = new Chart(ctx, {
       type: chartType,
       data: {
         labels: [
@@ -497,20 +505,11 @@ export class ControlPanelContainerComponent implements OnInit {
         ],
         datasets: [{
           label: 'Emissions',
-          data: [10, 20, 30, 40],
+          data: monthlyData,
           backgroundColor: '#555555', // Gris oscuro
           borderColor: '#555555',
           borderWidth: 1,
           // this dataset is drawn below
-          order: 2
-      }, {
-          label: 'Objective',
-          data: [10, 15, 19, 17],
-          type: 'line',
-          backgroundColor: '#008000', // Púrpura vivo
-          borderColor: '#008000',
-          borderWidth: 2,
-          // this dataset is drawn on top
           order: 1
       }]
   },
@@ -542,9 +541,18 @@ export class ControlPanelContainerComponent implements OnInit {
     }
     });
   }
-  heatSteamColdCompAir(chartType: keyof ChartTypeRegistry): void {
+  heatSteamColdCompAir(chartType: keyof ChartTypeRegistry, scop2Data: any): void {
     const ctx = document.getElementById('heatSteamColdCompAir') as HTMLCanvasElement;
-    new Chart(ctx, {
+    const monthlyData = new Array(12).fill(0); // Inicializar con 12 meses en 0
+    scop2Data.forEach((dataObject: any) => {
+      const monthIndex = parseInt(dataObject.periodoFactura.replace('M', '')) - 1; // Obtener índice del mes
+      monthlyData[monthIndex] += parseFloat(dataObject.quantity); // Asignar cantidad al mes correspondiente
+    });
+
+    if (this.chartInstanceHeatSteamColdCompAir) {
+        this.chartInstanceHeatSteamColdCompAir.destroy();
+    }
+    this.chartInstanceHeatSteamColdCompAir = new Chart(ctx, {
       type: chartType,
       data: {
         labels: [
@@ -561,20 +569,10 @@ export class ControlPanelContainerComponent implements OnInit {
         ],
         datasets: [{
           label: 'Emissions',
-          data: [10, 20, 30, 40,10, 20, 30, 40,10, 20, 30, 40],
-          backgroundColor: '#555555', // Gris oscuro
+          data: monthlyData,
+          backgroundColor: '#555555',
           borderColor: '#555555',
           borderWidth: 1,
-          // this dataset is drawn below
-          order: 2
-      }, {
-          label: 'Objective',
-          data: [10, 15, 19, 17],
-          type: 'line',
-          backgroundColor: '#008000', // Púrpura vivo
-          borderColor: '#008000',
-          borderWidth: 2,
-          // this dataset is drawn on top
           order: 1
       }]
   },
