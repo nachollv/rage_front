@@ -477,14 +477,13 @@ export class ControlPanelContainerComponent implements OnInit {
     });
   }
   electricityVehicles(chartType: keyof ChartTypeRegistry, scop2Data: any): void {
-    console.log(scop2Data)
     const ctx = document.getElementById('electricityVehicles') as HTMLCanvasElement;
     const monthlyData = new Array(12).fill(0); // Inicializar con 12 meses en 0
     scop2Data.forEach((dataObject: any) => {
       const monthIndex = parseInt(dataObject.periodoFactura.replace('M', '')) - 1; // Obtener índice del mes
-      monthlyData[monthIndex] += parseFloat(dataObject.quantity); // Asignar cantidad al mes correspondiente
+      monthlyData[monthIndex] += parseFloat(dataObject.activityData); // Asignar cantidad al mes correspondiente
     });
-
+    console.log(scop2Data, monthlyData)
     if (this.chartInstanceElectricityVehicles) {
         this.chartInstanceElectricityVehicles.destroy();
     }
