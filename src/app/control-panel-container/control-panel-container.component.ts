@@ -23,13 +23,21 @@ export class ControlPanelContainerComponent implements OnInit {
   userName: string = '' // Nombre del usuario
   userId: number = 0 // ID del usuario
   organizacionID: number = 0 // ID de la organización
-  activityYear: number = new Date().getFullYear()-2; // Año de actividad asignado por defecto
   token: string = '' // Token del usuario
   prodCenterID: number = 0 // ID del centro de producción
   scopeOneRecords: any[] = [] // Lista de registros de Scope 1
   scopeTwoRecords: any[] = [] // Lista de registros de Scope 2
   displayedColumnsScope1: string[] = ['year', 'periodoFactura', 'equipmentType', 'fuelType', 'quantity', 'activityType', 'updated_at']
   displayedColumnsScope2: string[] = ['year', 'periodoFactura', 'activityData', 'activityType', 'electricityTradingCompany', 'gdo', 'energyType', 'updated_at']
+
+  chartInstanceFixedEmis: Chart | null = null;
+  chartInstanceElectricityBuildings: Chart | null = null;
+  chartInstanceElectricityVehicles: Chart | null = null;
+  chartInstanceHeatSteamColdCompAir: Chart | null = null;
+  chartInstanceRoadTransp: Chart | null = null;
+  chartInstanceRailSeaAir: Chart | null = null;
+  chartInstanceMachinery: Chart | null = null;
+  chartInstanceFugitiveEmiss: Chart | null = null;
 
   data = [{ }]
   dataSourceScope1 = new MatTableDataSource<any>(this.data)
@@ -45,7 +53,7 @@ export class ControlPanelContainerComponent implements OnInit {
 
   ngOnInit():void {
     this.filterForm = this.fb.group({
-      activityYear: [new Date().getFullYear()], // Por defecto, el año actual
+      activityYear: [new Date().getFullYear()-2], // Por defecto, el año actual menos 2
     });
 
     this.token = this.authService.getToken() || ''
@@ -56,23 +64,13 @@ export class ControlPanelContainerComponent implements OnInit {
     Chart.register(...registerables);
     this.getScopeOneRecords(this.filterForm.value.activityYear)
     this.getScopeTwoRecords(this.filterForm.value.activityYear)
-/*     this.fixedInstChart('line'); */
-    /* this.roadTranspChart('bar');
-    this.railSeaAirChart('line');
-    this.machineryChart('bar');
-    this.fugitiveEmissChart('line'); */
 
-   /*  this.electricityBuildings('line'); */
     this.electricityVehicles('bar');
     this.heatSteamColdCompAir('line');
   }
 
-  onYearFilterSubmit(): void {
-    // Obtener el valor seleccionado del formulario
-    const activityYear = this.filterForm.value.activityYear;
-
-    // Lógica para filtrar los datos por año
-    console.log('Filtrar por año:', activityYear);
+  onYearFilterChange(event: any): void {
+    const activityYear = event;
     this.getScopeOneRecords(activityYear)
     this.getScopeTwoRecords(activityYear)
   }
@@ -126,73 +124,70 @@ export class ControlPanelContainerComponent implements OnInit {
 
   fixedInstChart(chartType: keyof ChartTypeRegistry, scop1Data: any): void {
     const ctx = document.getElementById('fixedInstChart') as HTMLCanvasElement;
-    console.log('Scope 1 fixed Data:', scop1Data);
-    new Chart(ctx, {
+    const monthlyData = new Array(12).fill(0); // Inicializar con 12 meses en 0
 
-      type: chartType,
-      data: {
-        labels: [
-          'January',
-          'February',
-          'March',
-          'April',          'May',
-          'June',
-          'July',
-          'August',          'September',
-          'October',
-          'November',
-          'December',
-        ],
-        datasets: [{
-          label: 'Emissions',
-          data: scop1Data,
-          backgroundColor: '#B22222', // Verde bosque
-          borderColor: '#B22222',
-          borderWidth: 1,  // this dataset is drawn below
-          order: 1
-        }/* , {
-          label: 'Objective',
-          data: [10, 15, 19, 17],
-          type: 'line',
-          backgroundColor: '#008000',
-          borderColor: '#008000',
-          borderWidth: 1, */
-          // this dataset is drawn on top
-          /* order: 1 */
-      /* }*/] 
-  },
-      options: {
-      /*  responsive: true,
-         maintainAspectRatio: true,  */
-        plugins: {  
-          legend: {
-            position: 'top',
-          },
-          title: {
-            display: true,
-            text: 'Fixed Installations - Emissions and objective'
-          }
+    scop1Data.forEach((dataObject: any) => {
+      const monthIndex = parseInt(dataObject.periodoFactura.replace('M', '')) - 1; // Obtener índice del mes
+      monthlyData[monthIndex] += parseFloat(dataObject.quantity); // Asignar cantidad al mes correspondiente
+    });
+
+    if (this.chartInstanceFixedEmis) {
+        this.chartInstanceFixedEmis.destroy();
+    }
+    this.chartInstanceFixedEmis = new Chart(ctx, {
+        type: chartType,
+        data: {
+            labels: [
+                'January', 'February', 'March', 'April', 'May', 'June',
+                'July', 'August', 'September', 'October', 'November', 'December',
+            ],
+            datasets: [{
+                label: 'Emissions',
+                data: monthlyData,
+                backgroundColor: '#B22222',
+                borderColor: '#B22222',
+                borderWidth: 1,
+                order: 1
+            }]
         },
-        interaction: {  
-          mode: 'index',
-          intersect: false,
-        },
-        scales: {
-          y: {
-            beginAtZero: true,
-            stacked: true
-          },
-          x: {
-            stacked: true
-          }
+        options: {
+            plugins: {
+                legend: {
+                    position: 'top',
+                },
+                title: {
+                    display: true,
+                    text: 'Fixed Installations - Emissions and objective'
+                }
+            },
+            interaction: {
+                mode: 'index',
+                intersect: false,
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    stacked: true
+                },
+                x: {
+                    stacked: true
+                }
+            }
         }
-      }
     });
   }
   roadTranspChart(chartType: keyof ChartTypeRegistry, scop1Data: any): void {
-    console.log('Scope 1 road Transport Data:', scop1Data);
     const ctx = document.getElementById('roadTranspChart') as HTMLCanvasElement;
-    new Chart(ctx, {
+    const monthlyData = new Array(12).fill(0); // Inicializar con 12 meses en 0
+    scop1Data.forEach((dataObject: any) => {
+      const monthIndex = parseInt(dataObject.periodoFactura.replace('M', '')) - 1; // Obtener índice del mes
+      monthlyData[monthIndex] += parseFloat(dataObject.quantity); // Asignar cantidad al mes correspondiente
+    });
+
+    if (this.chartInstanceRoadTransp) {
+        this.chartInstanceRoadTransp.destroy();
+    }
+    this.chartInstanceRoadTransp = new Chart(ctx, {
       type: chartType,
       data: {
         labels: [
@@ -209,20 +204,11 @@ export class ControlPanelContainerComponent implements OnInit {
         ],
         datasets: [{
           label: 'Emissions',
-          data: scop1Data,
+          data: monthlyData,
           backgroundColor: '#B22222', // Verde bosque
           borderColor: '#B22222',
           borderWidth: 1,  // this dataset is drawn below
           // this dataset is drawn below
-          order: 2
-      }, {
-          label: 'Objective',
-          data: [10, 15, 19, 17],
-          type: 'line',
-          backgroundColor: '#008000', // Púrpura vivo
-          borderColor: '#008000',
-          borderWidth: 2,
-          // this dataset is drawn on top
           order: 1
       }]
   },
@@ -247,9 +233,17 @@ export class ControlPanelContainerComponent implements OnInit {
     });
   }
   railSeaAirChart(chartType: keyof ChartTypeRegistry, scop1Data: any): void {
-    console.log('Scope 1 railSeaAir Data:', scop1Data);
     const ctx = document.getElementById('railSeaAirChart') as HTMLCanvasElement;
-    new Chart(ctx, {
+    const monthlyData = new Array(12).fill(0); // Inicializar con 12 meses en 0
+    scop1Data.forEach((dataObject: any) => {
+      const monthIndex = parseInt(dataObject.periodoFactura.replace('M', '')) - 1; // Obtener índice del mes
+      monthlyData[monthIndex] += parseFloat(dataObject.quantity); // Asignar cantidad al mes correspondiente
+    });
+
+    if (this.chartInstanceRailSeaAir) {
+        this.chartInstanceRailSeaAir.destroy();
+    }
+    this.chartInstanceRailSeaAir = new Chart(ctx, {
       type: chartType,
       data: {
         labels: [
@@ -266,19 +260,10 @@ export class ControlPanelContainerComponent implements OnInit {
         ],
         datasets: [{
           label: 'Emissions',
-          data: scop1Data,
+          data: monthlyData,
           backgroundColor: '#B22222', // Verde bosque
           borderColor: '#B22222',
           borderWidth: 1,  // this dataset is drawn below
-          order: 2
-      }, {
-          label: 'Objective',
-          data: [10, 15, 19, 17],
-          type: 'line',
-          backgroundColor: '#008000', // Púrpura vivo
-          borderColor: '#008000',
-          borderWidth: 1,
-          // this dataset is drawn on top
           order: 1
       }]
   },
@@ -311,12 +296,20 @@ export class ControlPanelContainerComponent implements OnInit {
     });
   }
   machineryChart(chartType: keyof ChartTypeRegistry, scop1Data: any): void {
-    console.log('Scope 1 machinery Data:', scop1Data);
     const ctx = document.getElementById('machineryChart') as HTMLCanvasElement;
-    new Chart(ctx, {
+    const monthlyData = new Array(12).fill(0); // Inicializar con 12 meses en 0
+    scop1Data.forEach((dataObject: any) => {
+      const monthIndex = parseInt(dataObject.periodoFactura.replace('M', '')) - 1; // Obtener índice del mes
+      monthlyData[monthIndex] += parseFloat(dataObject.quantity); // Asignar cantidad al mes correspondiente
+    });
+
+    if (this.chartInstanceMachinery) {
+        this.chartInstanceMachinery.destroy();
+    }
+    this.chartInstanceMachinery = new Chart(ctx, {
       type: chartType,
-  data: {
-    labels: [          'January',
+      data: {
+      labels: [          'January',
       'February',
       'March',
       'April',          'May',
@@ -328,20 +321,11 @@ export class ControlPanelContainerComponent implements OnInit {
       'December',],
     datasets: [{
       label: 'Emissions',
-      data: scop1Data,
+      data: monthlyData,
       backgroundColor: '#B22222', // Verde bosque
       borderColor: '#B22222',
       borderWidth: 1,  // this dataset is drawn below
       // this dataset is drawn below
-      order: 2
-  }, {
-      label: 'Objective',
-      data: [10, 15, 19, 17],
-      type: 'line',
-      backgroundColor: '#008000', // Púrpura vivo
-      borderColor: '#008000',
-      borderWidth: 2,
-      // this dataset is drawn on top
       order: 1
   }]
   },
@@ -366,9 +350,17 @@ export class ControlPanelContainerComponent implements OnInit {
     });
   }
   fugitiveEmissChart(chartType: keyof ChartTypeRegistry, scop1Data: any): void {
-    console.log('Scope 1 fugitive emissions Data:', scop1Data);
     const ctx = document.getElementById('fugitiveEmissChart') as HTMLCanvasElement;
-    new Chart(ctx, {
+    const monthlyData = new Array(12).fill(0); // Inicializar con 12 meses en 0
+    scop1Data.forEach((dataObject: any) => {
+      const monthIndex = parseInt(dataObject.periodoFactura.replace('M', '')) - 1; // Obtener índice del mes
+      monthlyData[monthIndex] += parseFloat(dataObject.quantity); // Asignar cantidad al mes correspondiente
+    });
+
+    if (this.chartInstanceFugitiveEmiss) {
+        this.chartInstanceFugitiveEmiss.destroy();
+    }
+    this.chartInstanceFugitiveEmiss = new Chart(ctx, {
       type: chartType,
       data: {
         labels: [
@@ -385,21 +377,12 @@ export class ControlPanelContainerComponent implements OnInit {
         ],
         datasets: [{
           label: 'Emissions',
-          data: scop1Data,
+          data: monthlyData,
           backgroundColor: '#B22222', // Verde bosque
           borderColor: '#B22222',
           borderWidth: 1,  // this dataset is drawn below
-          order: 2
-      }, {
-          label: 'Objective',
-          data: [10, 15, 19, 17],
-          type: 'line',
-          backgroundColor: '#008000', // Púrpura vivo
-          borderColor: '#008000',
-          borderWidth: 1,
-          // this dataset is drawn on top
           order: 1
-      }]
+        }]
   },
   options: {
     /*  responsive: true,

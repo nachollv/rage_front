@@ -1,14 +1,14 @@
 <!-- Filtro por activityYear al inicio -->
 <section>
   <h2>{{ 'filter_by_year' | translate }}</h2>
-  <form [formGroup]="filterForm" (ngSubmit)="onYearFilterSubmit()">
+  <form [formGroup]="filterForm">
     <mat-form-field appearance="fill">
       <mat-label>{{ 'activityYear' | translate }}</mat-label>
-      <mat-select id="activityYear" formControlName="activityYear">
+      <mat-select id="activityYear" formControlName="activityYear"  (selectionChange)="onYearFilterChange($event.value)">
         <mat-option *ngFor="let year of availableYears" [value]="year">{{ year }}</mat-option>
       </mat-select>
     </mat-form-field>
-    <button mat-raised-button color="primary" type="submit">{{ 'apply_filter' | translate }}</button>
+
   </form>
 </section>
 
