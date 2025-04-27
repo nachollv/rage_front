@@ -20,6 +20,8 @@
 
   "filter_by_year": "Filtrar per any d'activitat",
   "filter_by_activity": "Filtrar per activitat",
+  "apply_filter": "Aplicar filtre",
+  "clear_filter": "Esborrar filtre",
 
   "electricityOtherEnergies": "Electricitat i altres energies",
   "fixedInstallationsFuelConsumption": "Instalacions fixes",

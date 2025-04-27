@@ -19,6 +19,8 @@
 
   "filter_by_year": "Filter by activity year",
   "filter_by_activity": "Filter by activity",
+  "apply_filter": "Apply filter",
+  "clear_filter": "Clear filter",
   
   "electricityOtherEnergies": "Electricity and other energies",
   "fixedInstallationsFuelConsumption": "Fixed Installations",

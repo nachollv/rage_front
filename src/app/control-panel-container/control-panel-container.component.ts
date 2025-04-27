@@ -6,6 +6,7 @@ import { ScopeOneRecordsService } from '../services/scope-one-records.service';
 import { ScopeTwoRecordsService } from '../services/scope-two-records.service';
 import { AuthService } from '../services/auth.service';
 import { MatTableDataSource } from '@angular/material/table';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-control-panel-container',
@@ -38,6 +39,7 @@ export class ControlPanelContainerComponent implements OnInit {
     private fb: FormBuilder,
     private authService: AuthService,
     private jwtHelper: JwtHelperService,
+    private snackBar: MatSnackBar,
     private scopeOneRecordsService: ScopeOneRecordsService,
     private scopeTwoRecordsService: ScopeTwoRecordsService) {}
 
@@ -75,7 +77,7 @@ export class ControlPanelContainerComponent implements OnInit {
     this.getScopeTwoRecords(activityYear)
   }
 
-  getScopeOneRecords(activityYear:number): void {
+/*   getScopeOneRecords(activityYear:number): void {
     this.scopeOneRecordsService.getRecordsByFilters(activityYear).subscribe(
       (response: any) => {
         this.scopeOneRecords = response.data;
@@ -87,7 +89,27 @@ export class ControlPanelContainerComponent implements OnInit {
         console.error('Error fetching Scope 1 records:', error);
       }
     );
+  } */
+    getScopeOneRecords(activityYear: number): void {
+      this.scopeOneRecordsService.getRecordsByFilters(activityYear).subscribe(
+          (response: any) => {
+              this.scopeOneRecords = response.data;
+              console.log('Scope 1 Records:', this.scopeOneRecords);
+              this.dataSourceScope1 = new MatTableDataSource(this.scopeOneRecords);
+              this.fixedInstChart('line', this.scopeOneRecords);
+          },
+          (error) => {
+              if (error.status === 404 && error.messages?.error === "No se encontraron registros con los parámetros proporcionados.") {
+                  console.error('No se encontraron registros:', error);
+                  this.showSnackBar('No se encontraron registros con los parámetros proporcionados.');
+              } else {
+                  console.error('Error fetching Scope 1 records:', error);
+                  this.showSnackBar('Error al obtener registros de Alcance 1.');
+              }
+          }
+      );
   }
+  
   getScopeTwoRecords(activityYear:number): void {
     this.scopeTwoRecordsService.getRecordsByFilters(activityYear).subscribe(
       (response: any) => {
@@ -97,7 +119,13 @@ export class ControlPanelContainerComponent implements OnInit {
         this.electricityBuildings('line', this.scopeTwoRecords);
       },
       (error) => {
-        console.error('Error fetching Scope 2 records:', error);
+          if (error.status === 404 && error.messages?.error === "No se encontraron registros con los parámetros proporcionados.") {
+              console.error('No se encontraron registros:', error);
+              this.showSnackBar('No se encontraron registros con los parámetros proporcionados.');
+          } else {
+              console.error('Error fetching Scope 1 records:', error);
+              this.showSnackBar('Error al obtener registros de Alcance 2.');
+          }
       }
     );
   }
@@ -594,6 +622,15 @@ export class ControlPanelContainerComponent implements OnInit {
         }
       }
     }
+    });
+  }
+
+  private showSnackBar(msg: string): void {
+    this.snackBar.open(msg, 'Close', {
+      duration: 15000,
+      verticalPosition: 'top',
+      horizontalPosition: 'center',
+      panelClass: ['custom-snackbar'],
     });
   }
 }
