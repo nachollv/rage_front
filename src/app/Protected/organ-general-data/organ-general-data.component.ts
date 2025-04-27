@@ -13,7 +13,7 @@ import { ProductioncenterService } from '../../services/productioncenter.service
 import { SectorsDTO } from '../../models/sectors.dto';
 import { SectoresEconomicosService } from '../../services/sectores.economicos.service';
 import { activityIndexDTO } from '../../models/activityIndex.dto';
-import { activityranquingDTO } from '../../models/activityranquing.dto';
+import { actRanquingDTO } from '../../models/actRanquing.dto';
 import { MatCheckboxChange } from '@angular/material/checkbox';
 import { EmisionesElectricasEdificiosService } from '../../services/emisiones-electricas-edificios.service';
 
@@ -41,7 +41,7 @@ export class OrganGeneralDataComponent implements OnInit {
   sectors: SectorsDTO[] = []
   objectiveList: string[] = ['Reducción del consumo de energía', 'Minimizar residuos', 'Ahorro de agua', 'Disminución de Emisiones de CO2', 'Aumento del uso de energías renovables'];
   activityIndex: activityIndexDTO[] = [{id: '1', name: 'Producción anual'}, {id: '2', name: 'Consumo energético'}, {id: '3', name: 'Superficie de las instalaciones'}, {id: '4', name: 'Número de empleados'}, {id: '5', name: 'Facturación'}];
-  activityRanquing: activityranquingDTO[] = [{id: '1', name: 'Cantidad de datos registrados'}, {id: '2', name: 'Calidad de los datos registrados'}, {id: '3', name: 'Frecuencia de actualización del registro'}];
+  activityRanquing: actRanquingDTO[] = [{id: '1', name: 'Cantidad de datos registrados'}, {id: '2', name: 'Calidad de los datos registrados'}, {id: '3', name: 'Frecuencia de actualización del registro'}];
   token: string = ''
   organizationID!: number
   availableYears: number[] = []
