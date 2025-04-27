@@ -29,6 +29,7 @@ export class MachineryComponent implements OnInit, OnChanges {
     this.emissionsForm = this.fb.group({
            year: [{ value: this.activityYear, disabled: true }],
            productionCenter: [{value: this.productionCenter, disabled: true}],
+           periodoFactura: ['', Validators.required],
            machineryType: ['', Validators.required],
            fuelType: ['', Validators.required],
            activityData: [0, [Validators.required, Validators.min(0)]],

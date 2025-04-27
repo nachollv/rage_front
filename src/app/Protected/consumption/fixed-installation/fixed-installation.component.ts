@@ -31,6 +31,7 @@ export class FixedInstallationComponent implements OnInit, OnChanges {
       this.fuelForm = this.fb.group({
         year: [{ value: this.activityYear, disabled: true }],
         productionCenter: [{value: this.productionCenter, disabled: true}],
+        periodoFactura: ['', Validators.required],
         fuelType: ['', Validators.required],
         activityData: ['', [Validators.required, Validators.min(0)]],
         defaultFactor: this.fb.group({

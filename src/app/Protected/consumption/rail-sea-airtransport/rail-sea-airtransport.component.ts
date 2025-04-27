@@ -30,6 +30,7 @@ export class RailSeaAirtransportComponent  implements OnInit, OnChanges {
     this.transportForm = this.fb.group({
       year: [{ value: this.activityYear, disabled: true }],
       productionCenter: [{value: this.productionCenter, disabled: true}],
+      periodoFactura: ['', Validators.required],
       equipmentType: ['', Validators.required],
       transportType: ['', Validators.required],
       fuelType: ['', Validators.required],

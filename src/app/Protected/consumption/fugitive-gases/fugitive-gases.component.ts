@@ -30,6 +30,7 @@ export class FugitiveGasesComponent implements OnInit, OnChanges {
     this.emisionesForm = this.fb.group({
       calculationYear: [{ value: this.activityYear, disabled: true }, [Validators.required, Validators.minLength(4), Validators.maxLength(4)]],
       productionCenter: [{ value: this.productionCenter, disabled: true }, Validators.required],
+      periodoFactura: ['', Validators.required],
       nombre_gas_mezcla: ['', Validators.required],
       formulaQuimica: [{ value: '', disabled: true }, Validators.required],
       pca: [{ value: '', disabled: true }, Validators.required],

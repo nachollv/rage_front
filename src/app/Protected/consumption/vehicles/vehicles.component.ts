@@ -36,6 +36,7 @@ export class MachineryVehiclesComponent  implements OnInit, OnChanges {
     this.vehicleForm = this.fb.group({
       year: [{ value: this.activityYear }],
       productionCenter: [{ value: this.productionCenter }],
+      periodoFactura: ['', Validators.required],
       equipmentType: ['', Validators.required],
       fuelType: ['', Validators.required],
       quantity: [0, [Validators.required, Validators.pattern(/^\d+$/)]],
@@ -77,7 +78,7 @@ export class MachineryVehiclesComponent  implements OnInit, OnChanges {
       })
   }
 
-  getScopeOneRecords(calculationYear: number = this.activityYear, productionCenter: number = this.productionCenter, activityType: string = 'vehicles') {
+  getScopeOneRecords(calculationYear: number = this.activityYear, productionCenter: number = this.productionCenter, activityType: string = 'roadTransp') {
     this.scopeOneRecordsService.getRecordsByFilters(calculationYear, productionCenter, activityType)
       .subscribe({
         next: (registros: any) => {
@@ -107,7 +108,7 @@ export class MachineryVehiclesComponent  implements OnInit, OnChanges {
     formValue.productionCenter = this.productionCenter
     formValue.equipmentType = this.vehicleForm.get('equipmentType')?.value.id
     formValue.fuelType = this.vehicleForm.get('fuelType')?.value.id
-    formValue.activityType = 'vehicles'
+    formValue.activityType = 'roadTransp'
     formValue.quantity = this.vehicleForm.get('quantity')?.value
     console.log("formValue: ", formValue)
     this.scopeOneRecordsService.createRecord(formValue)

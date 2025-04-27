@@ -57,10 +57,10 @@ export class ControlPanelContainerComponent implements OnInit {
     this.getScopeOneRecords(this.filterForm.value.activityYear)
     this.getScopeTwoRecords(this.filterForm.value.activityYear)
 /*     this.fixedInstChart('line'); */
-    this.roadTranspChart('bar');
+    /* this.roadTranspChart('bar');
     this.railSeaAirChart('line');
     this.machineryChart('bar');
-    this.fugitiveEmissChart('line');
+    this.fugitiveEmissChart('line'); */
 
    /*  this.electricityBuildings('line'); */
     this.electricityVehicles('bar');
@@ -77,33 +77,27 @@ export class ControlPanelContainerComponent implements OnInit {
     this.getScopeTwoRecords(activityYear)
   }
 
-/*   getScopeOneRecords(activityYear:number): void {
-    this.scopeOneRecordsService.getRecordsByFilters(activityYear).subscribe(
-      (response: any) => {
-        this.scopeOneRecords = response.data;
-        console.log('Scope 1 Records:', this.scopeOneRecords);
-        this.dataSourceScope1 = new MatTableDataSource(this.scopeOneRecords) 
-        this.fixedInstChart('line', this.scopeOneRecords);
-      },
-      (error) => {
-        console.error('Error fetching Scope 1 records:', error);
-      }
-    );
-  } */
-    getScopeOneRecords(activityYear: number): void {
+  getScopeOneRecords(activityYear: number): void {
       this.scopeOneRecordsService.getRecordsByFilters(activityYear).subscribe(
           (response: any) => {
-              this.scopeOneRecords = response.data;
+            this.scopeOneRecords = response.data;
               console.log('Scope 1 Records:', this.scopeOneRecords);
-              this.dataSourceScope1 = new MatTableDataSource(this.scopeOneRecords);
-              this.fixedInstChart('line', this.scopeOneRecords);
+              if (this.scopeOneRecords.length > 0) {
+                this.dataSourceScope1 = new MatTableDataSource(this.scopeOneRecords);
+                this.fixedInstChart('line', this.scopeOneRecords.filter((record: any) => record.activityType === 'fixed'));
+                this.roadTranspChart('bar', this.scopeOneRecords.filter((record: any) => record.activityType === 'roadTransp'));
+                this.railSeaAirChart('line', this.scopeOneRecords.filter((record: any) => record.activityType === 'transferma'));
+                this.machineryChart('bar', this.scopeOneRecords.filter((record: any) => record.activityType === 'machinery'));
+                this.fugitiveEmissChart('line', this.scopeOneRecords.filter((record: any) => record.activityType === 'fugitiveEmissions'));
+              } else {
+                this.showSnackBar('No hay registros con activityType "fixed".');
+                this.dataSourceScope1 = new MatTableDataSource<any>([]);
+              }
           },
           (error) => {
               if (error.status === 404 && error.messages?.error === "No se encontraron registros con los parámetros proporcionados.") {
-                  console.error('No se encontraron registros:', error);
                   this.showSnackBar('No se encontraron registros con los parámetros proporcionados.');
               } else {
-                  console.error('Error fetching Scope 1 records:', error);
                   this.showSnackBar('Error al obtener registros de Alcance 1.');
               }
           }
@@ -120,10 +114,10 @@ export class ControlPanelContainerComponent implements OnInit {
       },
       (error) => {
           if (error.status === 404 && error.messages?.error === "No se encontraron registros con los parámetros proporcionados.") {
-              console.error('No se encontraron registros:', error);
+             /*  console.error('No se encontraron registros:', error); */
               this.showSnackBar('No se encontraron registros con los parámetros proporcionados.');
           } else {
-              console.error('Error fetching Scope 1 records:', error);
+           /*    console.error('Error fetching Scope 1 records:', error); */
               this.showSnackBar('Error al obtener registros de Alcance 2.');
           }
       }
@@ -132,6 +126,7 @@ export class ControlPanelContainerComponent implements OnInit {
 
   fixedInstChart(chartType: keyof ChartTypeRegistry, scop1Data: any): void {
     const ctx = document.getElementById('fixedInstChart') as HTMLCanvasElement;
+    console.log('Scope 1 fixed Data:', scop1Data);
     new Chart(ctx, {
 
       type: chartType,
@@ -194,7 +189,8 @@ export class ControlPanelContainerComponent implements OnInit {
       }
     });
   }
-  roadTranspChart(chartType: keyof ChartTypeRegistry): void {
+  roadTranspChart(chartType: keyof ChartTypeRegistry, scop1Data: any): void {
+    console.log('Scope 1 road Transport Data:', scop1Data);
     const ctx = document.getElementById('roadTranspChart') as HTMLCanvasElement;
     new Chart(ctx, {
       type: chartType,
@@ -213,7 +209,7 @@ export class ControlPanelContainerComponent implements OnInit {
         ],
         datasets: [{
           label: 'Emissions',
-          data: [10, 20, 30, 40],
+          data: scop1Data,
           backgroundColor: '#B22222', // Verde bosque
           borderColor: '#B22222',
           borderWidth: 1,  // this dataset is drawn below
@@ -250,7 +246,8 @@ export class ControlPanelContainerComponent implements OnInit {
     }
     });
   }
-  railSeaAirChart(chartType: keyof ChartTypeRegistry): void {
+  railSeaAirChart(chartType: keyof ChartTypeRegistry, scop1Data: any): void {
+    console.log('Scope 1 railSeaAir Data:', scop1Data);
     const ctx = document.getElementById('railSeaAirChart') as HTMLCanvasElement;
     new Chart(ctx, {
       type: chartType,
@@ -269,7 +266,7 @@ export class ControlPanelContainerComponent implements OnInit {
         ],
         datasets: [{
           label: 'Emissions',
-          data: [10, 20, 30, 40],
+          data: scop1Data,
           backgroundColor: '#B22222', // Verde bosque
           borderColor: '#B22222',
           borderWidth: 1,  // this dataset is drawn below
@@ -313,7 +310,8 @@ export class ControlPanelContainerComponent implements OnInit {
     }
     });
   }
-  machineryChart(chartType: keyof ChartTypeRegistry): void {
+  machineryChart(chartType: keyof ChartTypeRegistry, scop1Data: any): void {
+    console.log('Scope 1 machinery Data:', scop1Data);
     const ctx = document.getElementById('machineryChart') as HTMLCanvasElement;
     new Chart(ctx, {
       type: chartType,
@@ -330,7 +328,7 @@ export class ControlPanelContainerComponent implements OnInit {
       'December',],
     datasets: [{
       label: 'Emissions',
-      data: [10, 20, 30, 40],
+      data: scop1Data,
       backgroundColor: '#B22222', // Verde bosque
       borderColor: '#B22222',
       borderWidth: 1,  // this dataset is drawn below
@@ -367,7 +365,8 @@ export class ControlPanelContainerComponent implements OnInit {
   }
     });
   }
-  fugitiveEmissChart(chartType: keyof ChartTypeRegistry): void {
+  fugitiveEmissChart(chartType: keyof ChartTypeRegistry, scop1Data: any): void {
+    console.log('Scope 1 fugitive emissions Data:', scop1Data);
     const ctx = document.getElementById('fugitiveEmissChart') as HTMLCanvasElement;
     new Chart(ctx, {
       type: chartType,
@@ -386,7 +385,7 @@ export class ControlPanelContainerComponent implements OnInit {
         ],
         datasets: [{
           label: 'Emissions',
-          data: [10, 20, 30, 40],
+          data: scop1Data,
           backgroundColor: '#B22222', // Verde bosque
           borderColor: '#B22222',
           borderWidth: 1,  // this dataset is drawn below
