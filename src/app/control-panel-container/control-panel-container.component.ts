@@ -413,7 +413,6 @@ export class ControlPanelContainerComponent implements OnInit {
     });
   }
 
-
   electricityBuildings(chartType: keyof ChartTypeRegistry, scop2Data: any): void {
     const ctx = document.getElementById('electricityBuildings') as HTMLCanvasElement;
     const monthlyData = new Array(12).fill(0); // Inicializar con 12 meses en 0
@@ -478,6 +477,7 @@ export class ControlPanelContainerComponent implements OnInit {
     });
   }
   electricityVehicles(chartType: keyof ChartTypeRegistry, scop2Data: any): void {
+    console.log(scop2Data)
     const ctx = document.getElementById('electricityVehicles') as HTMLCanvasElement;
     const monthlyData = new Array(12).fill(0); // Inicializar con 12 meses en 0
     scop2Data.forEach((dataObject: any) => {
@@ -514,8 +514,8 @@ export class ControlPanelContainerComponent implements OnInit {
       }]
   },
   options: {
-      responsive: true,
-      maintainAspectRatio: true,
+/*       responsive: true,
+      maintainAspectRatio: true, */
       plugins: {  
         legend: {
           position: 'top',
