@@ -106,7 +106,7 @@ export class ControlPanelContainerComponent implements OnInit {
           this.dataSourceScope2 = new MatTableDataSource(this.scopeTwoRecords);
           this.electricityBuildings('bar', this.scopeTwoRecords.filter((record: any) => record.activityType === 'electricityBuildings'));
           this.electricityVehicles('line', this.scopeTwoRecords.filter((record: any) => record.activityType === 'electricityVehicles'));
-          this.heatSteamColdCompAir('bar', this.scopeTwoRecords.filter((record: any) => record.activityType === 'heatSteamColdCompAir'));
+          this.heatSteamColdCompAir('bar', this.scopeTwoRecords.filter((record: any) => record.activityType === 'heatSteamColdAir'));
         } else {
           this.showSnackBar('No hay registros con activityType "electricityBuildings".');
           this.dataSourceScope2 = new MatTableDataSource<any>([]);
