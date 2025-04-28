@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { DialogComponent } from '../../dialog/dialog.component';
-import { TranslationService } from '../../services/translate.service';
 import { AuthService } from '../../services/auth.service';
 import { ProductioncenterService } from '../../services/productioncenter.service';
 import { OrganizacionService } from '../../services/organizacion.service';
@@ -23,7 +22,7 @@ export class ConsumptionComponent {
   prodCenterID: number = 0
   prodCenterName: string = ''
   organizacionID: number = 0
-  availableYears: string[] = [];
+  availableYears: number[] = [];
   currentActivityYear: string = ''
   auxText: AuxTextDTO | undefined
   title: string = ''
@@ -39,8 +38,7 @@ export class ConsumptionComponent {
     private auxHelpingTextsService: AuxHelpingTextsService,
     private snackBar: MatSnackBar,
     private productionCenterService: ProductioncenterService,
-    private organizationService: OrganizacionService,
-    private translate: TranslationService) {
+    private organizationService: OrganizacionService) {
      this.productionCenterForm = this.fb.group({
       activityYear: [{ value: '' }, [Validators.required]],
       /* productionCenter: [{value: '', disabled: true}], */
@@ -65,23 +63,19 @@ export class ConsumptionComponent {
   this.getProductionCenterDetails( this.prodCenterID )
   }
 
-
   getProductionCenterDetails(id:number) {
     this.productionCenterService.getCentroDeProduccionByID(id)
       .subscribe((pCenterItem: any) => {
         this.prodCenterName = pCenterItem.nombre
-        /* this.productionCenterForm.patchValue({
-          productionCenter: pCenterItem.nombre
-        }) */
+
       })
   }
 
   getOrganizacionActivityYears(organizacionID: number) {
     this.organizationService.getActivityYearsByOrganization(organizacionID)
       .subscribe((years: any) => {
-        this.availableYears = years
-        this.availableYears = ['2020', '2021', '2022', '2023']
-        console.log('Años de actividad:', this.availableYears)
+        this.currentActivityYear = years.data[0]
+        this.availableYears = this.currentActivityYear.split(", ").map(Number)
       })  
    }
 
