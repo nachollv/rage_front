@@ -129,7 +129,6 @@ export class ElectricityVehiclesComponent implements OnInit, OnChanges{
     formValue.activityType = 'electricityVehicles' // Tipo de actividad
     formValue.periodoFactura = formValue.periodoFactura // Asigna el periodo de factura
     this.vehiclesElectricity.markAllAsTouched(); // Marca todos los campos como tocados para mostrar errores de validación
-    console.log('Form Value after assignment:', formValue); // Imprime el valor del formulario después de la asignación
     this.scopeTWoRecordsService.createConsumption(this.vehiclesElectricity.value).subscribe({
       next: (response) => { 
         this.showSnackBar(response.message); // Imprime la respuesta del servidor
