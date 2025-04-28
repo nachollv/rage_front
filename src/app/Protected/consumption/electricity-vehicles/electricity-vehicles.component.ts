@@ -72,7 +72,7 @@ export class ElectricityVehiclesComponent implements OnInit, OnChanges{
             itemsElectricity.data.forEach((registro: any) => {
               registro.delete = true
               const matchedComercializadora = this.comercializadorasElectricas.find((comercializadoraItem: any) => comercializadoraItem.id === registro.electricityTradingCompany);
-              registro.electricityTradingCompany = matchedComercializadora?.nombreComercial || 'desconocido';
+              registro.electricityTradingCompany = matchedComercializadora?.nombreComercial+" (fe:"+matchedComercializadora?.kg_CO2_kWh+")" || 'desconocido';
             })
 
           })
