@@ -4,6 +4,8 @@ import { EmisionesMachineryService } from '../../../services/emisiones-machinery
 import { ScopeOneRecordsService } from '../../../services/scope-one-records.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MesesService } from '../../../services/meses.service';
+
 @Component({
   selector: 'app-machinery',
   templateUrl: './machinery.component.html',
@@ -22,6 +24,7 @@ export class MachineryComponent implements OnInit, OnChanges {
   constructor( private fb: FormBuilder,
       private emisionesMachineryService: EmisionesMachineryService,
       private snackBar: MatSnackBar,
+      private mesesService: MesesService,
       private scopeOneRecordsService: ScopeOneRecordsService,
       ) { }
 
@@ -60,12 +63,15 @@ export class MachineryComponent implements OnInit, OnChanges {
               this.emisionesMachineryService.getEmisionesByYear(calculationYear)
               .subscribe((emissions:any) => {
                 this.fuelEmisTypes = emissions
+                const meses = this.mesesService.getMeses();
                 registros.data.forEach((registro: any) => {
                   registro.edit = true
                   registro.delete = true
                   const matchedFuel = this.fuelEmisTypes.find((fuelItem: any) => fuelItem.id === registro.fuelType);
                   registro.fuelType = matchedFuel?.FuelType || 'desconocido';
                   registro.categoria = matchedFuel?.Categoria || 'desconocido';
+                  const resultado = meses.find((mes) => mes.key === registro.periodoFactura);
+                  registro.periodoFactura = resultado?.value   || 'desconocido';
                 })
                 this.dataSource = new MatTableDataSource(registros.data)
               })

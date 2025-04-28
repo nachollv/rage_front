@@ -7,21 +7,8 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ScopeOneRecordsService } from '../../../services/scope-one-records.service';
 import { ProductioncenterService } from '../../../services/productioncenter.service';
+import { MesesService } from '../../../services/meses.service';
 
-const meses = [
-  { key: 'M01', value: 'Enero', value_ca: 'Gener' },
-  { key: 'M02', value: 'Febrero', value_ca: 'Febrer' },
-  { key: 'M03', value: 'Marzo', value_ca: 'Març' },
-  { key: 'M04', value: 'Abril', value_ca: 'Abril' },
-  { key: 'M05', value: 'Mayo', value_ca: 'Maig' },
-  { key: 'M06', value: 'Junio', value_ca: 'Juny' },
-  { key: 'M07', value: 'Julio', value_ca: 'Juliol' },
-  { key: 'M08', value: 'Agosto', value_ca: 'Agost' },
-  { key: 'M09', value: 'Septiembre', value_ca: 'Setembre' },
-  { key: 'M10', value: 'Octubre', value_ca: 'Octubre' },
-  { key: 'M11', value: 'Noviembre', value_ca: 'Novembre' },
-  { key: 'M12', value: 'Diciembre', value_ca: 'Desembre' }
-];
 
 @Component({
   selector: 'app-vehicles',
@@ -43,6 +30,7 @@ export class MachineryVehiclesComponent  implements OnInit, OnChanges {
     private scopeOneRecordsService: ScopeOneRecordsService,
     private vehicleFuelService: VehiclesFuelConsumptionService,
     private productionCenterService: ProductioncenterService,
+    private mesesService: MesesService,
     private snackBar: MatSnackBar
   ) {
   }
@@ -99,6 +87,7 @@ export class MachineryVehiclesComponent  implements OnInit, OnChanges {
           this.vehicleFuelService.getByYear(this.activityYear)
           .subscribe((fuelTypes:any) => {
             this.fuelTypes = fuelTypes
+            const meses = this.mesesService.getMeses();
             registros.data.forEach((registro: any) => {
               registro.edit = true
               registro.delete = true

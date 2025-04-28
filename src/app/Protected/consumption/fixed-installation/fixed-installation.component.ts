@@ -6,20 +6,8 @@ import { DialogComponent } from '../../../dialog/dialog.component';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ScopeOneRecordsService } from '../../../services/scope-one-records.service';
-const meses = [
-  { key: 'M01', value: 'Enero', value_ca: 'Gener' },
-  { key: 'M02', value: 'Febrero', value_ca: 'Febrer' },
-  { key: 'M03', value: 'Marzo', value_ca: 'Març' },
-  { key: 'M04', value: 'Abril', value_ca: 'Abril' },
-  { key: 'M05', value: 'Mayo', value_ca: 'Maig' },
-  { key: 'M06', value: 'Junio', value_ca: 'Juny' },
-  { key: 'M07', value: 'Julio', value_ca: 'Juliol' },
-  { key: 'M08', value: 'Agosto', value_ca: 'Agost' },
-  { key: 'M09', value: 'Septiembre', value_ca: 'Setembre' },
-  { key: 'M10', value: 'Octubre', value_ca: 'Octubre' },
-  { key: 'M11', value: 'Noviembre', value_ca: 'Novembre' },
-  { key: 'M12', value: 'Diciembre', value_ca: 'Desembre' }
-];
+import { MesesService } from '../../../services/meses.service';
+
 
 @Component({
   selector: 'app-fixed-installation',
@@ -39,6 +27,7 @@ export class FixedInstallationComponent implements OnInit, OnChanges {
     constructor(private fb: FormBuilder, public dialog: MatDialog,
       private fuelDataService: FuelDataService,
       private scopeOneRecordsService: ScopeOneRecordsService,
+      private mesesService: MesesService,
       private snackBar: MatSnackBar) { }
 
     ngOnInit(): void {
@@ -85,6 +74,7 @@ export class FixedInstallationComponent implements OnInit, OnChanges {
             this.fuelDataService.getByYear(calculationYear)
             .subscribe((fuel:any) => {
               this.fuelTypes = fuel
+              const meses = this.mesesService.getMeses();
               registros.data.forEach((registro: any) => {
                 registro.edit = true
                 registro.delete = true

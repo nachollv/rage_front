@@ -4,20 +4,8 @@ import { EmisionesTransFerAerMarService } from '../../../services/emisiones-tran
 import { ScopeOneRecordsService } from '../../../services/scope-one-records.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSnackBar } from '@angular/material/snack-bar';
-const meses = [
-  { key: 'M01', value: 'Enero', value_ca: 'Gener' },
-  { key: 'M02', value: 'Febrero', value_ca: 'Febrer' },
-  { key: 'M03', value: 'Marzo', value_ca: 'Març' },
-  { key: 'M04', value: 'Abril', value_ca: 'Abril' },
-  { key: 'M05', value: 'Mayo', value_ca: 'Maig' },
-  { key: 'M06', value: 'Junio', value_ca: 'Juny' },
-  { key: 'M07', value: 'Julio', value_ca: 'Juliol' },
-  { key: 'M08', value: 'Agosto', value_ca: 'Agost' },
-  { key: 'M09', value: 'Septiembre', value_ca: 'Setembre' },
-  { key: 'M10', value: 'Octubre', value_ca: 'Octubre' },
-  { key: 'M11', value: 'Noviembre', value_ca: 'Novembre' },
-  { key: 'M12', value: 'Diciembre', value_ca: 'Desembre' }
-];
+import { MesesService } from '../../../services/meses.service';
+
 
 @Component({
   selector: 'app-rail-sea-airtransport',
@@ -37,6 +25,7 @@ export class RailSeaAirtransportComponent  implements OnInit, OnChanges {
   constructor( private fb: FormBuilder,
       private emisionesTransFerAerMarService: EmisionesTransFerAerMarService,
       private snackBar: MatSnackBar,
+      private mesesService: MesesService,
       private scopeOneRecordsService: ScopeOneRecordsService,
       ) { }
 
@@ -74,6 +63,7 @@ export class RailSeaAirtransportComponent  implements OnInit, OnChanges {
             this.emisionesTransFerAerMarService.getEmisionesByYear(calculationYear)
             .subscribe((emissions:any) => {
               this.fuelEmisTypes = emissions
+              const meses = this.mesesService.getMeses();
               registros.data.forEach((registro: any) => {
                 registro.edit = true
                 registro.delete = true

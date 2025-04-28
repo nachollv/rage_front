@@ -6,6 +6,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent } from '../../../dialog/dialog.component';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MesesService } from '../../../services/meses.service';
 
 @Component({
   selector: 'app-fugitive-gases',
@@ -24,7 +25,9 @@ export class FugitiveGasesComponent implements OnInit, OnChanges {
 
   constructor(private fb: FormBuilder, private leakGases: LeakrefrigerantgasesService, 
     private registerLeakService: RegistroemisionesFugasService, private dialog: MatDialog,
-    private snackBar: MatSnackBar) {  }
+    private snackBar: MatSnackBar,
+    private mesesService: MesesService
+  ) {  }
 
   ngOnInit(): void { 
     this.emisionesForm = this.fb.group({
@@ -55,12 +58,34 @@ export class FugitiveGasesComponent implements OnInit, OnChanges {
 
   getregistros() {
     this.registerLeakService.getRegistroByFilters(this.activityYear, this.productionCenter)
-      .subscribe((registrosleak:any) => {
-        this.dataSource = new MatTableDataSource(registrosleak.data)
-      this.dataSource.paginator = null
-      //this.showSnackBar('Registros leak obtenidos: ' + registrosleak.length)
-      })
-  }
+      .subscribe((registrosleak: any) => {
+        const meses = this.mesesService.getMeses(); // Obtener el array de meses
+        this.leakGases.getAll().subscribe((gases: any[]) => {
+          registrosleak.data.forEach((registro: any) => {
+            // Obtener el nombre del mes
+            registro.delete = true
+            const mesEncontrado = meses.find((mes) => mes.key === registro.periodoFactura);
+            registro.periodoFactura = mesEncontrado?.value || 'desconocido';
+
+            // Obtener información del gas
+            const gasEncontrado = gases.find((gas: any) => gas.id === registro.nombre_gas_mezcla);
+            registro.nombre_gas_mezcla = gasEncontrado?.Nombre || 'desconocido';
+            registro.formulaQuimica = gasEncontrado?.formula || 'desconocido';
+            registro.PCA_6Ar = gasEncontrado?.PCA_6Ar || 'desconocido';
+          });
+
+          this.dataSource = new MatTableDataSource(registrosleak.data);
+          this.dataSource.paginator = null;
+          this.dataSource.sort = null;
+        });
+
+        this.dataSource = new MatTableDataSource(registrosleak.data);
+        this.dataSource.paginator = null;
+        this.dataSource.sort = null;
+      });
+}
+
+
 
   setPCAAndChemicalFormula() {
     const gasData = this.emisionesForm.value
