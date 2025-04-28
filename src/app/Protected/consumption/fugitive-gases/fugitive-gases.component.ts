@@ -15,7 +15,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class FugitiveGasesComponent implements OnInit, OnChanges {
   @Input() activityYear: number = 0
   @Input() productionCenter: number = 0
-  displayedColumns: string[] = ['year', 'nombre_gas_mezcla', 'capacidad_equipo', 'recarga_equipo', 'updated_at', 'edit', 'delete']
+  displayedColumns: string[] = ['year', 'periodoFactura', 'nombre_gas_mezcla', 'capacidad_equipo', 'recarga_equipo', 'updated_at', 'delete']
   data = [{ }]
   dataSource = new MatTableDataSource<any>(this.data)
   emisionesForm!: FormGroup;

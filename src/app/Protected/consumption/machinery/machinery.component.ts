@@ -14,7 +14,7 @@ export class MachineryComponent implements OnInit, OnChanges {
   @Input() productionCenter: number = 0
   emissionsForm!: FormGroup;
   showField: boolean = false
-  displayedColumns: string[] = ['year', 'categoria', 'fuelType', 'activityData', 'updated_at', 'edit', 'delete']
+  displayedColumns: string[] = ['year', 'periodoFactura', 'categoria', 'fuelType', 'activityData', 'updated_at', 'delete']
   data = [{ }]
   dataSource = new MatTableDataSource<any>(this.data)
   fuelEmisTypes: any[] = []

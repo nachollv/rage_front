@@ -16,7 +16,7 @@ import { ProductioncenterService } from '../../../services/productioncenter.serv
 export class MachineryVehiclesComponent  implements OnInit, OnChanges {
   @Input() activityYear!: number
   @Input() productionCenter!: number
-    displayedColumns: string[] = ['year', 'categoria', 'equipmentType', 'fuelType', 'activityData', 'updated_at', 'edit', 'delete']
+    displayedColumns: string[] = ['year', 'periodoFactura', 'categoria', 'equipmentType', 'fuelType', 'activityData', 'updated_at', 'delete']
       data = [ { }, ]
       dataSource = new MatTableDataSource<any>(this.data)
       vehicleCategories: any[] = []

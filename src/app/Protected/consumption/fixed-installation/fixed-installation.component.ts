@@ -16,7 +16,7 @@ import { ScopeOneRecordsService } from '../../../services/scope-one-records.serv
 export class FixedInstallationComponent implements OnInit, OnChanges {
     @Input() activityYear!: number
     @Input() productionCenter: number = 0
-    displayedColumns: string[] = ['year', 'fuelType', 'activityData', 'updated_at', 'edit', 'delete']
+    displayedColumns: string[] = ['year', 'periodoFactura', 'fuelType', 'activityData', 'updated_at', 'delete']
     data = [{ }]
     dataSource = new MatTableDataSource<any>(this.data)
     fuelForm!: FormGroup;
