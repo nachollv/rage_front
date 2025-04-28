@@ -29,8 +29,6 @@ export class FixedInstallationComponent implements OnInit, OnChanges {
 
     ngOnInit(): void {
       this.fuelForm = this.fb.group({
-/*         year: [{ value: this.activityYear, disabled: true }],
-        productionCenter: [{value: this.productionCenter, disabled: true}], */
         periodoFactura: ['', Validators.required],
         fuelType: ['', Validators.required],
         activityData: ['', [Validators.required, Validators.min(0)]],
@@ -107,7 +105,7 @@ setupValueChangeListeners(): void {
         const formValue = this.fuelForm.value
         formValue.year = this.activityYear
         formValue.productionCenter = this.productionCenter
-        formValue.fuel_type = this.fuelForm.get('fuelType')?.value.id
+        formValue.fuelType = this.fuelForm.get('fuelType')?.value.id
         formValue.activityType = 'fixed'
         formValue.activityData = this.fuelForm.get('activityData')?.value
         this.scopeOneRecordsService.createRecord(formValue)
