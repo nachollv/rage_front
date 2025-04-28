@@ -87,7 +87,6 @@ export class FixedInstallationComponent implements OnInit, OnChanges {
 
 // Configuración de los listeners para recalcular valores
 setupValueChangeListeners(): void {
-  // Listener para fuelType
   this.fuelForm.get('fuelType')?.valueChanges.subscribe((selectedFuel) => {
     if (selectedFuel) {
       this.setEmissionFactors();
@@ -95,7 +94,6 @@ setupValueChangeListeners(): void {
     }
   });
 
-  // Listener para activityData
   this.fuelForm.get('activityData')?.valueChanges.subscribe(() => {
     this.calculateEmissions();
   });
