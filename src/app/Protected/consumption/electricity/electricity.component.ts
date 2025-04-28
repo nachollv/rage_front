@@ -65,30 +65,18 @@ export class ElectricityComponent implements OnInit, OnChanges {
       this.scopeTwoRecordsService.getRecordsByFilters(calculationYear, productionCenter, activityType)
         .subscribe({
           next: (itemsElectricity: any) => {
-            console.log('Registros electricity buildings:', itemsElectricity.data);
             this.emisionesElectricasservice.getByYear(calculationYear)
               .subscribe((comercializadora:any) => {
                 this.comercializadorasElectricas = comercializadora
                 itemsElectricity.data.forEach((registro: any) => {
+                  console.log('Registro:', registro, registro.electricityTradingCompany);
                   registro.edit = true
                   registro.delete = true
                   const matchedComercializadora = this.comercializadorasElectricas.find((comercializadoraItem: any) => comercializadoraItem.id === registro.electricityTradingCompany);
-                  registro.electricityTradingCompany = matchedComercializadora?.electricityTradingCompany || 'desconocido';
-                  const matchedGdo = this.comercializadorasElectricas.find((gdoItem: any) => gdoItem.id === registro.gdo);  
+                  registro.electricityTradingCompany = matchedComercializadora?.nombreComercial || 'desconocido';
                 })
 
               })
-            
-/*             this.fuelDataService.getByYear(calculationYear)
-            .subscribe((fuel:any) => {
-              this.fuelTypes = fuel
-              registros.data.forEach((registro: any) => {
-                registro.edit = true
-                registro.delete = true
-                const matchedFuel = this.fuelTypes.find((fuelItem: any) => fuelItem.id === registro.fuelType);
-                registro.fuelType = matchedFuel?.Combustible || 'desconocido';
-              })
-            }) */
             this.dataSource = new MatTableDataSource(itemsElectricity.data)
           },
           error: (err: any) => {
