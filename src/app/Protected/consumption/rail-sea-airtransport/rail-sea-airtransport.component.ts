@@ -28,13 +28,10 @@ export class RailSeaAirtransportComponent  implements OnInit, OnChanges {
 
   ngOnInit(): void {
     this.transportForm = this.fb.group({
-      year: [{ value: this.activityYear, disabled: true }],
-      productionCenter: [{value: this.productionCenter, disabled: true}],
       periodoFactura: ['', Validators.required],
       equipmentType: ['', Validators.required],
-      transportType: ['', Validators.required],
       fuelType: ['', Validators.required],
-      fuelQuantity: ['', [Validators.required, Validators.min(0)]],
+      activityData: ['', [Validators.required, Validators.min(0)]],
       defaultEmissionFactor: this.fb.group({
         co2: [{ value: 0, disabled: true }],
         ch4: [{ value: 0, disabled: true }],
@@ -86,13 +83,13 @@ export class RailSeaAirtransportComponent  implements OnInit, OnChanges {
     formValue.year = this.activityYear
     formValue.productionCenter = this.productionCenter
     formValue.fuelType = this.transportForm.get('fuelType')?.value.id
-    formValue.activityType = 'rail-sea-air-transport'
+    formValue.activityType = 'transferma'
     formValue.quantity = this.transportForm.get('quantity')?.value
 
     this.scopeOneRecordsService.createRecord(formValue)
       .subscribe(
         (fuel: any) => {
-          this.showSnackBar('Éxito:' + fuel);
+          this.showSnackBar(fuel.message);
           this.getScopeOneRecords(this.activityYear, this.productionCenter, 'transferma')
           this.transportForm.reset()
         },
@@ -127,10 +124,10 @@ export class RailSeaAirtransportComponent  implements OnInit, OnChanges {
       const CH4_g_ud = parseFloat( fuelType.CH4_g_ud );
       const CO2_kg_ud = parseFloat( fuelType.CO2_kg_ud );
       const N2O_g_ud = parseFloat( fuelType.N2O_g_ud );
-      this.transportForm.get('partialEmissions')?.get('co2')?.setValue(fuelData.fuelQuantity * CO2_kg_ud);
-      this.transportForm.get('partialEmissions')?.get('ch4')?.setValue(fuelData.fuelQuantity * CH4_g_ud);
-      this.transportForm.get('partialEmissions')?.get('n2o')?.setValue(fuelData.fuelQuantity * N2O_g_ud);
-      this.transportForm.get('totalEmissions')?.setValue(fuelData.fuelQuantity * CO2_kg_ud+fuelData.fuelQuantity * CH4_g_ud+fuelData.fuelQuantity * N2O_g_ud)
+      this.transportForm.get('partialEmissions')?.get('co2')?.setValue(fuelData.activityData * CO2_kg_ud);
+      this.transportForm.get('partialEmissions')?.get('ch4')?.setValue(fuelData.activityData * CH4_g_ud);
+      this.transportForm.get('partialEmissions')?.get('n2o')?.setValue(fuelData.activityData * N2O_g_ud);
+      this.transportForm.get('totalEmissions')?.setValue(fuelData.activityData * CO2_kg_ud+fuelData.activityData * CH4_g_ud+fuelData.activityData * N2O_g_ud)
   }
 
   getFuelEmissions(year: number, selectedTransport: string) {

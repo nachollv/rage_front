@@ -3,25 +3,25 @@
     <mat-form-field appearance="fill">
       <mat-label>Periodo factura</mat-label>
       <mat-select formControlName="periodoFactura">
-        <mat-option value="01">Enero</mat-option>
-        <mat-option value="02">Febrero</mat-option>
-        <mat-option value="03">Marzo</mat-option>
-        <mat-option value="04">Abril</mat-option>
-        <mat-option value="05">Mayo</mat-option>
-        <mat-option value="06">Junio</mat-option>
-        <mat-option value="07">Julio</mat-option>
-        <mat-option value="08">Agosto</mat-option>
-        <mat-option value="09">Setiembre</mat-option>
-        <mat-option value="10">Octubre</mat-option>
-        <mat-option value="11">Noviembre</mat-option>
-        <mat-option value="12">Diciembre</mat-option>
+        <mat-option value="M01">Enero</mat-option>
+        <mat-option value="M02">Febrero</mat-option>
+        <mat-option value="M03">Marzo</mat-option>
+        <mat-option value="M04">Abril</mat-option>
+        <mat-option value="M05">Mayo</mat-option>
+        <mat-option value="M06">Junio</mat-option>
+        <mat-option value="M07">Julio</mat-option>
+        <mat-option value="M08">Agosto</mat-option>
+        <mat-option value="M09">Setiembre</mat-option>
+        <mat-option value="M10">Octubre</mat-option>
+        <mat-option value="M11">Noviembre</mat-option>
+        <mat-option value="M12">Diciembre</mat-option>
       </mat-select>
     </mat-form-field>
     <section ngClass="type-fuel-quantity">
       <!-- Tipo de transporte -->
       <mat-form-field appearance="fill">
         <mat-label>Tipo de transporte</mat-label>
-        <mat-select formControlName="transportType" (selectionChange)="onTransportChange($event.value)">
+        <mat-select formControlName="equipmentType" (selectionChange)="onTransportChange($event.value)">
           <mat-option value="Ferrocarril">Transporte ferroviario</mat-option>
           <mat-option value="Marítimo">Transporte marítimo</mat-option>
           <mat-option value="Aéreo">Transporte aéreo</mat-option>
@@ -39,7 +39,7 @@
       <!-- Cantidad combustible (ud) -->
       <mat-form-field appearance="fill">
         <mat-label>Dato de actividad (ud)</mat-label>
-        <input matInput type="number" formControlName="fuelQuantity" (input)="onQuantityChange()"/>
+        <input matInput type="number" formControlName="activityData" (input)="onQuantityChange()"/>
       </mat-form-field>
     </section>
 
