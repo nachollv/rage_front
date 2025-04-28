@@ -18,15 +18,8 @@ export class ElectricityComponent implements OnInit, OnChanges {
   comercializadorasElectricas: any[] = []
   errorMessage: string = ''
 
-  displayedColumns: string[] = ['year', 'periodoFactura', 'electricityTradingCompany', 'activityData', 'factorMixElectrico', 'gdo', 'fe_co2', 'updated_at', 'delete']
-  data = [
-   /*  { delegation: 'Central', year: 2023, '01': 25, '02': 34.25, '03': '23.54', '04': 45.345, '05': 45.345, '06': 45.345, '07': 45.345, '08': 45.345, '09': 45.345, '10': 45.345, '11': 45.345, edit: true, delete: true},
-    { delegation: 'Felanitx', year: 2023, '01': 25, '02': 34.25, '03': '23.54', '04': 45.345, '05': 45.345, '06': 45.345, '07': 45.345, '08': 45.345, '09': 45.345, '10': 45.345, '11': 45.345, edit: true, delete: true },
-    { delegation: 'Manacor', year: 2023, '01': 25, '02': 34.25, '03': '23.54', '04': 45.345, '05': 45.345, '06': 45.345, '07': 45.345, '08': 45.345, '09': 45.345, '10': 45.345, '11': 45.345, edit: true, delete: true },  
-    { delegation: 'Calvià', year: 2023, '01': 25, '02': 34.25, '03': '23.54', '04': 45.345, '05': 45.345, '06': 45.345, '07': 45.345, '08': 45.345, '09': 45.345, '10': 45.345, '11': 45.345, edit: false, delete: true },
-    { delegation: 'Andraitx', year: 2023, '01': 25, '02': 34.25, '03': '23.54', '04': 45.345, '05': 45.345, '06': 45.345, '07': 45.345, '08': 45.345, '09': 45.345, '10': 45.345, '11': 45.345, edit: true, delete: true },
-    { delegation: 'Pollença', year: 2023, '01': 25, '02': 34.25, '03': '23.54', '04': 45.345, '05': 45.345, '06': 45.345, '07': 45.345, '08': 45.345, '09': 45.345, '10': 45.345, '11': 45.345, edit: true, delete: true } */
-  ];
+  displayedColumns: string[] = ['year', 'periodoFactura', 'electricityTradingCompany', 'activityData', 'gdo', 'updated_at', 'delete']
+  data = [ { } ];
   dataSource = new MatTableDataSource<any>(this.data)
   buildingElecConsumption!: FormGroup;
   
