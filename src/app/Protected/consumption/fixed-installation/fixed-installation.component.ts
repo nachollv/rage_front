@@ -67,6 +67,7 @@ export class FixedInstallationComponent implements OnInit, OnChanges {
       this.scopeOneRecordsService.getRecordsByFilters(calculationYear, productionCenter, activityType)
         .subscribe({
           next: (registros: any) => {
+
             this.fuelDataService.getByYear(calculationYear)
             .subscribe((fuel:any) => {
               this.fuelTypes = fuel
@@ -78,6 +79,7 @@ export class FixedInstallationComponent implements OnInit, OnChanges {
               })
               this.dataSource = new MatTableDataSource(registros.data)
             })
+          
           },
           error: (err: any) => {
             this.showSnackBar('Error al obtener los registros ' + err.messages?.error || err.message)

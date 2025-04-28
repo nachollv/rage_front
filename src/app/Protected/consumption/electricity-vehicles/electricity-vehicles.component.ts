@@ -66,6 +66,7 @@ export class ElectricityVehiclesComponent implements OnInit, OnChanges{
     this.scopeTWoRecordsService.getRecordsByFilters(this.activityYear, this.productionCenter, 'electricityVehicles')
     .subscribe({
       next: (data: any) => {
+        //console.log('registros electricity vehicles:', data); // Imprime la respuesta del servidor
         data.data.forEach((record: any) => {
           record.periodoFactura = record.periodoFactura.split('T')[0]; // Formato de fecha
           record.updated_at = record.updated_at.split('T')[0]; // Formato de fecha

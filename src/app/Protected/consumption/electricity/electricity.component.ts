@@ -18,7 +18,7 @@ export class ElectricityComponent implements OnInit, OnChanges {
   comercializadorasElectricas: any[] = []
   errorMessage: string = ''
 
-  displayedColumns: string[] = ['year', 'periodoFactura', 'comercializadora', 'activityData', 'factorMixElectrico', 'gdo', 'fe_co2', 'updated_at', 'delete']
+  displayedColumns: string[] = ['year', 'periodoFactura', 'electricityTradingCompany', 'activityData', 'factorMixElectrico', 'gdo', 'fe_co2', 'updated_at', 'delete']
   data = [
    /*  { delegation: 'Central', year: 2023, '01': 25, '02': 34.25, '03': '23.54', '04': 45.345, '05': 45.345, '06': 45.345, '07': 45.345, '08': 45.345, '09': 45.345, '10': 45.345, '11': 45.345, edit: true, delete: true},
     { delegation: 'Felanitx', year: 2023, '01': 25, '02': 34.25, '03': '23.54', '04': 45.345, '05': 45.345, '06': 45.345, '07': 45.345, '08': 45.345, '09': 45.345, '10': 45.345, '11': 45.345, edit: true, delete: true },
@@ -50,7 +50,8 @@ export class ElectricityComponent implements OnInit, OnChanges {
         emisionesCO2e: [{ value: 0, disabled: true }] 
       });
       this.getAllEmissionsbyYear(this.activityYear)
-      this.getScopeTwoRecords(this.activityYear, this.productionCenter)
+      this.getScopeTwoRecords()
+      this.dataSource = new MatTableDataSource<any>(this.data)
       this.setupListeners()
     }
 
@@ -63,7 +64,21 @@ export class ElectricityComponent implements OnInit, OnChanges {
     getScopeTwoRecords(calculationYear: number = this.activityYear, productionCenter: number = this.productionCenter, activityType: string = 'electricityBuildings'): void {
       this.scopeTwoRecordsService.getRecordsByFilters(calculationYear, productionCenter, activityType)
         .subscribe({
-          next: (registros: any) => {
+          next: (itemsElectricity: any) => {
+            console.log('Registros electricity buildings:', itemsElectricity.data);
+            this.emisionesElectricasservice.getByYear(calculationYear)
+              .subscribe((comercializadora:any) => {
+                this.comercializadorasElectricas = comercializadora
+                itemsElectricity.data.forEach((registro: any) => {
+                  registro.edit = true
+                  registro.delete = true
+                  const matchedComercializadora = this.comercializadorasElectricas.find((comercializadoraItem: any) => comercializadoraItem.id === registro.electricityTradingCompany);
+                  registro.electricityTradingCompany = matchedComercializadora?.electricityTradingCompany || 'desconocido';
+                  const matchedGdo = this.comercializadorasElectricas.find((gdoItem: any) => gdoItem.id === registro.gdo);  
+                })
+
+              })
+            
 /*             this.fuelDataService.getByYear(calculationYear)
             .subscribe((fuel:any) => {
               this.fuelTypes = fuel
@@ -73,8 +88,8 @@ export class ElectricityComponent implements OnInit, OnChanges {
                 const matchedFuel = this.fuelTypes.find((fuelItem: any) => fuelItem.id === registro.fuelType);
                 registro.fuelType = matchedFuel?.Combustible || 'desconocido';
               })
-              this.dataSource = new MatTableDataSource(registros.data)
             }) */
+            this.dataSource = new MatTableDataSource(itemsElectricity.data)
           },
           error: (err: any) => {
             this.showSnackBar('Error al obtener los registros ' + err.messages?.error || err.message)
@@ -86,7 +101,6 @@ export class ElectricityComponent implements OnInit, OnChanges {
       this.emisionesElectricasservice.getByYear(year).subscribe({
         next: (data) => {
           this.comercializadorasElectricas = data;
-          console.log('Emisiones obtenidas:', this.comercializadorasElectricas);
         },
         error: (error) => {
           this.errorMessage = error.message;
@@ -133,9 +147,9 @@ export class ElectricityComponent implements OnInit, OnChanges {
             });
           });
         }
-      }
+    }
       
-      onSubmit() {
+    onSubmit() {
         const formValue = this.buildingElecConsumption.value
         formValue.year = this.activityYear
         formValue.productionCenter = this.productionCenter
@@ -154,7 +168,7 @@ export class ElectricityComponent implements OnInit, OnChanges {
             this.showSnackBar(error.message); // Manejo de errores
           }
         });
-      }
+    }
 
     openDialog(): void {
         const dialogRef = this.dialog.open(DialogComponent, {
