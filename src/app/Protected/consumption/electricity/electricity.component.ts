@@ -54,16 +54,14 @@ export class ElectricityComponent implements OnInit, OnChanges {
       }
     }
 
-    getScopeTwoRecords(calculationYear: number = this.activityYear, productionCenter: number = this.productionCenter, activityType: string = 'electricityBuildings'): void {
-      this.scopeTwoRecordsService.getRecordsByFilters(calculationYear, productionCenter, activityType)
+    getScopeTwoRecords(activityYear: number = this.activityYear, productionCenter: number = this.productionCenter, activityType: string = 'electricityBuildings'): void {
+      this.scopeTwoRecordsService.getRecordsByFilters(activityYear, productionCenter, activityType)
         .subscribe({
           next: (itemsElectricity: any) => {
-            this.emisionesElectricasservice.getByYear(calculationYear)
+            this.emisionesElectricasservice.getByYear(activityYear)
               .subscribe((comercializadora:any) => {
                 this.comercializadorasElectricas = comercializadora
                 itemsElectricity.data.forEach((registro: any) => {
-                  console.log('Registro:', registro, registro.electricityTradingCompany);
-                  registro.edit = true
                   registro.delete = true
                   const matchedComercializadora = this.comercializadorasElectricas.find((comercializadoraItem: any) => comercializadoraItem.id === registro.electricityTradingCompany);
                   registro.electricityTradingCompany = matchedComercializadora?.nombreComercial || 'desconocido';

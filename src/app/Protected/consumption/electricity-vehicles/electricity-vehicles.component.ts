@@ -65,18 +65,21 @@ export class ElectricityVehiclesComponent implements OnInit, OnChanges{
   getScopeTwoRecords() {
     this.scopeTWoRecordsService.getRecordsByFilters(this.activityYear, this.productionCenter, 'electricityVehicles')
     .subscribe({
-      next: (data: any) => {
-        //console.log('registros electricity vehicles:', data); // Imprime la respuesta del servidor
-        data.data.forEach((record: any) => {
-          record.periodoFactura = record.periodoFactura.split('T')[0]; // Formato de fecha
-          record.updated_at = record.updated_at.split('T')[0]; // Formato de fecha
-          record.activityData = record.activityData + " kWh" // Formato de número
-          record.delete = true
-        });
-        this.dataSource.data = data.data; // Asigna los datos a la fuente de datos de la tabla
+      next: (itemsElectricity: any) => {
+        this.emisionesElectricasservice.getByYear(this.activityYear)
+          .subscribe((comercializadora:any) => {
+            this.comercializadorasElectricas = comercializadora
+            itemsElectricity.data.forEach((registro: any) => {
+              registro.delete = true
+              const matchedComercializadora = this.comercializadorasElectricas.find((comercializadoraItem: any) => comercializadoraItem.id === registro.electricityTradingCompany);
+              registro.electricityTradingCompany = matchedComercializadora?.nombreComercial || 'desconocido';
+            })
+
+          })
+        this.dataSource = new MatTableDataSource(itemsElectricity.data)
       },
-      error: (error) => {
-        console.error('Error al obtener los registros:', error); // Manejo de errores
+      error: (err: any) => {
+        this.showSnackBar('Error al obtener los registros ' + err.messages?.error || err.message)
       }
     });
   }
