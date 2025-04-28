@@ -8,41 +8,44 @@
         <mat-option *ngFor="let year of availableYears" [value]="year">{{ year }}</mat-option>
       </mat-select>
     </mat-form-field>
-
   </form>
 </section>
 
 
 <h2>{{'scope1' | translate}} {{'scope1_1' | translate}}</h2>
 <section ngClass="scope1">
-  <article >
+  <article ngClass="fixed">
     <canvas id="fixedInstChart"></canvas>
   </article>
-  <article >
+  <article ngClass="road">
     <canvas id="roadTranspChart"></canvas>
   </article>
-  <article >
+  <article ngClass="rail">
     <canvas id="railSeaAirChart"></canvas>
   </article>
-  <article >
+  <article ngClass="machinery">
     <canvas id="machineryChart"></canvas>
   </article>
-  <article >
+  <article ngClass="fugitive">
     <canvas id="fugitiveEmissChart"></canvas>
   </article>
-  <app-data-table [displayedColumns]="displayedColumnsScope1" [dataSource]="dataSourceScope1"></app-data-table>
+  <article ngClass="scope1Table">
+    <app-data-table [displayedColumns]="displayedColumnsScope1" [dataSource]="dataSourceScope1"></app-data-table>
+  </article>
 </section>
-<section>>
+
 <h2>{{'scope2' | translate}} {{'scope2_2' | translate}}</h2>
-<section  ngClass="scope2">
-  <article >
+<section ngClass="scope2">
+  <article ngClass="electricity" >
     <canvas id="electricityBuildings"></canvas>
   </article>
-  <article >
+  <article ngClass="electricityVehicles">
     <canvas id="electricityVehicles"></canvas>
   </article>
-  <article >
+  <article ngClass="heat" >
     <canvas id="heatSteamColdCompAir"></canvas>
   </article>
+  <article ngClass="scope2Table">
   <app-data-table [displayedColumns]="displayedColumnsScope2" [dataSource]="dataSourceScope2"></app-data-table>
+  </article>
 </section>
