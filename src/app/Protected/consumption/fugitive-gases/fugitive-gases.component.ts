@@ -92,14 +92,12 @@ export class FugitiveGasesComponent implements OnInit, OnChanges {
 
   onSubmit(): void {
     const formValue = this.emisionesForm.value
-    const calculationYearValue = this.emisionesForm.get('calculationYear')?.value;
-    const productionCenterValue = this.emisionesForm.get('productionCenter')?.value;
     formValue.capacidad_equipo = parseFloat(formValue.capacidad_equipo).toFixed(2);
     formValue.recarga_equipo = parseFloat(formValue.recarga_equipo).toFixed(2);
-    formValue.calculationYear = calculationYearValue;
-    formValue.productionCenter = productionCenterValue;
+    formValue.year = this.activityYear;
+    formValue.productionCenter = this.productionCenter;
     formValue.activityType = 'fugitive-gases'
-    formValue.nombre_gas_mezcla = formValue.nombre_gas_mezcla.Nombre;
+    formValue.nombre_gas_mezcla = formValue.nombre_gas_mezcla.id;
     console.log(formValue)
 
      this.registerLeakService.createRegistro(formValue).subscribe({
