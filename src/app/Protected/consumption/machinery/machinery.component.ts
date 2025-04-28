@@ -27,10 +27,8 @@ export class MachineryComponent implements OnInit, OnChanges {
 
   ngOnInit(): void { 
     this.emissionsForm = this.fb.group({
-           year: [{ value: this.activityYear, disabled: true }],
-           productionCenter: [{value: this.productionCenter, disabled: true}],
            periodoFactura: ['', Validators.required],
-           machineryType: ['', Validators.required],
+           equipmentType: ['', Validators.required],
            fuelType: ['', Validators.required],
            activityData: [0, [Validators.required, Validators.min(0)]],
            defaultEmissionFactor: this.fb.group({
@@ -70,7 +68,6 @@ export class MachineryComponent implements OnInit, OnChanges {
                   registro.categoria = matchedFuel?.Categoria || 'desconocido';
                 })
                 this.dataSource = new MatTableDataSource(registros.data)
-                //this.showSnackBar('Registros obtenidos maquinaria: ' + registros.data.length)
               })
             },
             error: (err: any) => {
@@ -93,8 +90,8 @@ export class MachineryComponent implements OnInit, OnChanges {
       this.calculateEmissions();
     });
 
-    // Listener para machineryType (puedes agregar lógica específica si es necesario)
-    this.emissionsForm.get('machineryType')?.valueChanges.subscribe(() => {
+    // Listener para equipmentType (puedes agregar lógica específica si es necesario)
+    this.emissionsForm.get('equipmentType')?.valueChanges.subscribe(() => {
       this.calculateEmissions();
     });
   }
@@ -124,14 +121,15 @@ export class MachineryComponent implements OnInit, OnChanges {
     formValue.year = this.activityYear
     formValue.productionCenter = this.productionCenter
     formValue.activityType = 'machinery'
+    formValue.fuelType = this.emissionsForm.get('fuelType')?.value.id
     console.log("formValue: ", formValue)
 
     this.scopeOneRecordsService.createRecord(formValue)
       .subscribe(
         (result: any) => {
-          this.showSnackBar('Éxito:' + result);
+          this.showSnackBar(result.message);
           this.getScopeOneRecords(this.activityYear, this.productionCenter, 'machinery')
-          //this.emissionsForm.reset()
+          this.emissionsForm.reset()
         },
         (error: any) => {
           this.showSnackBar('Error al crear:' + error);
