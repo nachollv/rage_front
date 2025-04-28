@@ -60,7 +60,7 @@ export class ElectricityComponent implements OnInit, OnChanges {
       }
     }
 
-    getScopeTwoRecords(calculationYear: number = this.activityYear, productionCenter: number = this.productionCenter, activityType: string = 'electricityVehicles'): void {
+    getScopeTwoRecords(calculationYear: number = this.activityYear, productionCenter: number = this.productionCenter, activityType: string = 'electricityBuildings'): void {
       this.scopeTwoRecordsService.getRecordsByFilters(calculationYear, productionCenter, activityType)
         .subscribe({
           next: (registros: any) => {
@@ -135,20 +135,13 @@ export class ElectricityComponent implements OnInit, OnChanges {
         }
       }
       
-         
-    /*     onSubmit() {
-      if (this.buildingElecConsumption.valid) {
-        console.log(this.buildingElecConsumption.value);
-      }
-    } */
       onSubmit() {
         const formValue = this.buildingElecConsumption.value
         formValue.year = this.activityYear
         formValue.productionCenter = this.productionCenter
-        formValue.activityType = 'electricityVehicles' // Tipo de actividad
+        formValue.activityType = 'electricityBuildings' // Tipo de actividad
         this.buildingElecConsumption.markAllAsTouched(); // Marca todos los campos como tocados para mostrar errores de validación
-        console.log('Form Value:', formValue); // Imprime el valor del formulario
-     
+
         this.scopeTwoRecordsService.createConsumption(this.buildingElecConsumption.value).subscribe({
           next: (response) => { 
             this.showSnackBar(response.message); // Imprime la respuesta del servidor

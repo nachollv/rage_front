@@ -32,15 +32,12 @@ export class ElectricityVehiclesComponent implements OnInit, OnChanges{
     this.vehiclesElectricity = this.fb.group({
         periodoFactura: ['', Validators.required],
         consumos: this.fb.group({
-          energyType: [''], // Tipo de energía
           comercializadora: ['', [Validators.required]],
           fe_co2: [{ value: null, disabled: true }],
           activityData: ['', [Validators.required, Validators.pattern(/^\d+(\.\d{2})?$/)]],
           factorMixElectrico : [{ value: 0, disabled: true }, [Validators.required, Validators.pattern(/^\d+(\.\d{2})?$/)]],
           gdo: ['', [Validators.required]]
         }),
-        gdo:[0],
-        electricityTradingCompany: [0],
         emisionesCO2e: [{ value: 0, disabled: true }] 
       });
       this.getScopeTwoRecords()
@@ -132,16 +129,17 @@ export class ElectricityVehiclesComponent implements OnInit, OnChanges{
     formValue.activityType = 'electricityVehicles' // Tipo de actividad
     formValue.periodoFactura = formValue.periodoFactura // Asigna el periodo de factura
     this.vehiclesElectricity.markAllAsTouched(); // Marca todos los campos como tocados para mostrar errores de validación
+    console.log('Form Value after assignment:', formValue); // Imprime el valor del formulario después de la asignación
     this.scopeTWoRecordsService.createConsumption(this.vehiclesElectricity.value).subscribe({
       next: (response) => { 
-        this.showSnackBar('Registro creado de actividad creado correctamente!'); // Imprime la respuesta del servidor
+        this.showSnackBar(response.message); // Imprime la respuesta del servidor
         this.getScopeTwoRecords(); // Actualiza la tabla después de crear un nuevo registro
         this.dataSource.data.push(response); // Agrega el nuevo registro a la tabla
         this.dataSource._updateChangeSubscription(); // Actualiza la fuente de datos de la tabla
         this.vehiclesElectricity.reset(); // Resetea el formulario después de enviar
       },
       error: (error) => {   
-        this.showSnackBar('Error al crear el registro: '+ error); // Manejo de errores
+        this.showSnackBar(error.message); // Manejo de errores
       }
     });
   }

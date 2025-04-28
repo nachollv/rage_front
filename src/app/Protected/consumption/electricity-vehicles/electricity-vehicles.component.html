@@ -25,7 +25,7 @@
             <mat-label>Comercializadora</mat-label>
             <mat-select formControlName="comercializadora" (selectionChange)="onComercializadoraChange($event.value)">
               <mat-option *ngFor="let comercializadora of comercializadorasElectricas" [value]="comercializadora">
-                {{ comercializadora.Comercializadora }}
+                {{ comercializadora.nombreComercial }}
               </mat-option>
             </mat-select>
           </mat-form-field>
