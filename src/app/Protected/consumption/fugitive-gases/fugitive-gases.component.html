@@ -19,7 +19,7 @@
   </mat-form-field>
   <mat-form-field>
     <mat-label>Nombre del gas o de la mezcla</mat-label>
-    <mat-select formControlName="equipmentType" placeholder="Introduce el nombre del gas o mezcla" (selectionChange)="setPCAAndChemicalFormula()">
+    <mat-select formControlName="nombre_gas_mezcla" placeholder="Introduce el nombre del gas o mezcla" (selectionChange)="setPCAAndChemicalFormula()">
       <mat-option *ngFor="let gas of gasTypes" [value]="gas">{{ gas.Nombre }}</mat-option>
     </mat-select>
   </mat-form-field>
