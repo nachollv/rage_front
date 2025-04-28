@@ -5,6 +5,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent } from '../../../dialog/dialog.component';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { ScopeTwoRecordsService } from '../../../services/scope-two-records.service';
 
 @Component({
   selector: 'app-electricity',
@@ -31,6 +32,8 @@ export class ElectricityComponent implements OnInit, OnChanges {
   
     constructor(private fb: FormBuilder, 
       private emisionesElectricasservice: EmisionesElectricasEdificiosService,
+      private scopeTwoRecordsService: ScopeTwoRecordsService,
+      private snackBar: MatSnackBar,
       public dialog: MatDialog) {
     }
 
@@ -47,6 +50,7 @@ export class ElectricityComponent implements OnInit, OnChanges {
         emisionesCO2e: [{ value: 0, disabled: true }] 
       });
       this.getAllEmissionsbyYear(this.activityYear)
+      this.getScopeTwoRecords(this.activityYear, this.productionCenter)
       this.setupListeners()
     }
 
@@ -54,6 +58,28 @@ export class ElectricityComponent implements OnInit, OnChanges {
       if (changes['activityYear'] && !changes['activityYear'].firstChange) {
         this.getAllEmissionsbyYear(this.activityYear);
       }
+    }
+
+    getScopeTwoRecords(calculationYear: number = this.activityYear, productionCenter: number = this.productionCenter, activityType: string = 'electricityVehicles'): void {
+      this.scopeTwoRecordsService.getRecordsByFilters(calculationYear, productionCenter, activityType)
+        .subscribe({
+          next: (registros: any) => {
+/*             this.fuelDataService.getByYear(calculationYear)
+            .subscribe((fuel:any) => {
+              this.fuelTypes = fuel
+              registros.data.forEach((registro: any) => {
+                registro.edit = true
+                registro.delete = true
+                const matchedFuel = this.fuelTypes.find((fuelItem: any) => fuelItem.id === registro.fuelType);
+                registro.fuelType = matchedFuel?.Combustible || 'desconocido';
+              })
+              this.dataSource = new MatTableDataSource(registros.data)
+            }) */
+          },
+          error: (err: any) => {
+            this.showSnackBar('Error al obtener los registros ' + err.messages?.error || err.message)
+          }
+        });
     }
 
     getAllEmissionsbyYear(year:number): void {
@@ -110,11 +136,32 @@ export class ElectricityComponent implements OnInit, OnChanges {
       }
       
          
-    onSubmit() {
+    /*     onSubmit() {
       if (this.buildingElecConsumption.valid) {
         console.log(this.buildingElecConsumption.value);
       }
-    }
+    } */
+      onSubmit() {
+        const formValue = this.buildingElecConsumption.value
+        formValue.year = this.activityYear
+        formValue.productionCenter = this.productionCenter
+        formValue.activityType = 'electricityVehicles' // Tipo de actividad
+        this.buildingElecConsumption.markAllAsTouched(); // Marca todos los campos como tocados para mostrar errores de validación
+        console.log('Form Value:', formValue); // Imprime el valor del formulario
+     
+        this.scopeTwoRecordsService.createConsumption(this.buildingElecConsumption.value).subscribe({
+          next: (response) => { 
+            this.showSnackBar(response.message); // Imprime la respuesta del servidor
+            this.getScopeTwoRecords(); // Actualiza la tabla después de crear un nuevo registro
+            this.dataSource.data.push(response); // Agrega el nuevo registro a la tabla
+            this.dataSource._updateChangeSubscription(); // Actualiza la fuente de datos de la tabla
+            this.buildingElecConsumption.reset(); // Resetea el formulario después de enviar
+          },
+          error: (error) => {   
+            this.showSnackBar(error.message); // Manejo de errores
+          }
+        });
+      }
 
     openDialog(): void {
         const dialogRef = this.dialog.open(DialogComponent, {
@@ -131,6 +178,15 @@ export class ElectricityComponent implements OnInit, OnChanges {
         dialogRef.afterClosed().subscribe(result => {
           console.log('El dialog se cerró');
         });
+    }
+
+    private showSnackBar(msg: string): void {
+      this.snackBar.open(msg, 'Close', {
+        duration: 15000,
+        verticalPosition: 'top',
+        horizontalPosition: 'center',
+        panelClass: ['custom-snackbar'],
+      });
     }
   }
   
