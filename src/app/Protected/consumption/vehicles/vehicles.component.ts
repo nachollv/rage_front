@@ -111,7 +111,8 @@ setupValueChangeListeners(): void {
   });
 
   this.vehicleForm.get('activityData')?.valueChanges.subscribe(() => {
-    this.calculateEmissions();
+    console.log('activityData changed')
+    this.onactivityDataChange();
   });
 }
 
