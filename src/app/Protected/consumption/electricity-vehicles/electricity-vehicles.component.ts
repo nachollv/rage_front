@@ -17,7 +17,7 @@ export class ElectricityVehiclesComponent implements OnInit, OnChanges{
   @Input() productionCenter: number = 0
   comercializadorasElectricas: any[] = []
   errorMessage: string = ''
-  displayedColumns: string[] = ['year', 'periodoFactura', 'energyType', 'activityData', 'updated_at', 'delete']
+  displayedColumns: string[] = ['year', 'periodoFactura', 'electricityTradingCompany', 'activityData', 'gdo', 'updated_at', 'delete']
   data = [{}]; 
   dataSource = new MatTableDataSource<any>(this.data)
   vehiclesElectricity!: FormGroup;
