@@ -124,12 +124,11 @@ setupValueChangeListeners(): void {
     formValue.fuelType = this.vehicleForm.get('fuelType')?.value.id
     formValue.activityType = 'roadTransp'
     formValue.activityData = this.vehicleForm.get('activityData')?.value
-    console.log("formValue: ", formValue)
     this.scopeOneRecordsService.createRecord(formValue)
       .subscribe(
         (fuel: any) => {
           this.showSnackBar(fuel.message);
-          this.getFuelConsumptions(this.activityYear)
+          this.getScopeOneRecords(this.activityYear, this.productionCenter, 'roadTransp')
           this.vehicleForm.reset()
         },
         (error: any) => {

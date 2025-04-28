@@ -122,8 +122,6 @@ export class MachineryComponent implements OnInit, OnChanges {
     formValue.productionCenter = this.productionCenter
     formValue.activityType = 'machinery'
     formValue.fuelType = this.emissionsForm.get('fuelType')?.value.id
-    console.log("formValue: ", formValue)
-
     this.scopeOneRecordsService.createRecord(formValue)
       .subscribe(
         (result: any) => {

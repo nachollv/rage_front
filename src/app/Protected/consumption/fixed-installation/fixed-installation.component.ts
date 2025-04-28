@@ -110,7 +110,8 @@ setupValueChangeListeners(): void {
           .subscribe(
             (fuel: any) => {
               this.showSnackBar(fuel.message)
-              this.getFuelConsumptions(this.activityYear)
+              this.getScopeOneRecords(this.activityYear, this.productionCenter, 'fixed')
+              this.fuelForm.reset()
             },
             (error: any) => {
               this.showSnackBar('Error al crear:' + error)

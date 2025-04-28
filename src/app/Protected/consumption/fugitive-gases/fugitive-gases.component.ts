@@ -98,11 +98,11 @@ export class FugitiveGasesComponent implements OnInit, OnChanges {
     formValue.productionCenter = this.productionCenter;
     formValue.activityType = 'fugitive-gases'
     formValue.nombre_gas_mezcla = formValue.nombre_gas_mezcla.id;
-    console.log(formValue)
 
      this.registerLeakService.createRegistro(formValue).subscribe({
       next: (response) => { 
         this.showSnackBar(response.message)
+        this.emisionesForm.reset()
         this.getregistros()},
       error: (err) => { this.showSnackBar("Error al crear el registro "+err.message) } })
 
