@@ -4,6 +4,20 @@ import { EmisionesTransFerAerMarService } from '../../../services/emisiones-tran
 import { ScopeOneRecordsService } from '../../../services/scope-one-records.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSnackBar } from '@angular/material/snack-bar';
+const meses = [
+  { key: 'M01', value: 'Enero', value_ca: 'Gener' },
+  { key: 'M02', value: 'Febrero', value_ca: 'Febrer' },
+  { key: 'M03', value: 'Marzo', value_ca: 'Març' },
+  { key: 'M04', value: 'Abril', value_ca: 'Abril' },
+  { key: 'M05', value: 'Mayo', value_ca: 'Maig' },
+  { key: 'M06', value: 'Junio', value_ca: 'Juny' },
+  { key: 'M07', value: 'Julio', value_ca: 'Juliol' },
+  { key: 'M08', value: 'Agosto', value_ca: 'Agost' },
+  { key: 'M09', value: 'Septiembre', value_ca: 'Setembre' },
+  { key: 'M10', value: 'Octubre', value_ca: 'Octubre' },
+  { key: 'M11', value: 'Noviembre', value_ca: 'Novembre' },
+  { key: 'M12', value: 'Diciembre', value_ca: 'Desembre' }
+];
 
 @Component({
   selector: 'app-rail-sea-airtransport',
@@ -15,7 +29,7 @@ export class RailSeaAirtransportComponent  implements OnInit, OnChanges {
   @Input() productionCenter: number = 0
   transportForm!: FormGroup
   showField: boolean = false
-  displayedColumns: string[] = ['year', 'categoria', 'fuelType', 'activityData', 'updated_at', 'delete']
+  displayedColumns: string[] = ['year', 'periodoFactura', 'categoria', 'fuelType', 'activityData', 'updated_at', 'delete']
   data = [{ }]
   dataSource = new MatTableDataSource<any>(this.data)
   fuelEmisTypes: any[] = []
@@ -66,9 +80,10 @@ export class RailSeaAirtransportComponent  implements OnInit, OnChanges {
                 const matchedFuel = this.fuelEmisTypes.find((fuelItem: any) => fuelItem.id === registro.fuelType);
                 registro.fuelType = matchedFuel?.FuelType || 'desconocido';
                 registro.categoria = matchedFuel?.Categoria || 'desconocido';
+                const resultado = meses.find((mes) => mes.key === registro.periodoFactura);
+                registro.periodoFactura = resultado?.value   || 'desconocido';
               })
             this.dataSource = new MatTableDataSource(registros.data)
-            //this.showSnackBar('Registros obtenidos transferma: ' + registros.data.length)
             })
           },
           error: (err: any) => {
