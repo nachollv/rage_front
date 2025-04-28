@@ -1,10 +1,11 @@
 .scope1 {
   display: grid;
-  grid-template-areas: "fixedemissions scope1Table" 
+  grid-template-areas: 
+  "fixedemissions scope1Table" 
   "road scope1Table"
   "rail scope1Table"
-  "machinery scope1Table"
-  "fugitive scope1Table"; // Tres columnas de igual ancho
+  "machinery ."
+  "fugitive ."; // Tres columnas de igual ancho
   gap: 1rem; // Espaciado uniforme entre columnas y filas
   width: auto; // Ocupa todo el ancho del contenedor padre
   box-sizing: border-box; // Asegura un cálculo correcto del ancho
@@ -13,11 +14,12 @@
   border-radius: 8px; // Bordes redondeados para un aspecto más suave
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); // Sombra sutil para profundidad
   border: 1px solid #ccc; // Borde sutil para separación
-  align-items: start;
+  align-content: self-start;
+  justify-content: self-start;
 }
 
 .fixed {
-grid-area: fixedemissions;
+  grid-area: fixedemissions;
 }
 .road {
   grid-area: road;
@@ -33,14 +35,14 @@ grid-area: fixedemissions;
 }
 .scope1Table {
   grid-area: scope1Table;
+  align-self: start; // Asegura que scope1Table esté alineada en la parte superior de su contenedor
 }
 
 .scope2 {
   display: grid;
   grid-template-areas: "electricity scope2Table" 
   "electricityVehicle scope2Table"
-  "heat scope2Table"
- ; // Tres columnas de igual ancho
+  "heat scope2Table"; // Tres columnas de igual ancho
   gap: 1rem; // Espaciado uniforme entre columnas y filas
   width: auto; // Ocupa todo el ancho del contenedor padre
   box-sizing: border-box; // Asegura un cálculo correcto del ancho
