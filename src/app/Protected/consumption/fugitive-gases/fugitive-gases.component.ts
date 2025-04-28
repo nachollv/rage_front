@@ -15,7 +15,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class FugitiveGasesComponent implements OnInit, OnChanges {
   @Input() activityYear: number = 0
   @Input() productionCenter: number = 0
-  displayedColumns: string[] = ['year', 'nombre_gas_mezcla', 'capacidad_equipo', 'recarga_equipo', 'updated_at', 'edit', 'delete']
+  displayedColumns: string[] = ['year', 'equipmentType', 'capacidad_equipo', 'recarga_equipo', 'updated_at', 'edit', 'delete']
   data = [{ }]
   dataSource = new MatTableDataSource<any>(this.data)
   emisionesForm!: FormGroup;
@@ -28,10 +28,8 @@ export class FugitiveGasesComponent implements OnInit, OnChanges {
 
   ngOnInit(): void { 
     this.emisionesForm = this.fb.group({
-      calculationYear: [{ value: this.activityYear, disabled: true }, [Validators.required, Validators.minLength(4), Validators.maxLength(4)]],
-      productionCenter: [{ value: this.productionCenter, disabled: true }, Validators.required],
       periodoFactura: ['', Validators.required],
-      nombre_gas_mezcla: ['', Validators.required],
+      equipmentType: ['', Validators.required],
       formulaQuimica: [{ value: '', disabled: true }, Validators.required],
       pca: [{ value: '', disabled: true }, Validators.required],
       capacidad_equipo: [null, [Validators.required, Validators.min(0)]],
@@ -66,7 +64,7 @@ export class FugitiveGasesComponent implements OnInit, OnChanges {
 
   setPCAAndChemicalFormula() {
     const gasData = this.emisionesForm.value
-    const gasType = gasData.nombre_gas_mezcla
+    const gasType = gasData.equipmentType
     const chemicalFormula = gasType.FormulaQuimica;
     const pca6AR = parseFloat(gasType.PCA_6AR).toFixed(3);
     const equipmentRecharge = gasData.recargaEquipo
@@ -81,7 +79,7 @@ export class FugitiveGasesComponent implements OnInit, OnChanges {
     const gasData = this.emisionesForm.value
     const equipmentCapacity = gasData.capacidad_equipo
     const equipmentRecharge = gasData.recarga_equipo
-    const pca6AR = gasData.nombre_gas_mezcla.PCA_6AR
+    const pca6AR = gasData.equipmentType.PCA_6AR
     const recharge = parseFloat(equipmentRecharge).toFixed(2);
     const capacity = parseFloat(equipmentCapacity).toFixed(2);
     if (recharge > capacity) {
@@ -101,7 +99,7 @@ export class FugitiveGasesComponent implements OnInit, OnChanges {
     formValue.calculationYear = calculationYearValue;
     formValue.productionCenter = productionCenterValue;
     formValue.activityType = 'fugitive-gases'
-    formValue.nombre_gas_mezcla = formValue.nombre_gas_mezcla.Nombre;
+    formValue.equipmentType = formValue.equipmentType.Nombre;
     console.log(formValue)
 
      this.registerLeakService.createRegistro(formValue).subscribe({
