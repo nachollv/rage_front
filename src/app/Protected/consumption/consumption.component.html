@@ -1,14 +1,18 @@
 <form [formGroup]="productionCenterForm">
+  <section appearance="fill">
+    <section appearance="fill">
+      <mat-label>{{"organizationName" | translate}}: </mat-label>
+      <h2 [innerHTML]="organizationName"></h2>
+    </section>
+    <mat-label>{{"productionCenter" | translate}}: </mat-label>
+    <h2 [innerHTML]="prodCenterName"></h2>
+  </section>
     <mat-form-field appearance="fill">
       <mat-label>{{"activityYear" | translate}}</mat-label>
       <mat-select formControlName="activityYear" (selectionChange)="onYearChange($event)">
         <mat-option *ngFor="let year of availableYears" [value]="year">{{ year }}</mat-option>
       </mat-select>
     </mat-form-field>
-    <section appearance="fill">
-      <mat-label>{{"productionCenter" | translate}}: </mat-label>
-      <h2 [innerHTML]="prodCenterName"></h2>
-    </section>
 </form>
 <app-consumtion-container-scope1 *ngIf="scope1" [activityYear]="selectedActivityYear" [productionCenter]="prodCenterID"></app-consumtion-container-scope1>
 <app-consumtion-container-scope2 *ngIf="scope2" [activityYear]="selectedActivityYear" [productionCenter]="prodCenterID"></app-consumtion-container-scope2>

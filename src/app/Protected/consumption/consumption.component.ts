@@ -22,6 +22,7 @@ export class ConsumptionComponent {
   prodCenterID: number = 0
   prodCenterName: string = ''
   organizacionID: number = 0
+  organizationName: string = ''
   availableYears: number[] = [];
   currentActivityYear: string = ''
   auxText: AuxTextDTO | undefined
@@ -60,14 +61,29 @@ export class ConsumptionComponent {
   this.prodCenterID = this.jwtHelper.decodeToken(this.token).data.id
   this.organizacionID = this.jwtHelper.decodeToken(this.token).data.id_empresa
   this.getOrganizacionActivityYears( this.organizacionID )
+  this.getOrganizationDetails( this.organizacionID )
   this.getProductionCenterDetails( this.prodCenterID )
   }
+
+  getOrganizationDetails(id: number): void {
+    this.organizationService.getOrganizacion(id)
+      .subscribe(
+        (item: any) => {
+          console.log('Detalles de la organización:', item);
+          this.organizationName = item.organizacion.companyName; // Asigna el nombre de la organización
+        },
+        (error: any) => {
+          console.error('Error al obtener los detalles de la organización:', error);
+          this.organizationName = 'Desconocido'; // Valor por defecto en caso de error
+        }
+      );
+  }
+  
 
   getProductionCenterDetails(id:number) {
     this.productionCenterService.getCentroDeProduccionByID(id)
       .subscribe((pCenterItem: any) => {
         this.prodCenterName = pCenterItem.nombre
-
       })
   }
 
