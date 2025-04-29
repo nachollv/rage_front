@@ -151,11 +151,11 @@ export class ControlPanelContainerComponent implements OnInit {
     );
   }
 
-  fixedInstChart(chartType: keyof ChartTypeRegistry, scop1Data: any): void {
+  fixedInstChart(chartType: keyof ChartTypeRegistry, scop1DataFI: any): void {
     const ctx = document.getElementById('fixedInstChart') as HTMLCanvasElement;
     const monthlyData = new Array(12).fill(0); // Inicializar con 12 meses en 0
 
-    scop1Data.forEach((dataObjectFI: any) => {
+    scop1DataFI.forEach((dataObjectFI: any) => {
       const monthIndex = parseInt(dataObjectFI.periodoFactura.replace('M', '')) - 1; // Obtener índice del mes
       monthlyData[monthIndex] += parseFloat(dataObjectFI.quantity); // Asignar cantidad al mes correspondiente
       const matchedFuel = this.fuelTypes.find((fuelItem: any) => fuelItem.id === dataObjectFI.fuelType);
@@ -163,7 +163,7 @@ export class ControlPanelContainerComponent implements OnInit {
       console.log("dataObjectFI", dataObjectFI)
       dataObjectFI.fuelType = matchedFuel?.Combustible || 'desconocido';
     });
-    this.dataSourceScope1FixedEmis = new MatTableDataSource(scop1Data);
+    this.dataSourceScope1FixedEmis = new MatTableDataSource(scop1DataFI);
 
     if (this.chartInstanceFixedEmis) {
         this.chartInstanceFixedEmis.destroy();
@@ -210,10 +210,10 @@ export class ControlPanelContainerComponent implements OnInit {
         }
     });
   }
-  roadTranspChart(chartType: keyof ChartTypeRegistry, scop1Data: any): void {
+  roadTranspChart(chartType: keyof ChartTypeRegistry, scop1DataRD: any): void {
     const ctx = document.getElementById('roadTranspChart') as HTMLCanvasElement;
     const monthlyData = new Array(12).fill(0); // Inicializar con 12 meses en 0
-    scop1Data.forEach((dataObject: any) => {
+    scop1DataRD.forEach((dataObject: any) => {
       const monthIndex = parseInt(dataObject.periodoFactura.replace('M', '')) - 1; // Obtener índice del mes
       monthlyData[monthIndex] += parseFloat(dataObject.quantity); // Asignar cantidad al mes correspondiente
       const matchedFuel = this.fuelTypes.find((fuelItem: any) => fuelItem.id === dataObject.fuelType);
@@ -221,6 +221,7 @@ export class ControlPanelContainerComponent implements OnInit {
       console.log("dataObject", dataObject)
       dataObject.fuelType = matchedFuel?.Combustible || 'desconocido';
     });
+    this.dataSourceScope1RoadTransp = new MatTableDataSource(scop1DataRD);
 
     if (this.chartInstanceRoadTransp) {
         this.chartInstanceRoadTransp.destroy();
@@ -270,17 +271,17 @@ export class ControlPanelContainerComponent implements OnInit {
     }
     });
   }
-  railSeaAirChart(chartType: keyof ChartTypeRegistry, scop1Data: any): void {
+  railSeaAirChart(chartType: keyof ChartTypeRegistry, scop1DataRSA: any): void {
     const ctx = document.getElementById('railSeaAirChart') as HTMLCanvasElement;
     const monthlyData = new Array(12).fill(0); // Inicializar con 12 meses en 0
-    scop1Data.forEach((dataObject: any) => {
+    scop1DataRSA.forEach((dataObject: any) => {
       const monthIndex = parseInt(dataObject.periodoFactura.replace('M', '')) - 1; // Obtener índice del mes
       monthlyData[monthIndex] += parseFloat(dataObject.quantity); // Asignar cantidad al mes correspondiente
       const matchedFuel = this.fuelTypes.find((fuelItem: any) => fuelItem.id === dataObject.fuelType)
       console.log("matched fuel", matchedFuel)
       console.log("dataObject", dataObject)
     });
-
+    this.dataSourceScope1RailSeaAir = new MatTableDataSource(scop1DataRSA);
     if (this.chartInstanceRailSeaAir) {
         this.chartInstanceRailSeaAir.destroy();
     }
@@ -336,14 +337,14 @@ export class ControlPanelContainerComponent implements OnInit {
     }
     });
   }
-  machineryChart(chartType: keyof ChartTypeRegistry, scop1Data: any): void {
+  machineryChart(chartType: keyof ChartTypeRegistry, scop1DataMA: any): void {
     const ctx = document.getElementById('machineryChart') as HTMLCanvasElement;
     const monthlyData = new Array(12).fill(0); // Inicializar con 12 meses en 0
-    scop1Data.forEach((dataObject: any) => {
+    scop1DataMA.forEach((dataObject: any) => {
       const monthIndex = parseInt(dataObject.periodoFactura.replace('M', '')) - 1; // Obtener índice del mes
       monthlyData[monthIndex] += parseFloat(dataObject.quantity); // Asignar cantidad al mes correspondiente
     });
-
+    this.dataSourceScope1Machinery = new MatTableDataSource(scop1DataMA);
     if (this.chartInstanceMachinery) {
         this.chartInstanceMachinery.destroy();
     }
@@ -390,14 +391,14 @@ export class ControlPanelContainerComponent implements OnInit {
   }
     });
   }
-  fugitiveEmissChart(chartType: keyof ChartTypeRegistry, scop1Data: any): void {
+  fugitiveEmissChart(chartType: keyof ChartTypeRegistry, scop1DataFE: any): void {
     const ctx = document.getElementById('fugitiveEmissChart') as HTMLCanvasElement;
     const monthlyData = new Array(12).fill(0); // Inicializar con 12 meses en 0
-    scop1Data.forEach((dataObject: any) => {
+    scop1DataFE.forEach((dataObject: any) => {
       const monthIndex = parseInt(dataObject.periodoFactura.replace('M', '')) - 1; // Obtener índice del mes
       monthlyData[monthIndex] += parseFloat(dataObject.quantity); // Asignar cantidad al mes correspondiente
     });
-
+    this.dataSourceScope1FugitiveEmiss = new MatTableDataSource(scop1DataFE);
     if (this.chartInstanceFugitiveEmiss) {
         this.chartInstanceFugitiveEmiss.destroy();
     }
