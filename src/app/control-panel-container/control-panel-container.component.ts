@@ -12,6 +12,8 @@ import { FuelDataService } from '../services/fuel-data.service';
 import { VehiclesFuelConsumptionService } from '../services/vehicles-fuel-consumption.service';
 import { EmisionesTransFerAerMarService } from '../services/emisiones-trans-feraermar.service';
 import { EmisionesMachineryService } from '../services/emisiones-machinery.service';
+import { LeakrefrigerantgasesService } from '../services/leakrefrigerantgases.service';
+import { RegistroemisionesFugasService } from '../services/registroemisionesfugas.service';
 
 @Component({
   selector: 'app-control-panel-container',
@@ -31,6 +33,7 @@ export class ControlPanelContainerComponent implements OnInit {
   prodCenterID: number = 0 // ID del centro de producción
   scopeOneRecords: any[] = [] // Lista de registros de Scope 1
   scopeTwoRecords: any[] = [] // Lista de registros de Scope 2
+  fugitiveEmissionsRecords: any[] = []
   displayedColumnsScope1FI: string[] = ['activity Year', 'Invoice period', 'fuelType', 'activity Data', 'updated At']
   displayedColumnsScope1RT: string[] = ['activity Year', 'Invoice period', 'Categoría vehículo', 'fuel Type', 'activity Data',  'updated_at']
   displayedColumnsScope1TransFerMarAe: string[] = ['activity Year', 'Invoice period', 'Categoría vehículo', 'fuel Type', 'activity Data', 'updated_at']
@@ -41,7 +44,7 @@ export class ControlPanelContainerComponent implements OnInit {
   vehicleCategories: { id: number; Combustible: string; Categoria: string }[] = []
   ferMarAerCateories: { id: number; FuelType: string; Categoria: string }[] = []
   machineryCategories: { id: number; FuelType: string; Categoria: string }[] = []
-
+  fugitiveEmissions: { id: number; gasName: string; pca: string }[] = []
   chartInstanceFixedEmis: Chart | null = null;
   chartInstanceMachinery: Chart | null = null;
   chartInstanceHeatSteamColdCompAir: Chart | null = null;
@@ -72,8 +75,11 @@ export class ControlPanelContainerComponent implements OnInit {
     private vehicleFuelService: VehiclesFuelConsumptionService,
     private ferMarAerService: EmisionesTransFerAerMarService,
     private machineryService: EmisionesMachineryService,
+    private emisionesFugitivas: LeakrefrigerantgasesService,
+
     private scopeOneRecordsService: ScopeOneRecordsService,
-    private scopeTwoRecordsService: ScopeTwoRecordsService) {}
+    private scopeTwoRecordsService: ScopeTwoRecordsService,
+    private fugitiveEmissionRecordsService: RegistroemisionesFugasService) {}
 
   ngOnInit():void {
     this.filterForm = this.fb.group({
@@ -90,6 +96,7 @@ export class ControlPanelContainerComponent implements OnInit {
     this.getFuelConsumptions(this.filterForm.value.activityYear)
     this.getferMarAerConsumtions(this.filterForm.value.activityYear)
     this.getMachineryConsumtions(this.filterForm.value.activityYear)
+    this.getEmisionesFugitivas()
     this.getScopeOneRecords(this.filterForm.value.activityYear)
     this.getScopeTwoRecords(this.filterForm.value.activityYear)
   }
@@ -98,6 +105,7 @@ export class ControlPanelContainerComponent implements OnInit {
     const activityYear = event;
     this.getScopeOneRecords(activityYear)
     this.getScopeTwoRecords(activityYear)
+    this.getFugitiveEmissionRecords(activityYear)
   }
 
   getScopeOneRecords(activityYear: number): void {
@@ -137,7 +145,7 @@ export class ControlPanelContainerComponent implements OnInit {
       );
   }
   
-  getScopeTwoRecords(activityYear:number): void {
+  getScopeTwoRecords(activityYear: number): void {
     this.scopeTwoRecordsService.getRecordsByFilters(activityYear).subscribe(
       (response: any) => {
         this.scopeTwoRecords = response.data;
@@ -164,6 +172,14 @@ export class ControlPanelContainerComponent implements OnInit {
           }
       }
     );
+  }
+
+  getFugitiveEmissionRecords(activityYear: number): void {
+    this.fugitiveEmissionRecordsService.getRegistroByFilters(activityYear, 6)
+      .subscribe((response: any) => {
+        this.fugitiveEmissionsRecords = response;
+        this.fugitiveEmissChart('bar', this.fugitiveEmissionRecordsService)
+      });
   }
 
   fixedInstChart(chartType: keyof ChartTypeRegistry, scop1DataFI: any): void {
@@ -415,7 +431,7 @@ export class ControlPanelContainerComponent implements OnInit {
     const monthlyData = new Array(12).fill(0); // Inicializar con 12 meses en 0
     scop1DataFE.forEach((dataObject: any) => {
       const monthIndex = parseInt(dataObject.periodoFactura.replace('M', '')) - 1; // Obtener índice del mes
-      monthlyData[monthIndex] += parseFloat(dataObject.quantity); // Asignar cantidad al mes correspondiente
+      monthlyData[monthIndex] += parseFloat(dataObject.activityData); // Asignar cantidad al mes correspondiente
     });
     this.dataSourceScope1FugitiveEmiss = new MatTableDataSource(scop1DataFE);
     if (this.chartInstanceFugitiveEmiss) {
@@ -690,7 +706,14 @@ export class ControlPanelContainerComponent implements OnInit {
     this.machineryService.getEmisionesByYear(year)
       .subscribe((item:any) => {
         this.machineryCategories = item
-        console.log ("machineries", this.machineryCategories)
+      })
+  }
+
+  getEmisionesFugitivas() {
+    this.emisionesFugitivas.getAll()
+      .subscribe((item:any) => {
+        this.fugitiveEmissions = item
+        console.log (this.fugitiveEmissions)
       })
   }
 
