@@ -94,10 +94,23 @@ article {
 
 /* Large devices (laptops/desktops, 992px and up) */
 @media only screen and (max-width: 992px) {
-  .scope1, .scope2 {
-    grid-template-columns: repeat(1, 1fr); // Una columna de ancho completo
-    gap: 0.5rem; // Espaciado reducido entre columnas y filas
+  .scope1 {
+    grid-template-areas: 
+    "fixedemissions" 
+    "road"
+    "rail"
+    "machinery"
+    "fugitive"
+    "scope1Table"; // Tres columnas de igual ancho
   }
+  .scope2 {
+    grid-template-areas: 
+    "electricity" 
+    "electricityVehicle"
+    "heat"
+    "scope2Table"; // Tres columnas de igual ancho
+  }
+  
   article {
     margin: auto;
     width: auto;
