@@ -18,7 +18,7 @@ import { MesesService } from '../../../services/meses.service';
 export class MachineryVehiclesComponent  implements OnInit, OnChanges {
   @Input() activityYear!: number
   @Input() productionCenter!: number
-    displayedColumns: string[] = ['year', 'periodoFactura', 'categoria', 'fuelType', 'activityData', 'updated_at', 'delete']
+    displayedColumns: string[] = ['year', 'periodoFactura', 'equipment Type', 'fuel Type', 'activityData', 'updated_at', 'delete']
       data = [ { }, ]
       dataSource = new MatTableDataSource<any>(this.data)
       vehicleCategories: any[] = []
@@ -92,8 +92,8 @@ export class MachineryVehiclesComponent  implements OnInit, OnChanges {
               registro.edit = true
               registro.delete = true
               const matchedFuel = this.fuelTypes.find((fuelItem: any) => fuelItem.id === registro.fuelType);
-              registro.categoria = matchedFuel?.Categoria  || 'desconocido';
-              registro.fuelType = matchedFuel?.FuelType    || 'desconocido';
+              registro['equipment Type'] = matchedFuel?.Categoria  || 'desconocido';
+              registro['fuel Type'] = matchedFuel?.FuelType    || 'desconocido';
               const resultado = meses.find((mes) => mes.key === registro.periodoFactura);
               registro.periodoFactura = resultado?.value   || 'desconocido';
             })
