@@ -10,6 +10,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MesesService } from '../services/meses.service';
 import { FuelDataService } from '../services/fuel-data.service';
 import { VehiclesFuelConsumptionService } from '../services/vehicles-fuel-consumption.service';
+import { EmisionesTransFerAerMarService } from '../services/emisiones-trans-feraermar.service';
+import { EmisionesMachineryService } from '../services/emisiones-machinery.service';
 
 @Component({
   selector: 'app-control-panel-container',
@@ -30,21 +32,23 @@ export class ControlPanelContainerComponent implements OnInit {
   scopeOneRecords: any[] = [] // Lista de registros de Scope 1
   scopeTwoRecords: any[] = [] // Lista de registros de Scope 2
   displayedColumnsScope1FI: string[] = ['activity Year', 'Invoice period', 'fuelType', 'activity Data', 'updated At']
-  displayedColumnsScope1RT: string[] = ['activity Year', 'Invoice period', 'Categoría vehículo', 'fuel Type', 'activityData',  'updated_at']
-  displayedColumnsScope1TransFerMarAe: string[] = ['activity Year', 'Invoice period', 'equipmentType', 'fuelType', 'activityData', 'updated_at']
-
+  displayedColumnsScope1RT: string[] = ['activity Year', 'Invoice period', 'Categoría vehículo', 'fuel Type', 'activity Data',  'updated_at']
+  displayedColumnsScope1TransFerMarAe: string[] = ['activity Year', 'Invoice period', 'Categoría vehículo', 'fuel Type', 'activity Data', 'updated_at']
+  displayedColumnsScope1MA: string[] = ['activity Year', 'Invoice period', 'Categoría vehículo', 'fuel Type', 'activity Data',  'updated_at']
 
   displayedColumnsScope2: string[] = ['year', 'periodoFactura', 'activityData', 'activityType', 'electricityTradingCompany', 'gdo', 'energyType', 'updated_at']
-  fuelTypes: { id: number; Combustible: string }[] = []; // Define fuelTypes property
+  fuelTypes: { id: number; Combustible: string }[] = []
   vehicleCategories: { id: number; Combustible: string; Categoria: string }[] = []
+  ferMarAerCateories: { id: number; FuelType: string; Categoria: string }[] = []
+  machineryCategories: { id: number; FuelType: string; Categoria: string }[] = []
 
   chartInstanceFixedEmis: Chart | null = null;
-  chartInstanceElectricityBuildings: Chart | null = null;
-  chartInstanceElectricityVehicles: Chart | null = null;
+  chartInstanceMachinery: Chart | null = null;
   chartInstanceHeatSteamColdCompAir: Chart | null = null;
   chartInstanceRoadTransp: Chart | null = null;
   chartInstanceRailSeaAir: Chart | null = null;
-  chartInstanceMachinery: Chart | null = null;
+  chartInstanceElectricityBuildings: Chart | null = null;
+  chartInstanceElectricityVehicles: Chart | null = null;
   chartInstanceFugitiveEmiss: Chart | null = null;
 
   data = [{ }]
@@ -66,6 +70,8 @@ export class ControlPanelContainerComponent implements OnInit {
     private mesesService: MesesService,
     private fuelDataService: FuelDataService,
     private vehicleFuelService: VehiclesFuelConsumptionService,
+    private ferMarAerService: EmisionesTransFerAerMarService,
+    private machineryService: EmisionesMachineryService,
     private scopeOneRecordsService: ScopeOneRecordsService,
     private scopeTwoRecordsService: ScopeTwoRecordsService) {}
 
@@ -82,6 +88,8 @@ export class ControlPanelContainerComponent implements OnInit {
     Chart.register(...registerables);
     this.getFixedFuelConsumptions(this.filterForm.value.activityYear)
     this.getFuelConsumptions(this.filterForm.value.activityYear)
+    this.getferMarAerConsumtions(this.filterForm.value.activityYear)
+    this.getMachineryConsumtions(this.filterForm.value.activityYear)
     this.getScopeOneRecords(this.filterForm.value.activityYear)
     this.getScopeTwoRecords(this.filterForm.value.activityYear)
   }
@@ -112,8 +120,8 @@ export class ControlPanelContainerComponent implements OnInit {
               this.fixedInstChart('line', this.scopeOneRecords.filter((record: any) => record.activityType === 'fixed'));
               this.roadTranspChart('bar', this.scopeOneRecords.filter((record: any) => record.activityType === 'roadTransp'));
               this.railSeaAirChart('line', this.scopeOneRecords.filter((record: any) => record.activityType === 'transferma'));
-              /*   this.machineryChart('bar', this.scopeOneRecords.filter((record: any) => record.activityType === 'machinery'));
-              this.fugitiveEmissChart('line', this.scopeOneRecords.filter((record: any) => record.activityType === 'fugitiveEmissions')); */
+              this.machineryChart('bar', this.scopeOneRecords.filter((record: any) => record.activityType === 'machinery'));
+              /*   this.fugitiveEmissChart('line', this.scopeOneRecords.filter((record: any) => record.activityType === 'fugitiveEmissions')); */
             } else {
               this.showSnackBar('No hay registros con activityType "fixed".');
               //this.dataSourceScope1 = new MatTableDataSource<any>([]);
@@ -279,15 +287,14 @@ export class ControlPanelContainerComponent implements OnInit {
     });
   }
   railSeaAirChart(chartType: keyof ChartTypeRegistry, scop1DataRSA: any): void {
-    console.log ("rail", scop1DataRSA)
     const ctx = document.getElementById('railSeaAirChart') as HTMLCanvasElement;
     const monthlyData = new Array(12).fill(0); // Inicializar con 12 meses en 0
     scop1DataRSA.forEach((dataObject: any) => {
       const monthIndex = parseInt(dataObject.periodoFactura.replace('M', '')) - 1; // Obtener índice del mes
       monthlyData[monthIndex] += parseFloat(dataObject.activityData); // Asignar cantidad al mes correspondiente
-      const matchedFuel = this.fuelTypes.find((fuelItem: any) => fuelItem.id === dataObject.fuelType)
-/*       console.log("matched fuel", matchedFuel)
-      console.log("dataObject", dataObject) */
+      const matchedFerMarAer = this.ferMarAerCateories.find((item: any) => item.id === dataObject.fuelType)
+      dataObject['Categoría vehículo'] = dataObject?.equipmentType
+      dataObject['fuel Type'] = matchedFerMarAer?.FuelType
     });
     this.dataSourceScope1RailSeaAir = new MatTableDataSource(scop1DataRSA);
     if (this.chartInstanceRailSeaAir) {
@@ -348,9 +355,13 @@ export class ControlPanelContainerComponent implements OnInit {
   machineryChart(chartType: keyof ChartTypeRegistry, scop1DataMA: any): void {
     const ctx = document.getElementById('machineryChart') as HTMLCanvasElement;
     const monthlyData = new Array(12).fill(0); // Inicializar con 12 meses en 0
-    scop1DataMA.forEach((dataObject: any) => {
-      const monthIndex = parseInt(dataObject.periodoFactura.replace('M', '')) - 1; // Obtener índice del mes
-      monthlyData[monthIndex] += parseFloat(dataObject.quantity); // Asignar cantidad al mes correspondiente
+    scop1DataMA.forEach((machineDataActiv: any) => {
+      const monthIndex = parseInt(machineDataActiv.periodoFactura.replace('M', '')) - 1; // Obtener índice del mes
+      monthlyData[monthIndex] += parseFloat(machineDataActiv.activityData); // Asignar cantidad al mes correspondiente
+      const matchedMachinery = this.machineryCategories.find((item: any) => item.id === machineDataActiv.fuelType)
+      machineDataActiv['Categoría vehículo'] = machineDataActiv?.equipmentType
+      machineDataActiv['fuel Type'] = matchedMachinery?.FuelType
+      /* machineDataActiv['fuel Type'] = machineDataActiv?.FuelType */
     });
     this.dataSourceScope1Machinery = new MatTableDataSource(scop1DataMA);
     if (this.chartInstanceMachinery) {
@@ -665,6 +676,21 @@ export class ControlPanelContainerComponent implements OnInit {
     this.vehicleFuelService.getByYear(year)
       .subscribe((category:any) => {
       this.vehicleCategories = category
+      })
+  }
+
+  getferMarAerConsumtions(year: number) {
+    this.ferMarAerService.getEmisionesByYear(year)
+      .subscribe((item:any) => {
+        this.ferMarAerCateories = item
+      })
+  }
+
+  getMachineryConsumtions(year: number) {
+    this.machineryService.getEmisionesByYear(year)
+      .subscribe((item:any) => {
+        this.machineryCategories = item
+        console.log ("machineries", this.machineryCategories)
       })
   }
 
