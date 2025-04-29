@@ -4,7 +4,7 @@
     <input matInput (keyup)="applyFilter($event)" placeholder="Filtrar">
   </mat-form-field>
 
-  <mat-table [dataSource]="dataSource" matSort>
+  <table mat-table [dataSource]="dataSource" matSort>
     <!-- Columnas dinámicas -->
     <ng-container *ngFor="let column of displayedColumns; let index = index" [matColumnDef]="column">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ column }}</th>
@@ -22,7 +22,7 @@
     </ng-container>
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-  </mat-table>
+  </table>
 
   <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
 </section>
