@@ -22,12 +22,12 @@
   <article ngClass="rail">
     <canvas id="railSeaAirChart"></canvas>
   </article>
-  <article ngClass="machinery">
+  <!--<article ngClass="machinery">
     <canvas id="machineryChart"></canvas>
   </article>
   <article ngClass="fugitive">
     <canvas id="fugitiveEmissChart"></canvas>
-  </article>
+  </article> -->
   <article ngClass="scope1TableFI">
     <app-data-table [displayedColumns]="displayedColumnsScope1FI" [dataSource]="dataSourceScope1FixedEmis"></app-data-table>
   </article>
@@ -35,14 +35,14 @@
     <app-data-table [displayedColumns]="displayedColumnsScope1RT" [dataSource]="dataSourceScope1RoadTransp"></app-data-table>
   </article>
   <article ngClass="scope1TableRA">
-    <app-data-table [displayedColumns]="displayedColumnsScope1RT" [dataSource]="dataSourceScope1Machinery"></app-data-table>
+    <app-data-table [displayedColumns]="displayedColumnsScope1TransFerMarAe" [dataSource]="dataSourceScope1RailSeaAir"></app-data-table>
   </article>
-  <article ngClass="scope1TableMA">
+  <!-- <article ngClass="scope1TableMA">
     <app-data-table [displayedColumns]="displayedColumnsScope1RT" [dataSource]="dataSourceScope1Machinery"></app-data-table>
   </article>
   <article ngClass="scope1TableFU">
     <app-data-table [displayedColumns]="displayedColumnsScope1RT" [dataSource]="dataSourceScope1FugitiveEmiss"></app-data-table>
-  </article>
+  </article> -->
 </section>
 
 <h2 ngClass="scope2-title">{{'scope2' | translate}} {{'scope2_2' | translate}}</h2>
