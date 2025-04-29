@@ -1,11 +1,11 @@
 .scope1 {
   display: grid;
   grid-template-areas: 
-  "fixedemissions scope1Table" 
-  "road scope1Table"
-  "rail scope1Table"
-  "machinery ."
-  "fugitive .";     // Tres columnas de igual ancho
+  "fixedemissions scope1TableFI" 
+  "road scope1TableRD"
+  "rail scope1TableRA"
+  "machinery scope1TableMA"
+  "fugitive scope1TableFU";     // Tres columnas de igual ancho
   gap: 1rem;        // Espaciado uniforme entre columnas y filas
   width: auto;      // Ocupa todo el ancho del contenedor padre
   box-sizing: border-box; // Asegura un cálculo correcto del ancho
@@ -14,8 +14,7 @@
   border-radius: 8px; // Bordes redondeados para un aspecto más suave
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); // Sombra sutil para profundidad
   border: 1px solid #ccc; // Borde sutil para separación
-  align-content: self-start;
-  justify-content: self-start;
+
   border: 1px solid #B0C4DE; // Borde sutil para separación
 }
 
@@ -34,11 +33,21 @@
 .fugitive {
   grid-area: fugitive;
 }
-.scope1Table {
-  grid-area: scope1Table;
-  align-self: start; // Asegura que scope1Table esté alineada en la parte superior de su contenedor
+.scope1TableFI {
+  grid-area: scope1TableFI;
 }
-
+.scope1TableRD {
+  grid-area: scope1TableRD;
+}
+.scope1TableRA {
+  grid-area: scope1TableRA;
+}
+.scope1TableMA {
+  grid-area: scope1TableMA;
+}
+.scope1TableFU {
+  grid-area: scope1TableFU;
+}
 .scope2 {
   display: grid;
   grid-template-areas: "electricity scope2Table" 
@@ -67,15 +76,15 @@
   grid-area: scope2Table;
 }
 
-.scope1 article {
+.scope1 {
   background-color: #B0C4DE; /* Color principal para emisiones directas */
-  padding: 16px;
-  border-radius: 8px; /* Opcional: esquinas redondeadas */
+  padding: 1rem;
+  border-radius: .5rem; /* Opcional: esquinas redondeadas */
 }
-.scope2 article {
+.scope2 {
   background-color: #ecdb79; /* Color sugerido para emisiones indirectas */
-  padding: 16px;
-  border-radius: 8px; /* Opcional: esquinas redondeadas */
+  padding: 1rem;
+  border-radius: .5rem; /* Opcional: esquinas redondeadas */
 }
 
 .scope1-title {

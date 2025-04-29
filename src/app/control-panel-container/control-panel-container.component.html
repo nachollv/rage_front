@@ -28,8 +28,20 @@
   <article ngClass="fugitive">
     <canvas id="fugitiveEmissChart"></canvas>
   </article>
-  <article ngClass="scope1Table">
-    <app-data-table [displayedColumns]="displayedColumnsScope1" [dataSource]="dataSourceScope1"></app-data-table>
+  <article ngClass="scope1TableFI">
+    <app-data-table [displayedColumns]="displayedColumnsScope1FI" [dataSource]="dataSourceScope1FixedEmis"></app-data-table>
+  </article>
+  <article ngClass="scope1TableRD">
+    <app-data-table [displayedColumns]="displayedColumnsScope1RT" [dataSource]="dataSourceScope1RoadTransp"></app-data-table>
+  </article>
+  <article ngClass="scope1TableRA">
+    <app-data-table [displayedColumns]="displayedColumnsScope1RT" [dataSource]="dataSourceScope1RoadTransp"></app-data-table>
+  </article>
+  <article ngClass="scope1TableMA">
+    <app-data-table [displayedColumns]="displayedColumnsScope1RT" [dataSource]="dataSourceScope1RoadTransp"></app-data-table>
+  </article>
+  <article ngClass="scope1TableFU">
+    <app-data-table [displayedColumns]="displayedColumnsScope1RT" [dataSource]="dataSourceScope1RoadTransp"></app-data-table>
   </article>
 </section>
 
@@ -44,7 +56,7 @@
   <article ngClass="heat" >
     <canvas id="heatSteamColdCompAir"></canvas>
   </article>
-  <article ngClass="scope2Table">
-  <app-data-table [displayedColumns]="displayedColumnsScope2" [dataSource]="dataSourceScope2"></app-data-table>
-  </article>
+<!--   <article ngClass="scope2Table">
+  <app-data-table [displayedColumns]="displayedColumnsScope2" [dataSource]="dataSourceScope1FixedEmis"></app-data-table>
+  </article> -->
 </section>
