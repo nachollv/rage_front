@@ -5,17 +5,18 @@
   "road scope1Table"
   "rail scope1Table"
   "machinery ."
-  "fugitive ."; // Tres columnas de igual ancho
-  gap: 1rem; // Espaciado uniforme entre columnas y filas
-  width: auto; // Ocupa todo el ancho del contenedor padre
+  "fugitive .";     // Tres columnas de igual ancho
+  gap: 1rem;        // Espaciado uniforme entre columnas y filas
+  width: auto;      // Ocupa todo el ancho del contenedor padre
   box-sizing: border-box; // Asegura un cálculo correcto del ancho
-  margin: 1rem; // Espacio entre las dos secciones
-  padding: 1rem; // Espacio interno para el contenido
+  margin: 1rem;     // Espacio entre las dos secciones
+  padding: 1rem;    // Espacio interno para el contenido
   border-radius: 8px; // Bordes redondeados para un aspecto más suave
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); // Sombra sutil para profundidad
   border: 1px solid #ccc; // Borde sutil para separación
   align-content: self-start;
   justify-content: self-start;
+  border: 1px solid #B0C4DE; // Borde sutil para separación
 }
 
 .fixed {

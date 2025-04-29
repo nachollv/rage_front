@@ -4,7 +4,7 @@
   <form [formGroup]="filterForm">
     <mat-form-field appearance="fill">
       <mat-label>{{ 'activityYear' | translate }}</mat-label>
-      <mat-select id="activityYear" formControlName="activityYear"  (selectionChange)="onYearFilterChange($event.value)">
+      <mat-select id="activityYear" formControlName="activityYear" (selectionChange)="onYearFilterChange($event.value)">
         <mat-option *ngFor="let year of availableYears" [value]="year">{{ year }}</mat-option>
       </mat-select>
     </mat-form-field>
