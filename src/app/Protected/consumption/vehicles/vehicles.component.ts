@@ -80,7 +80,7 @@ export class MachineryVehiclesComponent  implements OnInit, OnChanges {
       })
   }
 
-  getScopeOneRecords(calculationYear: number = this.activityYear, productionCenter: number = this.productionCenter, activityType: string = 'roadTransp') {
+getScopeOneRecords(calculationYear: number = this.activityYear, productionCenter: number = this.productionCenter, activityType: string = 'roadTransp') {
     this.scopeOneRecordsService.getRecordsByFilters(calculationYear, productionCenter, activityType)
       .subscribe({
         next: (registros: any) => {
@@ -104,7 +104,7 @@ export class MachineryVehiclesComponent  implements OnInit, OnChanges {
           this.showSnackBar('Error al obtener los registros: ' + err)
         }
       });
-  }
+}
 
   // Configuración de los listeners para recalcular valores
 setupValueChangeListeners(): void {
@@ -121,7 +121,7 @@ setupValueChangeListeners(): void {
   });
 }
 
-  onSubmit() {
+onSubmit() {
     const formValue = this.vehicleForm.value
     formValue.year = this.activityYear
     formValue.productionCenter = this.productionCenter
@@ -140,16 +140,15 @@ setupValueChangeListeners(): void {
           this.showSnackBar('Error al crear:' + error);
       }
       );
-  }
+}
 
-  setFuelTypes() {
+setFuelTypes() {
     const vehicleData = this.vehicleForm.value
     this.vehicleFuelService.getByYearType(this.activityYear, vehicleData.equipmentType.Categoria)
       .subscribe((fuelTypes:any) => {
         this.fuelTypes = fuelTypes
-        console.log('emissions: ', this.fuelTypes)
     })
-  }
+}
 
 setEmissionFactors () {
   const fuelData = this.vehicleForm.value

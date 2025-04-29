@@ -9,13 +9,13 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MesesService } from '../services/meses.service';
 import { FuelDataService } from '../services/fuel-data.service';
+import { VehiclesFuelConsumptionService } from '../services/vehicles-fuel-consumption.service';
 
 @Component({
   selector: 'app-control-panel-container',
   templateUrl: './control-panel-container.component.html',
   styleUrl: './control-panel-container.component.scss'
 })
-
 
 export class ControlPanelContainerComponent implements OnInit {
   filterForm!: FormGroup; // Formulario reactivo
@@ -29,11 +29,12 @@ export class ControlPanelContainerComponent implements OnInit {
   prodCenterID: number = 0 // ID del centro de producción
   scopeOneRecords: any[] = [] // Lista de registros de Scope 1
   scopeTwoRecords: any[] = [] // Lista de registros de Scope 2
-  displayedColumnsScope1FI: string[] = ['year', 'periodoFactura', 'fuelType', 'activityData', 'activityType', 'updated_at']
-  displayedColumnsScope1RT: string[] = ['year', 'periodoFactura', 'equipmentType', 'fuelType', 'activityData', 'activityType', 'updated_at']
+  displayedColumnsScope1FI: string[] = ['activity Year', 'Invoice period', 'fuelType', 'activity Data', 'updated At']
+  displayedColumnsScope1RT: string[] = ['activity Year', 'Invoice period', 'equipmentType', 'fuelType', 'activityData', 'activityType', 'updated_at']
 
   displayedColumnsScope2: string[] = ['year', 'periodoFactura', 'activityData', 'activityType', 'electricityTradingCompany', 'gdo', 'energyType', 'updated_at']
   fuelTypes: { id: number; Combustible: string }[] = []; // Define fuelTypes property
+  equipmentTypes: { id: number; Combustible: string }[] = []
 
   chartInstanceFixedEmis: Chart | null = null;
   chartInstanceElectricityBuildings: Chart | null = null;
@@ -55,7 +56,6 @@ export class ControlPanelContainerComponent implements OnInit {
   dataSourceScope2ElectricityVehicles = new MatTableDataSource<any>(this.data)
   dataSourceScope2SteamColdCompAir = new MatTableDataSource<any>(this.data)
 
-
   constructor (
     private fb: FormBuilder,
     private authService: AuthService,
@@ -63,6 +63,7 @@ export class ControlPanelContainerComponent implements OnInit {
     private snackBar: MatSnackBar,
     private mesesService: MesesService,
     private fuelDataService: FuelDataService,
+      private vehicleFuelService: VehiclesFuelConsumptionService,
     private scopeOneRecordsService: ScopeOneRecordsService,
     private scopeTwoRecordsService: ScopeTwoRecordsService) {}
 
@@ -95,7 +96,10 @@ export class ControlPanelContainerComponent implements OnInit {
             const meses = this.mesesService.getMeses();
             this.scopeOneRecords.forEach((registro: any) => {
               const resultado = meses.find((mes) => mes.key === registro.periodoFactura);
-              registro.periodoFactura = resultado?.value || 'desconocido';
+              registro['Invoice period'] = resultado?.value || 'desconocido';
+              registro['activity Data'] = registro.activityData
+              registro['activity Year'] = registro.year
+              registro['updated At'] = registro.updated_at
               registro.edit = false
               registro.delete = true
 
@@ -161,7 +165,7 @@ export class ControlPanelContainerComponent implements OnInit {
       const matchedFuel = this.fuelTypes.find((fuelItem: any) => fuelItem.id === dataObjectFI.fuelType);
       console.log("matched fuel", matchedFuel)
       console.log("dataObjectFI", dataObjectFI)
-      dataObjectFI.fuelType = matchedFuel?.Combustible || 'desconocido';
+      dataObjectFI['fuelType'] = matchedFuel?.Combustible || 'desconocido';
     });
     this.dataSourceScope1FixedEmis = new MatTableDataSource(scop1DataFI);
 
@@ -211,6 +215,7 @@ export class ControlPanelContainerComponent implements OnInit {
     });
   }
   roadTranspChart(chartType: keyof ChartTypeRegistry, scop1DataRD: any): void {
+    console.log ("road", scop1DataRD)
     const ctx = document.getElementById('roadTranspChart') as HTMLCanvasElement;
     const monthlyData = new Array(12).fill(0); // Inicializar con 12 meses en 0
     scop1DataRD.forEach((dataObject: any) => {
@@ -220,6 +225,7 @@ export class ControlPanelContainerComponent implements OnInit {
       console.log("matched fuel", matchedFuel)
       console.log("dataObject", dataObject)
       dataObject.fuelType = matchedFuel?.Combustible || 'desconocido';
+      const equipmentType = this.equipmentTypes.find((equipmentType: any) => equipmentType.id === dataObject.equipmentType);
     });
     this.dataSourceScope1RoadTransp = new MatTableDataSource(scop1DataRD);
 
@@ -653,6 +659,13 @@ export class ControlPanelContainerComponent implements OnInit {
       console.log("fuel types", this.fuelTypes)
     })
   }
+
+  getEquipmentTypes(year: number, vehicleCategory: string) {
+    this.vehicleFuelService.getByYearType(year, vehicleCategory)
+      .subscribe((equipmentTypes:any) => {
+        this.equipmentTypes = equipmentTypes
+    })
+}
 
   private showSnackBar(msg: string): void {
     this.snackBar.open(msg, 'Close', {
