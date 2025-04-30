@@ -5,7 +5,7 @@
   "road scope1TableRD"
   "rail scope1TableRA"
   "machinery scope1TableMA"
-  "fugitive scope1TableFU";     // Tres columnas de igual ancho
+  "fugitive scope1TableFE";     // Tres columnas de igual ancho
   width: auto;      // Ocupa todo el ancho del contenedor padre
   box-sizing: border-box; // Asegura un cálculo correcto del ancho
   margin: 1rem;     // Espacio entre las dos secciones
@@ -44,8 +44,8 @@
 .scope1TableMA {
   grid-area: scope1TableMA;
 }
-.scope1TableFU {
-  grid-area: scope1TableFU;
+.scope1TableFE {
+  grid-area: scope1TableFE;
 }
 .scope2 {
   display: grid;

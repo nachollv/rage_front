@@ -34,17 +34,18 @@ export class ControlPanelContainerComponent implements OnInit {
   scopeOneRecords: any[] = [] // Lista de registros de Scope 1
   scopeTwoRecords: any[] = [] // Lista de registros de Scope 2
   fugitiveEmissionsRecords: any[] = []
-  displayedColumnsScope1FI: string[] = ['activity Year', 'Invoice period', 'fuelType', 'activity Data', 'updated At']
-  displayedColumnsScope1RT: string[] = ['activity Year', 'Invoice period', 'Categoría vehículo', 'fuel Type', 'activity Data',  'updated_at']
-  displayedColumnsScope1TransFerMarAe: string[] = ['activity Year', 'Invoice period', 'Categoría vehículo', 'fuel Type', 'activity Data', 'updated_at']
-  displayedColumnsScope1MA: string[] = ['activity Year', 'Invoice period', 'Categoría vehículo', 'fuel Type', 'activity Data',  'updated_at']
+  displayedColumnsScope1FI: string[] = ['activity Year', 'Periode', 'fuelType', 'activity Data', 'updated At']
+  displayedColumnsScope1RT: string[] = ['activity Year', 'Periode', 'Categoría vehículo', 'fuel Type', 'activity Data',  'updated At']
+  displayedColumnsScope1TransFerMarAe: string[] = ['activity Year', 'Periode', 'Categoría vehículo', 'fuel Type', 'activity Data', 'updated At']
+  displayedColumnsScope1MA: string[] = ['activity Year', 'Periode', 'Categoría vehículo', 'fuel Type', 'activity Data',  'updated At']
+  displayedColumnsScope1FE: string[] = ['activity Year', 'Periode', 'Gas/Mezcla', 'Capacidad', 'Recarga', 'updated At']
 
   displayedColumnsScope2: string[] = ['year', 'periodoFactura', 'activityData', 'activityType', 'electricityTradingCompany', 'gdo', 'energyType', 'updated_at']
   fuelTypes: { id: number; Combustible: string }[] = []
   vehicleCategories: { id: number; Combustible: string; Categoria: string }[] = []
   ferMarAerCateories: { id: number; FuelType: string; Categoria: string }[] = []
   machineryCategories: { id: number; FuelType: string; Categoria: string }[] = []
-  fugitiveEmissions: { id: number; gasName: string; pca: string }[] = []
+  fugitiveEmissions: { id: number; Nombre: string; FormulaQuimica: string, PCA_6AR: string }[] = []
   chartInstanceFixedEmis: Chart | null = null;
   chartInstanceMachinery: Chart | null = null;
   chartInstanceHeatSteamColdCompAir: Chart | null = null;
@@ -99,6 +100,7 @@ export class ControlPanelContainerComponent implements OnInit {
     this.getEmisionesFugitivas()
     this.getScopeOneRecords(this.filterForm.value.activityYear)
     this.getScopeTwoRecords(this.filterForm.value.activityYear)
+    this.getFugitiveEmissionRecords(this.filterForm.value.activityYear)
   }
 
   onYearFilterChange(event: any): void {
@@ -115,12 +117,12 @@ export class ControlPanelContainerComponent implements OnInit {
             const meses = this.mesesService.getMeses();
             this.scopeOneRecords.forEach((registro: any) => {
               const resultado = meses.find((mes) => mes.key === registro.periodoFactura);
-              registro['Invoice period'] = resultado?.value || 'desconocido';
+              registro['Periode'] = resultado?.value || 'desconocido';
               registro['activity Data'] = registro.activityData
               registro['activity Year'] = registro.year
               registro['updated At'] = registro.updated_at
               registro.edit = false
-              registro.delete = true
+              registro.delete = false
 
             });
             if (this.scopeOneRecords.length > 0) {
@@ -177,8 +179,21 @@ export class ControlPanelContainerComponent implements OnInit {
   getFugitiveEmissionRecords(activityYear: number): void {
     this.fugitiveEmissionRecordsService.getRegistroByFilters(activityYear, 6)
       .subscribe((response: any) => {
-        this.fugitiveEmissionsRecords = response;
-        this.fugitiveEmissChart('bar', this.fugitiveEmissionRecordsService)
+        this.fugitiveEmissionsRecords = response.data;
+        const meses = this.mesesService.getMeses();
+        this.fugitiveEmissionsRecords.forEach((registro: any) => {
+          const resultado = meses.find((mes) => mes.key === registro.periodoFactura)
+          registro['Periode'] = resultado?.value || 'desconocido'
+          const matchedFE = this.fugitiveEmissions.find((fuelItem: any) => fuelItem.id === registro.nombre_gas_mezcla);
+          registro['Gas/Mezcla'] = matchedFE?.Nombre
+          registro['Recarga'] = registro.recarga_equipo
+          registro['Capacidad'] = registro.capacidad_equipo
+          registro['activity Year'] = registro.year
+          registro['updated At'] = registro.updated_at
+          registro.edit = false
+          registro.delete = false
+        });
+        this.fugitiveEmissChart('bar', this.fugitiveEmissionsRecords)
       });
   }
 
@@ -427,11 +442,12 @@ export class ControlPanelContainerComponent implements OnInit {
     });
   }
   fugitiveEmissChart(chartType: keyof ChartTypeRegistry, scop1DataFE: any): void {
+    console.log ("fugitiveEmis", scop1DataFE)
     const ctx = document.getElementById('fugitiveEmissChart') as HTMLCanvasElement;
     const monthlyData = new Array(12).fill(0); // Inicializar con 12 meses en 0
     scop1DataFE.forEach((dataObject: any) => {
       const monthIndex = parseInt(dataObject.periodoFactura.replace('M', '')) - 1; // Obtener índice del mes
-      monthlyData[monthIndex] += parseFloat(dataObject.activityData); // Asignar cantidad al mes correspondiente
+      monthlyData[monthIndex] += (parseFloat(dataObject.capacidad_equipo)-(dataObject.recarga_equipo)); // Asignar cantidad al mes correspondiente
     });
     this.dataSourceScope1FugitiveEmiss = new MatTableDataSource(scop1DataFE);
     if (this.chartInstanceFugitiveEmiss) {
@@ -453,7 +469,7 @@ export class ControlPanelContainerComponent implements OnInit {
           'December',
         ],
         datasets: [{
-          label: 'Emissions',
+          label: 'Emissions: capacidad equipo - recarga-equipo',
           data: monthlyData,
           backgroundColor: '#B22222', // Verde bosque
           borderColor: '#B22222',
@@ -713,7 +729,6 @@ export class ControlPanelContainerComponent implements OnInit {
     this.emisionesFugitivas.getAll()
       .subscribe((item:any) => {
         this.fugitiveEmissions = item
-        console.log (this.fugitiveEmissions)
       })
   }
 

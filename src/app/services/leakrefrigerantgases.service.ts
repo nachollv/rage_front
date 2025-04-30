@@ -7,9 +7,7 @@ import { catchError } from 'rxjs/operators';
   providedIn: 'root',
 })
 export class LeakrefrigerantgasesService {
-  //private apiUrl = 'https://pre.tramits.idi.es/public/index.php/auth';
   private apiUrl = 'https://rage.industrialocalsostenible.com/public/index.php';
-
 
   constructor(private http: HttpClient) {}
 
