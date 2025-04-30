@@ -355,7 +355,6 @@ export class ControlPanelContainerComponent implements OnInit {
                       borderColor: '#696969',
                       borderWidth: 1,
                   });
-                  console.log ("datasets", datasets)
               }
           });
       });
