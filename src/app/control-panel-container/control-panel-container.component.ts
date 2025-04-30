@@ -196,7 +196,7 @@ export class ControlPanelContainerComponent implements OnInit {
       });
   }
 
-  fixedInstChart(chartType: keyof ChartTypeRegistry, scop1DataFI: any): void {
+/*   fixedInstChart(chartType: keyof ChartTypeRegistry, scop1DataFI: any): void {
     const ctx = document.getElementById('fixedInstChart') as HTMLCanvasElement;
     const monthlyData = new Array(12).fill(0); // Inicializar con 12 meses en 0
 
@@ -252,70 +252,86 @@ export class ControlPanelContainerComponent implements OnInit {
             }
         }
     });
-  }
-  /* roadTranspChart(chartType: keyof ChartTypeRegistry, scop1DataRD: any): void {
-    const ctx = document.getElementById('roadTranspChart') as HTMLCanvasElement;
-    const monthlyData = new Array(12).fill(0); // Inicializar con 12 meses en 0
-    scop1DataRD.forEach((dataObject: any) => {
-
-      const monthIndex = parseInt(dataObject.periodoFactura.replace('M', '')) - 1; // Obtener índice del mes
-      monthlyData[monthIndex] += parseFloat(dataObject.activityData); // Asignar cantidad al mes correspondiente
-      const equipmentType = this.vehicleCategories.find((vehicleItem: any) => vehicleItem.id === dataObject.equipmentType)
-      dataObject['Categoría vehículo'] = equipmentType?.Categoria
-      const fuelType = this.fuelTypes.find((fuelItem:any) => fuelItem.id === dataObject.fuelType)
-      dataObject['fuel Type'] = fuelType?.Combustible
-
-    });
-    this.dataSourceScope1RoadTransp = new MatTableDataSource(scop1DataRD);
-
-    if (this.chartInstanceRoadTransp) {
-        this.chartInstanceRoadTransp.destroy();
-    }
-    this.chartInstanceRoadTransp = new Chart(ctx, {
-      type: chartType,
-      data: {
-        labels: [
-          'January',
-          'February',
-          'March',
-          'April',          'May',
-          'June',
-          'July',
-          'August',          'September',
-          'October',
-          'November',
-          'December',
-        ],
-        datasets: [{
-          label: 'Emissions',
-          data: monthlyData,
-          backgroundColor: '#B22222', // Verde bosque
-          borderColor: '#B22222',
-          borderWidth: 1,  // this dataset is drawn below
-          // this dataset is drawn below
-          order: 1
-      }]
-  },
-  options: {
-    responsive: true,
-    plugins: {
-      legend: {
-        labels: {
-          color: '#696969' // Gris oscuro para etiquetas
-        }
-      },
-      title: {
-        display: true,
-        text: 'Transporte por carretera - Emissions and objective'
-      }
-    },
-    scales: {
-      x: { ticks: { color: '#696969' } },
-      y: { ticks: { color: '#696969' } }
-    }
-    }
-    });
   } */
+    fixedInstChart(chartType: keyof ChartTypeRegistry, scop1DataFI: any): void {
+      const ctx = document.getElementById('fixedInstChart') as HTMLCanvasElement;
+      scop1DataFI.forEach((dataObjectFI: any) => {
+        const matchedFuel = this.fuelTypes.find((fuelItem: any) => fuelItem.id === dataObjectFI.fuelType);
+        dataObjectFI['fuelType'] = matchedFuel?.Combustible || 'desconocido '+dataObjectFI['fuelType'];
+      });
+      // Inicializar tipos de combustible
+      const fuelTypes = new Set(scop1DataFI.map((item: any) => item['fuelType']));
+      const datasets: any[] = [];
+  
+      // Crear datos agrupados por fuelType
+      fuelTypes.forEach((fuelType) => {
+          const monthlyData = new Array(12).fill(0); // Inicializar con 12 meses en 0
+  
+          scop1DataFI.forEach((dataObjectFI: any) => {
+              if (dataObjectFI['fuelType'] === fuelType) {
+                  const monthIndex = parseInt(dataObjectFI.periodoFactura.replace('M', '')) - 1; // Obtener índice del mes
+                  monthlyData[monthIndex] += parseFloat(dataObjectFI.activityData); // Sumar datos mensuales
+              }
+          });
+  
+          // Agregar dataset si tiene datos
+          if (monthlyData.some((value) => value > 0)) {
+              datasets.push({
+                  label: fuelType,
+                  data: monthlyData,
+                  backgroundColor: `#${Math.floor(Math.random() * 16777215).toString(16)}`, // Generar color aleatorio
+                  borderColor: '#696969',
+                  borderWidth: 1,
+              });
+          }
+      });
+  
+      this.dataSourceScope1FixedEmis = new MatTableDataSource(scop1DataFI);
+  
+      if (this.chartInstanceFixedEmis) {
+          this.chartInstanceFixedEmis.destroy();
+      }
+  
+      this.chartInstanceFixedEmis = new Chart(ctx, {
+          type: 'bar',
+          data: {
+              labels: [
+                  'January', 'February', 'March', 'April', 'May', 'June',
+                  'July', 'August', 'September', 'October', 'November', 'December',
+              ],
+              datasets: datasets,
+          },
+          options: {
+              plugins: {
+                  legend: {
+                      position: 'top',
+                      labels: {
+                          color: '#696969',
+                      },
+                  },
+                  title: {
+                      display: true,
+                      text: 'Fixed Installations - Emissions Grouped by Fuel Type',
+                  },
+              },
+              interaction: {
+                  mode: 'index',
+                  intersect: false,
+              },
+              scales: {
+                  x: {
+                      stacked: true,
+                      ticks: { color: '#696969' },
+                  },
+                  y: {
+                      beginAtZero: true,
+                      stacked: true,
+                      ticks: { color: '#696969' },
+                  },
+              },
+          },
+      });
+  }
   
   roadTranspChart(chartType: keyof ChartTypeRegistry, scop1DataRD: any): void {
       const ctx = document.getElementById('roadTranspChart') as HTMLCanvasElement;
@@ -410,8 +426,6 @@ export class ControlPanelContainerComponent implements OnInit {
           },
       });
   }
-  
-
   railSeaAirChart(chartType: keyof ChartTypeRegistry, scop1DataRSA: any): void {
     const ctx = document.getElementById('railSeaAirChart') as HTMLCanvasElement;
     const monthlyData = new Array(12).fill(0); // Inicializar con 12 meses en 0
