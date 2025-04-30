@@ -35,13 +35,16 @@ export class ControlPanelContainerComponent implements OnInit {
   scopeOneRecords: any[] = [] // Lista de registros de Scope 1
   scopeTwoRecords: any[] = [] // Lista de registros de Scope 2
   fugitiveEmissionsRecords: any[] = []
-  displayedColumnsScope1FI: string[] = ['activity Year', 'Periode', 'fuelType', 'activity Data', 'updated At']
-  displayedColumnsScope1RT: string[] = ['activity Year', 'Periode', 'Categoría vehículo', 'fuelType', 'activity Data',  'updated At']
-  displayedColumnsScope1TransFerMarAe: string[] = ['activity Year', 'Periode', 'Categoría vehículo', 'fuel Type', 'activity Data', 'updated At']
-  displayedColumnsScope1MA: string[] = ['activity Year', 'Periode', 'equipmentType', 'fuelType', 'activity Data',  'updated At']
-  displayedColumnsScope1FE: string[] = ['activity Year', 'Periode', 'Gas/Mezcla', 'Capacidad', 'Recarga', 'updated At']
+  displayedColumnsScope1FI: string[] = ['activity Year', 'Periode', 'fuelType', 'activity Data']
+  displayedColumnsScope1RT: string[] = ['activity Year', 'Periode', 'Categoría vehículo', 'fuelType', 'activity Data']
+  displayedColumnsScope1TransFerMarAe: string[] = ['activity Year', 'Periode', 'Categoría vehículo', 'fuel Type', 'activity Data']
+  displayedColumnsScope1MA: string[] = ['activity Year', 'Periode', 'equipmentType', 'fuelType', 'activity Data']
+  displayedColumnsScope1FE: string[] = ['activity Year', 'Periode', 'Gas/Mezcla', 'Capacidad', 'Recarga']
 
-  displayedColumnsScope2: string[] = ['year', 'Periode', 'Comercializadora', 'activityData', 'gdo', 'updated_at']
+  displayedColumnsScope2: string[] = ['activity Year', 'Periode', 'Comercializadora', 'activity Data']
+  displayedColumnsScope2Steam: string[] = ['activity Year', 'Periode', 'Tipo de energía adquirida', 'activity Data']
+
+
   fuelTypes: { id: number; Combustible: string }[] = []
   vehicleCategories: { id: number; FuelType: string; Categoria: string }[] = []
   ferMarAerCateories: { id: number; FuelType: string; Categoria: string }[] = []
@@ -661,77 +664,13 @@ export class ControlPanelContainerComponent implements OnInit {
     }
     });
   }
-  /*   electricityVehicles(chartType: keyof ChartTypeRegistry, scop2DataVehicles: any): void {
-    const ctx = document.getElementById('electricityVehicles') as HTMLCanvasElement;
-    const monthlyData = new Array(12).fill(0); // Inicializar con 12 meses en 0
-
-    scop2DataVehicles.forEach((dataObject: any) => {
-      const monthIndex = parseInt(dataObject.periodoFactura.replace('M', '')) - 1; // Obtener índice del mes
-      monthlyData[monthIndex] += parseFloat(dataObject.activityData); // Asignar cantidad al mes correspondiente
-      const matchedComercialiadora = this.comercializadorasElectricas.find((item: any) => item.id === dataObject.Comercializadora)
-      dataObject['Comercializadora'] = matchedComercialiadora?.nombreComercial
-    });
-
-    this.dataSourceScope2ElectricityVehicles = new MatTableDataSource(scop2DataVehicles)
-    if (this.chartInstanceElectricityVehicles) {
-        this.chartInstanceElectricityVehicles.destroy();
-    }
-    this.chartInstanceElectricityVehicles = new Chart(ctx, {
-      type: chartType,
-      data: {
-        labels: [
-          'January',
-          'February',
-          'March',
-          'April',          'May',
-          'June',
-          'July',
-          'August',          'September',
-          'October',
-          'November',
-          'December',
-        ],
-        datasets: [{
-          label: 'Emissions',
-          data: monthlyData,
-          backgroundColor: '#555555', // Gris oscuro
-          borderColor: '#555555',
-          borderWidth: 1,
-          // this dataset is drawn below
-          order: 1
-      }]
-  },
-  options: {
-
-      plugins: {  
-        legend: {
-          position: 'top',
-        },
-        title: {
-          display: true,
-          text: 'Consumo eléctrico en vehículos - Emissions and objective'
-        }
-      },
-      interaction: {  
-        mode: 'index',
-        intersect: false,
-      },
-      scales: {
-        y: {
-          beginAtZero: true,
-          stacked: true
-        },
-        x: {
-          stacked: true
-        }
-      }
-    }
-    });
-  } */
-
+  
   electricityVehicles(chartType: keyof ChartTypeRegistry, scop2DataVehicles: any): void {
       const ctx = document.getElementById('electricityVehicles') as HTMLCanvasElement;
-  
+      scop2DataVehicles.forEach((dataObject: any) => {
+        const matchedComercialiadora = this.comercializadorasElectricas.find((item: any) => item.id === dataObject.Comercializadora)
+        dataObject['Comercializadora'] = matchedComercialiadora?.nombreComercial
+      });
       // Inicializar comercializadoras únicas
       const comercializadoras = new Set(scop2DataVehicles.map((item: any) => item['Comercializadora']));
       const datasets: any[] = [];
@@ -816,70 +755,99 @@ export class ControlPanelContainerComponent implements OnInit {
       });
   }
   
+  heatSteamColdCompAir(chartType: keyof ChartTypeRegistry, scop2DataSteam: any): void {
+      const ctx = document.getElementById('heatSteamColdCompAir') as HTMLCanvasElement;
+      console.log ("scope2Steam", scop2DataSteam)
+      scop2DataSteam.forEach((registro: any) => {
+        registro['Tipo de energía adquirida'] = registro.energyType
+      })
+      // Inicializar tipos de energía
+      const energyTypes = new Set(scop2DataSteam.map((item: any) => item['energyType']));
+      const datasets: any[] = [];
   
-  heatSteamColdCompAir(chartType: keyof ChartTypeRegistry, scop2Data: any): void {
-    const ctx = document.getElementById('heatSteamColdCompAir') as HTMLCanvasElement;
-    const monthlyData = new Array(12).fill(0); // Inicializar con 12 meses en 0
-    scop2Data.forEach((dataObject: any) => {
-      const monthIndex = parseInt(dataObject.periodoFactura.replace('M', '')) - 1; // Obtener índice del mes
-      monthlyData[monthIndex] += parseFloat(dataObject.activityData); // Asignar cantidad al mes correspondiente
-    });
-    if (this.chartInstanceHeatSteamColdCompAir) {
-        this.chartInstanceHeatSteamColdCompAir.destroy();
-    }
-    this.chartInstanceHeatSteamColdCompAir = new Chart(ctx, {
-      type: chartType,
-      data: {
-        labels: [
-          'January',
-          'February',
-          'March',
-          'April',          'May',
-          'June',
-          'July',
-          'August',          'September',
-          'October',
-          'November',
-          'December',
-        ],
-        datasets: [{
-          label: 'Emissions',
-          data: monthlyData,
-          backgroundColor: '#555555',
-          borderColor: '#555555',
-          borderWidth: 1,
-          order: 1
-      }]
-  },
-  options: {
-      responsive: true,
-      maintainAspectRatio: true,
-      plugins: {  
-        legend: {
-          position: 'top',
-        },
-        title: {
-          display: true,
-          text: 'Calor, vapor, frío y aire comprimido - Emissions and objective'
-        }
-      },
-      interaction: {  
-        mode: 'index',
-        intersect: false,
-      },
-      scales: {
-        y: {
-          beginAtZero: true,
-          stacked: true
-        },
-        x: {
-          stacked: true
-        }
+      // Crear datos agrupados por energyType
+      energyTypes.forEach((energyType) => {
+          const monthlyData = new Array(12).fill(0); // Inicializar con 12 meses en 0
+  
+          scop2DataSteam.forEach((dataObject: any) => {
+              if (dataObject['energyType'] === energyType) {
+                  const monthIndex = parseInt(dataObject.periodoFactura.replace('M', '')) - 1; // Obtener índice del mes
+                  monthlyData[monthIndex] += parseFloat(dataObject.activityData); // Sumar datos mensuales
+              }
+          });
+  
+          // Agregar dataset si tiene datos
+          if (monthlyData.some((value) => value > 0)) {
+              datasets.push({
+                  label: energyType,
+                  data: monthlyData,
+                  backgroundColor: `#${Math.floor(Math.random() * 16777215).toString(16)}`, // Generar color aleatorio
+                  borderColor: '#696969',
+                  borderWidth: 1,
+              });
+          }
+      });
+  
+      this.dataSourceScope2SteamColdCompAir = new MatTableDataSource(scop2DataSteam);
+  
+      if (this.chartInstanceHeatSteamColdCompAir) {
+          this.chartInstanceHeatSteamColdCompAir.destroy();
       }
-    }
-    });
+  
+      this.chartInstanceHeatSteamColdCompAir = new Chart(ctx, {
+          type: 'bar',
+          data: {
+              labels: [
+                  'January',
+                  'February',
+                  'March',
+                  'April',
+                  'May',
+                  'June',
+                  'July',
+                  'August',
+                  'September',
+                  'October',
+                  'November',
+                  'December',
+              ],
+              datasets: datasets,
+          },
+          options: {
+              responsive: true,
+              maintainAspectRatio: true,
+              plugins: {
+                  legend: {
+                      position: 'top',
+                      labels: {
+                          color: '#696969',
+                      },
+                  },
+                  title: {
+                      display: true,
+                      text: 'Calor, vapor, frío y aire comprimido - Emissions Grouped by Energy Type',
+                  },
+              },
+              interaction: {
+                  mode: 'index',
+                  intersect: false,
+              },
+              scales: {
+                  x: {
+                      stacked: true,
+                      ticks: { color: '#696969' },
+                  },
+                  y: {
+                      beginAtZero: true,
+                      stacked: true,
+                      ticks: { color: '#696969' },
+                  },
+              },
+          },
+      });
   }
-
+  
+  
   getFixedFuelConsumptions(year: number) {
     this.fuelDataService.getByYear(year)
     .subscribe((fuel:any) => {
