@@ -14,6 +14,7 @@ import { EmisionesTransFerAerMarService } from '../services/emisiones-trans-fera
 import { EmisionesMachineryService } from '../services/emisiones-machinery.service';
 import { LeakrefrigerantgasesService } from '../services/leakrefrigerantgases.service';
 import { RegistroemisionesFugasService } from '../services/registroemisionesfugas.service';
+import { EmisionesElectricasEdificiosService } from '../services/emisiones-electricas-edificios.service';
 
 @Component({
   selector: 'app-control-panel-container',
@@ -46,6 +47,7 @@ export class ControlPanelContainerComponent implements OnInit {
   ferMarAerCateories: { id: number; FuelType: string; Categoria: string }[] = []
   machineryCategories: { id: number; FuelType: string; Categoria: string }[] = []
   fugitiveEmissions: { id: number; Nombre: string; FormulaQuimica: string, PCA_6AR: string }[] = []
+  comercializadorasElectricas: { id: number; nombreComercial: string; kg_CO2_kWh: string }[] = []
   chartInstanceFixedEmis: Chart | null = null;
   chartInstanceMachinery: Chart | null = null;
   chartInstanceHeatSteamColdCompAir: Chart | null = null;
@@ -80,7 +82,8 @@ export class ControlPanelContainerComponent implements OnInit {
 
     private scopeOneRecordsService: ScopeOneRecordsService,
     private scopeTwoRecordsService: ScopeTwoRecordsService,
-    private fugitiveEmissionRecordsService: RegistroemisionesFugasService) {}
+    private fugitiveEmissionRecordsService: RegistroemisionesFugasService,
+    private emisionesElectricasBuildingService:EmisionesElectricasEdificiosService) {}
 
   ngOnInit():void {
     this.filterForm = this.fb.group({
@@ -98,6 +101,7 @@ export class ControlPanelContainerComponent implements OnInit {
     this.getferMarAerConsumtions(this.filterForm.value.activityYear)
     this.getMachineryConsumtions(this.filterForm.value.activityYear)
     this.getEmisionesFugitivas()
+    this.getEmisionesComercializadoras(this.filterForm.value.activityYear)
     this.getScopeOneRecords(this.filterForm.value.activityYear)
     this.getScopeTwoRecords(this.filterForm.value.activityYear)
     this.getFugitiveEmissionRecords(this.filterForm.value.activityYear)
@@ -238,7 +242,7 @@ export class ControlPanelContainerComponent implements OnInit {
       }
   
       this.chartInstanceFixedEmis = new Chart(ctx, {
-          type: 'bar',
+          type: chartType,
           data: {
               labels: [
                   'January', 'February', 'March', 'April', 'May', 'June',
@@ -285,8 +289,6 @@ export class ControlPanelContainerComponent implements OnInit {
         roadTransport['Categoría vehículo'] = matchedroadTransport?.Categoria
         roadTransport['fuelType'] = matchedroadTransport?.FuelType
       });
-
-      console.log ("scop1DataRD ", scop1DataRD)
       // Inicializar categorías y colores
       const categories = new Set(scop1DataRD.map((item: any) => item['Categoría vehículo']));
       const fuelTypes = new Set(scop1DataRD.map((item: any) => item['fuelType']));
@@ -443,7 +445,6 @@ export class ControlPanelContainerComponent implements OnInit {
         machineDataActiv['Categoría vehículo'] = machineDataActiv?.equipmentType
         machineDataActiv['fuelType'] = matchedMachinery?.FuelType
       });
-      console.log ("scop1DataMA ", scop1DataMA)
       // Inicializar categorías y colores
       const categories = new Set(scop1DataMA.map((item: any) => item['equipmentType']));
       const fuelTypes = new Set(scop1DataMA.map((item: any) => item['fuelType']));
@@ -531,7 +532,6 @@ export class ControlPanelContainerComponent implements OnInit {
       });
   }
   fugitiveEmissChart(chartType: keyof ChartTypeRegistry, scop1DataFE: any): void {
-    console.log ("fugitiveEmis", scop1DataFE)
     const ctx = document.getElementById('fugitiveEmissChart') as HTMLCanvasElement;
     const monthlyData = new Array(12).fill(0); // Inicializar con 12 meses en 0
     scop1DataFE.forEach((dataObject: any) => {
@@ -597,11 +597,13 @@ export class ControlPanelContainerComponent implements OnInit {
 
   electricityBuildings(chartType: keyof ChartTypeRegistry, scop2ElecBuild: any): void {
     const ctx = document.getElementById('electricityBuildings') as HTMLCanvasElement;
-    console.log ("scop2ElecBuild", scop2ElecBuild)
     const monthlyData = new Array(12).fill(0); // Inicializar con 12 meses en 0
     scop2ElecBuild.forEach((dataObject: any) => {
       const monthIndex = parseInt(dataObject.periodoFactura.replace('M', '')) - 1; // Obtener índice del mes
       monthlyData[monthIndex] += parseFloat(dataObject.activityData); // Asignar cantidad al mes correspondiente
+      const matchedComercialiadora = this.comercializadorasElectricas.find((item: any) => item.id === dataObject.Comercializadora)
+      dataObject['Comercializadora'] = matchedComercialiadora?.nombreComercial
+
     });
     this.dataSourceScope2ElectricityBuildings = new MatTableDataSource(scop2ElecBuild);
     if (this.chartInstanceElectricityBuildings) {
@@ -659,14 +661,18 @@ export class ControlPanelContainerComponent implements OnInit {
     }
     });
   }
-  electricityVehicles(chartType: keyof ChartTypeRegistry, scop2Data: any): void {
+  /*   electricityVehicles(chartType: keyof ChartTypeRegistry, scop2DataVehicles: any): void {
     const ctx = document.getElementById('electricityVehicles') as HTMLCanvasElement;
     const monthlyData = new Array(12).fill(0); // Inicializar con 12 meses en 0
-    scop2Data.forEach((dataObject: any) => {
+
+    scop2DataVehicles.forEach((dataObject: any) => {
       const monthIndex = parseInt(dataObject.periodoFactura.replace('M', '')) - 1; // Obtener índice del mes
       monthlyData[monthIndex] += parseFloat(dataObject.activityData); // Asignar cantidad al mes correspondiente
+      const matchedComercialiadora = this.comercializadorasElectricas.find((item: any) => item.id === dataObject.Comercializadora)
+      dataObject['Comercializadora'] = matchedComercialiadora?.nombreComercial
     });
-    /* console.log(scop2Data, monthlyData) */
+
+    this.dataSourceScope2ElectricityVehicles = new MatTableDataSource(scop2DataVehicles)
     if (this.chartInstanceElectricityVehicles) {
         this.chartInstanceElectricityVehicles.destroy();
     }
@@ -696,8 +702,7 @@ export class ControlPanelContainerComponent implements OnInit {
       }]
   },
   options: {
-/*       responsive: true,
-      maintainAspectRatio: true, */
+
       plugins: {  
         legend: {
           position: 'top',
@@ -722,7 +727,96 @@ export class ControlPanelContainerComponent implements OnInit {
       }
     }
     });
+  } */
+
+  electricityVehicles(chartType: keyof ChartTypeRegistry, scop2DataVehicles: any): void {
+      const ctx = document.getElementById('electricityVehicles') as HTMLCanvasElement;
+  
+      // Inicializar comercializadoras únicas
+      const comercializadoras = new Set(scop2DataVehicles.map((item: any) => item['Comercializadora']));
+      const datasets: any[] = [];
+  
+      // Crear datos agrupados por comercializadora
+      comercializadoras.forEach((comercializadora) => {
+          const monthlyData = new Array(12).fill(0); // Inicializar con 12 meses en 0
+  
+          scop2DataVehicles.forEach((dataObject: any) => {
+              if (dataObject['Comercializadora'] === comercializadora) {
+                  const monthIndex = parseInt(dataObject.periodoFactura.replace('M', '')) - 1; // Obtener índice del mes
+                  monthlyData[monthIndex] += parseFloat(dataObject.activityData); // Sumar datos mensuales
+              }
+          });
+  
+          // Agregar dataset si tiene datos
+          if (monthlyData.some((value) => value > 0)) {
+              datasets.push({
+                  label: comercializadora,
+                  data: monthlyData,
+                  backgroundColor: `#${Math.floor(Math.random() * 16777215).toString(16)}`, // Generar color aleatorio
+                  borderColor: '#696969',
+                  borderWidth: 1,
+              });
+          }
+      });
+  
+      this.dataSourceScope2ElectricityVehicles = new MatTableDataSource(scop2DataVehicles);
+  
+      if (this.chartInstanceElectricityVehicles) {
+          this.chartInstanceElectricityVehicles.destroy();
+      }
+  
+      this.chartInstanceElectricityVehicles = new Chart(ctx, {
+          type: 'bar',
+          data: {
+              labels: [
+                  'January',
+                  'February',
+                  'March',
+                  'April',
+                  'May',
+                  'June',
+                  'July',
+                  'August',
+                  'September',
+                  'October',
+                  'November',
+                  'December',
+              ],
+              datasets: datasets,
+          },
+          options: {
+              plugins: {
+                  legend: {
+                      position: 'top',
+                      labels: {
+                          color: '#696969',
+                      },
+                  },
+                  title: {
+                      display: true,
+                      text: 'Consumo eléctrico en vehículos - Emissions Grouped by Comercializadora',
+                  },
+              },
+              interaction: {
+                  mode: 'index',
+                  intersect: false,
+              },
+              scales: {
+                  x: {
+                      stacked: true,
+                      ticks: { color: '#696969' },
+                  },
+                  y: {
+                      beginAtZero: true,
+                      stacked: true,
+                      ticks: { color: '#696969' },
+                  },
+              },
+          },
+      });
   }
+  
+  
   heatSteamColdCompAir(chartType: keyof ChartTypeRegistry, scop2Data: any): void {
     const ctx = document.getElementById('heatSteamColdCompAir') as HTMLCanvasElement;
     const monthlyData = new Array(12).fill(0); // Inicializar con 12 meses en 0
@@ -730,7 +824,6 @@ export class ControlPanelContainerComponent implements OnInit {
       const monthIndex = parseInt(dataObject.periodoFactura.replace('M', '')) - 1; // Obtener índice del mes
       monthlyData[monthIndex] += parseFloat(dataObject.activityData); // Asignar cantidad al mes correspondiente
     });
-    /* console.log(scop2Data, monthlyData) */
     if (this.chartInstanceHeatSteamColdCompAir) {
         this.chartInstanceHeatSteamColdCompAir.destroy();
     }
@@ -798,7 +891,6 @@ export class ControlPanelContainerComponent implements OnInit {
     this.vehicleFuelService.getByYear(year)
       .subscribe((category:any) => {
       this.vehicleCategories = category
-      /* console.log ("vehicleCategories", this.vehicleCategories) */
       })
   }
 
@@ -821,6 +913,13 @@ export class ControlPanelContainerComponent implements OnInit {
       .subscribe((item:any) => {
         this.fugitiveEmissions = item
       })
+  }
+
+  getEmisionesComercializadoras(year:number) {
+    this.emisionesElectricasBuildingService.getByYear(year)
+    .subscribe((item:any) => {
+      this.comercializadorasElectricas = item
+    })
   }
 
   private showSnackBar(msg: string): void {
