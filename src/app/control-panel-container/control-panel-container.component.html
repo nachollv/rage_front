@@ -56,7 +56,14 @@
   <article ngClass="heat" >
     <canvas id="heatSteamColdCompAir"></canvas>
   </article>
-<!--   <article ngClass="scope2Table">
-  <app-data-table [displayedColumns]="displayedColumnsScope2" [dataSource]="dataSourceScope1FixedEmis"></app-data-table>
-  </article> -->
+
+  <article ngClass="scope2TableElec">
+    <app-data-table [displayedColumns]="displayedColumnsScope2" [dataSource]="dataSourceScope2ElectricityBuildings"></app-data-table>
+  </article>
+  <article ngClass="scope2TableElecVehi">
+    <app-data-table [displayedColumns]="displayedColumnsScope2" [dataSource]="dataSourceScope2ElectricityVehicles"></app-data-table>
+  </article>
+  <article ngClass="scope2TableHeatCold">
+    <app-data-table [displayedColumns]="displayedColumnsScope2" [dataSource]="dataSourceScope2SteamColdCompAir"></app-data-table>
+  </article>  
 </section>

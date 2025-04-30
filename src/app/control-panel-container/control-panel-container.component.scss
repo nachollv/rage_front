@@ -49,9 +49,9 @@
 }
 .scope2 {
   display: grid;
-  grid-template-areas: "electricity scope2Table" 
-  "electricityVehicle scope2Table"
-  "heat scope2Table"; // Tres columnas de igual ancho
+  grid-template-areas: "electricity scope2TableElec" 
+  "electricityVehicle scope2TableElecVehi"
+  "heat scope2TableHeatCold"; // Tres columnas de igual ancho
   gap: 1rem; // Espaciado uniforme entre columnas y filas
   width: auto; // Ocupa todo el ancho del contenedor padre
   box-sizing: border-box; // Asegura un cálculo correcto del ancho
@@ -71,8 +71,14 @@
 .heat {
   grid-area: heat;
 }
-.scope2Table {
-  grid-area: scope2Table;
+.scope2TableElec {
+  grid-area: scope2TableElec;
+}
+.scope2TableElecVehi {
+  grid-area: scope2TableElecVehi;
+}
+.scope2TableHeatCold {
+  grid-area: scope2TableHeatCold;
 }
 
 .scope1 {

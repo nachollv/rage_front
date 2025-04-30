@@ -40,7 +40,7 @@ export class ControlPanelContainerComponent implements OnInit {
   displayedColumnsScope1MA: string[] = ['activity Year', 'Periode', 'equipmentType', 'fuelType', 'activity Data',  'updated At']
   displayedColumnsScope1FE: string[] = ['activity Year', 'Periode', 'Gas/Mezcla', 'Capacidad', 'Recarga', 'updated At']
 
-  displayedColumnsScope2: string[] = ['year', 'periodoFactura', 'activityData', 'activityType', 'electricityTradingCompany', 'gdo', 'energyType', 'updated_at']
+  displayedColumnsScope2: string[] = ['year', 'Periode', 'Comercializadora', 'activityData', 'gdo', 'updated_at']
   fuelTypes: { id: number; Combustible: string }[] = []
   vehicleCategories: { id: number; FuelType: string; Categoria: string }[] = []
   ferMarAerCateories: { id: number; FuelType: string; Categoria: string }[] = []
@@ -123,17 +123,14 @@ export class ControlPanelContainerComponent implements OnInit {
               registro['updated At'] = registro.updated_at
               registro.edit = false
               registro.delete = false
-
             });
             if (this.scopeOneRecords.length > 0) {
-             
               this.fixedInstChart('bar', this.scopeOneRecords.filter((record: any) => record.activityType === 'fixed'));
               this.roadTranspChart('bar', this.scopeOneRecords.filter((record: any) => record.activityType === 'roadTransp'));
               this.railSeaAirChart('bar', this.scopeOneRecords.filter((record: any) => record.activityType === 'transferma'));
               this.machineryChart('bar', this.scopeOneRecords.filter((record: any) => record.activityType === 'machinery'));
             } else {
               this.showSnackBar('No hay registros con activityType "fixed".');
-              //this.dataSourceScope1 = new MatTableDataSource<any>([]);
             }
           },
           (error) => {
@@ -145,36 +142,6 @@ export class ControlPanelContainerComponent implements OnInit {
           }
       );
   }
-  
-  getScopeTwoRecords(activityYear: number): void {
-    this.scopeTwoRecordsService.getRecordsByFilters(activityYear).subscribe(
-      (response: any) => {
-        this.scopeTwoRecords = response.data;
-        const meses = this.mesesService.getMeses();
-        this.scopeTwoRecords.forEach((registro: any) => {
-          const resultado = meses.find((mes) => mes.key === registro.periodoFactura);
-          registro.periodoFactura = resultado?.value || 'desconocido';
-        });
-        if (this.scopeTwoRecords.length > 0) {
-          //this.dataSourceScope2 = new MatTableDataSource(this.scopeTwoRecords);
-          this.electricityBuildings('bar', this.scopeTwoRecords.filter((record: any) => record.activityType === 'electricityBuildings'));
-          this.electricityVehicles('bar', this.scopeTwoRecords.filter((record: any) => record.activityType === 'electricityVehicles'));
-          this.heatSteamColdCompAir('bar', this.scopeTwoRecords.filter((record: any) => record.activityType === 'heatSteamColdAir'));
-        } else {
-          this.showSnackBar('No hay registros con activityType "electricityBuildings".');
-          //this.dataSourceScope2 = new MatTableDataSource<any>([]);
-        }
-      },
-      (error) => {
-          if (error.status === 404 && error.messages?.error === "No se encontraron registros con los parámetros proporcionados.") {
-              this.showSnackBar('No se encontraron registros con los parámetros proporcionados.');
-          } else {
-              this.showSnackBar('Error al obtener registros de Alcance 2.');
-          }
-      }
-    );
-  }
-
   getFugitiveEmissionRecords(activityYear: number): void {
     this.fugitiveEmissionRecordsService.getRegistroByFilters(activityYear, 6)
       .subscribe((response: any) => {
@@ -194,66 +161,44 @@ export class ControlPanelContainerComponent implements OnInit {
         });
         this.fugitiveEmissChart('bar', this.fugitiveEmissionsRecords)
       });
+  }  
+  
+  getScopeTwoRecords(activityYear: number): void {
+    this.scopeTwoRecordsService.getRecordsByFilters(activityYear).subscribe(
+      (response: any) => {
+        this.scopeTwoRecords = response.data;
+        const meses = this.mesesService.getMeses();
+
+        this.scopeTwoRecords.forEach((registro: any) => {
+          const resultado = meses.find((mes) => mes.key === registro.periodoFactura);
+          registro['Periode'] = resultado?.value || 'desconocido';
+          registro['Comercializadora'] = registro.electricityTradingCompany
+          registro['activity Data'] = registro.activityData
+          registro['activity Year'] = registro.year
+          registro['updated At'] = registro.updated_at
+          registro.edit = false
+          registro.delete = false
+        });
+
+        if (this.scopeTwoRecords.length > 0) {
+          this.electricityBuildings('bar', this.scopeTwoRecords.filter((record: any) => record.activityType === 'electricityBuildings'));
+          this.electricityVehicles('bar', this.scopeTwoRecords.filter((record: any) => record.activityType === 'electricityVehicles'));
+          this.heatSteamColdCompAir('bar', this.scopeTwoRecords.filter((record: any) => record.activityType === 'heatSteamColdAir'));
+        } else {
+          this.showSnackBar('No hay registros con activityType "electricityBuildings".');
+        }
+      },
+      (error) => {
+          if (error.status === 404 && error.messages?.error === "No se encontraron registros con los parámetros proporcionados.") {
+              this.showSnackBar('No se encontraron registros con los parámetros proporcionados.');
+          } else {
+              this.showSnackBar('Error al obtener registros de Alcance 2.');
+          }
+      }
+    );
   }
 
-/*   fixedInstChart(chartType: keyof ChartTypeRegistry, scop1DataFI: any): void {
-    const ctx = document.getElementById('fixedInstChart') as HTMLCanvasElement;
-    const monthlyData = new Array(12).fill(0); // Inicializar con 12 meses en 0
-
-    scop1DataFI.forEach((dataObjectFI: any) => {
-      const monthIndex = parseInt(dataObjectFI.periodoFactura.replace('M', '')) - 1; // Obtener índice del mes
-      monthlyData[monthIndex] += parseFloat(dataObjectFI.activityData); // Asignar cantidad al mes correspondiente
-      const matchedFuel = this.fuelTypes.find((fuelItem: any) => fuelItem.id === dataObjectFI.fuelType);
-      dataObjectFI['fuelType'] = matchedFuel?.Combustible || 'desconocido '+dataObjectFI['fuelType'];
-    });
-    this.dataSourceScope1FixedEmis = new MatTableDataSource(scop1DataFI);
-
-    if (this.chartInstanceFixedEmis) {
-        this.chartInstanceFixedEmis.destroy();
-    }
-    this.chartInstanceFixedEmis = new Chart(ctx, {
-        type: chartType,
-        data: {
-            labels: [
-                'January', 'February', 'March', 'April', 'May', 'June',
-                'July', 'August', 'September', 'October', 'November', 'December',
-            ],
-            datasets: [{
-                label: 'Emissions',
-                data: monthlyData,
-                backgroundColor: '#B22222',
-                borderColor: '#B22222',
-                borderWidth: 1,
-                order: 1
-            }]
-        },
-        options: {
-            plugins: {
-                legend: {
-                    position: 'top',
-                },
-                title: {
-                    display: true,
-                    text: 'Fixed Installations - Emissions and objective'
-                }
-            },
-            interaction: {
-                mode: 'index',
-                intersect: false,
-            },
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    stacked: true
-                },
-                x: {
-                    stacked: true
-                }
-            }
-        }
-    });
-  } */
-    fixedInstChart(chartType: keyof ChartTypeRegistry, scop1DataFI: any): void {
+  fixedInstChart(chartType: keyof ChartTypeRegistry, scop1DataFI: any): void {
       const ctx = document.getElementById('fixedInstChart') as HTMLCanvasElement;
       scop1DataFI.forEach((dataObjectFI: any) => {
         const matchedFuel = this.fuelTypes.find((fuelItem: any) => fuelItem.id === dataObjectFI.fuelType);
@@ -332,7 +277,6 @@ export class ControlPanelContainerComponent implements OnInit {
           },
       });
   }
-  
   roadTranspChart(chartType: keyof ChartTypeRegistry, scop1DataRD: any): void {
       const ctx = document.getElementById('roadTranspChart') as HTMLCanvasElement;
       
@@ -651,14 +595,15 @@ export class ControlPanelContainerComponent implements OnInit {
     });
   }
 
-  electricityBuildings(chartType: keyof ChartTypeRegistry, scop2Data: any): void {
+  electricityBuildings(chartType: keyof ChartTypeRegistry, scop2ElecBuild: any): void {
     const ctx = document.getElementById('electricityBuildings') as HTMLCanvasElement;
+    console.log ("scop2ElecBuild", scop2ElecBuild)
     const monthlyData = new Array(12).fill(0); // Inicializar con 12 meses en 0
-    scop2Data.forEach((dataObject: any) => {
+    scop2ElecBuild.forEach((dataObject: any) => {
       const monthIndex = parseInt(dataObject.periodoFactura.replace('M', '')) - 1; // Obtener índice del mes
       monthlyData[monthIndex] += parseFloat(dataObject.activityData); // Asignar cantidad al mes correspondiente
     });
-    this.dataSourceScope2ElectricityBuildings = new MatTableDataSource(scop2Data);
+    this.dataSourceScope2ElectricityBuildings = new MatTableDataSource(scop2ElecBuild);
     if (this.chartInstanceElectricityBuildings) {
         this.chartInstanceElectricityBuildings.destroy();
     }
@@ -695,7 +640,7 @@ export class ControlPanelContainerComponent implements OnInit {
         },
         title: {
           display: true,
-          text: 'Consumo eléctrico en edificios - Emissions and objective'
+          text: 'Consumo eléctrico en edificios - Emissions'
         }
       },
       interaction: {  
