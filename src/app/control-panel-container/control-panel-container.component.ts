@@ -35,14 +35,14 @@ export class ControlPanelContainerComponent implements OnInit {
   scopeTwoRecords: any[] = [] // Lista de registros de Scope 2
   fugitiveEmissionsRecords: any[] = []
   displayedColumnsScope1FI: string[] = ['activity Year', 'Periode', 'fuelType', 'activity Data', 'updated At']
-  displayedColumnsScope1RT: string[] = ['activity Year', 'Periode', 'Categoría vehículo', 'fuel Type', 'activity Data',  'updated At']
+  displayedColumnsScope1RT: string[] = ['activity Year', 'Periode', 'Categoría vehículo', 'fuelType', 'activity Data',  'updated At']
   displayedColumnsScope1TransFerMarAe: string[] = ['activity Year', 'Periode', 'Categoría vehículo', 'fuel Type', 'activity Data', 'updated At']
   displayedColumnsScope1MA: string[] = ['activity Year', 'Periode', 'equipmentType', 'fuelType', 'activity Data',  'updated At']
   displayedColumnsScope1FE: string[] = ['activity Year', 'Periode', 'Gas/Mezcla', 'Capacidad', 'Recarga', 'updated At']
 
   displayedColumnsScope2: string[] = ['year', 'periodoFactura', 'activityData', 'activityType', 'electricityTradingCompany', 'gdo', 'energyType', 'updated_at']
   fuelTypes: { id: number; Combustible: string }[] = []
-  vehicleCategories: { id: number; Combustible: string; Categoria: string }[] = []
+  vehicleCategories: { id: number; FuelType: string; Categoria: string }[] = []
   ferMarAerCateories: { id: number; FuelType: string; Categoria: string }[] = []
   machineryCategories: { id: number; FuelType: string; Categoria: string }[] = []
   fugitiveEmissions: { id: number; Nombre: string; FormulaQuimica: string, PCA_6AR: string }[] = []
@@ -127,9 +127,9 @@ export class ControlPanelContainerComponent implements OnInit {
             });
             if (this.scopeOneRecords.length > 0) {
              
-              this.fixedInstChart('line', this.scopeOneRecords.filter((record: any) => record.activityType === 'fixed'));
+              this.fixedInstChart('bar', this.scopeOneRecords.filter((record: any) => record.activityType === 'fixed'));
               this.roadTranspChart('bar', this.scopeOneRecords.filter((record: any) => record.activityType === 'roadTransp'));
-              this.railSeaAirChart('line', this.scopeOneRecords.filter((record: any) => record.activityType === 'transferma'));
+              this.railSeaAirChart('bar', this.scopeOneRecords.filter((record: any) => record.activityType === 'transferma'));
               this.machineryChart('bar', this.scopeOneRecords.filter((record: any) => record.activityType === 'machinery'));
             } else {
               this.showSnackBar('No hay registros con activityType "fixed".');
@@ -158,7 +158,7 @@ export class ControlPanelContainerComponent implements OnInit {
         if (this.scopeTwoRecords.length > 0) {
           //this.dataSourceScope2 = new MatTableDataSource(this.scopeTwoRecords);
           this.electricityBuildings('bar', this.scopeTwoRecords.filter((record: any) => record.activityType === 'electricityBuildings'));
-          this.electricityVehicles('line', this.scopeTwoRecords.filter((record: any) => record.activityType === 'electricityVehicles'));
+          this.electricityVehicles('bar', this.scopeTwoRecords.filter((record: any) => record.activityType === 'electricityVehicles'));
           this.heatSteamColdCompAir('bar', this.scopeTwoRecords.filter((record: any) => record.activityType === 'heatSteamColdAir'));
         } else {
           this.showSnackBar('No hay registros con activityType "electricityBuildings".');
@@ -253,7 +253,7 @@ export class ControlPanelContainerComponent implements OnInit {
         }
     });
   }
-  roadTranspChart(chartType: keyof ChartTypeRegistry, scop1DataRD: any): void {
+  /* roadTranspChart(chartType: keyof ChartTypeRegistry, scop1DataRD: any): void {
     const ctx = document.getElementById('roadTranspChart') as HTMLCanvasElement;
     const monthlyData = new Array(12).fill(0); // Inicializar con 12 meses en 0
     scop1DataRD.forEach((dataObject: any) => {
@@ -315,7 +315,104 @@ export class ControlPanelContainerComponent implements OnInit {
     }
     }
     });
+  } */
+  
+  roadTranspChart(chartType: keyof ChartTypeRegistry, scop1DataRD: any): void {
+      const ctx = document.getElementById('roadTranspChart') as HTMLCanvasElement;
+      
+      scop1DataRD.forEach((roadTransport: any) => {
+        const matchedroadTransport = this.vehicleCategories.find((item: any) => item.id === roadTransport.equipmentType)
+        roadTransport['Categoría vehículo'] = matchedroadTransport?.Categoria
+        roadTransport['fuelType'] = matchedroadTransport?.FuelType
+      });
+
+      console.log ("scop1DataRD ", scop1DataRD)
+      // Inicializar categorías y colores
+      const categories = new Set(scop1DataRD.map((item: any) => item['Categoría vehículo']));
+      const fuelTypes = new Set(scop1DataRD.map((item: any) => item['fuelType']));
+      const datasets: any[] = [];
+      // Crear datos agrupados por Categoría vehículo y fuel Type
+      categories.forEach((category) => {
+          fuelTypes.forEach((fuelType) => {
+              const monthlyData = new Array(12).fill(0); // Inicializar con 12 meses en 0
+  
+              scop1DataRD.forEach((dataObject: any) => {
+                  if (
+                      dataObject['Categoría vehículo'] === category &&
+                      dataObject['fuelType'] === fuelType
+                  ) {
+                      const monthIndex = parseInt(dataObject.periodoFactura.replace('M', '')) - 1; // Obtener índice del mes
+                      monthlyData[monthIndex] += parseFloat(dataObject.activityData); // Sumar datos mensuales
+                  }
+              });
+  
+              // Agregar dataset si tiene datos
+              if (monthlyData.some((value) => value > 0)) {
+                  datasets.push({
+                      label: `${category} - ${fuelType}`,
+                      data: monthlyData,
+                      backgroundColor: `#${Math.floor(Math.random() * 16777215).toString(16)}`, // Generar color aleatorio
+                      borderColor: '#696969',
+                      borderWidth: 1,
+                  });
+                  console.log ("datasets", datasets)
+              }
+          });
+      });
+  
+      this.dataSourceScope1RoadTransp = new MatTableDataSource(scop1DataRD);
+  
+      if (this.chartInstanceRoadTransp) {
+          this.chartInstanceRoadTransp.destroy();
+      }
+  
+      this.chartInstanceRoadTransp = new Chart(ctx, {
+          type: chartType,
+          data: {
+              labels: [
+                  'January',
+                  'February',
+                  'March',
+                  'April',
+                  'May',
+                  'June',
+                  'July',
+                  'August',
+                  'September',
+                  'October',
+                  'November',
+                  'December',
+              ],
+              datasets: datasets,
+          },
+          options: {
+              responsive: true,
+              plugins: {
+                  legend: {
+                      labels: {
+                          color: '#696969',
+                      },
+                  },
+                  title: {
+                      display: true,
+                      text: 'Transporte por carretera - Emissions Grouped by Vehicle Category and Fuel Type',
+                  },
+              },
+              scales: {
+                  x: {
+                      stacked: true,
+                      ticks: { color: '#696969' },
+                  },
+                  y: {
+                      stacked: true,
+                      ticks: { color: '#696969' },
+                  },
+              },
+          },
+      });
   }
+  
+
   railSeaAirChart(chartType: keyof ChartTypeRegistry, scop1DataRSA: any): void {
     const ctx = document.getElementById('railSeaAirChart') as HTMLCanvasElement;
     const monthlyData = new Array(12).fill(0); // Inicializar con 12 meses en 0
@@ -384,8 +481,6 @@ export class ControlPanelContainerComponent implements OnInit {
   }
   machineryChart(chartType: keyof ChartTypeRegistry, scop1DataMA: any): void {
       const ctx = document.getElementById('machineryChart') as HTMLCanvasElement;
-      console.log ("scop1DataMA ", scop1DataMA)
-      
       scop1DataMA.forEach((machineDataActiv: any) => {
         const matchedMachinery = this.machineryCategories.find((item: any) => item.id === machineDataActiv.fuelType)
         machineDataActiv['Categoría vehículo'] = machineDataActiv?.equipmentType
@@ -395,8 +490,6 @@ export class ControlPanelContainerComponent implements OnInit {
       // Inicializar categorías y colores
       const categories = new Set(scop1DataMA.map((item: any) => item['equipmentType']));
       const fuelTypes = new Set(scop1DataMA.map((item: any) => item['fuelType']));
-      console.log ("categories", categories)
-      console.log ("fuelType", fuelTypes)
       const matchedMachinery = this.machineryCategories.find((item: any) => item.id === fuelTypes)
       const datasets: any[] = [];
   
@@ -480,8 +573,6 @@ export class ControlPanelContainerComponent implements OnInit {
           },
       });
   }
-  
-  
   fugitiveEmissChart(chartType: keyof ChartTypeRegistry, scop1DataFE: any): void {
     console.log ("fugitiveEmis", scop1DataFE)
     const ctx = document.getElementById('fugitiveEmissChart') as HTMLCanvasElement;
@@ -749,6 +840,7 @@ export class ControlPanelContainerComponent implements OnInit {
     this.vehicleFuelService.getByYear(year)
       .subscribe((category:any) => {
       this.vehicleCategories = category
+      /* console.log ("vehicleCategories", this.vehicleCategories) */
       })
   }
 
