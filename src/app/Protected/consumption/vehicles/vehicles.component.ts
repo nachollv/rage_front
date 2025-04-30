@@ -51,7 +51,7 @@ export class MachineryVehiclesComponent  implements OnInit, OnChanges {
         ch4: [{ value: 0, disabled: true }],
         n2o: [{ value: 0, disabled: true }]
       }),
-      totalEmissions: [{ value: '', disabled: true }]
+      totalEmissions: [{ value: 0, disabled: true }]
     });
     this.getFuelConsumptions(this.activityYear)
     this.getScopeOneRecords (this.activityYear, this.productionCenter)

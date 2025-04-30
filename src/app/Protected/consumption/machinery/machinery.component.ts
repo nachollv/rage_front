@@ -44,7 +44,7 @@ export class MachineryComponent implements OnInit, OnChanges {
              ch4: [{ value: 0, disabled: true }, Validators.required],
              n2o: [{ value: 0, disabled: true }, Validators.required]
            }),
-           totalEmissions: [{ value: '', disabled: true }]
+           totalEmissions: [{ value: 0, disabled: true }]
          });
          this.getScopeOneRecords()
          this.setupValueChangeListeners();

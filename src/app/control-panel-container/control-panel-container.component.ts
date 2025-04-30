@@ -757,7 +757,6 @@ export class ControlPanelContainerComponent implements OnInit {
   
   heatSteamColdCompAir(chartType: keyof ChartTypeRegistry, scop2DataSteam: any): void {
       const ctx = document.getElementById('heatSteamColdCompAir') as HTMLCanvasElement;
-      console.log ("scope2Steam", scop2DataSteam)
       scop2DataSteam.forEach((registro: any) => {
         registro['Tipo de energía adquirida'] = registro.energyType
       })
