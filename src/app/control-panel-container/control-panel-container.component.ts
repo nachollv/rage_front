@@ -26,12 +26,14 @@ export class ControlPanelContainerComponent implements OnInit {
   filterForm!: FormGroup; // Formulario reactivo
   availableYears: number[] = [2021, 2022, 2023, 2024]; // Años disponibles
   viewUserMenu: boolean = true
+  isLoggedIn: boolean = false
+  isExpiredToken: boolean = false
   role: string = '' // Rol del usuario
   userName: string = '' // Nombre del usuario
   userId: number = 0 // ID del usuario
-  organizacionID: number = 0 // ID de la organización
   token: string = '' // Token del usuario
-  prodCenterID: number = 0 // ID del centro de producción
+  organizacionID!: number // ID de la organización
+  prodCenterID!: number // ID del centro de producción
   scopeOneRecords: any[] = [] // Lista de registros de Scope 1
   scopeTwoRecords: any[] = [] // Lista de registros de Scope 2
   fugitiveEmissionsRecords: any[] = []
@@ -43,7 +45,6 @@ export class ControlPanelContainerComponent implements OnInit {
 
   displayedColumnsScope2: string[] = ['activity Year', 'Periode', 'Comercializadora', 'activity Data']
   displayedColumnsScope2Steam: string[] = ['activity Year', 'Periode', 'Tipo de energía adquirida', 'activity Data']
-
 
   fuelTypes: { id: number; Combustible: string }[] = []
   vehicleCategories: { id: number; FuelType: string; Categoria: string }[] = []
@@ -86,18 +87,22 @@ export class ControlPanelContainerComponent implements OnInit {
     private scopeOneRecordsService: ScopeOneRecordsService,
     private scopeTwoRecordsService: ScopeTwoRecordsService,
     private fugitiveEmissionRecordsService: RegistroemisionesFugasService,
-    private emisionesElectricasBuildingService:EmisionesElectricasEdificiosService) {}
+    private emisionesElectricasBuildingService:EmisionesElectricasEdificiosService) 
+    {
+      this.token = this.authService.getToken() || ''
+      if (this.token) {
+        this.isExpiredToken = this.jwtHelper.isTokenExpired(this.token)
+       if (!this.isExpiredToken) {
+        this.prodCenterID = this.jwtHelper.decodeToken(this.token).data.id
+        this.organizacionID = this.jwtHelper.decodeToken(this.token).data.id_empresa
+       }
+      } 
+    }
 
   ngOnInit():void {
     this.filterForm = this.fb.group({
       activityYear: [new Date().getFullYear()-2], // Por defecto, el año actual menos 2
     });
-
-    this.token = this.authService.getToken() || ''
-    if (this.token === '') {
-      this.prodCenterID = this.jwtHelper.decodeToken(this.token).data.id
-      this.organizacionID = this.jwtHelper.decodeToken(this.token).data.id_empresa
-    } 
     Chart.register(...registerables);
     this.getFixedFuelConsumptions(this.filterForm.value.activityYear)
     this.getFuelConsumptions(this.filterForm.value.activityYear)
@@ -117,8 +122,8 @@ export class ControlPanelContainerComponent implements OnInit {
     this.getFugitiveEmissionRecords(activityYear)
   }
 
-  getScopeOneRecords(activityYear: number): void {
-      this.scopeOneRecordsService.getRecordsByFilters(activityYear).subscribe(
+  getScopeOneRecords(activityYear: number, prodCenterID?: number): void {
+      this.scopeOneRecordsService.getRecordsByFilters(activityYear, prodCenterID).subscribe(
           (response: any) => {
             this.scopeOneRecords = response.data;
             const meses = this.mesesService.getMeses();
@@ -132,10 +137,10 @@ export class ControlPanelContainerComponent implements OnInit {
               registro.delete = false
             });
             if (this.scopeOneRecords.length > 0) {
-              this.fixedInstChart('bar', this.scopeOneRecords.filter((record: any) => record.activityType === 'fixed'));
+              this.fixedInstChart ('bar', this.scopeOneRecords.filter((record: any) => record.activityType === 'fixed'));
               this.roadTranspChart('bar', this.scopeOneRecords.filter((record: any) => record.activityType === 'roadTransp'));
               this.railSeaAirChart('bar', this.scopeOneRecords.filter((record: any) => record.activityType === 'transferma'));
-              this.machineryChart('bar', this.scopeOneRecords.filter((record: any) => record.activityType === 'machinery'));
+              this.machineryChart ('bar', this.scopeOneRecords.filter((record: any) => record.activityType === 'machinery'));
             } else {
               this.showSnackBar('No hay registros con activityType "fixed".');
             }
@@ -149,8 +154,8 @@ export class ControlPanelContainerComponent implements OnInit {
           }
       );
   }
-  getFugitiveEmissionRecords(activityYear: number): void {
-    this.fugitiveEmissionRecordsService.getRegistroByFilters(activityYear, 6)
+  getFugitiveEmissionRecords(activityYear: number, prodCenterID?: number): void {
+    this.fugitiveEmissionRecordsService.getRegistroByFilters(activityYear, prodCenterID)
       .subscribe((response: any) => {
         this.fugitiveEmissionsRecords = response.data;
         const meses = this.mesesService.getMeses();
@@ -168,10 +173,9 @@ export class ControlPanelContainerComponent implements OnInit {
         });
         this.fugitiveEmissChart('bar', this.fugitiveEmissionsRecords)
       });
-  }  
-  
-  getScopeTwoRecords(activityYear: number): void {
-    this.scopeTwoRecordsService.getRecordsByFilters(activityYear).subscribe(
+  }
+  getScopeTwoRecords(activityYear: number, prodCenterID?: number): void {
+    this.scopeTwoRecordsService.getRecordsByFilters(activityYear, prodCenterID).subscribe(
       (response: any) => {
         this.scopeTwoRecords = response.data;
         const meses = this.mesesService.getMeses();
