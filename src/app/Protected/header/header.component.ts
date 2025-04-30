@@ -20,12 +20,13 @@ export class HeaderComponent {
   decodedToken: any;
   scope1:boolean = true
   scope2:boolean = false
-  
+  token: string = ''
+  isExpiredToken: boolean = false
     constructor(
-    private jwtHelper: JwtHelperService,
-    private translate: TranslateService,
-    private authService: AuthService,
-    private router: Router, public dialog: MatDialog
+      private jwtHelper: JwtHelperService,
+      private translate: TranslateService,
+      private authService: AuthService,
+      private router: Router, public dialog: MatDialog
     ) {
       this.translate.setDefaultLang('es'); // Establece el idioma por defecto
       const preferredLang = localStorage.getItem('preferredLang');
@@ -39,9 +40,10 @@ export class HeaderComponent {
 
   ngOnInit(): void {
     /* const token = localStorage.getItem('authToken') */
-    const token = this.authService.getToken()
-    if (token) {
-      this.decodedToken = this.jwtHelper.decodeToken(token)
+    this.token = this.authService.getToken() || ''
+    this.isExpiredToken = this.jwtHelper.isTokenExpired(this.token)
+    if (this.token) {
+      this.decodedToken = this.jwtHelper.decodeToken(this.token)
       this.role = this.decodedToken.data.rol
       this.userName = this.decodedToken.data.nombre
     } else {

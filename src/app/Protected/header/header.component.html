@@ -25,7 +25,8 @@
   <button mat-menu-item (click)="switchLanguage('ca')">Català</button>
   <button mat-menu-item (click)="switchLanguage('es')">Castellano</button>
   <hr>
-  <button  mat-menu-item ngClass="rage-menu-item" (click)="logout()">{{'logout' | translate}}</button>
+  <button  mat-menu-item ngClass="rage-menu-item" (click)="logout()"> <span *ngIf="isExpiredToken">{{'login' | translate}}</span> <span *ngIf="!isExpiredToken">{{'logout' | translate}}</span></button>
+
 </mat-menu>
 
 <mat-menu #emissions="matMenu">
