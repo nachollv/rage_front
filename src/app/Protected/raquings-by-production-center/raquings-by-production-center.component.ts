@@ -20,7 +20,7 @@ export type ProductionRecord = {
   styleUrl: './raquings-by-production-center.component.scss'
 })
 export class RaquingsByProductionCenterComponent implements OnInit, OnChanges {
-  @Input() activityYear: number = 2022
+  @Input() activityYear: number = 2023
   @Input() productionCenterID!: number
   totales: any[] = [];
   productionCenterData: any[] = []

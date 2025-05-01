@@ -16,7 +16,8 @@
   "scope1_1": "(Scope 1)",
   "scope2": "INDIRECT EMISSIONS",
   "scope2_2": "(Scope 2)",
-
+  "ranquing": "Ranking",
+  
   "filter_by_year": "Filter by activity year",
   "filter_by_activity": "Filter by activity",
   "apply_filter": "Apply filter",
