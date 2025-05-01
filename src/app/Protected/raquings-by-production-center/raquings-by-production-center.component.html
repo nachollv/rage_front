@@ -4,22 +4,28 @@
   </header>
 
   <section>
-    <p *ngIf="!totales || totales['length'] === 0">No hay datos disponibles para el año seleccionado.</p>
-    <table *ngIf="totales && totales['length'] > 0" aria-label="Tabla de resultados totales por filtros">
-      <thead>
-        <tr>
-          <th>Año</th>
-          <th>Centro de Producción</th>
-          <th>Total Registros</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let total of totales">
-          <td>{{ total.activityYear }}</td>
-          <td>{{ total.productionCenter }}</td>
-          <td>{{ total.total_records }}</td>
-        </tr>
-      </tbody>
-    </table>
+    <p *ngIf="!totales || totales.length === 0">No hay datos disponibles para el año seleccionado.</p>
+    <mat-table [dataSource]="totales" *ngIf="totales && totales.length > 0" aria-label="Ranking Table">
+      <!-- Año Column -->
+      <ng-container matColumnDef="activityYear">
+        <mat-header-cell *matHeaderCellDef>Año</mat-header-cell>
+        <mat-cell *matCellDef="let total">{{ total.activityYear }}</mat-cell>
+      </ng-container>
+
+      <!-- Centro de Producción Column -->
+      <ng-container matColumnDef="productionCenter">
+        <mat-header-cell *matHeaderCellDef>Centro de Producción</mat-header-cell>
+        <mat-cell *matCellDef="let total">{{ total.productionCenter }}</mat-cell>
+      </ng-container>
+
+      <!-- Total Registros Column -->
+      <ng-container matColumnDef="totalRecords">
+        <mat-header-cell *matHeaderCellDef>Total Registros</mat-header-cell>
+        <mat-cell *matCellDef="let total">{{ total.total_records }}</mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
   </section>
 </div>

@@ -13,7 +13,7 @@ export class RaquingsByProductionCenterComponent implements OnInit, OnChanges {
   @Input() productionCenterID!: number
   totales: any[] = [];
   productionCenterData: any[] = []
-
+  displayedColumns: string[] = ['activityYear', 'productionCenter', 'totalRecords'];
   constructor ( private ranquingCalculation: RanquingCalculationService,
                 private productionCenterService: ProductioncenterService
    ) 
