@@ -3,12 +3,13 @@
     <button mat-icon-button aria-label="Menu" [matMenuTriggerFor]="mainMenu" accesskey="m" tabindex="0"><mat-icon>menu</mat-icon></button>
     <span ngClass="header-title">{{'rageTitle' | translate}}</span>
     <span ngClass="header-title-mobile">{{'rageTitleShort' | translate}}</span>
-
     <img src="../../../assets/logo-huella.jpeg" alt="Logotipo de la aplicación RAGE" title="Ir al inicio de la app" ngClass="header-logo" (click)="goHome()" accesskey="l" tabindex="1">
   </mat-toolbar>
 </header>
 <mat-menu #mainMenu="matMenu">
   <button mat-menu-item ngClass="rage-menu-item" routerLink="/dashboard">{{'dashboard' | translate}}</button>
+  <hr>
+  <button mat-menu-item ngClass="rage-menu-item" routerLink="/ranquing">{{'ranquing' | translate}}</button>
   <hr>
   <section *ngIf="role === 'User'">
     <button mat-menu-item [routerLink]="['/scope', 'one']">{{'scope1' | translate}}</button>

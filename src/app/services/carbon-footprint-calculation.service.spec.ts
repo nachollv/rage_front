@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { CarbonFootprintCalculationService } from './carbon-footprint-calculation.service';
+import { RanquingCalculationService } from './ranquing-calculation.service';
 
 describe('CarbonFootprintCalculationService', () => {
-  let service: CarbonFootprintCalculationService;
+  let service: RanquingCalculationService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(CarbonFootprintCalculationService);
+    service = TestBed.inject(RanquingCalculationService);
   });
 
   it('should be created', () => {

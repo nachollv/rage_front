@@ -83,11 +83,11 @@ export class ControlPanelContainerComponent implements OnInit {
     private ferMarAerService: EmisionesTransFerAerMarService,
     private machineryService: EmisionesMachineryService,
     private emisionesFugitivas: LeakrefrigerantgasesService,
-
     private scopeOneRecordsService: ScopeOneRecordsService,
     private scopeTwoRecordsService: ScopeTwoRecordsService,
     private fugitiveEmissionRecordsService: RegistroemisionesFugasService,
-    private emisionesElectricasBuildingService:EmisionesElectricasEdificiosService) 
+    private emisionesElectricasBuildingService:EmisionesElectricasEdificiosService)
+
     {
       this.token = this.authService.getToken() || ''
       if (this.token) {
@@ -849,7 +849,6 @@ export class ControlPanelContainerComponent implements OnInit {
           },
       });
   }
-  
   
   getFixedFuelConsumptions(year: number) {
     this.fuelDataService.getByYear(year)

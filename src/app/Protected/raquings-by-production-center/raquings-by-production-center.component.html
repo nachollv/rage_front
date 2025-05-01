@@ -1,0 +1,25 @@
+<div class="ranking-container">
+  <header>
+    <h1>Ranquing</h1>
+  </header>
+
+  <section>
+    <p *ngIf="!totales || totales['length'] === 0">No hay datos disponibles para el año seleccionado.</p>
+    <table *ngIf="totales && totales['length'] > 0" aria-label="Tabla de resultados totales por filtros">
+      <thead>
+        <tr>
+          <th>Año</th>
+          <th>Centro de Producción</th>
+          <th>Total Registros</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let total of totales">
+          <td>{{ total.activityYear }}</td>
+          <td>{{ total.productionCenter }}</td>
+          <td>{{ total.total_records }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+</div>

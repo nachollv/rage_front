@@ -57,6 +57,7 @@ import { HeatSteamColdCompAirComponent } from './Protected/consumption/heat-stea
 import { RailSeaAirtransportComponent } from './Protected/consumption/rail-sea-airtransport/rail-sea-airtransport.component';
 import { UserManagementComponent } from './Protected/user/user-management/user-management.component';
 import { ConsumptionComponent } from './Protected/consumption/consumption.component';
+import { RaquingsByProductionCenterComponent } from './Protected/raquings-by-production-center/raquings-by-production-center.component';
 
 // Función para cargar los archivos de traducción
 export function HttpLoaderFactory(http: HttpClient) {
@@ -95,6 +96,7 @@ export function tokenGetter() {
     RailSeaAirtransportComponent,
     UserManagementComponent,
     ConsumptionComponent,
+    RaquingsByProductionCenterComponent,
   ],
   imports: [
     BrowserModule,

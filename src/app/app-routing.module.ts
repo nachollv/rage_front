@@ -12,6 +12,7 @@ import { ControlPanelContainerComponent } from './control-panel-container/contro
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { RecoveryPasswordComponent } from './recovery-password/recovery-password.component';
 import { UserManagementComponent } from './Protected/user/user-management/user-management.component';
+import { RaquingsByProductionCenterComponent } from './Protected/raquings-by-production-center/raquings-by-production-center.component';
 
 const routes: Routes = [
 
@@ -23,6 +24,7 @@ const routes: Routes = [
   { path: 'scope/:scope', component: ConsumptionComponent, canActivate: [AuthGuard] },
   { path: 'organ-gen-data', component: OrganGeneralDataComponent, canActivate: [AuthGuard] },
   { path: 'dashboard', component: ControlPanelContainerComponent },
+  { path: 'ranquing', component: RaquingsByProductionCenterComponent},
   { path: 'electricity-consumption', component: ElectricityComponent, canActivate: [AuthGuard] },
   { path: 'recover-password', component: RecoveryPasswordComponent },
   { path: '*', redirectTo: '/login', pathMatch: 'full' },

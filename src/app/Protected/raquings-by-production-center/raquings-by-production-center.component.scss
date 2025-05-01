@@ -1,0 +1,64 @@
+.ranking-container {
+  padding: 20px;
+  font-family: 'Arial', sans-serif;
+  background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+
+  header {
+    h1 {
+      text-align: center;
+      font-size: 2em;
+      color: #333;
+      font-weight: bold;
+      text-transform: uppercase;
+      margin-bottom: 15px;
+    }
+  }
+
+  section {
+    p {
+      text-align: center;
+      font-style: italic;
+      color: #999;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+
+      thead {
+        tr {
+          th {
+            background-color: #ffd700; /* Color dorado para evocar una medalla */
+            color: #333;
+            padding: 10px;
+            text-align: center;
+            font-weight: bold;
+            text-transform: uppercase;
+            border-bottom: 3px solid #ccac00; /* Sombra para realzar el dorado */
+          }
+        }
+      }
+
+      tbody {
+        tr {
+          &:nth-child(even) {
+            background-color: #f8f9fa; /* Fondo alternado */
+          }
+
+          &:nth-child(odd) {
+            background-color: #fff;
+          }
+
+          td {
+            padding: 10px;
+            text-align: center;
+            color: #555;
+          }
+        }
+      }
+    }
+  }
+}
