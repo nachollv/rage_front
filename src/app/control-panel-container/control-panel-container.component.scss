@@ -111,27 +111,33 @@ article {
 @media only screen and (max-width: 992px) {
   .scope1 {
     grid-template-areas: 
-    "fixedemissions" 
+    "fixedemissions"
+    "scope1TableFI"
     "road"
+    "scope1TableRD"
     "rail"
+    "scope1TableRA"
     "machinery"
+    "scope1TableMA"
     "fugitive"
-    "scope1Table"; // Tres columnas de igual ancho
+    "scope1TableFE";
   }
   .scope2 {
     grid-template-areas: 
-    "electricity" 
+    "electricity"
+    "scope2TableElec"
     "electricityVehicle"
+    "scope2TableElecVehi"
     "heat"
-    "scope2Table"; // Tres columnas de igual ancho
+    "scope2TableHeatCold"; // Tres columnas de igual ancho
   }
   
   article {
     margin: auto;
-    width: auto;
+    width: 100%;
   }
   canvas {
     display: block; /* Asegura que el canvas sea tratado como un bloque */
-    max-width: 90%; /* El ancho máximo será el del contenedor */
+    max-width: 95%; /* El ancho máximo será el del contenedor */
     height: auto; /* Ajusta la altura proporcionalmente */}
 }
