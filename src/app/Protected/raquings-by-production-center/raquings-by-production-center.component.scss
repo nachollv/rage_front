@@ -1,25 +1,9 @@
-.ranking-card {
-  margin: 20px;
-  padding: 10px;
-  background-color: #f9f9f9;
+.ranquing-card {
+  max-width: 25%;
+  margin-bottom: 8px;
 }
 
-.record-card {
-  margin: 10px 0;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-}
-
-mat-card-header {
-  background-color: #3f51b5;
-  color: white;
-  text-align: center;
-}
-
-mat-card-title {
-  font-size: 1.2em;
-  font-weight: bold;
-}
-
-mat-card-content {
-  padding: 10px;
+.total-value{
+  font-size: 3rem;
+  font-weight: bolder;
 }

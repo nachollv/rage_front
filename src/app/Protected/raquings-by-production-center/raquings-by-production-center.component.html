@@ -3,31 +3,18 @@
     <h1>Ranquing</h1>
   </header>
 
-  <section>
-    <mat-card class="ranking-card">
+  <section *ngFor="let total of totales">
+    <mat-card class="ranquing-card" appearance="outlined">
       <mat-card-header>
-        <mat-card-title>Ranking</mat-card-title>
+        <mat-card-title-group>
+          <mat-card-title>{{ total.productionCenter }}</mat-card-title>
+          <mat-card-subtitle>{{ total.activityYear }}</mat-card-subtitle>
+          <img mat-card-sm-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" >
+        </mat-card-title-group>
       </mat-card-header>
-    
-      <mat-card-content *ngIf="totales && totales.length > 0">
-        <ng-container *ngFor="let total of totales">
-          <mat-card class="record-card">
-            <mat-card-header>
-              <mat-card-title>{{ total.productionCenter }}</mat-card-title>
-              <mat-card-subtitle>Año: {{ total.activityYear }}</mat-card-subtitle>
-            </mat-card-header>
-            <mat-card-content>
-              <p>Total Registros: {{ total.totalRecords }}</p>
-            </mat-card-content>
-          </mat-card>
-        </ng-container>
-      </mat-card-content>
-    
-      <mat-card-content *ngIf="!totales || totales.length === 0">
-        <p>No hay datos disponibles para el año seleccionado.</p>
+      <mat-card-content ngClass="total-value">
+        {{ total.totalRecords }} 
       </mat-card-content>
     </mat-card>
-    
-    
   </section>
 </div>
