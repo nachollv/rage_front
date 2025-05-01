@@ -8,6 +8,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ScopeOneRecordsService } from '../../../services/scope-one-records.service';
 import { ProductioncenterService } from '../../../services/productioncenter.service';
 import { MesesService } from '../../../services/meses.service';
+import { registerLocaleData } from '@angular/common';
 
 
 @Component({
@@ -18,7 +19,7 @@ import { MesesService } from '../../../services/meses.service';
 export class MachineryVehiclesComponent  implements OnInit, OnChanges {
   @Input() activityYear!: number
   @Input() productionCenter!: number
-    displayedColumns: string[] = ['year', 'periodoFactura', 'equipment Type', 'fuel Type', 'activityData', 'updated_at', 'delete']
+    displayedColumns: string[] = ['activity Year', 'Peride', 'equipment Type', 'fuel Type', 'activity Data', 'total Emissions', 'updated At', 'delete']
       data = [ { }, ]
       dataSource = new MatTableDataSource<any>(this.data)
       vehicleCategories: any[] = []
@@ -91,11 +92,19 @@ getScopeOneRecords(calculationYear: number = this.activityYear, productionCenter
             registros.data.forEach((registro: any) => {
               registro.edit = true
               registro.delete = true
+              registro['activity Year'] = registro.year
+              registro['updated At'] = registro.updated_at
               const matchedFuel = this.fuelTypes.find((fuelItem: any) => fuelItem.id === registro.fuelType);
               registro['equipment Type'] = matchedFuel?.Categoria  || 'desconocido';
               registro['fuel Type'] = matchedFuel?.FuelType    || 'desconocido';
               const resultado = meses.find((mes) => mes.key === registro.periodoFactura);
               registro.periodoFactura = resultado?.value   || 'desconocido';
+              registro['Peride'] = registro.periodoFactura
+              registro['activity Data'] = registro.activityData
+              const co2 = registro.activityData * parseFloat(matchedFuel.CO2_kg_ud || 0);
+              const ch4 = registro.activityData * parseFloat(matchedFuel.CH4_g_ud || 0);
+              const n2o = registro.activityData * parseFloat(matchedFuel.NO2_g_ud || 0);
+              registro['total Emissions'] = '<strong>' + (co2 + (ch4 / 1000) * 25 + (n2o / 1000) * 298).toFixed(3).toString()+' (tnCO2eq)</strong>'; 
             })
             this.dataSource = new MatTableDataSource(registros.data)        
           })

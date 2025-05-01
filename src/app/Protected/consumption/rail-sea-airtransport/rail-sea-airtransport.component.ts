@@ -17,7 +17,7 @@ export class RailSeaAirtransportComponent  implements OnInit, OnChanges {
   @Input() productionCenter: number = 0
   transportForm!: FormGroup
   showField: boolean = false
-  displayedColumns: string[] = ['year', 'periodoFactura', 'categoria', 'fuelType', 'activityData', 'updated_at', 'delete']
+  displayedColumns: string[] = ['activity Year', 'Periode', 'categoria', 'fuel Type', 'activity Data', 'total Emissions', 'updated At', 'delete']
   data = [{ }]
   dataSource = new MatTableDataSource<any>(this.data)
   fuelEmisTypes: any[] = []
@@ -67,11 +67,20 @@ export class RailSeaAirtransportComponent  implements OnInit, OnChanges {
               registros.data.forEach((registro: any) => {
                 registro.edit = true
                 registro.delete = true
+                registro['activity Year'] = registro.year
+                registro['updated At'] = registro.updated_at
                 const matchedFuel = this.fuelEmisTypes.find((fuelItem: any) => fuelItem.id === registro.fuelType);
                 registro.fuelType = matchedFuel?.FuelType || 'desconocido';
                 registro.categoria = matchedFuel?.Categoria || 'desconocido';
                 const resultado = meses.find((mes) => mes.key === registro.periodoFactura);
                 registro.periodoFactura = resultado?.value   || 'desconocido';
+                registro['Periode'] = registro.periodoFactura
+                registro['fuel Type'] = matchedFuel?.FuelType    || 'desconocido';
+                registro['activity Data'] = registro.activityData
+                const co2 = registro.activityData * parseFloat(matchedFuel.CO2_kg_ud || 0);
+                const ch4 = registro.activityData * parseFloat(matchedFuel.CH4_g_ud || 0);
+                const n2o = registro.activityData * parseFloat(matchedFuel.NO2_g_ud || 0);
+                registro['total Emissions'] = '<strong>' + (co2 + (ch4 / 1000) * 25 + (n2o / 1000) * 298).toFixed(3).toString()+' (tnCO2eq)</strong>'; 
               })
             this.dataSource = new MatTableDataSource(registros.data)
             })

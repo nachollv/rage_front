@@ -16,7 +16,7 @@
           <div *ngSwitchCase="'delete'">
             <button *ngIf="element[column]" (click)="deleteUser(index)"><mat-icon>delete</mat-icon></button>
           </div>
-          <div *ngSwitchDefault>{{ element[column] }}</div>
+          <div *ngSwitchDefault [innerHTML]="element[column]"></div>
         </section>
       </td>
     </ng-container>

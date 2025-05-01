@@ -20,6 +20,7 @@ export type ProductionRecord = {
   styleUrl: './raquings-by-production-center.component.scss'
 })
 export class RaquingsByProductionCenterComponent implements OnInit, OnChanges {
+  availableYears: number[] = [2019, 2020, 2021, 2022, 2023];
   @Input() activityYear: number = 2023
   @Input() productionCenterID!: number
   totales: any[] = [];
@@ -29,7 +30,6 @@ export class RaquingsByProductionCenterComponent implements OnInit, OnChanges {
                 private productionCenterService: ProductioncenterService
    ) 
   {
-   /*  this.getRanquings(this.activityYear, this.productionCenterID) */
    this.getProductionCenterData(this.productionCenterID)
   }
 
@@ -140,6 +140,11 @@ export class RaquingsByProductionCenterComponent implements OnInit, OnChanges {
           return response.data;
         })
       );
+    }
+
+    filterByYear(year: number | 2023) {
+      this.activityYear = +year;
+      this.getProductionCenterData(this.productionCenterID)
     }
     
   

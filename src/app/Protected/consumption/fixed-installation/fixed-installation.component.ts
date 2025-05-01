@@ -18,7 +18,7 @@ import { MesesService } from '../../../services/meses.service';
 export class FixedInstallationComponent implements OnInit, OnChanges {
     @Input() activityYear!: number
     @Input() productionCenter: number = 0
-    displayedColumns: string[] = ['year', 'periodoFactura', 'fuelType', 'activityData', 'updated_at', 'delete']
+    displayedColumns: string[] = ['activity Year', 'Periode', 'fuel Type', 'activity Data', 'total Emissions', 'updated At', 'delete']
     data = [{ }]
     dataSource = new MatTableDataSource<any>(this.data)
     fuelForm!: FormGroup;
@@ -82,6 +82,15 @@ export class FixedInstallationComponent implements OnInit, OnChanges {
                 registro.fuelType = matchedFuel?.Combustible || 'desconocido';
                 const resultado = meses.find((mes) => mes.key === registro.periodoFactura);
                 registro.periodoFactura = resultado?.value   || 'desconocido';
+                registro['activity Year'] = registro.year
+                registro['Periode'] = registro.periodoFactura
+                registro['fuel Type'] = registro.fuelType
+                registro['activity Data'] = registro.activityData
+                registro['updated At'] = registro.updated_at
+                const co2 = registro.activityData * parseFloat(matchedFuel.CO2_kg_ud || 0);
+                const ch4 = registro.activityData * parseFloat(matchedFuel.CH4_g_ud || 0);
+                const n2o = registro.activityData * parseFloat(matchedFuel.NO2_g_ud || 0);
+                registro['total Emissions'] = '<strong>' + (co2 + (ch4 / 1000) * 25 + (n2o / 1000) * 298).toFixed(3).toString()+' (tnCO2eq)</strong>'; 
               })
               this.dataSource = new MatTableDataSource(registros.data)
             })
@@ -107,7 +116,7 @@ setupValueChangeListeners(): void {
   });
 }
     
-    onSubmit() {
+onSubmit() {
         const formValue = this.fuelForm.value
         formValue.year = this.activityYear
         formValue.productionCenter = this.productionCenter
@@ -125,9 +134,9 @@ setupValueChangeListeners(): void {
               this.showSnackBar('Error al crear:' + error)
             }
           );
-    }
+}
     
-    setEmissionFactors() {
+setEmissionFactors() {
         const fuelData = this.fuelForm.value
         const fuelType = fuelData.fuelType
         const CO2_kg_ud = parseFloat(fuelType.CO2_kg_ud).toFixed(3);
@@ -142,7 +151,7 @@ setupValueChangeListeners(): void {
         this.fuelForm.get('partialEmissions')?.get('n2o')?.setValue(fuelData.activityData * parseFloat(N2O_g_ud));
       
         this.fuelForm.get('totalEmissions')?.setValue(fuelData.activityData * parseFloat(CO2_kg_ud)+fuelData.activityData * parseFloat(CH4_g_ud)+fuelData.activityData * parseFloat(N2O_g_ud))
-    }
+}
 
     calculateEmissions(): void {
       const activityData = this.fuelForm.get('activityData')?.value || 0;
@@ -182,7 +191,7 @@ setupValueChangeListeners(): void {
 
     private showSnackBar(msg: string): void {
       this.snackBar.open(msg, 'Close', {
-        duration: 15000,
+        duration: 10000,
         verticalPosition: 'top',
         horizontalPosition: 'center',
         panelClass: ['custom-snackbar'],

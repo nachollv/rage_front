@@ -1,15 +1,20 @@
-
-  <header>
-    <h1>{{'ranquing' | translate}}</h1>
-    2023
-  </header>
-  <div class="ranking-container">
+<header>
+  <h1>{{'ranquing' | translate}}</h1>
+  <label for="yearFilter">{{'activityYear' | translate}}</label>
+    <mat-form-field appearance="fill">
+      <mat-label>{{ 'activityYear' | translate }}</mat-label>
+      <mat-select id="activityYear" formControlName="activityYear" (selectionChange)="filterByYear($event.value)">
+        <mat-option *ngFor="let year of availableYears" [value]="year">{{ year }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  <h2>{{ activityYear }}</h2>
+</header>
+  <article class="ranking-container">
   <section *ngFor="let total of totales" >
     <mat-card class="ranquing-card" appearance="outlined">
       <mat-card-header>
         <mat-card-title-group>
           <mat-card-title ngClass="card-title">{{ total.productionCenter }}</mat-card-title>
-          
           <img *ngIf="total.best" mat-card-sm-image src="../../../assets/first.jpg" >
         </mat-card-title-group>
       </mat-card-header>
@@ -19,4 +24,4 @@
       </mat-card-content>
     </mat-card>
   </section>
-</div>
+</article>

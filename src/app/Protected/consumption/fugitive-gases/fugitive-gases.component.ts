@@ -16,7 +16,7 @@ import { MesesService } from '../../../services/meses.service';
 export class FugitiveGasesComponent implements OnInit, OnChanges {
   @Input() activityYear: number = 0
   @Input() productionCenter: number = 0
-  displayedColumns: string[] = ['year', 'periodoFactura', 'nombre_gas_mezcla', 'capacidad_equipo', 'recarga_equipo', 'updated_at', 'delete']
+  displayedColumns: string[] = ['activity Year', 'Periode', 'Name of gas mixture', 'gas Equipment Capacity', 'Equipment recharge', 'total Emissions', 'updated At', 'delete']
   data = [{ }]
   dataSource = new MatTableDataSource<any>(this.data)
   emisionesForm!: FormGroup;
@@ -40,12 +40,12 @@ export class FugitiveGasesComponent implements OnInit, OnChanges {
       emisionesCO2e: [{ value: 0, disabled: true }]
     });
     this.getGases()
-    this.getregistros()
+    this.getFugitiveEmisRegisters()
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['activityYear'] && !changes['activityYear'].firstChange) {
-      this.getregistros()
+      this.getFugitiveEmisRegisters()
     }
   }
 
@@ -56,7 +56,7 @@ export class FugitiveGasesComponent implements OnInit, OnChanges {
       })
   }
 
-  getregistros() {
+  getFugitiveEmisRegisters() {
     this.registerLeakService.getRegistroByFilters(this.activityYear, this.productionCenter)
       .subscribe((registrosleak: any) => {
         const meses = this.mesesService.getMeses(); // Obtener el array de meses
@@ -64,14 +64,24 @@ export class FugitiveGasesComponent implements OnInit, OnChanges {
           registrosleak.data.forEach((registro: any) => {
             // Obtener el nombre del mes
             registro.delete = true
-            const mesEncontrado = meses.find((mes) => mes.key === registro.periodoFactura);
-            registro.periodoFactura = mesEncontrado?.value || 'desconocido';
-
+            registro['activity Year'] = registro.year
+            registro['updated At'] = registro.updated_at
+            const matchedMonth = meses.find((mes) => mes.key === registro.periodoFactura);
+            registro.periodoFactura = matchedMonth?.value || 'desconocido';
+            registro['Periode'] = registro.periodoFactura
             // Obtener información del gas
-            const gasEncontrado = gases.find((gas: any) => gas.id === registro.nombre_gas_mezcla);
-            registro.nombre_gas_mezcla = gasEncontrado?.Nombre || 'desconocido';
-            registro.formulaQuimica = gasEncontrado?.formula || 'desconocido';
-            registro.PCA_6Ar = gasEncontrado?.PCA_6Ar || 'desconocido';
+            const matchedGas = gases.find((gas: any) => gas.id === registro.nombre_gas_mezcla);
+            registro.nombre_gas_mezcla = matchedGas?.Nombre || 'desconocido';
+            registro['Name of gas mixture'] = registro.nombre_gas_mezcla
+            registro.formulaQuimica = matchedGas?.formula || 'desconocido';
+            const pca6AR = matchedGas?.PCA_6Ar
+            const chemicalFormula = matchedGas?.formulaQuimica
+            const recharge = parseFloat(registro.recarga_equipo).toFixed(2);
+            const capacity = parseFloat(registro.capacidad_equipo).toFixed(2);
+            registro.PCA_6Ar = matchedGas?.PCA_6Ar || 'desconocido';
+            registro['gas Equipment Capacity'] = registro.capacidad_equipo
+            registro['Equipment recharge'] = registro.recarga_equipo
+            registro['total Emissions'] = parseFloat(recharge) * parseFloat(parseFloat(pca6AR).toFixed(2))
           });
 
           this.dataSource = new MatTableDataSource(registrosleak.data);
@@ -100,7 +110,7 @@ export class FugitiveGasesComponent implements OnInit, OnChanges {
     }
   }
 
-  equipmentRecharge() {
+  equipmentRechargeChange() {
     const gasData = this.emisionesForm.value
     const equipmentCapacity = gasData.capacidad_equipo
     const equipmentRecharge = gasData.recarga_equipo
@@ -128,7 +138,7 @@ export class FugitiveGasesComponent implements OnInit, OnChanges {
       next: (response) => { 
         this.showSnackBar(response.message)
         this.emisionesForm.reset()
-        this.getregistros()},
+        this.getFugitiveEmisRegisters()},
       error: (err) => { this.showSnackBar("Error al crear el registro "+err.message) } })
 
   }
