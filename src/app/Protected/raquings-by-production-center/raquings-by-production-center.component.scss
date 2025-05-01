@@ -1,7 +1,7 @@
 .ranking-container {
   max-width: 800px;
   margin: 0 auto;
-  padding: 20px;
+  padding: 1rem;
   background-color: #f4f4f9;
   border-radius: 10px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
@@ -16,9 +16,14 @@ header {
   margin-bottom: 20px;
 }
 
+section {
+width: 100%;
+margin: auto;
+}
+
 .ranquing-card {
   margin: 10px 0;
-  padding: 20px;
+  padding: 1rem;
   border: 1px solid #ccc;
   border-radius: 8px;
   background-color: #ffffff;
@@ -62,4 +67,12 @@ header {
 .total-value {
   font-size: 3rem;
   font-weight: bolder;
+}
+
+
+@media only screen and (max-width: 992px) {
+  .ranking-container {
+    grid-template-columns: 100%;
+    width: 100%;
+  }
 }
