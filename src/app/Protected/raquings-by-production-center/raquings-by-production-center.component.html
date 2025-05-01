@@ -3,7 +3,8 @@
     <h1>{{'ranquing' | translate}}</h1>
     2023
   </header>
-  <section *ngFor="let total of totales" ngClass="ranking-container">
+  <div class="ranking-container">
+  <section *ngFor="let total of totales" >
     <mat-card class="ranquing-card" appearance="outlined">
       <mat-card-header>
         <mat-card-title-group>
@@ -18,3 +19,4 @@
       </mat-card-content>
     </mat-card>
   </section>
+</div>
