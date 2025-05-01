@@ -20,9 +20,10 @@
 
       <!-- Total Registros Column -->
       <ng-container matColumnDef="totalRecords">
-        <mat-header-cell *matHeaderCellDef>Total Registros</mat-header-cell>
-        <mat-cell *matCellDef="let total">{{ total.total_records }}</mat-cell>
+        <th mat-header-cell *matHeaderCellDef>Total Registros</th>
+        <td mat-cell *matCellDef="let total">{{ total.totalRecords }}</td>
       </ng-container>
+      
 
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
       <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
