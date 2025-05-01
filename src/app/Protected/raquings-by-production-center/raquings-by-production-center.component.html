@@ -4,29 +4,30 @@
   </header>
 
   <section>
-    <p *ngIf="!totales || totales.length === 0">No hay datos disponibles para el año seleccionado.</p>
-    <mat-table [dataSource]="totales" *ngIf="totales && totales.length > 0" aria-label="Ranking Table">
-      <!-- Año Column -->
-      <ng-container matColumnDef="activityYear">
-        <mat-header-cell *matHeaderCellDef>Año</mat-header-cell>
-        <mat-cell *matCellDef="let total">{{ total.activityYear }}</mat-cell>
-      </ng-container>
-
-      <!-- Centro de Producción Column -->
-      <ng-container matColumnDef="productionCenter">
-        <mat-header-cell *matHeaderCellDef>Centro de Producción</mat-header-cell>
-        <mat-cell *matCellDef="let total">{{ total.productionCenter }}</mat-cell>
-      </ng-container>
-
-      <!-- Total Registros Column -->
-      <ng-container matColumnDef="totalRecords">
-        <th mat-header-cell *matHeaderCellDef>Total Registros</th>
-        <td mat-cell *matCellDef="let total">{{ total.totalRecords }}</td>
-      </ng-container>
-      
-
-      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-    </mat-table>
+    <mat-card class="ranking-card">
+      <mat-card-header>
+        <mat-card-title>Ranking</mat-card-title>
+      </mat-card-header>
+    
+      <mat-card-content *ngIf="totales && totales.length > 0">
+        <ng-container *ngFor="let total of totales">
+          <mat-card class="record-card">
+            <mat-card-header>
+              <mat-card-title>{{ total.productionCenter }}</mat-card-title>
+              <mat-card-subtitle>Año: {{ total.activityYear }}</mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+              <p>Total Registros: {{ total.totalRecords }}</p>
+            </mat-card-content>
+          </mat-card>
+        </ng-container>
+      </mat-card-content>
+    
+      <mat-card-content *ngIf="!totales || totales.length === 0">
+        <p>No hay datos disponibles para el año seleccionado.</p>
+      </mat-card-content>
+    </mat-card>
+    
+    
   </section>
 </div>
