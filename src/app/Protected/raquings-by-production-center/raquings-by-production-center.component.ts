@@ -101,6 +101,13 @@ export class RaquingsByProductionCenterComponent implements OnInit, OnChanges {
                       this.totales[index].totalRecords = record.total_records;
                     }
                   }); 
+                  
+                  // Ordenar totales de mayor a menor por `totalRecords`
+                  this.totales.sort((a, b) => parseInt(b.totalRecords, 10) - parseInt(a.totalRecords, 10));
+                   // Agregar la etiqueta 'BEST' al primer elemento
+                  if (this.totales.length > 0) {
+                    this.totales[0].best = true;
+                  }
                   console.log('Totales acumulados:', this.totales);
                 },
                 (error) => {
