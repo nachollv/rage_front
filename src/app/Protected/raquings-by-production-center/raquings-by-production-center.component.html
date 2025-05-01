@@ -7,7 +7,7 @@
     <mat-card class="ranquing-card" appearance="outlined">
       <mat-card-header>
         <mat-card-title-group>
-          <mat-card-title>{{ total.productionCenter }}</mat-card-title>
+          <mat-card-title ngClass="card-title">{{ total.productionCenter }}</mat-card-title>
           <mat-card-subtitle>Total data activity registers:</mat-card-subtitle>
           <img *ngIf="total.best" mat-card-sm-image src="../../../assets/first.jpg" >
         </mat-card-title-group>
