@@ -1,10 +1,8 @@
 .ranking-container {
-/*   max-width: 800px; */
-  /* width: 100%; */
   margin: auto;
   width: 90%;
   padding: 1rem;
-  background-color: #f4f4f9;
+  background-color: #e0f7e9; /* Fondo verde claro */
   border-radius: 10px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   display: grid;
@@ -14,27 +12,28 @@
 
 header {
   text-align: center;
-  color: #2d3748;
-  font-size: 2rem;
+  color: #2e7d32; /* Verde más oscuro */
+  font-size: 2.5rem;
   margin-bottom: 20px;
+  font-family: 'Arial', sans-serif;
 }
 
 .ranquing-card {
   margin: auto;
   padding: 1rem;
-  border: 1px solid #ccc;
+  border: 1px solid #a5d6a7; /* Bordes verdes */
   border-radius: 1rem;
   background-color: #ffffff;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
 
   &:hover {
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
     transform: translateY(-2px);
-    transition: all 0.3s ease;
   }
 
   .mat-card-header {
-    background-color: #edf2f7;
+    background-color: #c8e6c9; /* Verde claro */
     border-radius: 1rem 1rem 0 0;
     padding: 1rem;
   }
@@ -43,12 +42,12 @@ header {
 .card-title {
   font-size: 2rem;
   font-weight: bold;
-  color: #2c5282;
+  color: #1b5e20; /* Verde oscuro */
   text-align: left;
 }
 
 mat-card-subtitle {
-  color: #718096;
+  color: #4e342e; /* Marrón para un toque natural */
 }
 
 .mat-card-content {
@@ -61,21 +60,23 @@ mat-card-subtitle {
 img {
   width: 80px;
   height: auto;
+  border-radius: 50%; /* Un toque más orgánico */
+  border: 2px solid #66bb6a; /* Borde verde */
 }
 
 .total-value {
   font-size: 3rem;
   font-weight: bolder;
+  color: #2e7d32; /* Verde sólido */
 }
-
 
 @media only screen and (max-width: 992px) {
   .ranking-container {
     grid-template-columns: 100%;
-    
   }
- section {
-  width: 90%;
-  margin: auto;
-}
+  
+  section {
+    width: 90%;
+    margin: auto;
+  }
 }
