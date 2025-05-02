@@ -6,6 +6,7 @@ import { DialogComponent } from '../../../dialog/dialog.component';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ScopeTwoRecordsService } from '../../../services/scope-two-records.service';
+import { MesesService } from '../../../services/meses.service';
 
 @Component({
   selector: 'app-electricity',
@@ -18,7 +19,7 @@ export class ElectricityComponent implements OnInit, OnChanges {
   comercializadorasElectricas: any[] = []
   errorMessage: string = ''
 
-  displayedColumns: string[] = ['year', 'periodoFactura', 'electricityTradingCompany', 'activityData', 'gdo', 'updated_at', 'delete']
+  displayedColumns: string[] = ['activity Year', 'Period', 'electricity Trading Company', 'activity Data', 'gdo', 'updated_at', 'delete']
   data = [ { } ];
   dataSource = new MatTableDataSource<any>(this.data)
   buildingElecConsumption!: FormGroup;
@@ -26,6 +27,7 @@ export class ElectricityComponent implements OnInit, OnChanges {
     constructor(private fb: FormBuilder, 
       private emisionesElectricasservice: EmisionesElectricasEdificiosService,
       private scopeTwoRecordsService: ScopeTwoRecordsService,
+      private mesesService: MesesService,
       private snackBar: MatSnackBar,
       public dialog: MatDialog) {
     }
@@ -57,18 +59,25 @@ export class ElectricityComponent implements OnInit, OnChanges {
     getScopeTwoRecords(activityYear: number = this.activityYear, productionCenter: number = this.productionCenter, activityType: string = 'electricityBuildings'): void {
       this.scopeTwoRecordsService.getRecordsByFilters(activityYear, productionCenter, activityType)
         .subscribe({
-          next: (itemsElectricity: any) => {
+          next: (registros: any) => {
             this.emisionesElectricasservice.getByYear(activityYear)
               .subscribe((comercializadora:any) => {
                 this.comercializadorasElectricas = comercializadora
-                itemsElectricity.data.forEach((registro: any) => {
+                const meses = this.mesesService.getMeses();
+                registros.data.forEach((registro: any) => {
                   registro.delete = true
+                  const resultado = meses.find((mes) => mes.key === registro.periodoFactura);
+                  registro.periodoFactura = resultado?.value   || 'desconocido';
+                  registro['activity Year'] = registro.year
+                  registro['Period'] = registro.periodoFactura
                   const matchedComercializadora = this.comercializadorasElectricas.find((comercializadoraItem: any) => comercializadoraItem.id === registro.electricityTradingCompany);
                   registro.electricityTradingCompany = matchedComercializadora?.nombreComercial+" (fe:"+matchedComercializadora?.kg_CO2_kWh+")" || 'desconocido';
+                  registro['electricity Trading Company'] = registro.electricityTradingCompany
+                  registro['activity Data'] = registro.activityData
                 })
 
               })
-            this.dataSource = new MatTableDataSource(itemsElectricity.data)
+            this.dataSource = new MatTableDataSource(registros.data)
           },
           error: (err: any) => {
             this.showSnackBar('Error al obtener los registros ' + err.messages?.error || err.message)

@@ -6,6 +6,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent } from '../../../dialog/dialog.component';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MesesService } from '../../../services/meses.service';
 
 @Component({
   selector: 'app-electricity-vehicles',
@@ -17,7 +18,7 @@ export class ElectricityVehiclesComponent implements OnInit, OnChanges{
   @Input() productionCenter: number = 0
   comercializadorasElectricas: any[] = []
   errorMessage: string = ''
-  displayedColumns: string[] = ['year', 'periodoFactura', 'electricityTradingCompany', 'activityData', 'gdo', 'updated_at', 'delete']
+  displayedColumns: string[] = ['activity Year', 'Period', 'electricity Trading Company', 'activity Data', 'gdo', 'updated_at', 'delete']
   data = [{}]; 
   dataSource = new MatTableDataSource<any>(this.data)
   vehiclesElectricity!: FormGroup;
@@ -25,6 +26,7 @@ export class ElectricityVehiclesComponent implements OnInit, OnChanges{
   constructor(private fb: FormBuilder, 
     private scopeTWoRecordsService: ScopeTwoRecordsService,
     private emisionesElectricasservice: EmisionesElectricasEdificiosService,
+    private mesesService: MesesService,
     private snackBar: MatSnackBar,
     public dialog: MatDialog) {
   }
@@ -69,10 +71,17 @@ export class ElectricityVehiclesComponent implements OnInit, OnChanges{
         this.emisionesElectricasservice.getByYear(this.activityYear)
           .subscribe((comercializadora:any) => {
             this.comercializadorasElectricas = comercializadora
+            const meses = this.mesesService.getMeses();
             itemsElectricity.data.forEach((registro: any) => {
               registro.delete = true
+              const resultado = meses.find((mes) => mes.key === registro.periodoFactura);
+              registro.periodoFactura = resultado?.value   || 'desconocido';
+              registro['activity Year'] = registro.year
+              registro['Period'] = registro.periodoFactura
               const matchedComercializadora = this.comercializadorasElectricas.find((comercializadoraItem: any) => comercializadoraItem.id === registro.electricityTradingCompany);
               registro.electricityTradingCompany = matchedComercializadora?.nombreComercial+" (fe:"+matchedComercializadora?.kg_CO2_kWh+")" || 'desconocido';
+              registro['electricity Trading Company'] = registro.electricityTradingCompany
+              registro['activity Data'] = registro.activityData
             })
 
           })

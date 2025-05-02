@@ -19,7 +19,7 @@ import { registerLocaleData } from '@angular/common';
 export class MachineryVehiclesComponent  implements OnInit, OnChanges {
   @Input() activityYear!: number
   @Input() productionCenter!: number
-    displayedColumns: string[] = ['activity Year', 'Peride', 'equipment Type', 'fuel Type', 'activity Data', 'total Emissions', 'updated At', 'delete']
+    displayedColumns: string[] = ['activity Year', 'Period', 'equipment Type', 'fuel Type', 'activity Data', 'total Emissions', 'updated At', 'delete']
       data = [ { }, ]
       dataSource = new MatTableDataSource<any>(this.data)
       vehicleCategories: any[] = []
@@ -99,7 +99,7 @@ getScopeOneRecords(calculationYear: number = this.activityYear, productionCenter
               registro['fuel Type'] = matchedFuel?.FuelType    || 'desconocido';
               const resultado = meses.find((mes) => mes.key === registro.periodoFactura);
               registro.periodoFactura = resultado?.value   || 'desconocido';
-              registro['Peride'] = registro.periodoFactura
+              registro['Period'] = registro.periodoFactura
               registro['activity Data'] = registro.activityData
               const co2 = registro.activityData * parseFloat(matchedFuel.CO2_kg_ud || 0);
               const ch4 = registro.activityData * parseFloat(matchedFuel.CH4_g_ud || 0);

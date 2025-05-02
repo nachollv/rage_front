@@ -16,7 +16,7 @@ export class MachineryComponent implements OnInit, OnChanges {
   @Input() productionCenter: number = 0
   emissionsForm!: FormGroup;
   showField: boolean = false
-  displayedColumns: string[] = ['activity Year', 'Periode', 'categoria', 'fuel Type', 'activity Data', 'total Emissions', 'updated At', 'delete']
+  displayedColumns: string[] = ['activity Year', 'Period', 'categoria', 'fuel Type', 'activity Data', 'total Emissions', 'updated At', 'delete']
   data = [{ }]
   dataSource = new MatTableDataSource<any>(this.data)
   fuelEmisTypes: any[] = []
@@ -74,7 +74,7 @@ export class MachineryComponent implements OnInit, OnChanges {
                   registro.categoria = matchedFuel?.Categoria || 'desconocido';
                   const resultado = meses.find((mes) => mes.key === registro.periodoFactura);
                   registro.periodoFactura = resultado?.value   || 'desconocido';
-                  registro['Periode'] = registro.periodoFactura
+                  registro['Period'] = registro.periodoFactura
                   registro['fuel Type'] = matchedFuel?.FuelType    || 'desconocido';
                   registro['activity Data'] = registro.activityData
                   const co2 = registro.activityData * parseFloat(matchedFuel.CO2_kg_l || 0);

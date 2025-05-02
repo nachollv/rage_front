@@ -16,7 +16,7 @@ import { MesesService } from '../../../services/meses.service';
 export class FugitiveGasesComponent implements OnInit, OnChanges {
   @Input() activityYear: number = 0
   @Input() productionCenter: number = 0
-  displayedColumns: string[] = ['activity Year', 'Periode', 'Name of gas mixture', 'gas Equipment Capacity', 'Equipment recharge', 'total Emissions', 'updated At', 'delete']
+  displayedColumns: string[] = ['activity Year', 'Period', 'Name of gas mixture', 'gas Equipment Capacity', 'Equipment recharge', 'total Emissions', 'updated At', 'delete']
   data = [{ }]
   dataSource = new MatTableDataSource<any>(this.data)
   emisionesForm!: FormGroup;
@@ -68,7 +68,7 @@ export class FugitiveGasesComponent implements OnInit, OnChanges {
             registro['updated At'] = registro.updated_at
             const matchedMonth = meses.find((mes) => mes.key === registro.periodoFactura);
             registro.periodoFactura = matchedMonth?.value || 'desconocido';
-            registro['Periode'] = registro.periodoFactura
+            registro['Period'] = registro.periodoFactura
             // Obtener información del gas
             const matchedGas = gases.find((gas: any) => gas.id === registro.nombre_gas_mezcla);
             registro.nombre_gas_mezcla = matchedGas?.Nombre || 'desconocido';

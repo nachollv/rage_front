@@ -37,14 +37,14 @@ export class ControlPanelContainerComponent implements OnInit {
   scopeOneRecords: any[] = [] // Lista de registros de Scope 1
   scopeTwoRecords: any[] = [] // Lista de registros de Scope 2
   fugitiveEmissionsRecords: any[] = []
-  displayedColumnsScope1FI: string[] = ['activity Year', 'Periode', 'fuelType', 'activity Data']
-  displayedColumnsScope1RT: string[] = ['activity Year', 'Periode', 'Categoría vehículo', 'fuelType', 'activity Data']
-  displayedColumnsScope1TransFerMarAe: string[] = ['activity Year', 'Periode', 'Categoría vehículo', 'fuelType', 'activity Data']
-  displayedColumnsScope1MA: string[] = ['activity Year', 'Periode', 'equipmentType', 'fuelType', 'activity Data']
-  displayedColumnsScope1FE: string[] = ['activity Year', 'Periode', 'Gas/Mezcla', 'Capacidad', 'Recarga']
+  displayedColumnsScope1FI: string[] = ['activity Year', 'Period', 'fuelType', 'activity Data']
+  displayedColumnsScope1RT: string[] = ['activity Year', 'Period', 'Categoría vehículo', 'fuelType', 'activity Data']
+  displayedColumnsScope1TransFerMarAe: string[] = ['activity Year', 'Period', 'Categoría vehículo', 'fuelType', 'activity Data']
+  displayedColumnsScope1MA: string[] = ['activity Year', 'Period', 'equipmentType', 'fuelType', 'activity Data']
+  displayedColumnsScope1FE: string[] = ['activity Year', 'Period', 'Gas/Mezcla', 'Capacidad', 'Recarga']
 
-  displayedColumnsScope2: string[] = ['activity Year', 'Periode', 'Comercializadora', 'activity Data']
-  displayedColumnsScope2Steam: string[] = ['activity Year', 'Periode', 'Tipo de energía adquirida', 'activity Data']
+  displayedColumnsScope2: string[] = ['activity Year', 'Period', 'Comercializadora', 'activity Data']
+  displayedColumnsScope2Steam: string[] = ['activity Year', 'Period', 'Tipo de energía adquirida', 'activity Data']
 
   fuelTypes: { id: number; Combustible: string }[] = []
   vehicleCategories: { id: number; FuelType: string; Categoria: string }[] = []
@@ -122,39 +122,7 @@ export class ControlPanelContainerComponent implements OnInit {
     this.getFugitiveEmissionRecords(activityYear)
   }
 
-/*   getScopeOneRecords(activityYear: number, prodCenterID?: number): void {
-      this.scopeOneRecordsService.getRecordsByFilters(activityYear, prodCenterID).subscribe(
-          (response: any) => {
-            this.scopeOneRecords = response.data;
-            const meses = this.mesesService.getMeses();
-            this.scopeOneRecords.forEach((registro: any) => {
-              const resultado = meses.find((mes) => mes.key === registro.periodoFactura);
-              registro['Periode'] = resultado?.value || 'desconocido';
-              registro['activity Data'] = registro.activityData
-              registro['activity Year'] = registro.year
-              registro['updated At'] = registro.updated_at
-              registro.edit = false
-              registro.delete = false
-            });
-            if (this.scopeOneRecords.length > 0) {
-              this.fixedInstChart ('bar', this.scopeOneRecords.filter((record: any) => record.activityType === 'fixed'));
-              this.roadTranspChart('bar', this.scopeOneRecords.filter((record: any) => record.activityType === 'roadTransp'));
-              this.railSeaAirChart('bar', this.scopeOneRecords.filter((record: any) => record.activityType === 'transferma'));
-              this.machineryChart ('bar', this.scopeOneRecords.filter((record: any) => record.activityType === 'machinery'));
-            } else {
-              this.showSnackBar('No hay registros con activityType "fixed".');
-            }
-          },
-          (error) => {
-              if (error.status === 404 && error.messages?.error === "No se encontraron registros con los parámetros proporcionados.") {
-                  this.showSnackBar('No se encontraron registros con los parámetros proporcionados.');
-              } else {
-                  this.showSnackBar('Error al obtener registros de Alcance 1.');
-              }
-          }
-      );
-  } */
-  async getScopeOneRecords(activityYear: number, prodCenterID?: number): Promise<void> {
+    async getScopeOneRecords(activityYear: number, prodCenterID?: number): Promise<void> {
         try {
             const response = await this.scopeOneRecordsService.getRecordsByFilters(activityYear, prodCenterID).toPromise();
             this.scopeOneRecords = response.data;
@@ -162,7 +130,7 @@ export class ControlPanelContainerComponent implements OnInit {
     
             this.scopeOneRecords.forEach((registro: any) => {
                 const resultado = meses.find((mes) => mes.key === registro.periodoFactura);
-                registro['Periode'] = resultado?.value || 'desconocido';
+                registro['Period'] = resultado?.value || 'desconocido';
                 registro['activity Data'] = registro.activityData;
                 registro['activity Year'] = registro.year;
                 registro['updated At'] = registro.updated_at;
@@ -197,7 +165,7 @@ export class ControlPanelContainerComponent implements OnInit {
         const meses = this.mesesService.getMeses();
         this.fugitiveEmissionsRecords.forEach((registro: any) => {
           const resultado = meses.find((mes) => mes.key === registro.periodoFactura)
-          registro['Periode'] = resultado?.value || 'desconocido'
+          registro['Period'] = resultado?.value || 'desconocido'
           const matchedFE = this.fugitiveEmissions.find((fuelItem: any) => fuelItem.id === registro.nombre_gas_mezcla);
           registro['Gas/Mezcla'] = matchedFE?.Nombre
           registro['Recarga'] = registro.recarga_equipo
@@ -218,7 +186,7 @@ export class ControlPanelContainerComponent implements OnInit {
 
         this.scopeTwoRecords.forEach((registro: any) => {
           const resultado = meses.find((mes) => mes.key === registro.periodoFactura);
-          registro['Periode'] = resultado?.value || 'desconocido'
+          registro['Period'] = resultado?.value || 'desconocido'
           registro['Comercializadora'] = registro.electricityTradingCompany
           registro['activity Data'] = registro.activityData
           registro['activity Year'] = registro.year

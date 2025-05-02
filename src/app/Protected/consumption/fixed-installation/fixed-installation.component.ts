@@ -18,7 +18,7 @@ import { MesesService } from '../../../services/meses.service';
 export class FixedInstallationComponent implements OnInit, OnChanges {
     @Input() activityYear!: number
     @Input() productionCenter: number = 0
-    displayedColumns: string[] = ['activity Year', 'Periode', 'fuel Type', 'activity Data', 'total Emissions', 'updated At', 'delete']
+    displayedColumns: string[] = ['activity Year', 'Period', 'fuel Type', 'activity Data', 'total Emissions', 'updated At', 'delete']
     data = [{ }]
     dataSource = new MatTableDataSource<any>(this.data)
     fuelForm!: FormGroup;
@@ -83,7 +83,7 @@ export class FixedInstallationComponent implements OnInit, OnChanges {
                 const resultado = meses.find((mes) => mes.key === registro.periodoFactura);
                 registro.periodoFactura = resultado?.value   || 'desconocido';
                 registro['activity Year'] = registro.year
-                registro['Periode'] = registro.periodoFactura
+                registro['Period'] = registro.periodoFactura
                 registro['fuel Type'] = registro.fuelType
                 registro['activity Data'] = registro.activityData
                 registro['updated At'] = registro.updated_at
