@@ -38,7 +38,8 @@ export class ConsumtionContainerScope1Component {
   }
   
   openDialog( id: any ): void {
-    this.auxHelpingTextsService.getAuxTextById(id).subscribe((text: AuxTextDTO | undefined) => {
+    this.auxHelpingTextsService.getAuxTextById(id)
+    .subscribe((text: AuxTextDTO | undefined) => {
       if (text) {
         this.auxText = text
 
@@ -57,19 +58,15 @@ export class ConsumtionContainerScope1Component {
       } else {
         console.error('Texto auxiliar no encontrado');
       }
-    });
-
-    const dialogRef = this.dialog.open(DialogComponent, {
-      data: {
-        title: this.title,
-        text: this.text,
-        position: 'center'
-      },
-      width: '450px',
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('El dialog se cerró');
+      this.dialog.open(DialogComponent, {
+        data: {
+          title: this.title,
+          text: this.text,
+          position: 'center'
+        },
+        width: '450px',
+      });
+      
     });
  }
 

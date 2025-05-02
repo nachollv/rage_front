@@ -39,9 +39,9 @@
     "titleCA": "Abast 1",
     "titleES": "Alcance 1",
     "titleEN": "Scope 1",
-    "sectionTextCA": "Troba respostes a preguntes freqüents 2.",
-    "sectionTextES": "Encuentra respuestas a preguntas frecuentes 2.",
-    "sectionTextEN": "Find answers to frequently asked questions 2."
+    "sectionTextCA": "Troba respostes a preguntes freqüents fixedInstallationsFuelConsumption.",
+    "sectionTextES": "Encuentra respuestas a preguntas frecuentes fixedInstallationsFuelConsumption.",
+    "sectionTextEN": "Find answers to frequently asked questions fixedInstallationsFuelConsumption."
   },
   {
     "id": 3,
@@ -50,9 +50,9 @@
     "titleCA": "Abast 1",
     "titleES": "Alcance 1",
     "titleEN": "Scope 1",
-    "sectionTextCA": "Troba respostes a preguntes freqüents 3.",
-    "sectionTextES": "Encuentra respuestas a preguntas frecuentes 3.",
-    "sectionTextEN": "Find answers to frequently asked questions 3."
+    "sectionTextCA": "Troba respostes a preguntes freqüents roadTransport.",
+    "sectionTextES": "Encuentra respuestas a preguntas frecuentes roadTransport.",
+    "sectionTextEN": "Find answers to frequently asked questions roadTransport."
   },
   {
     "id": 4,
@@ -61,9 +61,9 @@
     "titleCA": "Abast 1",
     "titleES": "Alcance 1",
     "titleEN": "Scope 1",
-    "sectionTextCA": "Troba respostes a preguntes freqüents 4.",
-    "sectionTextES": "Encuentra respuestas a preguntas frecuentes 4.",
-    "sectionTextEN": "Find answers to frequently asked questions 4."
+    "sectionTextCA": "Troba respostes a preguntes freqüents railSeaAirTransport.",
+    "sectionTextES": "Encuentra respuestas a preguntas frecuentes railSeaAirTransport.",
+    "sectionTextEN": "Find answers to frequently asked questions railSeaAirTransport."
   },
   {
     "id": 5,
@@ -72,9 +72,9 @@
     "titleCA": "Abast 1",
     "titleES": "Alcance 1",
     "titleEN": "Scope 1",
-    "sectionTextCA": "Troba respostes a preguntes freqüents 5.",
-    "sectionTextES": "Encuentra respuestas a preguntas frecuentes 5.",
-    "sectionTextEN": "Find answers to frequently asked questions 5."
+    "sectionTextCA": "Troba respostes a preguntes freqüents fuelConsumptionMachinery.",
+    "sectionTextES": "Encuentra respuestas a preguntas frecuentes fuelConsumptionMachinery.",
+    "sectionTextEN": "Find answers to frequently asked questions fuelConsumptionMachinery."
   },
   {
     "id": 6,
@@ -83,8 +83,52 @@
     "titleCA": "Abast 1",
     "titleES": "Alcance 1",
     "titleEN": "Scope 1",
-    "sectionTextCA": "Troba respostes a preguntes freqüents 6.",
-    "sectionTextES": "Encuentra respuestas a preguntas frecuentes 6.",
-    "sectionTextEN": "Find answers to frequently asked questions 6."
+    "sectionTextCA": "Troba respostes a preguntes freqüents fugitiveEmissions.",
+    "sectionTextES": "Encuentra respuestas a preguntas frecuentes fugitiveEmissions.",
+    "sectionTextEN": "Find answers to frequently asked questions fugitiveEmissions."
+  },
+  {
+    "id": 7,
+    "scope": 88,
+    "scopeTab": 0,
+    "titleCA": "Abast 2",
+    "titleES": "Alcance 2",
+    "titleEN": "Scope 2",
+    "sectionTextCA": "Troba respostes a preguntes freqüents 7.",
+    "sectionTextES": "Encuentra respuestas a preguntas frecuentes 7.",
+    "sectionTextEN": "Find answers to frequently asked questions 7."
+  },
+  {
+    "id": 8,
+    "scope": 88,
+    "scopeTab": 0,
+    "titleCA": "Abast 2",
+    "titleES": "Alcance 2",
+    "titleEN": "Scope 2",
+    "sectionTextCA": "Troba respostes a preguntes freqüents electricityConsumptionInBuildings.",
+    "sectionTextES": "Encuentra respuestas a preguntas frecuentes electricityConsumptionInBuildings.",
+    "sectionTextEN": "Find answers to frequently asked questions electricityConsumptionInBuildings."
+  },
+  {
+    "id": 9,
+    "scope": 88,
+    "scopeTab": 0,
+    "titleCA": "Abast 2",
+    "titleES": "Alcance 2",
+    "titleEN": "Scope 2",
+    "sectionTextCA": "Troba respostes a preguntes freqüents electricityConsumptionInVehicles.",
+    "sectionTextES": "Encuentra respuestas a preguntas frecuentes electricityConsumptionInVehicles.",
+    "sectionTextEN": "Find answers to frequently asked questions electricityConsumptionInVehicles."
+  },
+  {
+    "id": 10,
+    "scope": 88,
+    "scopeTab": 0,
+    "titleCA": "Abast 2",
+    "titleES": "Alcance 2",
+    "titleEN": "Scope 2",
+    "sectionTextCA": "Troba respostes a preguntes freqüents heatSteamColdCompressedAir.",
+    "sectionTextES": "Encuentra respuestas a preguntas frecuentes heatSteamColdCompressedAir.",
+    "sectionTextEN": "Find answers to frequently asked questions heatSteamColdCompressedAir."
   }
 ]

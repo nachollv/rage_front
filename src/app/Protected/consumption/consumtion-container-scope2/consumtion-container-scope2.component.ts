@@ -34,38 +34,35 @@ export class ConsumtionContainerScope2Component {
   }
 
   openDialog( id: any ): void {
-     this.auxHelpingTextsService.getAuxTextById(id).subscribe((text: AuxTextDTO | undefined) => {
-       if (text) {
-         this.auxText = text
- 
-         if (localStorage.getItem('preferredLang') === 'es') {
-          this.title = text.titleES
-          this.text = text.sectionTextES
-         } else if (localStorage.getItem('preferredLang') === 'ca') {
-           this.title = text.titleCA
-           this.text = text.sectionTextCA
-         } else if (localStorage.getItem('preferredLang') === 'en') {
-           this.title = text.titleEN
-           this.text = text.sectionTextEN
-         } else {
-           console.error('Idioma no soportado')
-         }
-       } else {
-         console.error('Texto auxiliar no encontrado');
-       }
-     });
- 
-     const dialogRef = this.dialog.open(DialogComponent, {
-       data: {
-         title: this.title,
-         text: this.text,
-         position: 'center'
-       },
-       width: '450px',
-     });
- 
-     dialogRef.afterClosed().subscribe(result => {
-       console.log('El dialog se cerró');
-     });
-  }
+    this.auxHelpingTextsService.getAuxTextById(id)
+    .subscribe((text: AuxTextDTO | undefined) => {
+      if (text) {
+        this.auxText = text
+
+        if (localStorage.getItem('preferredLang') === 'es') {
+         this.title = text.titleES
+         this.text = text.sectionTextES
+        } else if (localStorage.getItem('preferredLang') === 'ca') {
+          this.title = text.titleCA
+          this.text = text.sectionTextCA
+        } else if (localStorage.getItem('preferredLang') === 'en') {
+          this.title = text.titleEN
+          this.text = text.sectionTextEN
+        } else {
+          console.error('Idioma no soportado')
+        }
+      } else {
+        console.error('Texto auxiliar no encontrado');
+      }
+      this.dialog.open(DialogComponent, {
+        data: {
+          title: this.title,
+          text: this.text,
+          position: 'center'
+        },
+        width: '450px',
+      });
+      
+    });
+ }
 }
