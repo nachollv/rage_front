@@ -1,22 +1,31 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
 })
 export class RecoveryPasswordService {
-  private apiUrl = 'https://tramits.idi.es/public/index.php/recovery';
+  private apiUrl = 'https://tramits.idi.es/public/assets/utils/enviaCorreoElectronicoRAGE.php';
 
   constructor(private http: HttpClient) {}
 
-  sendRecoveryEmail(email: string): Observable<any> {
-    const body = { email };
+  sendRecoveryEmail(email: any): Observable<any> {
 
-    return this.http.get(`${this.apiUrl}/hello`, ).pipe(
+    console.log (email)
+
+    return this.http
+    .get<any>(`${this.apiUrl}${email}`).pipe(
+      map(response => {
+        if (response.status === 'success') {
+          console.log ("Email sent", response.message)
+        } else {
+          console.error("Error sending mail: ", response.message)
+        }
+        return response
+      }),
       catchError((error) => {
-        // Manejar el error y procesar el contenido del mensaje
         let errorMessage = 'Ocurrió un error desconocido';
         if (error.error) {
           if (error.error.error) {
