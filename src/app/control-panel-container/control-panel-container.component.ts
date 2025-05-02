@@ -39,7 +39,7 @@ export class ControlPanelContainerComponent implements OnInit {
   fugitiveEmissionsRecords: any[] = []
   displayedColumnsScope1FI: string[] = ['activity Year', 'Periode', 'fuelType', 'activity Data']
   displayedColumnsScope1RT: string[] = ['activity Year', 'Periode', 'Categoría vehículo', 'fuelType', 'activity Data']
-  displayedColumnsScope1TransFerMarAe: string[] = ['activity Year', 'Periode', 'Categoría vehículo', 'fuel Type', 'activity Data']
+  displayedColumnsScope1TransFerMarAe: string[] = ['activity Year', 'Periode', 'Categoría vehículo', 'fuelType', 'activity Data']
   displayedColumnsScope1MA: string[] = ['activity Year', 'Periode', 'equipmentType', 'fuelType', 'activity Data']
   displayedColumnsScope1FE: string[] = ['activity Year', 'Periode', 'Gas/Mezcla', 'Capacidad', 'Recarga']
 
@@ -48,7 +48,7 @@ export class ControlPanelContainerComponent implements OnInit {
 
   fuelTypes: { id: number; Combustible: string }[] = []
   vehicleCategories: { id: number; FuelType: string; Categoria: string }[] = []
-  ferMarAerCateories: { id: number; FuelType: string; Categoria: string }[] = []
+  ferMarAerCategories: { id: number; FuelType: string; Categoria: string }[] = []
   machineryCategories: { id: number; FuelType: string; Categoria: string }[] = []
   fugitiveEmissions: { id: number; Nombre: string; FormulaQuimica: string, PCA_6AR: string }[] = []
   comercializadorasElectricas: { id: number; nombreComercial: string; kg_CO2_kWh: string }[] = []
@@ -289,7 +289,6 @@ export class ControlPanelContainerComponent implements OnInit {
   }
   roadTranspChart(chartType: keyof ChartTypeRegistry, scop1DataRD: any): void {
       const ctx = document.getElementById('roadTranspChart') as HTMLCanvasElement;
-      
       scop1DataRD.forEach((roadTransport: any) => {
         const matchedroadTransport = this.vehicleCategories.find((item: any) => item.id === roadTransport.equipmentType)
         roadTransport['Categoría vehículo'] = matchedroadTransport?.Categoria
@@ -378,7 +377,7 @@ export class ControlPanelContainerComponent implements OnInit {
           },
       });
   }
-  railSeaAirChart(chartType: keyof ChartTypeRegistry, scop1DataRSA: any): void {
+/*   railSeaAirChart(chartType: keyof ChartTypeRegistry, scop1DataRSA: any): void {
     const ctx = document.getElementById('railSeaAirChart') as HTMLCanvasElement;
     const monthlyData = new Array(12).fill(0); // Inicializar con 12 meses en 0
     scop1DataRSA.forEach((dataObject: any) => {
@@ -417,8 +416,6 @@ export class ControlPanelContainerComponent implements OnInit {
       }]
   },
   options: {
-    /*  responsive: true,
-       maintainAspectRatio: true,  */
       plugins: {  
         legend: {
           position: 'top',
@@ -443,7 +440,100 @@ export class ControlPanelContainerComponent implements OnInit {
       }
     }
     });
+  } */
+
+  railSeaAirChart(chartType: keyof ChartTypeRegistry, scop1DataRSA: any): void {
+      const ctx = document.getElementById('railSeaAirChart') as HTMLCanvasElement;
+      scop1DataRSA.forEach((marSeaAer: any) => {
+        const matchedFerMarAer = this.ferMarAerCategories.find((item: any) => item.Categoria === marSeaAer.equipmentType)
+        console.log ("matchedFerMarAer", matchedFerMarAer)
+        marSeaAer['Categoría vehículo'] = matchedFerMarAer?.Categoria
+        marSeaAer['fuelType'] = matchedFerMarAer?.FuelType
+      });
+      console.log ("scop1DataRSA", scop1DataRSA)
+      // Inicializar categorías y tipos de combustible únicos
+      const categories = new Set(scop1DataRSA.map((item: any) => item['Categoría vehículo']));
+      const fuelTypes = new Set(scop1DataRSA.map((item: any) => item['fuelType']));
+      console.log ("categories", categories)
+      console.log ("fuelTypes", fuelTypes)
+      const datasets: any[] = [];
+  
+      // Crear datos agrupados por Categoría vehículo y fuel Type
+      categories.forEach((category) => {
+          fuelTypes.forEach((fuelType) => {
+              const monthlyData = new Array(12).fill(0); // Inicializar con 12 meses en 0
+  
+              scop1DataRSA.forEach((dataObject: any) => {
+                  if (
+                      dataObject['Categoría vehículo'] === category &&
+                      dataObject['fuelType'] === fuelType
+                  ) {
+                      const monthIndex = parseInt(dataObject.periodoFactura.replace('M', '')) - 1; // Obtener índice del mes
+                      monthlyData[monthIndex] += parseFloat(dataObject.activityData); // Sumar datos mensuales
+                  }
+              });
+  
+              // Agregar dataset si tiene datos
+              if (monthlyData.some((value) => value > 0)) {
+                  datasets.push({
+                      label: `${category} - ${fuelType}`,
+                      data: monthlyData,
+                      backgroundColor: `#${Math.floor(Math.random() * 16777215).toString(16)}`, // Generar color aleatorio
+                      borderColor: '#696969',
+                      borderWidth: 1,
+                  });
+              }
+          });
+      });
+  
+      this.dataSourceScope1RailSeaAir = new MatTableDataSource(scop1DataRSA);
+  
+      if (this.chartInstanceRailSeaAir) {
+          this.chartInstanceRailSeaAir.destroy();
+      }
+  
+      this.chartInstanceRailSeaAir = new Chart(ctx, {
+          type: chartType,
+          data: {
+              labels: [
+                  'January', 'February', 'March', 'April', 'May', 'June',
+                  'July', 'August', 'September', 'October', 'November', 'December',
+              ],
+              datasets: datasets,
+          },
+          options: {
+              plugins: {
+                  legend: {
+                      position: 'top',
+                      labels: {
+                          color: '#696969',
+                      },
+                  },
+                  title: {
+                      display: true,
+                      text: 'Transporte ferroviario, marítimo, aéreo - Emissions grouped by Vehicle Category and Fuel Type',
+                  },
+              },
+              interaction: {
+                  mode: 'index',
+                  intersect: false,
+              },
+              scales: {
+                  x: {
+                      stacked: true,
+                      ticks: { color: '#696969' },
+                  },
+                  y: {
+                      beginAtZero: true,
+                      stacked: true,
+                      ticks: { color: '#696969' },
+                  },
+              },
+          },
+      });
   }
+  
+
   machineryChart(chartType: keyof ChartTypeRegistry, scop1DataMA: any): void {
       const ctx = document.getElementById('machineryChart') as HTMLCanvasElement;
       scop1DataMA.forEach((machineDataActiv: any) => {
@@ -888,7 +978,8 @@ export class ControlPanelContainerComponent implements OnInit {
   getferMarAerConsumtions(year: number) {
     this.ferMarAerService.getEmisionesByYear(year)
       .subscribe((item:any) => {
-        this.ferMarAerCateories = item
+        this.ferMarAerCategories = item
+        console.log ("this.ferMarAerCategories", this.ferMarAerCategories)
       })
   }
 
