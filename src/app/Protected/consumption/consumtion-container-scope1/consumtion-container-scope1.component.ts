@@ -1,15 +1,8 @@
 import { Component, Input } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent } from '../../../dialog/dialog.component';
-import { TranslationService } from '../../../services/translate.service';
-import { AuthService } from '../../../services/auth.service';
-import { ProductioncenterService } from '../../../services/productioncenter.service';
-import { OrganizacionService } from '../../../services/organizacion.service';
 import { AuxHelpingTextsService } from '../../../services/aux-helping-texts.service';
 import { AuxTextDTO } from '../../../models/auxText.dto';
-import { FormBuilder } from '@angular/forms';
-import { JwtHelperService } from '@auth0/angular-jwt';
-import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-consumtion-container-scope1',
@@ -30,17 +23,11 @@ export class ConsumtionContainerScope1Component {
   title: string = ''
   text: string = ''
   
-  constructor (public dialog: MatDialog, private fb: FormBuilder,
-    private jwtHelper: JwtHelperService,
-    private authService: AuthService,
-    private auxHelpingTextsService: AuxHelpingTextsService,
-    private snackBar: MatSnackBar) { }
+  constructor (public dialog: MatDialog,
+    private auxHelpingTextsService: AuxHelpingTextsService) { }
 
   ngOnInit() {
     const savedTabIndex = localStorage.getItem('selectedTabIndexscope1')
-    this.token = this.authService.getToken() || ''
-    this.productionCenter = this.jwtHelper.decodeToken(this.token).data.id
-    this.organizacionID = this.jwtHelper.decodeToken(this.token).data.id_empresa
     if (savedTabIndex !== null) {
       this.selectedTabIndexscope1 = +savedTabIndex;
     }
@@ -50,7 +37,7 @@ export class ConsumtionContainerScope1Component {
     localStorage.setItem('selectedTabIndexscope1', index.toString());
   }
   
-  openDialog( id: number ): void {
+  openDialog( id: any ): void {
     this.auxHelpingTextsService.getAuxTextById(id).subscribe((text: AuxTextDTO | undefined) => {
       if (text) {
         this.auxText = text
@@ -84,6 +71,6 @@ export class ConsumtionContainerScope1Component {
     dialogRef.afterClosed().subscribe(result => {
       console.log('El dialog se cerró');
     });
-  }
+ }
 
 }

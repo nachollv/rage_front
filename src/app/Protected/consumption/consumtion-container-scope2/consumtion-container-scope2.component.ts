@@ -1,13 +1,8 @@
 import { Component, Input } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent } from '../../../dialog/dialog.component';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { ProductioncenterService } from '../../../services/productioncenter.service';
-import { JwtHelperService } from '@auth0/angular-jwt';
-
 import { AuxHelpingTextsService } from '../../../services/aux-helping-texts.service';
 import { AuxTextDTO } from '../../../models/auxText.dto';
-import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-consumtion-container-scope2',
@@ -24,33 +19,15 @@ export class ConsumtionContainerScope2Component {
   title: string = ''
   text: string = ''
   
-  constructor (public dialog: MatDialog, private productionCenterService: ProductioncenterService,
-    private auxHelpingTextsService: AuxHelpingTextsService,
-    private snackBar: MatSnackBar,
-     private jwtHelper: JwtHelperService,
-  ) {
-    /* this.productionCenterForm = new FormBuilder().group({
-      calculationYear: [{ value: '2023', disabled: true }],
-      productionCenter: [{ value: '2', disabled: true }],
-    }); */
-  }
+  constructor (public dialog: MatDialog,
+    private auxHelpingTextsService: AuxHelpingTextsService) {  }
 
   ngOnInit() {
     const savedTabIndex = localStorage.getItem('selectedTabIndexscope2')
     if (savedTabIndex !== null) {
       this.selectedTabIndexscope2 = +savedTabIndex;
     }
-    /* this.getProductionCenterDetails(this.productionCenterForm.get('productionCenter')!.value) */
   }
-
- /*  getProductionCenterDetails(id:number) {
-    this.productionCenterService.getCentroDeProduccionByID(id)
-      .subscribe((pCenterItem: any) => {
-        this.productionCenterForm.patchValue({
-          productionCenter: pCenterItem.nombre
-        })
-      })
-  } */
 
   onTabChange(index: number) {
     localStorage.setItem('selectedTabIndexscope2', index.toString());
