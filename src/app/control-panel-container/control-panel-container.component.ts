@@ -99,20 +99,20 @@ export class ControlPanelContainerComponent implements OnInit {
       } 
     }
 
-  ngOnInit():void {
+  async ngOnInit(): Promise<void> {
     this.filterForm = this.fb.group({
       activityYear: [new Date().getFullYear()-2], // Por defecto, el año actual menos 2
     });
     Chart.register(...registerables);
-    this.getFixedFuelConsumptions(this.filterForm.value.activityYear)
-    this.getFuelConsumptions(this.filterForm.value.activityYear)
-    this.getferMarAerConsumtions(this.filterForm.value.activityYear)
-    this.getMachineryConsumtions(this.filterForm.value.activityYear)
-    this.getEmisionesFugitivas()
-    this.getEmisionesComercializadoras(this.filterForm.value.activityYear)
-    this.getScopeOneRecords(this.filterForm.value.activityYear)
-    this.getScopeTwoRecords(this.filterForm.value.activityYear)
-    this.getFugitiveEmissionRecords(this.filterForm.value.activityYear)
+    await this.getFixedFuelConsumptions(this.filterForm.value.activityYear)
+    await this.getFuelConsumptions(this.filterForm.value.activityYear)
+    await this.getferMarAerConsumtions(this.filterForm.value.activityYear)
+    await this.getMachineryConsumtions(this.filterForm.value.activityYear)
+    await this.getEmisionesFugitivas()
+    await this.getEmisionesComercializadoras(this.filterForm.value.activityYear)
+    await this.getScopeOneRecords(this.filterForm.value.activityYear)
+    await this.getScopeTwoRecords(this.filterForm.value.activityYear)
+    await this.getFugitiveEmissionRecords(this.filterForm.value.activityYear)
   }
 
   onYearFilterChange(event: any): void {
@@ -122,7 +122,7 @@ export class ControlPanelContainerComponent implements OnInit {
     this.getFugitiveEmissionRecords(activityYear)
   }
 
-  getScopeOneRecords(activityYear: number, prodCenterID?: number): void {
+/*   getScopeOneRecords(activityYear: number, prodCenterID?: number): void {
       this.scopeOneRecordsService.getRecordsByFilters(activityYear, prodCenterID).subscribe(
           (response: any) => {
             this.scopeOneRecords = response.data;
@@ -153,7 +153,43 @@ export class ControlPanelContainerComponent implements OnInit {
               }
           }
       );
-  }
+  } */
+  async getScopeOneRecords(activityYear: number, prodCenterID?: number): Promise<void> {
+        try {
+            const response = await this.scopeOneRecordsService.getRecordsByFilters(activityYear, prodCenterID).toPromise();
+            this.scopeOneRecords = response.data;
+            const meses = this.mesesService.getMeses();
+    
+            this.scopeOneRecords.forEach((registro: any) => {
+                const resultado = meses.find((mes) => mes.key === registro.periodoFactura);
+                registro['Periode'] = resultado?.value || 'desconocido';
+                registro['activity Data'] = registro.activityData;
+                registro['activity Year'] = registro.year;
+                registro['updated At'] = registro.updated_at;
+                registro.edit = false;
+                registro.delete = false;
+            });
+    
+            if (this.scopeOneRecords.length > 0) {
+                await this.fixedInstChart('bar', this.scopeOneRecords.filter((record: any) => record.activityType === 'fixed'));
+                await this.roadTranspChart('bar', this.scopeOneRecords.filter((record: any) => record.activityType === 'roadTransp'));
+    
+                this.railSeaAirChart('bar', this.scopeOneRecords.filter((record: any) => record.activityType === 'transferma'));
+                this.machineryChart('bar', this.scopeOneRecords.filter((record: any) => record.activityType === 'machinery'));
+            } else {
+                this.showSnackBar('No hay registros con activityType "fixed".');
+            }
+        } catch (error: any) {
+            if (error.status === 404 && error.messages?.error === "No se encontraron registros con los parámetros proporcionados.") {
+                this.showSnackBar('No se encontraron registros con los parámetros proporcionados.');
+            } else {
+                this.showSnackBar('Error al obtener registros de Alcance 1.');
+            }
+        }
+    }
+    
+
+
   getFugitiveEmissionRecords(activityYear: number, prodCenterID?: number): void {
     this.fugitiveEmissionRecordsService.getRegistroByFilters(activityYear, prodCenterID)
       .subscribe((response: any) => {
