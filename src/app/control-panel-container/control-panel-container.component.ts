@@ -182,7 +182,7 @@ export class ControlPanelContainerComponent implements OnInit {
 
         this.scopeTwoRecords.forEach((registro: any) => {
           const resultado = meses.find((mes) => mes.key === registro.periodoFactura);
-          registro['Periode'] = resultado?.value || 'desconocido';
+          registro['Periode'] = resultado?.value || 'desconocido'
           registro['Comercializadora'] = registro.electricityTradingCompany
           registro['activity Data'] = registro.activityData
           registro['activity Year'] = registro.year
@@ -196,7 +196,7 @@ export class ControlPanelContainerComponent implements OnInit {
           this.electricityVehicles('bar', this.scopeTwoRecords.filter((record: any) => record.activityType === 'electricityVehicles'));
           this.heatSteamColdCompAir('bar', this.scopeTwoRecords.filter((record: any) => record.activityType === 'heatSteamColdAir'));
         } else {
-          this.showSnackBar('No hay registros con activityType "electricityBuildings".');
+          this.showSnackBar('No hay registros.');
         }
       },
       (error) => {
@@ -613,72 +613,84 @@ export class ControlPanelContainerComponent implements OnInit {
   
 
   electricityBuildings(chartType: keyof ChartTypeRegistry, scop2ElecBuild: any): void {
-    const ctx = document.getElementById('electricityBuildings') as HTMLCanvasElement;
-    const monthlyData = new Array(12).fill(0); // Inicializar con 12 meses en 0
-    scop2ElecBuild.forEach((dataObject: any) => {
-      const monthIndex = parseInt(dataObject.periodoFactura.replace('M', '')) - 1; // Obtener índice del mes
-      monthlyData[monthIndex] += parseFloat(dataObject.activityData); // Asignar cantidad al mes correspondiente
-      const matchedComercialiadora = this.comercializadorasElectricas.find((item: any) => item.id === dataObject.Comercializadora)
-      dataObject['Comercializadora'] = matchedComercialiadora?.nombreComercial
-
-    });
-    this.dataSourceScope2ElectricityBuildings = new MatTableDataSource(scop2ElecBuild);
-    if (this.chartInstanceElectricityBuildings) {
-        this.chartInstanceElectricityBuildings.destroy();
-    }
-    this.chartInstanceElectricityBuildings = new Chart(ctx, {
-      type: chartType,
-      data: {
-        labels: [
-          'January',
-          'February',
-          'March',
-          'April',          'May',
-          'June',
-          'July',
-          'August',          'September',
-          'October',
-          'November',
-          'December',
-        ],
-        datasets: [{
-          label: 'Emissions',
-          data: monthlyData,
-          backgroundColor: '#555555', 
-          borderColor: '#555555',
-          borderWidth: 1,
-          order: 1
-      }]
-  },
-  options: {
-      responsive: true,
-      maintainAspectRatio: true,
-      plugins: {  
-        legend: {
-          position: 'top',
-        },
-        title: {
-          display: true,
-          text: 'Consumo eléctrico en edificios - Emissions'
-        }
-      },
-      interaction: {  
-        mode: 'index',
-        intersect: false,
-      },
-      scales: {
-        y: {
-          beginAtZero: true,
-          stacked: true
-        },
-        x: {
-          stacked: true
-        }
-      }
-    }
-    });
-  }
+      const ctx = document.getElementById('electricityBuildings') as HTMLCanvasElement;
+      scop2ElecBuild.forEach((dataObject: any) => {
+        const matchedComercialiadora = this.comercializadorasElectricas.find((item: any) => item.id === dataObject.Comercializadora)
+        dataObject['Comercializadora'] = matchedComercialiadora?.nombreComercial
+      });
+      // Inicializar comercializadoras únicas
+      const comercializadoras = new Set(scop2ElecBuild.map((item: any) => item['Comercializadora']));
+      const datasets: any[] = [];
   
+      // Crear datos agrupados por comercializadora
+      comercializadoras.forEach((comercializadora) => {
+          const monthlyData = new Array(12).fill(0); // Inicializar con 12 meses en 0
+  
+          scop2ElecBuild.forEach((dataObject: any) => {
+              if (dataObject['Comercializadora'] === comercializadora) {
+                  const monthIndex = parseInt(dataObject.periodoFactura.replace('M', '')) - 1; // Obtener índice del mes
+                  monthlyData[monthIndex] += parseFloat(dataObject.activityData); // Sumar datos mensuales
+              }
+          });
+  
+          // Agregar dataset si tiene datos
+          if (monthlyData.some((value) => value > 0)) {
+              datasets.push({
+                  label: comercializadora,
+                  data: monthlyData,
+                  backgroundColor: `#${Math.floor(Math.random() * 16777215).toString(16)}`, // Generar color aleatorio
+                  borderColor: '#696969',
+                  borderWidth: 1,
+              });
+          }
+      });
+  
+      this.dataSourceScope2ElectricityBuildings = new MatTableDataSource(scop2ElecBuild);
+  
+      if (this.chartInstanceElectricityBuildings) {
+          this.chartInstanceElectricityBuildings.destroy();
+      }
+  
+      this.chartInstanceElectricityBuildings = new Chart(ctx, {
+          type: 'bar',
+          data: {
+              labels: [
+                  'January', 'February', 'March', 'April', 'May', 'June',
+                  'July', 'August', 'September', 'October', 'November', 'December',
+              ],
+              datasets: datasets,
+          },
+          options: {
+              plugins: {
+                  legend: {
+                      position: 'top',
+                      labels: {
+                          color: '#696969',
+                      },
+                  },
+                  title: {
+                      display: true,
+                      text: 'Electrical consumption in Buildings - Emissions grouped by Comercializadora',
+                  },
+              },
+              interaction: {
+                  mode: 'index',
+                  intersect: false,
+              },
+              scales: {
+                  x: {
+                      stacked: true,
+                      ticks: { color: '#696969' },
+                  },
+                  y: {
+                      beginAtZero: true,
+                      stacked: true,
+                      ticks: { color: '#696969' },
+                  },
+              },
+          },
+      });
+  }
   electricityVehicles(chartType: keyof ChartTypeRegistry, scop2DataVehicles: any): void {
       const ctx = document.getElementById('electricityVehicles') as HTMLCanvasElement;
       scop2DataVehicles.forEach((dataObject: any) => {
@@ -719,7 +731,7 @@ export class ControlPanelContainerComponent implements OnInit {
       }
   
       this.chartInstanceElectricityVehicles = new Chart(ctx, {
-          type: 'bar',
+          type: chartType,
           data: {
               labels: [
                   'January',
@@ -768,7 +780,6 @@ export class ControlPanelContainerComponent implements OnInit {
           },
       });
   }
-  
   heatSteamColdCompAir(chartType: keyof ChartTypeRegistry, scop2DataSteam: any): void {
       const ctx = document.getElementById('heatSteamColdCompAir') as HTMLCanvasElement;
       scop2DataSteam.forEach((registro: any) => {
@@ -808,7 +819,7 @@ export class ControlPanelContainerComponent implements OnInit {
       }
   
       this.chartInstanceHeatSteamColdCompAir = new Chart(ctx, {
-          type: 'bar',
+          type: chartType,
           data: {
               labels: [
                   'January',
