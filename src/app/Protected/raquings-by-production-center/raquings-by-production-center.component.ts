@@ -2,6 +2,9 @@ import { Component, Input , OnInit, OnChanges, SimpleChanges } from '@angular/co
 import { ProductioncenterService } from '../../services/productioncenter.service';
 import { RanquingCalculationService } from '../../services/ranquing-calculation.service';
 import { tap } from 'rxjs';
+import { Router } from '@angular/router';
+import { JwtHelperService } from '@auth0/angular-jwt';
+import { AuthService } from '../../services/auth.service';
 
 export type ApiResponse = {
   status: string;
@@ -26,15 +29,25 @@ export class RaquingsByProductionCenterComponent implements OnInit, OnChanges {
   totales: any[] = [];
   productionCenterData: any[] = []
   displayedColumns: string[] = ['activityYear', 'productionCenter', 'totalRecords'];
+  token: string = ''
+  isExpiredToken: boolean = false
+
   constructor ( private ranquingCalculation: RanquingCalculationService,
-                private productionCenterService: ProductioncenterService
+                private productionCenterService: ProductioncenterService,
+                private jwtHelper: JwtHelperService,
+                private authService: AuthService,
+                private router: Router, 
    ) 
   {
    this.getProductionCenterData(this.productionCenterID)
   }
 
   ngOnInit(): void {
-    
+    this.token = this.authService.getToken() || ''
+    this.isExpiredToken = this.jwtHelper.isTokenExpired(this.token)
+    if (this.isExpiredToken) {
+      this.router.navigate(['/login'])
+    }
   }
 
   ngOnChanges(changes: SimpleChanges): void {
