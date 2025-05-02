@@ -16,7 +16,7 @@ export class RecoveryPasswordService {
     console.log (email)
 
     return this.http
-    .get<any>(`${this.apiUrl}${email}`).pipe(
+    .get<any>(`${this.apiUrl}?${email}`).pipe(
       map(response => {
         if (response.status === 'success') {
           console.log ("Email sent", response.message)
