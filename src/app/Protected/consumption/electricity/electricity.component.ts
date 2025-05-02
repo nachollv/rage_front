@@ -73,7 +73,7 @@ export class ElectricityComponent implements OnInit, OnChanges {
                   const matchedComercializadora = this.comercializadorasElectricas.find((comercializadoraItem: any) => comercializadoraItem.id === registro.electricityTradingCompany);
                   registro.electricityTradingCompany = matchedComercializadora?.nombreComercial+" (fe:"+matchedComercializadora?.kg_CO2_kWh+")" || 'desconocido';
                   registro['electricity Trading Company'] = registro.electricityTradingCompany
-                  registro['activity Data'] = registro.activityData
+                  registro['activity Data'] = registro.activityData + " kWh"
                 })
 
               })

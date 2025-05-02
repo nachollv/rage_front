@@ -4,8 +4,8 @@ import { DialogComponent } from '../../../dialog/dialog.component';
 import { ScopeTwoRecordsService } from '../../../services/scope-two-records.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { EmisionesElectricasEdificiosService } from '../../../services/emisiones-electricas-edificios.service';
 
+import { MesesService } from '../../../services/meses.service';
 @Component({
   selector: 'app-heat-steam-cold-comp-air',
   templateUrl: './heat-steam-cold-comp-air.component.html',
@@ -14,13 +14,14 @@ import { EmisionesElectricasEdificiosService } from '../../../services/emisiones
 export class HeatSteamColdCompAirComponent {
   @Input() activityYear!: number
   @Input() productionCenter: number = 0
-  displayedColumns: string[] = ['year', 'periodoFactura', 'energyType', 'activityData', 'updated_at', 'delete']
+  displayedColumns: string[] = ['activity Year', 'Period', 'energy Type', 'activity Data', 'updated_at', 'delete']
   data = [{}];
   dataSource = new MatTableDataSource<any>(this.data)
   heatSteamColdAirForm!: FormGroup;
 
   constructor(private fb: FormBuilder, 
     private snackBar: MatSnackBar,
+    private mesesService: MesesService,
     private scopeTWoRecordsService: ScopeTwoRecordsService) {
 
   }
@@ -46,6 +47,7 @@ export class HeatSteamColdCompAirComponent {
   }
 
   getScopeTwoRecords() {
+    const meses = this.mesesService.getMeses();
     this.scopeTWoRecordsService.getRecordsByFilters(this.activityYear, this.productionCenter, 'heatSteamColdAir')
     .subscribe({
       next: (data: any) => {
@@ -54,8 +56,14 @@ export class HeatSteamColdCompAirComponent {
           record.updated_at = record.updated_at.split('T')[0]; // Formato de fecha
           record.activityData = record.activityData + " kWh" // Formato de número
           record.delete = true
+          const resultado = meses.find((mes) => mes.key === record.periodoFactura);
+          record.periodoFactura = resultado?.value   || 'desconocido';
+          record['Period'] = record.periodoFactura
+          record['activity Year'] = record.year
+          record['energy Type'] = record.energyType
+          record['activity Data'] = record.activityData
         });
-        this.dataSource.data = data.data; // Asigna los datos a la fuente de datos de la tabla
+        this.dataSource = new MatTableDataSource(data.data) // Asigna los datos a la fuente de datos de la tabla
       },
       error: (error) => {
         console.error('Error al obtener los registros:', error); // Manejo de errores
@@ -66,7 +74,6 @@ export class HeatSteamColdCompAirComponent {
   calculateEmissions(): void {
     const consumosGroup = this.heatSteamColdAirForm.get('consumos') as FormGroup;
     const activityData = consumosGroup.get('activityData')?.value; // activityData ingresado
-    console.log('activityData:', activityData); // Imprime el activityData ingresado
     const emissionFactor = this.heatSteamColdAirForm.get('emissionFactor')?.value; // Factor de emisión ingresado
 
     if (activityData && emissionFactor) {
