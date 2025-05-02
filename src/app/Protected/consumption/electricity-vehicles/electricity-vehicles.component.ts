@@ -18,7 +18,7 @@ export class ElectricityVehiclesComponent implements OnInit, OnChanges{
   @Input() productionCenter: number = 0
   comercializadorasElectricas: any[] = []
   errorMessage: string = ''
-  displayedColumns: string[] = ['activity Year', 'Period', 'electricity Trading Company', 'activity Data', 'gdo', 'updated_at', 'delete']
+  displayedColumns: string[] = ['activity Year', 'Period', 'electricity Trading Company', 'activity Data', 'gdo', 'total Emissions', 'updated_at', 'delete']
   data = [{}]; 
   dataSource = new MatTableDataSource<any>(this.data)
   vehiclesElectricity!: FormGroup;
@@ -82,6 +82,11 @@ export class ElectricityVehiclesComponent implements OnInit, OnChanges{
               registro.electricityTradingCompany = matchedComercializadora?.nombreComercial+" (fe:"+matchedComercializadora?.kg_CO2_kWh+")" || 'desconocido';
               registro['electricity Trading Company'] = registro.electricityTradingCompany
               registro['activity Data'] = registro.activityData + " kWh"
+              const activityData =  registro.activityData || 0;
+              const factorMixElectrico = matchedComercializadora.kg_CO2_kWh || 0;
+              const fe_co2 = +factorMixElectrico === 0.302 ? 1.0 : registro.gdo || 0;
+              const emisionesCO2e = (activityData * factorMixElectrico * fe_co2) / 1000;
+              registro['total Emissions'] = "<strong><span ngClass='co2eqData'>"+ emisionesCO2e.toFixed(3) + " (tnCO2eq)</span></strong>"
             })
 
           })

@@ -19,7 +19,7 @@ export class ElectricityComponent implements OnInit, OnChanges {
   comercializadorasElectricas: any[] = []
   errorMessage: string = ''
 
-  displayedColumns: string[] = ['activity Year', 'Period', 'electricity Trading Company', 'activity Data', 'gdo', 'updated_at', 'delete']
+  displayedColumns: string[] = ['activity Year', 'Period', 'electricity Trading Company', 'activity Data', 'gdo', 'total Emissions', 'updated_at', 'delete']
   data = [ { } ];
   dataSource = new MatTableDataSource<any>(this.data)
   buildingElecConsumption!: FormGroup;
@@ -71,9 +71,15 @@ export class ElectricityComponent implements OnInit, OnChanges {
                   registro['activity Year'] = registro.year
                   registro['Period'] = registro.periodoFactura
                   const matchedComercializadora = this.comercializadorasElectricas.find((comercializadoraItem: any) => comercializadoraItem.id === registro.electricityTradingCompany);
+                  const activityData =  registro.activityData || 0;
+                  const factorMixElectrico = matchedComercializadora.kg_CO2_kWh || 0;
+                  const fe_co2 = +factorMixElectrico === 0.302 ? 1.0 : registro.gdo || 0;
+                  const emisionesCO2e = (activityData * factorMixElectrico * fe_co2) / 1000;
+
                   registro.electricityTradingCompany = matchedComercializadora?.nombreComercial+" (fe:"+matchedComercializadora?.kg_CO2_kWh+")" || 'desconocido';
                   registro['electricity Trading Company'] = registro.electricityTradingCompany
                   registro['activity Data'] = registro.activityData + " kWh"
+                  registro['total Emissions'] = "<strong><span ngClass='co2eqData'>"+ emisionesCO2e.toFixed(3) + " (tnCO2eq)</span></strong>"
                 })
 
               })
@@ -121,7 +127,6 @@ export class ElectricityComponent implements OnInit, OnChanges {
             const factorMixElectrico = consumosGroup.get('factorMixElectrico')?.value || 0;
             const fe_co2 = +factorMixElectrico === 0.302 ? 1.0 : consumosGroup.get('fe_co2')?.value || 0;
             const emisionesCO2e = (activityData * factorMixElectrico * fe_co2) / 1000;
-      
             this.buildingElecConsumption.get('emisionesCO2e')?.setValue(emisionesCO2e.toFixed(3));
           };
       

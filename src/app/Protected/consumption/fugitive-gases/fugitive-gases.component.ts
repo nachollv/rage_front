@@ -71,17 +71,19 @@ export class FugitiveGasesComponent implements OnInit, OnChanges {
             registro['Period'] = registro.periodoFactura
             // Obtener información del gas
             const matchedGas = gases.find((gas: any) => gas.id === registro.nombre_gas_mezcla);
+            console.log ("matchedGas", matchedGas)
             registro.nombre_gas_mezcla = matchedGas?.Nombre || 'desconocido';
             registro['Name of gas mixture'] = registro.nombre_gas_mezcla
             registro.formulaQuimica = matchedGas?.formula || 'desconocido';
-            const pca6AR = matchedGas?.PCA_6Ar
+            const pca6AR = parseFloat(matchedGas?.PCA_6AR)
             const chemicalFormula = matchedGas?.formulaQuimica
-            const recharge = parseFloat(registro.recarga_equipo).toFixed(2);
-            const capacity = parseFloat(registro.capacidad_equipo).toFixed(2);
-            registro.PCA_6Ar = matchedGas?.PCA_6Ar || 'desconocido';
+            const recharge = parseFloat(registro.recarga_equipo);
+            const capacity = parseFloat(registro.capacidad_equipo);
+            registro.PCA_6AR = matchedGas?.PCA_6AR || 0;
+
             registro['gas Equipment Capacity'] = registro.capacidad_equipo
             registro['Equipment recharge'] = registro.recarga_equipo
-            registro['total Emissions'] = parseFloat(recharge) * parseFloat(parseFloat(pca6AR).toFixed(2))
+            registro['total Emissions'] = "<strong><span ngClass='co2eqData'>"+ (recharge * pca6AR).toFixed(3) + " (tnCO2eq)</span></strong>"
           });
 
           this.dataSource = new MatTableDataSource(registrosleak.data);

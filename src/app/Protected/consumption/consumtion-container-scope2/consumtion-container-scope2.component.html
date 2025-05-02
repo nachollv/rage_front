@@ -1,20 +1,20 @@
-  <h1><button mat-menu-item (click)="openDialog (2)"><mat-icon style="color: #0a470d;">info</mat-icon>{{"scope2" | translate}}</button></h1>
+  <h1><button mat-menu-item (click)="openDialog (7)"><mat-icon style="color: #0a470d;">info</mat-icon>{{"scope2" | translate}}</button></h1>
   <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start"  [(selectedIndex)]="selectedTabIndexscope2" (selectedIndexChange)="onTabChange($event)" *ngIf = "activityYear">
     
     <mat-tab label="{{'electricityConsumptionInBuildings' | translate}}">
-      <button mat-menu-item (click)="openDialog('Instalaciones fijas no sujetas a las obligaciones establecidas en la Ley 1/2005, de 9 de marzo ')">
+      <button mat-menu-item (click)="openDialog(8)">
         <mat-icon style="color: #ff9310;">info</mat-icon>{{"electricityConsumptionInBuildings" | translate}}</button>
         <app-electricity [activityYear]="activityYear" [productionCenter]="productionCenter"></app-electricity>
     </mat-tab>
 
-    <mat-tab label="{{'electricityConsumptionInVehicles'  | translate}}">
-      <button mat-menu-item (click)="openDialog('Instalaciones fijas no sujetas a las obligaciones establecidas en la Ley 1/2005, de 9 de marzo ')">
+    <mat-tab label="{{'electricityConsumptionInVehicles' | translate}}">
+      <button mat-menu-item (click)="openDialog(9)">
         <mat-icon style="color: #ff9310;">info</mat-icon>{{"electricityConsumptionInVehicles" | translate}}</button>
         <app-electricity-vehicles [activityYear]="activityYear" [productionCenter]="productionCenter"></app-electricity-vehicles>
     </mat-tab>
   
-    <mat-tab label="{{'heatSteamColdCompressedAir'  | translate}}">
-      <button mat-menu-item (click)="openDialog('Instalaciones fijas no sujetas a las obligaciones establecidas en la Ley 1/2005, de 9 de marzo ')">
+    <mat-tab label="{{'heatSteamColdCompressedAir' | translate}}">
+      <button mat-menu-item (click)="openDialog(10)">
         <mat-icon style="color: #ff9310;">info</mat-icon>{{"heatSteamColdCompressedAir" | translate}}</button>
         <app-heat-steam-cold-comp-air [activityYear]="activityYear" [productionCenter]="productionCenter"></app-heat-steam-cold-comp-air>
     </mat-tab>

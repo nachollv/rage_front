@@ -14,7 +14,7 @@ import { MesesService } from '../../../services/meses.service';
 export class HeatSteamColdCompAirComponent {
   @Input() activityYear!: number
   @Input() productionCenter: number = 0
-  displayedColumns: string[] = ['activity Year', 'Period', 'energy Type', 'activity Data', 'updated_at', 'delete']
+  displayedColumns: string[] = ['activity Year', 'Period', 'energy Type', 'activity Data', 'total Emissions', 'updated_at', 'delete']
   data = [{}];
   dataSource = new MatTableDataSource<any>(this.data)
   heatSteamColdAirForm!: FormGroup;
@@ -61,7 +61,8 @@ export class HeatSteamColdCompAirComponent {
           record['Period'] = record.periodoFactura
           record['activity Year'] = record.year
           record['energy Type'] = record.energyType
-          record['activity Data'] = record.activityData
+          record['activity Data'] = record.activityData || 0
+          record['total Emissions'] = "<strong><span ngClass='co2eqData'>"+ (parseFloat(record.activityData)/1000) + " (tnCO2eq)</span></strong>"
         });
         this.dataSource = new MatTableDataSource(data.data) // Asigna los datos a la fuente de datos de la tabla
       },

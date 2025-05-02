@@ -34,16 +34,7 @@ export class ConsumtionContainerScope1Component {
     private jwtHelper: JwtHelperService,
     private authService: AuthService,
     private auxHelpingTextsService: AuxHelpingTextsService,
-    private snackBar: MatSnackBar,
-    /* private productionCenterService: ProductioncenterService,
-    private organizationService: OrganizacionService,
-    private translate: TranslationService */) {
-    /*   this.productionCenterForm = this.fb.group({
-      activityYear: [{ value: '' }],
-      productionCenter: [{value: '', disabled: true}],
-    }); */
-
-    }
+    private snackBar: MatSnackBar) { }
 
   ngOnInit() {
     const savedTabIndex = localStorage.getItem('selectedTabIndexscope1')
@@ -53,26 +44,7 @@ export class ConsumtionContainerScope1Component {
     if (savedTabIndex !== null) {
       this.selectedTabIndexscope1 = +savedTabIndex;
     }
-
-    /* this.getOrganizacionActivityYears( this.organizacionID )
-    this.getProductionCenterDetails( +this.prodCenterID ) */
   }
-
-/*   getProductionCenterDetails(id:number) {
-    this.productionCenterService.getCentroDeProduccionByID(id)
-      .subscribe((pCenterItem: any) => {
-        this.productionCenterForm.patchValue({
-          productionCenter: pCenterItem.nombre
-        })
-      })
-  }
-
-  getOrganizacionActivityYears(organizacionID: number) {
-    this.organizationService.getActivityYearsByOrganization(organizacionID)
-      .subscribe((years: any) => {
-        this.availableYears = years
-      })  
-   } */
 
   onTabChange(index: number) {
     localStorage.setItem('selectedTabIndexscope1', index.toString());
