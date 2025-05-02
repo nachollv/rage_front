@@ -7,7 +7,7 @@ import { catchError } from 'rxjs/operators';
   providedIn: 'root',
 })
 export class RecoveryPasswordService {
-  private apiUrl = 'https://pre.tramits.idi.es/public/index.php/recovery';
+  private apiUrl = 'https://tramits.idi.es/public/index.php/recovery';
 
   constructor(private http: HttpClient) {}
 
