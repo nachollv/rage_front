@@ -14,7 +14,7 @@ export class RecoveryPasswordService {
   sendRecoveryEmail(email: string): Observable<any> {
     const body = { email };
 
-    return this.http.post(`${this.apiUrl}/password`, body).pipe(
+    return this.http.post(`${this.apiUrl}/hello`, body).pipe(
       catchError((error) => {
         // Manejar el error y procesar el contenido del mensaje
         let errorMessage = 'Ocurrió un error desconocido';
