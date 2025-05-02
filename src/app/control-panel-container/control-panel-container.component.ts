@@ -208,7 +208,6 @@ export class ControlPanelContainerComponent implements OnInit {
       }
     );
   }
-
   fixedInstChart(chartType: keyof ChartTypeRegistry, scop1DataFI: any): void {
       const ctx = document.getElementById('fixedInstChart') as HTMLCanvasElement;
       scop1DataFI.forEach((dataObjectFI: any) => {
@@ -522,7 +521,7 @@ export class ControlPanelContainerComponent implements OnInit {
                   },
                   title: {
                       display: true,
-                      text: 'Maquinaria - Emissions Grouped by Vehicle Category and Fuel Type',
+                      text: 'Machinery - Emissions Grouped by Vehicle Category and Fuel Type',
                   },
               },
               scales: {
@@ -539,68 +538,79 @@ export class ControlPanelContainerComponent implements OnInit {
       });
   }
   fugitiveEmissChart(chartType: keyof ChartTypeRegistry, scop1DataFE: any): void {
-    const ctx = document.getElementById('fugitiveEmissChart') as HTMLCanvasElement;
-    const monthlyData = new Array(12).fill(0); // Inicializar con 12 meses en 0
-    scop1DataFE.forEach((dataObject: any) => {
-      const monthIndex = parseInt(dataObject.periodoFactura.replace('M', '')) - 1; // Obtener índice del mes
-      monthlyData[monthIndex] += (parseFloat(dataObject.capacidad_equipo)-(dataObject.recarga_equipo)); // Asignar cantidad al mes correspondiente
-    });
-    this.dataSourceScope1FugitiveEmiss = new MatTableDataSource(scop1DataFE);
-    if (this.chartInstanceFugitiveEmiss) {
-        this.chartInstanceFugitiveEmiss.destroy();
-    }
-    this.chartInstanceFugitiveEmiss = new Chart(ctx, {
-      type: chartType,
-      data: {
-        labels: [
-          'January',
-          'February',
-          'March',
-          'April',          'May',
-          'June',
-          'July',
-          'August',          'September',
-          'October',
-          'November',
-          'December',
-        ],
-        datasets: [{
-          label: 'Emissions: capacidad equipo - recarga-equipo',
-          data: monthlyData,
-          backgroundColor: '#B22222', // Verde bosque
-          borderColor: '#B22222',
-          borderWidth: 1,  // this dataset is drawn below
-          order: 1
-        }]
-  },
-  options: {
-    /*  responsive: true,
-       maintainAspectRatio: true,  */
-      plugins: {  
-        legend: {
-          position: 'top',
-        },
-        title: {
-          display: true,
-          text: 'Emisiones fugitivas - Emissions and objective'
-        }
-      },
-      interaction: {  
-        mode: 'index',
-        intersect: false,
-      },
-      scales: {
-        y: {
-          beginAtZero: true,
-          stacked: true
-        },
-        x: {
-          stacked: true
-        }
+      const ctx = document.getElementById('fugitiveEmissChart') as HTMLCanvasElement;
+      // Inicializar tipos de gases únicos
+      const gasTypes = new Set(scop1DataFE.map((item: any) => item['Gas/Mezcla']));
+      const datasets: any[] = [];
+      // Crear datos agrupados por tipo de gas
+      gasTypes.forEach((gasType) => {
+          const monthlyData = new Array(12).fill(0); // Inicializar con 12 meses en 0
+          scop1DataFE.forEach((dataObject: any) => {
+              if (dataObject['Gas/Mezcla'] === gasType) {
+                  const monthIndex = parseInt(dataObject.periodoFactura.replace('M', '')) - 1; // Obtener índice del mes
+                  monthlyData[monthIndex] += parseFloat(dataObject.capacidad_equipo) - parseFloat(dataObject.recarga_equipo); // Sumar datos mensuales
+              }
+          });
+
+          // Agregar dataset si tiene datos
+          if (monthlyData.some((value) => value > 0)) {
+              datasets.push({
+                  label: gasType,
+                  data: monthlyData,
+                  backgroundColor: `#${Math.floor(Math.random() * 16777215).toString(16)}`, // Color aleatorio
+                  borderColor: '#696969',
+                  borderWidth: 1,
+              });
+          }
+      });
+  
+      this.dataSourceScope1FugitiveEmiss = new MatTableDataSource(scop1DataFE);
+  
+      if (this.chartInstanceFugitiveEmiss) {
+          this.chartInstanceFugitiveEmiss.destroy();
       }
-    }
-    });
+  
+      this.chartInstanceFugitiveEmiss = new Chart(ctx, {
+          type: chartType,
+          data: {
+              labels: [
+                  'January', 'February', 'March', 'April', 'May', 'June',
+                  'July', 'August', 'September', 'October', 'November', 'December',
+              ],
+              datasets: datasets,
+          },
+          options: {
+              plugins: {
+                  legend: {
+                      position: 'top',
+                      labels: {
+                          color: '#696969',
+                      },
+                  },
+                  title: {
+                      display: true,
+                      text: 'Fugitive gases - Emissions grouped by Gas/Mixing type',
+                  },
+              },
+              interaction: {
+                  mode: 'index',
+                  intersect: false,
+              },
+              scales: {
+                  x: {
+                      stacked: true,
+                      ticks: { color: '#696969' },
+                  },
+                  y: {
+                      beginAtZero: true,
+                      stacked: true,
+                      ticks: { color: '#696969' },
+                  },
+              },
+          },
+      });
   }
+  
 
   electricityBuildings(chartType: keyof ChartTypeRegistry, scop2ElecBuild: any): void {
     const ctx = document.getElementById('electricityBuildings') as HTMLCanvasElement;
@@ -737,7 +747,7 @@ export class ControlPanelContainerComponent implements OnInit {
                   },
                   title: {
                       display: true,
-                      text: 'Consumo eléctrico en vehículos - Emissions Grouped by Comercializadora',
+                      text: 'Electricity consumption in vehicles - Emissions Grouped by Comercializadora',
                   },
               },
               interaction: {
