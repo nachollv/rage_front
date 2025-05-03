@@ -14,7 +14,7 @@ export class RecoveryPasswordComponent implements OnInit {
   message: string = ''; // Mensaje de retroalimentación
 
   constructor(private fb: FormBuilder, 
-    private http: HttpClient, 
+    private http: HttpClient,
     private recoveryService: RecoveryPasswordService,
     private snackBar: MatSnackBar) {}
 
@@ -29,6 +29,7 @@ export class RecoveryPasswordComponent implements OnInit {
   }
 
   onSubmit(): void {
+
     this.message ="Un momento, enviando ..."
     if (this.recoveryForm.valid) {
       const email = this.recoveryForm.value.email;

@@ -12,12 +12,10 @@ export class RecoveryPasswordService {
   constructor(private http: HttpClient) {}
 
   sendRecoveryEmail(email: any): Observable<any> {
-
-    console.log (email)
-
     return this.http
     .get<any>(`${this.apiUrl}?${email}`).pipe(
       map(response => {
+        console.log ("response.status ", response.status)
         if (response.status === 'success') {
           console.log ("Email sent", response.message)
         } else {
