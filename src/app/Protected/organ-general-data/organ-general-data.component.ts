@@ -46,8 +46,11 @@ export class OrganGeneralDataComponent implements OnInit {
   organizationID!: number
   availableYears: number[] = []
   selectedYears: string = ''
+  selectedyearsArray: number[] = []
+  activityIndexOrgConfig: string = ""
+  activityRanquingOrgConfig: string = ""
   selectedelectricityTradingCompany: string = ''
-
+  selectedelectricityTradingCompanyArray: string[] = []
   
     constructor(private fb: FormBuilder, private snackBar: MatSnackBar,
       private jwtHelper: JwtHelperService,
@@ -82,19 +85,27 @@ export class OrganGeneralDataComponent implements OnInit {
         this.token = this.authService.getToken()!
       }
       this.organizationID = this.jwtHelper.decodeToken(this.token).data.id_empresa
-      this.getTheOrganization(this.organizationID)
+      this.getTheOrganizationData(this.organizationID)
       this.getSectoresEconomicos()
       this.getAllEmisionesbyYear(2023)
     }
 
-    getTheOrganization(id: number) {
+    getTheOrganizationData(id: number) {
       this.organizationService.getOrganizacion(id)
         .subscribe((theOrganization: any) => {
-          
-          this.selectedYears = theOrganization.configuracion[0].activityYears;
-          let selectedyearsArray = this.selectedYears.split(", ").map(Number);
-          this.selectedelectricityTradingCompany = theOrganization.configuracion[0].electricityTradingCompany;
-          let selectedelectricityTradingCompanyArray = this.selectedelectricityTradingCompany.split(", ").map(String);
+          console.log (theOrganization.organizacion, theOrganization.configuracion, theOrganization.configuracion.length, id)
+
+          if (theOrganization.configuracion.length > 0) {
+            this.selectedYears = theOrganization.configuracion[0].activityYears
+            this.selectedyearsArray = this.selectedYears.split(", ").map(Number)
+            this.activityIndexOrgConfig = theOrganization.configuracion[0].activityIndex
+            this.activityRanquingOrgConfig = theOrganization.configuracion[0].activityRanquing
+            this.selectedelectricityTradingCompany = theOrganization.configuracion[0].electricityTradingCompany
+            this.selectedelectricityTradingCompanyArray = this.selectedelectricityTradingCompany.split(", ").map(String)
+          } 
+        
+  
+         
           const data = {
             id: theOrganization.organizacion.id,
             cif: theOrganization.organizacion.cif,
@@ -103,8 +114,10 @@ export class OrganGeneralDataComponent implements OnInit {
             cnae: theOrganization.organizacion.cnae,
             zipCode:theOrganization.organizacion.zipCode,
             multipleProductionCenter: theOrganization.organizacion.multipleProductionCenter,
-            activityIndex: theOrganization.configuracion[0].activityIndex,
-            activityRanquing: theOrganization.configuracion[0].activityRanquing,
+
+            activityIndex: this.activityIndexOrgConfig,
+            activityRanquing: this.activityRanquingOrgConfig,
+
             daysPasswordDuration: theOrganization.organizacion.daysPasswordDuration,
             email: theOrganization.organizacion.email,
             created_at: theOrganization.organizacion.created_at,
@@ -119,15 +132,12 @@ export class OrganGeneralDataComponent implements OnInit {
             this.mustShowDelegations = false;
             this.organizationForm.get('multipleProductionCenter')?.setValue('0')
           }
-          console.log("selected years: ", selectedyearsArray, Array.isArray(selectedyearsArray))
-          console.log("selected electricityTradingCompany: ", selectedelectricityTradingCompanyArray, Array.isArray(selectedelectricityTradingCompanyArray))
-
           this.availableYears = []
           for (let year = 2019; year <= 2023; year++) {
             this.availableYears.push(year)
           }
-          this.organizationForm.patchValue({ activityYear: selectedyearsArray }) 
-          this.organizationForm.patchValue({ comercializadora: selectedelectricityTradingCompanyArray })
+          this.organizationForm.patchValue({ activityYear: this.selectedyearsArray }) 
+          this.organizationForm.patchValue({ comercializadora: this.selectedelectricityTradingCompanyArray })
         this.getProductionCenters(theOrganization.organizacion.id) 
         }, (error: any) => {
           this.showSnackBar('Error' + 'Ha ocurrido un error al obtener la organización' + error.message);
