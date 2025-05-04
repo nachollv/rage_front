@@ -38,7 +38,7 @@
       <mat-label>Comercializadora eléctrica</mat-label>
       <mat-select formControlName="comercializadora" multiple>
         <mat-option *ngFor="let comercializadora of comercializadorasElectricas" [value]="comercializadora.id">
-          {{ comercializadora.id }} {{ comercializadora.nombreComercial }}
+          {{ comercializadora.nombreComercial }}
         </mat-option>
       </mat-select>
     </mat-form-field>

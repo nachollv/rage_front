@@ -158,8 +158,6 @@ export class OrganGeneralDataComponent implements OnInit {
     getProductionCenters(idEmpresa: number) {
       this.productionCenterService.getCentrosDeProduccionFromOrganizacion(idEmpresa)
         .subscribe((productionCenter:any) => {
-          console.log('Centros de producción:', productionCenter)
-      
         this.dataSource = new MatTableDataSource<any>(productionCenter)
         })
     }

@@ -39,7 +39,7 @@ export class RaquingsByProductionCenterComponent implements OnInit, OnChanges {
                 private router: Router, 
    ) 
   {
-   this.getProductionCenterData(this.productionCenterID)
+    
   }
 
   ngOnInit(): void {
@@ -48,6 +48,8 @@ export class RaquingsByProductionCenterComponent implements OnInit, OnChanges {
     if (this.isExpiredToken) {
       this.router.navigate(['/login'])
     }
+    this.productionCenterID = this.jwtHelper.decodeToken(this.token).data['id_empresa']
+    this.getProductionCenterData(this.productionCenterID)
   }
 
   ngOnChanges(changes: SimpleChanges): void {
