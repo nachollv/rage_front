@@ -32,8 +32,8 @@ export class ControlPanelContainerComponent implements OnInit {
   userName: string = '' // Nombre del usuario
   userId: number = 0 // ID del usuario
   token: string = '' // Token del usuario
-  organizacionID!: number // ID de la organización
-  prodCenterID!: number // ID del centro de producción
+  organizacionID!: number | undefined // ID de la organización
+  prodCenterID!: number | undefined // ID del centro de producción
   rol!: string
   scopeOneRecords: any[] = [] // Lista de registros de Scope 1
   scopeTwoRecords: any[] = [] // Lista de registros de Scope 2
@@ -97,8 +97,10 @@ export class ControlPanelContainerComponent implements OnInit {
         this.rol  = this.jwtHelper.decodeToken(this.token).data.rol
         if (this.rol === 'Admin') {
             this.organizacionID = this.jwtHelper.decodeToken(this.token).data.id_empresa
+            this.prodCenterID = undefined
         } else  {
             this.prodCenterID = this.jwtHelper.decodeToken(this.token).data.id
+            this.organizacionID = undefined
         }
        }
       }

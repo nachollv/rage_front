@@ -41,7 +41,7 @@ export class ScopeTwoRecordsService {
 
   // Obtener registros por calculationYear y productionCenter
   getRecordsByFilters(activityYear: number, productionCenter?: number, organizationID?:number, activityType?: string): Observable<any> {
-      return this.http.get<any>(`${this.apiUrl}/scopetworecords/activityYear/${activityYear}/productionCenter/${productionCenter}/organizationID/${organizationID}/activityType/${activityType}`, {
+      return this.http.get<any>(`${this.apiUrl}/scopetworecords/activityYear/${activityYear}/productionCenter/${productionCenter}/${organizationID}/${activityType}`, {
     }).pipe(
       catchError(this.handleError)
     );
