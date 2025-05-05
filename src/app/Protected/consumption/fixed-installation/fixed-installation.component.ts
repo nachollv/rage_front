@@ -130,7 +130,7 @@ onSubmit() {
         formValue.productionCenter = this.productionCenter
         formValue.fuelType = this.fuelForm.get('fuelType')?.value.id
         formValue.activityType = 'fixed'
-        formValue.organizacionID = this.organizacionID
+        formValue.id_empresa = this.organizacionID
         formValue.activityData = this.fuelForm.get('activityData')?.value
         this.scopeOneRecordsService.createRecord(formValue)
           .subscribe(

@@ -123,7 +123,7 @@ export class HeatSteamColdCompAirComponent {
     formValue.year = this.activityYear
     formValue.productionCenter = this.productionCenter
     formValue.activityType = 'heatSteamColdAir' // Tipo de actividad
-    formValue.organizacionID = this.organizacionID
+    formValue.id_empresa = this.organizacionID
     formValue.electricityTradingCompany = 0 // No hay comercializadora para este formulario
     formValue.gdo = 0.00 // No hay GDO para este formulario
     formValue.periodoFactura = formValue.periodoFactura // Asigna el periodo de factura

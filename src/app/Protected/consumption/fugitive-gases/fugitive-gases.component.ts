@@ -143,7 +143,7 @@ export class FugitiveGasesComponent implements OnInit, OnChanges {
     formValue.year = this.activityYear;
     formValue.productionCenter = this.productionCenter;
     formValue.activityType = 'fugitive-gases'
-    formValue.organizacionID = this.organizacionID
+    formValue.id_empresa = this.organizacionID
     formValue.nombre_gas_mezcla = formValue.nombre_gas_mezcla.id;
 
      this.registerLeakService.createRegistro(formValue).subscribe({

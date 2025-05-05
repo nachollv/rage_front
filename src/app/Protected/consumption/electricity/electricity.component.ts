@@ -154,7 +154,7 @@ export class ElectricityComponent implements OnInit, OnChanges {
         formValue.year = this.activityYear
         formValue.productionCenter = this.productionCenter
         formValue.activityType = 'electricityBuildings' // Tipo de actividad
-        formValue.organizacionID = this.organizacionID
+        formValue.id_empresa = this.organizacionID
         this.buildingElecConsumption.markAllAsTouched(); // Marca todos los campos como tocados para mostrar errores de validación
 
         this.scopeTwoRecordsService.createConsumption(this.buildingElecConsumption.value).subscribe({

@@ -154,7 +154,7 @@ export class ElectricityVehiclesComponent implements OnInit, OnChanges{
     formValue.year = this.activityYear
     formValue.productionCenter = this.productionCenter
     formValue.activityType = 'electricityVehicles' // Tipo de actividad
-    formValue.organizacionID = this.organizacionID
+    formValue.id_empresa = this.organizacionID
     formValue.periodoFactura = formValue.periodoFactura // Asigna el periodo de factura
     this.vehiclesElectricity.markAllAsTouched(); // Marca todos los campos como tocados para mostrar errores de validación
     this.scopeTWoRecordsService.createConsumption(this.vehiclesElectricity.value).subscribe({

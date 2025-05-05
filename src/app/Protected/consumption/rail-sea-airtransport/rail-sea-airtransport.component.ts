@@ -103,7 +103,7 @@ export class RailSeaAirtransportComponent  implements OnInit, OnChanges {
     formValue.productionCenter = this.productionCenter
     formValue.fuelType = this.transportForm.get('fuelType')?.value.id
     formValue.activityType = 'transferma'
-    formValue.organizacionID = this.organizacionID
+    formValue.id_empresa = this.organizacionID
     formValue.quantity = this.transportForm.get('quantity')?.value
 
     this.scopeOneRecordsService.createRecord(formValue)

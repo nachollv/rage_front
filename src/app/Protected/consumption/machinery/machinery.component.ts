@@ -146,7 +146,7 @@ export class MachineryComponent implements OnInit, OnChanges {
     formValue.year = this.activityYear
     formValue.productionCenter = this.productionCenter
     formValue.activityType = 'machinery'
-    formValue.organizacionID = this.organizacionID
+    formValue.id_empresa = this.organizacionID
     formValue.fuelType = this.emissionsForm.get('fuelType')?.value.id
     this.scopeOneRecordsService.createRecord(formValue)
       .subscribe(
