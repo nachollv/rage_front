@@ -105,7 +105,7 @@ export class FixedInstallationComponent implements OnInit, OnChanges {
           
           },
           error: (err: any) => {
-            this.showSnackBar('Error al obtener los registros ' + err.messages?.error || err.message)
+            this.showSnackBar('No se econtraron registros ' + err.messages?.error || err.message)
           }
         });
     }
@@ -134,13 +134,13 @@ onSubmit() {
         formValue.activityData = this.fuelForm.get('activityData')?.value
         this.scopeOneRecordsService.createRecord(formValue)
           .subscribe(
-            (fuel: any) => {
-              this.showSnackBar(fuel.message)
+            (dataActivReg: any) => {
+              this.showSnackBar(dataActivReg.message)
               this.getScopeOneRecords(this.activityYear, this.productionCenter, this.organizacionID, 'fixed')
               this.fuelForm.reset()
             },
             (error: any) => {
-              this.showSnackBar('Error al crear:' + error)
+              this.showSnackBar('Error al crear:' + error.message)
             }
           );
 }

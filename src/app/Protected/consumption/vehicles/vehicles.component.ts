@@ -116,7 +116,7 @@ getScopeOneRecords(calculationYear: number = this.activityYear, productionCenter
           })
         },
         error: (err: any) => {
-          this.showSnackBar('Error al obtener los registros: ' + err)
+          this.showSnackBar('No se econtraron registros ' + err.message)
         }
       });
 }
@@ -150,10 +150,10 @@ onSubmit() {
         (fuel: any) => {
           this.showSnackBar(fuel.message);
           this.getScopeOneRecords(this.activityYear, this.productionCenter, this.organizacionID, 'roadTransp')
-          this.vehicleForm.reset()
+          /* this.vehicleForm.reset() */
         },
         (error: any) => {
-          this.showSnackBar('Error al crear:' + error);
+          this.showSnackBar('Error al crear:' + error.message);
       }
       );
 }

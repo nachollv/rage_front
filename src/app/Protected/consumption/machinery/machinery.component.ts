@@ -96,7 +96,7 @@ export class MachineryComponent implements OnInit, OnChanges {
               })
             },
             error: (err: any) => {
-              this.showSnackBar('Error al obtener los registros ' + err.messages?.error || err.message)
+              this.showSnackBar('No se econtraron registros ' + err.messages?.error || err.message)
             }
           });
   }

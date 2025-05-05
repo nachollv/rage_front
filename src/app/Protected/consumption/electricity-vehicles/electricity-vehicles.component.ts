@@ -102,7 +102,7 @@ export class ElectricityVehiclesComponent implements OnInit, OnChanges{
         this.dataSource = new MatTableDataSource(itemsElectricity.data)
       },
       error: (err: any) => {
-        this.showSnackBar('Error al obtener los registros ' + err.messages?.error || err.message)
+        this.showSnackBar('No se econtraron registros ' + err.messages?.error || err.message)
       }
     });
   }

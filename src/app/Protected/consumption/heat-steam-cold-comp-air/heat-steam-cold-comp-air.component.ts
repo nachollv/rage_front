@@ -74,7 +74,7 @@ export class HeatSteamColdCompAirComponent {
         this.dataSource = new MatTableDataSource(data.data) // Asigna los datos a la fuente de datos de la tabla
       },
       error: (error) => {
-        console.error('Error al obtener los registros:', error); // Manejo de errores
+        console.error('No se econtraron registros ', error); // Manejo de errores
       }
     });
   }

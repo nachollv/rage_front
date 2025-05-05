@@ -32,7 +32,10 @@ export class RailSeaAirtransportComponent  implements OnInit, OnChanges {
       private jwtHelper: JwtHelperService,
       private authService: AuthService,
       private scopeOneRecordsService: ScopeOneRecordsService,
-      ) { }
+      ) { 
+        this.token = this.authService.getToken() || ''
+        this.organizacionID = this.jwtHelper.decodeToken(this.token).data.id_empresa
+      }
 
   ngOnInit(): void {
     this.transportForm = this.fb.group({
@@ -91,7 +94,7 @@ export class RailSeaAirtransportComponent  implements OnInit, OnChanges {
             })
           },
           error: (err: any) => {
-            this.showSnackBar('Error al obtener los registros ' + err.messages?.error || err.message)
+            this.showSnackBar('No se econtraron registros ' + err.messages?.error || err.message)
           }
         });
   }
@@ -104,7 +107,7 @@ export class RailSeaAirtransportComponent  implements OnInit, OnChanges {
     formValue.fuelType = this.transportForm.get('fuelType')?.value.id
     formValue.activityType = 'transferma'
     formValue.id_empresa = this.organizacionID
-    formValue.quantity = this.transportForm.get('quantity')?.value
+    formValue.activityData = this.transportForm.get('activityData')?.value
 
     this.scopeOneRecordsService.createRecord(formValue)
       .subscribe(

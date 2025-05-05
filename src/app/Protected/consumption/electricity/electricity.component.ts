@@ -93,7 +93,7 @@ export class ElectricityComponent implements OnInit, OnChanges {
             this.dataSource = new MatTableDataSource(registros.data)
           },
           error: (err: any) => {
-            this.showSnackBar('Error al obtener los registros ' + err.messages?.error || err.message)
+            this.showSnackBar('No se econtraron registros ' + err.messages?.error || err.message)
           }
         });
     }
@@ -102,6 +102,7 @@ export class ElectricityComponent implements OnInit, OnChanges {
       this.emisionesElectricasservice.getByYear(year).subscribe({
         next: (data) => {
           this.comercializadorasElectricas = data;
+          console.log (this.comercializadorasElectricas)
         },
         error: (error) => {
           this.errorMessage = error.message;
