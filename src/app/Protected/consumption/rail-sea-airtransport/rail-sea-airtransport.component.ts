@@ -5,7 +5,8 @@ import { ScopeOneRecordsService } from '../../../services/scope-one-records.serv
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MesesService } from '../../../services/meses.service';
-
+import { JwtHelperService } from '@auth0/angular-jwt';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-rail-sea-airtransport',
@@ -21,11 +22,15 @@ export class RailSeaAirtransportComponent  implements OnInit, OnChanges {
   data = [{ }]
   dataSource = new MatTableDataSource<any>(this.data)
   fuelEmisTypes: any[] = []
+  token: string = '' // Token del usuario
+  organizacionID!: number // ID de la organización
 
   constructor( private fb: FormBuilder,
       private emisionesTransFerAerMarService: EmisionesTransFerAerMarService,
       private snackBar: MatSnackBar,
       private mesesService: MesesService,
+      private jwtHelper: JwtHelperService,
+      private authService: AuthService,
       private scopeOneRecordsService: ScopeOneRecordsService,
       ) { }
 
@@ -57,7 +62,7 @@ export class RailSeaAirtransportComponent  implements OnInit, OnChanges {
   }
 
   getScopeOneRecords(calculationYear: number = this.activityYear, productionCenter: number = this.productionCenter, activityType: string = 'transferma') {
-      this.scopeOneRecordsService.getRecordsByFilters(calculationYear, productionCenter, activityType)
+      this.scopeOneRecordsService.getRecordsByFilters(calculationYear, productionCenter, this.organizacionID, activityType)
         .subscribe({
           next: (registros: any) => {
             this.emisionesTransFerAerMarService.getEmisionesByYear(calculationYear)
@@ -98,6 +103,7 @@ export class RailSeaAirtransportComponent  implements OnInit, OnChanges {
     formValue.productionCenter = this.productionCenter
     formValue.fuelType = this.transportForm.get('fuelType')?.value.id
     formValue.activityType = 'transferma'
+    formValue.organizacionID = this.organizacionID
     formValue.quantity = this.transportForm.get('quantity')?.value
 
     this.scopeOneRecordsService.createRecord(formValue)

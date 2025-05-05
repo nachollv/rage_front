@@ -7,6 +7,8 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ScopeTwoRecordsService } from '../../../services/scope-two-records.service';
 import { MesesService } from '../../../services/meses.service';
+import { JwtHelperService } from '@auth0/angular-jwt';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-electricity',
@@ -18,19 +20,24 @@ export class ElectricityComponent implements OnInit, OnChanges {
   @Input() productionCenter: number = 0
   comercializadorasElectricas: any[] = []
   errorMessage: string = ''
-
   displayedColumns: string[] = ['activity Year', 'Period', 'electricity Trading Company', 'activity Data', 'gdo', 'total Emissions', 'updated_at', 'delete']
   data = [ { } ];
   dataSource = new MatTableDataSource<any>(this.data)
   buildingElecConsumption!: FormGroup;
-  
-    constructor(private fb: FormBuilder, 
+  token: string = '' // Token del usuario
+  organizacionID!: number // ID de la organización
+
+  constructor(private fb: FormBuilder, 
       private emisionesElectricasservice: EmisionesElectricasEdificiosService,
       private scopeTwoRecordsService: ScopeTwoRecordsService,
       private mesesService: MesesService,
+      private jwtHelper: JwtHelperService,
+      private authService: AuthService,
       private snackBar: MatSnackBar,
       public dialog: MatDialog) {
-    }
+        this.token = this.authService.getToken() || ''
+        this.organizacionID = this.jwtHelper.decodeToken(this.token).data.id_empresa
+  }
 
     ngOnInit(): void {
       this.buildingElecConsumption = this.fb.group({
@@ -56,8 +63,8 @@ export class ElectricityComponent implements OnInit, OnChanges {
       }
     }
 
-    getScopeTwoRecords(activityYear: number = this.activityYear, productionCenter: number = this.productionCenter, activityType: string = 'electricityBuildings'): void {
-      this.scopeTwoRecordsService.getRecordsByFilters(activityYear, productionCenter, activityType)
+    getScopeTwoRecords(activityYear: number = this.activityYear, productionCenter: number = this.productionCenter, organizacionID:number = this.organizacionID, activityType: string = 'electricityBuildings'): void {
+      this.scopeTwoRecordsService.getRecordsByFilters(activityYear, productionCenter, organizacionID, activityType)
         .subscribe({
           next: (registros: any) => {
             this.emisionesElectricasservice.getByYear(activityYear)
@@ -147,6 +154,7 @@ export class ElectricityComponent implements OnInit, OnChanges {
         formValue.year = this.activityYear
         formValue.productionCenter = this.productionCenter
         formValue.activityType = 'electricityBuildings' // Tipo de actividad
+        formValue.organizacionID = this.organizacionID
         this.buildingElecConsumption.markAllAsTouched(); // Marca todos los campos como tocados para mostrar errores de validación
 
         this.scopeTwoRecordsService.createConsumption(this.buildingElecConsumption.value).subscribe({

@@ -7,6 +7,8 @@ import { DialogComponent } from '../../../dialog/dialog.component';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MesesService } from '../../../services/meses.service';
+import { JwtHelperService } from '@auth0/angular-jwt';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-fugitive-gases',
@@ -22,12 +24,19 @@ export class FugitiveGasesComponent implements OnInit, OnChanges {
   emisionesForm!: FormGroup;
   gasTypes: any[] = []
   showField: boolean = false
+  token: string = '' // Token del usuario
+  organizacionID!: number // ID de la organización
 
   constructor(private fb: FormBuilder, private leakGases: LeakrefrigerantgasesService, 
     private registerLeakService: RegistroemisionesFugasService, private dialog: MatDialog,
     private snackBar: MatSnackBar,
+    private jwtHelper: JwtHelperService,
+    private authService: AuthService,
     private mesesService: MesesService
-  ) {  }
+  ) {  
+    this.token = this.authService.getToken() || ''
+    this.organizacionID = this.jwtHelper.decodeToken(this.token).data.id_empresa
+  }
 
   ngOnInit(): void { 
     this.emisionesForm = this.fb.group({
@@ -134,6 +143,7 @@ export class FugitiveGasesComponent implements OnInit, OnChanges {
     formValue.year = this.activityYear;
     formValue.productionCenter = this.productionCenter;
     formValue.activityType = 'fugitive-gases'
+    formValue.organizacionID = this.organizacionID
     formValue.nombre_gas_mezcla = formValue.nombre_gas_mezcla.id;
 
      this.registerLeakService.createRegistro(formValue).subscribe({

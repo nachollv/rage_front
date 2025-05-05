@@ -4,8 +4,10 @@ import { DialogComponent } from '../../../dialog/dialog.component';
 import { ScopeTwoRecordsService } from '../../../services/scope-two-records.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSnackBar } from '@angular/material/snack-bar';
-
 import { MesesService } from '../../../services/meses.service';
+import { JwtHelperService } from '@auth0/angular-jwt';
+import { AuthService } from '../../../services/auth.service';
+
 @Component({
   selector: 'app-heat-steam-cold-comp-air',
   templateUrl: './heat-steam-cold-comp-air.component.html',
@@ -18,13 +20,18 @@ export class HeatSteamColdCompAirComponent {
   data = [{}];
   dataSource = new MatTableDataSource<any>(this.data)
   heatSteamColdAirForm!: FormGroup;
+  token: string = '' // Token del usuario
+  organizacionID!: number // ID de la organización
 
   constructor(private fb: FormBuilder, 
     private snackBar: MatSnackBar,
     private mesesService: MesesService,
+    private jwtHelper: JwtHelperService,
+    private authService: AuthService,
     private scopeTWoRecordsService: ScopeTwoRecordsService) {
-
-  }
+      this.token = this.authService.getToken() || ''
+      this.organizacionID = this.jwtHelper.decodeToken(this.token).data.id_empresa
+    }
 
   ngOnInit(): void {
     this.heatSteamColdAirForm = this.fb.group({
@@ -48,7 +55,7 @@ export class HeatSteamColdCompAirComponent {
 
   getScopeTwoRecords() {
     const meses = this.mesesService.getMeses();
-    this.scopeTWoRecordsService.getRecordsByFilters(this.activityYear, this.productionCenter, 'heatSteamColdAir')
+    this.scopeTWoRecordsService.getRecordsByFilters(this.activityYear, this.productionCenter, this.organizacionID, 'heatSteamColdAir')
     .subscribe({
       next: (data: any) => {
         data.data.forEach((record: any) => {
@@ -116,6 +123,7 @@ export class HeatSteamColdCompAirComponent {
     formValue.year = this.activityYear
     formValue.productionCenter = this.productionCenter
     formValue.activityType = 'heatSteamColdAir' // Tipo de actividad
+    formValue.organizacionID = this.organizacionID
     formValue.electricityTradingCompany = 0 // No hay comercializadora para este formulario
     formValue.gdo = 0.00 // No hay GDO para este formulario
     formValue.periodoFactura = formValue.periodoFactura // Asigna el periodo de factura

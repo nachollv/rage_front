@@ -34,6 +34,7 @@ export class ControlPanelContainerComponent implements OnInit {
   token: string = '' // Token del usuario
   organizacionID!: number // ID de la organización
   prodCenterID!: number // ID del centro de producción
+  rol!: string
   scopeOneRecords: any[] = [] // Lista de registros de Scope 1
   scopeTwoRecords: any[] = [] // Lista de registros de Scope 2
   fugitiveEmissionsRecords: any[] = []
@@ -93,13 +94,18 @@ export class ControlPanelContainerComponent implements OnInit {
       if (this.token) {
         this.isExpiredToken = this.jwtHelper.isTokenExpired(this.token)
        if (!this.isExpiredToken) {
-        this.prodCenterID = this.jwtHelper.decodeToken(this.token).data.id
-        this.organizacionID = this.jwtHelper.decodeToken(this.token).data.id_empresa
+        this.rol  = this.jwtHelper.decodeToken(this.token).data.rol
+        if (this.rol === 'Admin') {
+            this.organizacionID = this.jwtHelper.decodeToken(this.token).data.id_empresa
+        } else  {
+            this.prodCenterID = this.jwtHelper.decodeToken(this.token).data.id
+        }
        }
-      } 
+      }
     }
 
   async ngOnInit(): Promise<void> {
+
     this.filterForm = this.fb.group({
       activityYear: [new Date().getFullYear()-2], // Por defecto, el año actual menos 2
     });
@@ -110,21 +116,21 @@ export class ControlPanelContainerComponent implements OnInit {
     await this.getMachineryConsumtions(this.filterForm.value.activityYear)
     await this.getEmisionesFugitivas()
     await this.getEmisionesComercializadoras(this.filterForm.value.activityYear)
-    await this.getScopeOneRecords(this.filterForm.value.activityYear)
-    await this.getScopeTwoRecords(this.filterForm.value.activityYear)
-    await this.getFugitiveEmissionRecords(this.filterForm.value.activityYear)
+    await this.getScopeOneRecords(this.filterForm.value.activityYear, this.prodCenterID, this.organizacionID)
+    await this.getScopeTwoRecords(this.filterForm.value.activityYear, this.prodCenterID, this.organizacionID)
+    await this.getFugitiveEmissionRecords(this.filterForm.value.activityYear, this.organizacionID)
   }
 
-  onYearFilterChange(event: any): void {
+onYearFilterChange(event: any): void {
     const activityYear = event;
     this.getScopeOneRecords(activityYear)
     this.getScopeTwoRecords(activityYear)
     this.getFugitiveEmissionRecords(activityYear)
-  }
+}
 
-    async getScopeOneRecords(activityYear: number, prodCenterID?: number): Promise<void> {
+async getScopeOneRecords(activityYear: number, prodCenterID?: number, organizationID?: number): Promise<void> {
         try {
-            const response = await this.scopeOneRecordsService.getRecordsByFilters(activityYear, prodCenterID).toPromise();
+            const response = await this.scopeOneRecordsService.getRecordsByFilters(activityYear, prodCenterID, organizationID).toPromise();
             this.scopeOneRecords = response.data;
             const meses = this.mesesService.getMeses();
     
@@ -154,11 +160,8 @@ export class ControlPanelContainerComponent implements OnInit {
                 this.showSnackBar('Error al obtener registros de Alcance 1.');
             }
         }
-    }
-    
-
-
-  getFugitiveEmissionRecords(activityYear: number, prodCenterID?: number): void {
+    }  
+getFugitiveEmissionRecords(activityYear: number, prodCenterID?: number): void {
     this.fugitiveEmissionRecordsService.getRegistroByFilters(activityYear, prodCenterID)
       .subscribe((response: any) => {
         this.fugitiveEmissionsRecords = response.data;
@@ -177,9 +180,9 @@ export class ControlPanelContainerComponent implements OnInit {
         });
         this.fugitiveEmissChart('bar', this.fugitiveEmissionsRecords)
       });
-  }
-  getScopeTwoRecords(activityYear: number, prodCenterID?: number): void {
-    this.scopeTwoRecordsService.getRecordsByFilters(activityYear, prodCenterID).subscribe(
+    }
+getScopeTwoRecords(activityYear: number, prodCenterID?: number, organizationID?: number): void {
+    this.scopeTwoRecordsService.getRecordsByFilters(activityYear, prodCenterID, organizationID).subscribe(
       (response: any) => {
         this.scopeTwoRecords = response.data;
         const meses = this.mesesService.getMeses();
@@ -211,9 +214,10 @@ export class ControlPanelContainerComponent implements OnInit {
           }
       }
     );
-  }
-  fixedInstChart(chartType: keyof ChartTypeRegistry, scop1DataFI: any): void {
-      const ctx = document.getElementById('fixedInstChart') as HTMLCanvasElement;
+    }
+
+fixedInstChart(chartType: keyof ChartTypeRegistry, scop1DataFI: any): void {
+    const ctx = document.getElementById('fixedInstChart') as HTMLCanvasElement;
       scop1DataFI.forEach((dataObjectFI: any) => {
         const matchedFuel = this.fuelTypes.find((fuelItem: any) => fuelItem.id === dataObjectFI.fuelType);
         dataObjectFI['fuelType'] = matchedFuel?.Combustible || 'desconocido '+dataObjectFI['fuelType'];
@@ -290,8 +294,8 @@ export class ControlPanelContainerComponent implements OnInit {
               },
           },
       });
-  }
-  roadTranspChart(chartType: keyof ChartTypeRegistry, scop1DataRD: any): void {
+    }
+roadTranspChart(chartType: keyof ChartTypeRegistry, scop1DataRD: any): void {
       const ctx = document.getElementById('roadTranspChart') as HTMLCanvasElement;
       scop1DataRD.forEach((roadTransport: any) => {
         const matchedroadTransport = this.vehicleCategories.find((item: any) => item.id === roadTransport.equipmentType)
@@ -380,86 +384,17 @@ export class ControlPanelContainerComponent implements OnInit {
               },
           },
       });
-  }
-/*   railSeaAirChart(chartType: keyof ChartTypeRegistry, scop1DataRSA: any): void {
-    const ctx = document.getElementById('railSeaAirChart') as HTMLCanvasElement;
-    const monthlyData = new Array(12).fill(0); // Inicializar con 12 meses en 0
-    scop1DataRSA.forEach((dataObject: any) => {
-      const monthIndex = parseInt(dataObject.periodoFactura.replace('M', '')) - 1; // Obtener índice del mes
-      monthlyData[monthIndex] += parseFloat(dataObject.activityData); // Asignar cantidad al mes correspondiente
-      const matchedFerMarAer = this.ferMarAerCateories.find((item: any) => item.id === dataObject.fuelType)
-      dataObject['Categoría vehículo'] = dataObject?.equipmentType
-      dataObject['fuel Type'] = matchedFerMarAer?.FuelType
-    });
-    this.dataSourceScope1RailSeaAir = new MatTableDataSource(scop1DataRSA);
-    if (this.chartInstanceRailSeaAir) {
-        this.chartInstanceRailSeaAir.destroy();
     }
-    this.chartInstanceRailSeaAir = new Chart(ctx, {
-      type: chartType,
-      data: {
-        labels: [
-          'January',
-          'February',
-          'March',
-          'April',          'May',
-          'June',
-          'July',
-          'August',          'September',
-          'October',
-          'November',
-          'December',
-        ],
-        datasets: [{
-          label: 'Emissions',
-          data: monthlyData,
-          backgroundColor: '#B22222', // Verde bosque
-          borderColor: '#B22222',
-          borderWidth: 1,  // this dataset is drawn below
-          order: 1
-      }]
-  },
-  options: {
-      plugins: {  
-        legend: {
-          position: 'top',
-        },
-        title: {
-          display: true,
-          text: 'Transporte ferroviario, marítimo, aéreo - Emissions and objective'
-        }
-      },
-      interaction: {  
-        mode: 'index',
-        intersect: false,
-      },
-      scales: {
-        y: {
-          beginAtZero: true,
-          stacked: true
-        },
-        x: {
-          stacked: true
-        }
-      }
-    }
-    });
-  } */
-
-  railSeaAirChart(chartType: keyof ChartTypeRegistry, scop1DataRSA: any): void {
+railSeaAirChart(chartType: keyof ChartTypeRegistry, scop1DataRSA: any): void {
       const ctx = document.getElementById('railSeaAirChart') as HTMLCanvasElement;
       scop1DataRSA.forEach((marSeaAer: any) => {
         const matchedFerMarAer = this.ferMarAerCategories.find((item: any) => item.Categoria === marSeaAer.equipmentType)
-        console.log ("matchedFerMarAer", matchedFerMarAer)
         marSeaAer['Categoría vehículo'] = matchedFerMarAer?.Categoria
         marSeaAer['fuelType'] = matchedFerMarAer?.FuelType
       });
-      console.log ("scop1DataRSA", scop1DataRSA)
       // Inicializar categorías y tipos de combustible únicos
       const categories = new Set(scop1DataRSA.map((item: any) => item['Categoría vehículo']));
       const fuelTypes = new Set(scop1DataRSA.map((item: any) => item['fuelType']));
-      console.log ("categories", categories)
-      console.log ("fuelTypes", fuelTypes)
       const datasets: any[] = [];
   
       // Crear datos agrupados por Categoría vehículo y fuel Type
@@ -535,10 +470,8 @@ export class ControlPanelContainerComponent implements OnInit {
               },
           },
       });
-  }
-  
-
-  machineryChart(chartType: keyof ChartTypeRegistry, scop1DataMA: any): void {
+    }
+machineryChart(chartType: keyof ChartTypeRegistry, scop1DataMA: any): void {
       const ctx = document.getElementById('machineryChart') as HTMLCanvasElement;
       scop1DataMA.forEach((machineDataActiv: any) => {
         const matchedMachinery = this.machineryCategories.find((item: any) => item.id === machineDataActiv.fuelType)
@@ -630,8 +563,8 @@ export class ControlPanelContainerComponent implements OnInit {
               },
           },
       });
-  }
-  fugitiveEmissChart(chartType: keyof ChartTypeRegistry, scop1DataFE: any): void {
+    }
+fugitiveEmissChart(chartType: keyof ChartTypeRegistry, scop1DataFE: any): void {
       const ctx = document.getElementById('fugitiveEmissChart') as HTMLCanvasElement;
       // Inicializar tipos de gases únicos
       const gasTypes = new Set(scop1DataFE.map((item: any) => item['Gas/Mezcla']));
@@ -703,10 +636,10 @@ export class ControlPanelContainerComponent implements OnInit {
               },
           },
       });
-  }
+    }
   
 
-  electricityBuildings(chartType: keyof ChartTypeRegistry, scop2ElecBuild: any): void {
+electricityBuildings(chartType: keyof ChartTypeRegistry, scop2ElecBuild: any): void {
       const ctx = document.getElementById('electricityBuildings') as HTMLCanvasElement;
       scop2ElecBuild.forEach((dataObject: any) => {
         const matchedComercialiadora = this.comercializadorasElectricas.find((item: any) => item.id === dataObject.Comercializadora)
@@ -785,7 +718,7 @@ export class ControlPanelContainerComponent implements OnInit {
           },
       });
   }
-  electricityVehicles(chartType: keyof ChartTypeRegistry, scop2DataVehicles: any): void {
+electricityVehicles(chartType: keyof ChartTypeRegistry, scop2DataVehicles: any): void {
       const ctx = document.getElementById('electricityVehicles') as HTMLCanvasElement;
       scop2DataVehicles.forEach((dataObject: any) => {
         const matchedComercialiadora = this.comercializadorasElectricas.find((item: any) => item.id === dataObject.Comercializadora)
@@ -874,7 +807,7 @@ export class ControlPanelContainerComponent implements OnInit {
           },
       });
   }
-  heatSteamColdCompAir(chartType: keyof ChartTypeRegistry, scop2DataSteam: any): void {
+heatSteamColdCompAir(chartType: keyof ChartTypeRegistry, scop2DataSteam: any): void {
       const ctx = document.getElementById('heatSteamColdCompAir') as HTMLCanvasElement;
       scop2DataSteam.forEach((registro: any) => {
         registro['Tipo de energía adquirida'] = registro.energyType
@@ -983,7 +916,6 @@ export class ControlPanelContainerComponent implements OnInit {
     this.ferMarAerService.getEmisionesByYear(year)
       .subscribe((item:any) => {
         this.ferMarAerCategories = item
-        console.log ("this.ferMarAerCategories", this.ferMarAerCategories)
       })
   }
 

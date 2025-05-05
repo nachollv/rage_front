@@ -8,8 +8,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ScopeOneRecordsService } from '../../../services/scope-one-records.service';
 import { ProductioncenterService } from '../../../services/productioncenter.service';
 import { MesesService } from '../../../services/meses.service';
-import { registerLocaleData } from '@angular/common';
-
+import { JwtHelperService } from '@auth0/angular-jwt';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-vehicles',
@@ -19,21 +19,27 @@ import { registerLocaleData } from '@angular/common';
 export class MachineryVehiclesComponent  implements OnInit, OnChanges {
   @Input() activityYear!: number
   @Input() productionCenter!: number
-    displayedColumns: string[] = ['activity Year', 'Period', 'equipment Type', 'fuel Type', 'activity Data', 'total Emissions', 'updated At', 'delete']
-      data = [ { }, ]
-      dataSource = new MatTableDataSource<any>(this.data)
-      vehicleCategories: any[] = []
-      fuelTypes: any[] = []
-      vehicleForm!: FormGroup;
-      showField: boolean = false
-      
+  displayedColumns: string[] = ['activity Year', 'Period', 'equipment Type', 'fuel Type', 'activity Data', 'total Emissions', 'updated At', 'delete']
+  data = [ { }, ]
+  dataSource = new MatTableDataSource<any>(this.data)
+  vehicleCategories: any[] = []
+  fuelTypes: any[] = []
+  vehicleForm!: FormGroup;
+  showField: boolean = false
+  token: string = '' // Token del usuario
+  organizacionID!: number // ID de la organización
+
   constructor (private fb: FormBuilder, 
     private scopeOneRecordsService: ScopeOneRecordsService,
     private vehicleFuelService: VehiclesFuelConsumptionService,
+    private jwtHelper: JwtHelperService,
+    private authService: AuthService,
     private productionCenterService: ProductioncenterService,
     private mesesService: MesesService,
     private snackBar: MatSnackBar
   ) {
+    this.token = this.authService.getToken() || ''
+    this.organizacionID = this.jwtHelper.decodeToken(this.token).data.id_empresa
   }
 
   ngOnInit(): void {
@@ -55,13 +61,13 @@ export class MachineryVehiclesComponent  implements OnInit, OnChanges {
       totalEmissions: [{ value: 0, disabled: true }]
     });
     this.getFuelConsumptions(this.activityYear)
-    this.getScopeOneRecords (this.activityYear, this.productionCenter)
+    this.getScopeOneRecords (this.activityYear, this.productionCenter, this.organizacionID)
     this.setupValueChangeListeners()
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['activityYear'] && !changes['activityYear'].firstChange) {
-      this.getScopeOneRecords(this.activityYear, this.productionCenter)
+      this.getScopeOneRecords(this.activityYear, this.productionCenter, this.organizacionID)
     }
   }
 
@@ -81,8 +87,8 @@ export class MachineryVehiclesComponent  implements OnInit, OnChanges {
       })
   }
 
-getScopeOneRecords(calculationYear: number = this.activityYear, productionCenter: number = this.productionCenter, activityType: string = 'roadTransp') {
-    this.scopeOneRecordsService.getRecordsByFilters(calculationYear, productionCenter, activityType)
+getScopeOneRecords(calculationYear: number = this.activityYear, productionCenter: number = this.productionCenter, organizationID: number = this.organizacionID, activityType: string = 'roadTransp') {
+    this.scopeOneRecordsService.getRecordsByFilters(calculationYear, productionCenter, organizationID, activityType)
       .subscribe({
         next: (registros: any) => {
           this.vehicleFuelService.getByYear(this.activityYear)
@@ -137,12 +143,13 @@ onSubmit() {
     formValue.equipmentType = this.vehicleForm.get('equipmentType')?.value.id
     formValue.fuelType = this.vehicleForm.get('fuelType')?.value.id
     formValue.activityType = 'roadTransp'
+    formValue.organizacionID = this.organizacionID
     formValue.activityData = this.vehicleForm.get('activityData')?.value
     this.scopeOneRecordsService.createRecord(formValue)
       .subscribe(
         (fuel: any) => {
           this.showSnackBar(fuel.message);
-          this.getScopeOneRecords(this.activityYear, this.productionCenter, 'roadTransp')
+          this.getScopeOneRecords(this.activityYear, this.productionCenter, this.organizacionID, 'roadTransp')
           this.vehicleForm.reset()
         },
         (error: any) => {

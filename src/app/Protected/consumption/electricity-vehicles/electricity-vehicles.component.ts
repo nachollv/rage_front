@@ -7,6 +7,8 @@ import { DialogComponent } from '../../../dialog/dialog.component';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MesesService } from '../../../services/meses.service';
+import { JwtHelperService } from '@auth0/angular-jwt';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-electricity-vehicles',
@@ -22,14 +24,21 @@ export class ElectricityVehiclesComponent implements OnInit, OnChanges{
   data = [{}]; 
   dataSource = new MatTableDataSource<any>(this.data)
   vehiclesElectricity!: FormGroup;
+  token: string = '' // Token del usuario
+  organizacionID!: number // ID de la organización
 
   constructor(private fb: FormBuilder, 
     private scopeTWoRecordsService: ScopeTwoRecordsService,
     private emisionesElectricasservice: EmisionesElectricasEdificiosService,
     private mesesService: MesesService,
+    private jwtHelper: JwtHelperService,
+    private authService: AuthService,
     private snackBar: MatSnackBar,
     public dialog: MatDialog) {
+      this.token = this.authService.getToken() || ''
+      this.organizacionID = this.jwtHelper.decodeToken(this.token).data.id_empresa
   }
+
   ngOnInit(): void {
     this.vehiclesElectricity = this.fb.group({
         periodoFactura: ['', Validators.required],
@@ -65,7 +74,7 @@ export class ElectricityVehiclesComponent implements OnInit, OnChanges{
   }
 
   getScopeTwoRecords() {
-    this.scopeTWoRecordsService.getRecordsByFilters(this.activityYear, this.productionCenter, 'electricityVehicles')
+    this.scopeTWoRecordsService.getRecordsByFilters(this.activityYear, this.productionCenter, this.organizacionID, 'electricityVehicles')
     .subscribe({
       next: (itemsElectricity: any) => {
         this.emisionesElectricasservice.getByYear(this.activityYear)
@@ -145,6 +154,7 @@ export class ElectricityVehiclesComponent implements OnInit, OnChanges{
     formValue.year = this.activityYear
     formValue.productionCenter = this.productionCenter
     formValue.activityType = 'electricityVehicles' // Tipo de actividad
+    formValue.organizacionID = this.organizacionID
     formValue.periodoFactura = formValue.periodoFactura // Asigna el periodo de factura
     this.vehiclesElectricity.markAllAsTouched(); // Marca todos los campos como tocados para mostrar errores de validación
     this.scopeTWoRecordsService.createConsumption(this.vehiclesElectricity.value).subscribe({

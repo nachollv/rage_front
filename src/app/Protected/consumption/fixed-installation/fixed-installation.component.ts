@@ -7,7 +7,8 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ScopeOneRecordsService } from '../../../services/scope-one-records.service';
 import { MesesService } from '../../../services/meses.service';
-
+import { JwtHelperService } from '@auth0/angular-jwt';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-fixed-installation',
@@ -23,12 +24,19 @@ export class FixedInstallationComponent implements OnInit, OnChanges {
     dataSource = new MatTableDataSource<any>(this.data)
     fuelForm!: FormGroup;
     fuelTypes: any[] = []
+    token: string = '' // Token del usuario
+    organizacionID!: number // ID de la organización
 
     constructor(private fb: FormBuilder, public dialog: MatDialog,
       private fuelDataService: FuelDataService,
       private scopeOneRecordsService: ScopeOneRecordsService,
       private mesesService: MesesService,
-      private snackBar: MatSnackBar) { }
+      private jwtHelper: JwtHelperService,
+      private authService: AuthService,
+      private snackBar: MatSnackBar) {
+        this.token = this.authService.getToken() || ''
+        this.organizacionID = this.jwtHelper.decodeToken(this.token).data.id_empresa
+      }
 
     ngOnInit(): void {
       this.fuelForm = this.fb.group({
@@ -49,7 +57,7 @@ export class FixedInstallationComponent implements OnInit, OnChanges {
       });
 
       this.getFuelConsumptions(this.activityYear)
-      this.getScopeOneRecords(this.activityYear, this.productionCenter)
+      this.getScopeOneRecords(this.activityYear, this.productionCenter, this.organizacionID)
       this.setupValueChangeListeners()
     }
 
@@ -66,8 +74,8 @@ export class FixedInstallationComponent implements OnInit, OnChanges {
       })
     }
 
-    getScopeOneRecords(calculationYear: number = this.activityYear, productionCenter: number = this.productionCenter, activityType: string = 'fixed') {
-      this.scopeOneRecordsService.getRecordsByFilters(calculationYear, productionCenter, activityType)
+    getScopeOneRecords(calculationYear: number = this.activityYear, productionCenter: number = this.productionCenter, organizacionID: number = this.organizacionID, activityType: string = 'fixed') {
+      this.scopeOneRecordsService.getRecordsByFilters(calculationYear, productionCenter, organizacionID, activityType)
         .subscribe({
           next: (registros: any) => {
 
@@ -122,12 +130,13 @@ onSubmit() {
         formValue.productionCenter = this.productionCenter
         formValue.fuelType = this.fuelForm.get('fuelType')?.value.id
         formValue.activityType = 'fixed'
+        formValue.organizacionID = this.organizacionID
         formValue.activityData = this.fuelForm.get('activityData')?.value
         this.scopeOneRecordsService.createRecord(formValue)
           .subscribe(
             (fuel: any) => {
               this.showSnackBar(fuel.message)
-              this.getScopeOneRecords(this.activityYear, this.productionCenter, 'fixed')
+              this.getScopeOneRecords(this.activityYear, this.productionCenter, this.organizacionID, 'fixed')
               this.fuelForm.reset()
             },
             (error: any) => {

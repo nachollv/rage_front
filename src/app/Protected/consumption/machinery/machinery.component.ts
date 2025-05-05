@@ -5,6 +5,8 @@ import { ScopeOneRecordsService } from '../../../services/scope-one-records.serv
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MesesService } from '../../../services/meses.service';
+import { JwtHelperService } from '@auth0/angular-jwt';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-machinery',
@@ -20,13 +22,20 @@ export class MachineryComponent implements OnInit, OnChanges {
   data = [{ }]
   dataSource = new MatTableDataSource<any>(this.data)
   fuelEmisTypes: any[] = []
+  token: string = '' // Token del usuario
+  organizacionID!: number // ID de la organización
 
   constructor( private fb: FormBuilder,
       private emisionesMachineryService: EmisionesMachineryService,
       private snackBar: MatSnackBar,
       private mesesService: MesesService,
+      private jwtHelper: JwtHelperService,
+      private authService: AuthService,
       private scopeOneRecordsService: ScopeOneRecordsService,
-      ) { }
+      ) { 
+        this.token = this.authService.getToken() || ''
+        this.organizacionID = this.jwtHelper.decodeToken(this.token).data.id_empresa
+      }
 
   ngOnInit(): void { 
     this.emissionsForm = this.fb.group({
@@ -57,7 +66,7 @@ export class MachineryComponent implements OnInit, OnChanges {
   }
 
   getScopeOneRecords(calculationYear: number = this.activityYear, productionCenter: number = this.productionCenter, activityType: string = 'machinery') {
-        this.scopeOneRecordsService.getRecordsByFilters(calculationYear, productionCenter, activityType)
+        this.scopeOneRecordsService.getRecordsByFilters(calculationYear, productionCenter, this.organizacionID, activityType)
           .subscribe({
             next: (registros: any) => {
               this.emisionesMachineryService.getEmisionesByYear(calculationYear)
@@ -137,6 +146,7 @@ export class MachineryComponent implements OnInit, OnChanges {
     formValue.year = this.activityYear
     formValue.productionCenter = this.productionCenter
     formValue.activityType = 'machinery'
+    formValue.organizacionID = this.organizacionID
     formValue.fuelType = this.emissionsForm.get('fuelType')?.value.id
     this.scopeOneRecordsService.createRecord(formValue)
       .subscribe(
