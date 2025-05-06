@@ -26,6 +26,8 @@ export class RaquingsByProductionCenterComponent implements OnInit, OnChanges {
   availableYears: number[] = [2019, 2020, 2021, 2022, 2023];
   @Input() activityYear: number = 2023
   @Input() productionCenterID!: number
+  rol: string = ''
+  organizationID!: number
   totales: any[] = [];
   productionCenterData: any[] = []
   displayedColumns: string[] = ['activityYear', 'productionCenter', 'totalRecords'];
@@ -48,7 +50,13 @@ export class RaquingsByProductionCenterComponent implements OnInit, OnChanges {
     if (this.isExpiredToken) {
       this.router.navigate(['/login'])
     }
-    this.productionCenterID = this.jwtHelper.decodeToken(this.token).data['id_empresa']
+    this.rol = this.jwtHelper.decodeToken(this.token).data['rol']
+    this.organizationID = this.jwtHelper.decodeToken(this.token).data['id_empresa']
+    if (this.rol === 'Admin') {
+
+    } else  {
+      this.productionCenterID = this.jwtHelper.decodeToken(this.token).data['id']
+    }
     this.getProductionCenterData(this.productionCenterID)
   }
 
@@ -94,8 +102,8 @@ export class RaquingsByProductionCenterComponent implements OnInit, OnChanges {
           }
         );
       } else {
-        this.productionCenterService.getAllCentrosDeProduccion().subscribe(
-          (prodCenters: any[]) => {
+        this.productionCenterService.getCentrosDeProduccionFromOrganizacion(this.organizationID).subscribe(
+          (prodCenters: any) => {
             this.productionCenterData = prodCenters;
             // Inicializar los totales con valores de 0
            
