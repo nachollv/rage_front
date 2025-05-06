@@ -29,7 +29,7 @@ export class UserManagementComponent {
   decodedToken: any;
   actualID: string = ''
   xxDays: number = 0
-    displayedColumns: string[] = ['nombre', 'email', 'rol', 'ultimo_inicio_sesion', 'updated_at', 'edit', 'delete']
+    displayedColumns: string[] = ['Centro de producción', 'E·mail', 'Rol', 'Último inicio de sesión', 'La contraseña caduca el', 'edit', 'delete']
     data = [{ }]
     dataSource = new MatTableDataSource<any>(this.data)
 
@@ -64,13 +64,18 @@ export class UserManagementComponent {
         this.users.forEach((registro: any) => {
           registro.edit = true
           registro.delete = true
+          registro['Centro de producción'] = registro.nombre
+          registro['E·mail'] = registro.email
+          registro['Rol'] = registro.rol
+          registro['Último inicio de sesión'] = registro.ultimo_inicio_sesion
+          registro['La contraseña caduca el'] = registro.caducidad_contrasena
         this.dataSource = new MatTableDataSource(this.users)
-        this.showSnackBar('Se han encontrado ' + users.length + ' usuarios para esta organización');
+        this.showSnackBar('Se han encontrado ' + users.length + ' centros de producción para esta organización');
         })
       },
       (error) => {
-        console.error('Error al obtener los usuarios de la organización:', error.message); // Registrar el error
-        this.showSnackBar('No se pudieron obtener los usuarios de la organización. Intente más tarde. '+error.message);
+        console.error('Error al obtener los centros de producción de la organización:', error.message); // Registrar el error
+        this.showSnackBar('No se pudieron obtener los centros de producción de la organización. Intente más tarde. '+error.message);
       }
     );
   }
