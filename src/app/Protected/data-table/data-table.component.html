@@ -23,40 +23,21 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
-
   <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
 </section>
 
 <section *ngFor="let item of dataSource.data" ngClass="cards">
   <mat-card>
-   <!--  <mat-card-header>
-      <mat-card-title>{{ item.delegation | uppercase }} [{{ item.year }}]</mat-card-title>
-    </mat-card-header> -->
     <mat-card-content>
-
-         <!-- Iteramos sobre las columnas dinámicamente -->
-         <div *ngFor="let column of displayedColumns">
+         <!-- Itero sobre las columnas dinámicamente -->
+         <section *ngFor="let column of displayedColumns">
           <h4>{{ column | titlecase }}</h4>
           <p>{{ item[column] || 'N/A' }}</p>
-        </div>
-
-     <!--  <h3>{{item.tipoCombustible}}</h3>
-      <h4>Factor de emisión</h4>
-      <p>kg CO2: {{ item.kg_CO2_ud_defecto }}</p>
-      <p>g CH4: {{ item.gCH4_ud_defecto }}</p>
-      <p>g N2O: {{ item.gN2O_ud_defecto }}</p>
-      <h4>Emisiones parciales</h4>
-      <p>kg CO2: {{ item.kg__CO2 }}</p>
-      <p>g CH4: {{ item.g_CH4 }}</p>
-      <p>g N2O: {{ item.g_N2O }}</p>
-      <h4>Emisiones totales A kg CO2e</h4>
-      <p>kg CO2e: {{ item.kg__CO2e }}</p> -->
-
+        </section>
       <mat-card-actions>
         <button mat-button *ngIf="item.edit"><mat-icon>border_color</mat-icon></button>
         <button mat-button *ngIf="item.delete"><mat-icon>delete</mat-icon></button>
       </mat-card-actions>
-
     </mat-card-content>
   </mat-card>
 </section>

@@ -19,7 +19,7 @@ import { HeaderComponent } from './Protected/header/header.component';
 import { FooterComponent } from './Protected/footer/footer.component';
 /* Angular material components */
 import { MatTabsModule } from '@angular/material/tabs';
-import {MatTooltipModule} from '@angular/material/tooltip';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatIconModule } from '@angular/material/icon'
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
@@ -35,6 +35,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { CdkMenuModule } from '@angular/cdk/menu';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatListModule } from '@angular/material/list';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 /* RAGE app components */
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
@@ -122,6 +123,7 @@ export function tokenGetter() {
     CdkMenuModule,
     MatRadioModule,
     MatListModule,
+    MatProgressSpinnerModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

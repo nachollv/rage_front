@@ -15,10 +15,8 @@ export class DataTableComponent implements OnInit {
   @Input() displayedColumns: string[] = []
   @Input() dataSource : MatTableDataSource<any>
 
-  @ViewChild(MatPaginator)
-  paginator!: MatPaginator
-  @ViewChild(MatSort)
-  sort!: MatSort
+  @ViewChild(MatPaginator) paginator!: MatPaginator
+  @ViewChild(MatSort) sort!: MatSort
 
   constructor(private snackBar: MatSnackBar) {
     this.dataSource = new MatTableDataSource<any>([])
