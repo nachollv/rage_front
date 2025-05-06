@@ -18,10 +18,17 @@ export class EmissionFactorMaintenanceComponent {
   constructor (public dialog: MatDialog,
     private auxHelpingTextsService: AuxHelpingTextsService) { }
 
+    ngOnInit() {
+      const savedTabIndex = localStorage.getItem('selectedTabIndexFE')
+      if (savedTabIndex !== null) {
+        this.selectedTabIndexFE = +savedTabIndex;
+      }
+    }    
+
     onTabChange(index: number) {
-      localStorage.setItem('selectedTabIndexscope1', index.toString());
+      localStorage.setItem('selectedTabIndexFE', index.toString());
     }
-    
+
     openDialog( id: any ): void {
       this.auxHelpingTextsService.getAuxTextById(id)
       .subscribe((text: AuxTextDTO | undefined) => {

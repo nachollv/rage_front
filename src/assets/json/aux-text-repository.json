@@ -146,11 +146,11 @@
     "id": 12,
     "scope": 88,
     "scopeTab": 0,
-    "titleCA": "Manteniment dels factors d'emissió",
-    "titleES": "Mantenimento de los factores de emisión",
-    "titleEN": "Emission Factors Maintenance",
+    "titleCA": "Manteniment dels factors d'emissió (kgCO2e/ud)",
+    "titleES": "Mantenimento de los factores de emisión (kgCO2e/ud)",
+    "titleEN": "Emission Factors Maintenance (kgCO2e/ud)",
     "sectionTextCA": "Troba respostes a preguntes freqüents heatSteamColdCompressedAir.",
-    "sectionTextES": "Encuentra respuestas a preguntas frecuentes heatSteamColdCompressedAir.",
+    "sectionTextES": "Factores de emisión y PCI - Datos específicos para calderas y motores estacionarios de los Sectores Comercial/Institucional, Residencial y Agrícola (1A4ai, 1A4bi, 1A4ci) proporcionados por el equipo del Sistema Español de Inventario (SEI) para todos los combustibles (excepto los factores de emisión de la gasolina, gas butano y gas propano).  - Gasolina para motores: Cuadro 2.4 factores de emisión por defecto para la combustión estacionaria en la categoría comercial institucional. Volumen 2, Capítulo 2. Directrices del IPCC de 2006 para los inventarios nacionales de gases de efecto invernadero.  - Gas Butano y Gas Propano: Anexo 7 del Informe de Inventario Nacional de Gases de Efecto Invernadero (1990 - 2012). Edición 2014. No se proporcionan factores de emisión de CH4 y N2O.",
     "sectionTextEN": "Find answers to frequently asked questions heatSteamColdCompressedAir."
   },
   {
@@ -182,9 +182,9 @@
     "titleCA": "Emissions fugitives",
     "titleES": "Emisiones fugitivas",
     "titleEN": "Fugitive emissions",
-    "sectionTextCA": "Troba respostes a preguntes freqüents heatSteamColdCompressedAir.",
-    "sectionTextES": "Encuentra respuestas a preguntas frecuentes heatSteamColdCompressedAir.",
-    "sectionTextEN": "Find answers to frequently asked questions heatSteamColdCompressedAir."
+    "sectionTextCA": "Fugides de gasos d'efecte d'hivernacle que es produeixen en instal·lacions de climatització i/o refrigeració, sistemes de protecció contra incendis (extintors), equips de commutació d'alta tensió, etc. que són propietat de l'organització o que estan sota el seu control.",
+    "sectionTextES": "Fugas de gases de efecto invernadero que se producen en instalaciones de climatización y/o refrigeración, sistemas de protección contra incendios (extintores), equipos de conmutación de alta tensión, etc. que son propiedad de la organización o que están bajo su control.",
+    "sectionTextEN": "Leaks of greenhouse gases that occur in air conditioning and/or refrigeration installations, fire protection systems (fire extinguishers), high voltage switching equipment, etc. owned or controlled by the organisation."
   },
   {
     "id": 16,
