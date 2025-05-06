@@ -2,7 +2,8 @@ import { Component, Input, OnInit, OnChanges, SimpleChanges } from '@angular/cor
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FuelDataService } from '../../../services/fuel-data.service';
 import { MatDialog } from '@angular/material/dialog';
-import { DialogComponent } from '../../../dialog/dialog.component';
+import { finalize } from 'rxjs/operators';
+import { DialogService } from '../../../services/dialog.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ScopeOneRecordsService } from '../../../services/scope-one-records.service';
@@ -26,13 +27,15 @@ export class FixedInstallationComponent implements OnInit, OnChanges {
     fuelTypes: any[] = []
     token: string = '' // Token del usuario
     organizacionID!: number // ID de la organización
+    cargando:boolean = false
 
-    constructor(private fb: FormBuilder, public dialog: MatDialog,
+    constructor(private fb: FormBuilder,
       private fuelDataService: FuelDataService,
       private scopeOneRecordsService: ScopeOneRecordsService,
       private mesesService: MesesService,
       private jwtHelper: JwtHelperService,
       private authService: AuthService,
+      private dialogService: DialogService,
       private snackBar: MatSnackBar) {
         this.token = this.authService.getToken() || ''
         this.organizacionID = this.jwtHelper.decodeToken(this.token).data.id_empresa
@@ -183,20 +186,13 @@ setEmissionFactors() {
       }
     }
 
-    openDialog(title:string, text: string): void {
-      const dialogRef = this.dialog.open(DialogComponent, {
-        data: {
-          title: title,
-          text: text,
-          position: 'center'
-        },
-        width: '400px',
-        height: '300px'
-      });
-  
-      dialogRef.afterClosed().subscribe(result => {
-        console.log('El dialog se cerró');
-      });
+    openDialog(id: number): void {
+      this.cargando = true;
+      this.dialogService.openDialog(id).pipe(
+        finalize(() => {
+          this.cargando = false;
+        })
+      ).subscribe();
     }
 
     private showSnackBar(msg: string): void {

@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
 import { finalize } from 'rxjs/operators';
-import { AuxTextDTO } from '../../../models/auxText.dto';
 import { DialogService } from '../../../services/dialog.service';
 
 @Component({
@@ -10,13 +8,11 @@ import { DialogService } from '../../../services/dialog.service';
   styleUrl: './emission-factor-maintenance.component.scss'
 })
 export class EmissionFactorMaintenanceComponent {
-  auxText: AuxTextDTO | undefined
-  title: string = ''
-  text: string = ''
+
   selectedTabIndexFE: number = 0
   cargando:boolean = false
 
-  constructor (public dialog: MatDialog,
+  constructor (
     private dialogService: DialogService) { }
 
     ngOnInit() {
