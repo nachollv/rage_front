@@ -47,7 +47,7 @@ export class MachineryVehiclesComponent  implements OnInit, OnChanges {
       periodoFactura: ['', Validators.required],
       equipmentType: ['', Validators.required],
       fuelType: ['', Validators.required],
-      activityData: [0, [Validators.required, Validators.pattern(/^\d+$/)]],
+      activityData: ['', [Validators.required, Validators.pattern(/^\d+$/)]],
       defaultEmissionFactor: this.fb.group({
         co2: [{ value: 0, disabled: true }],
         ch4: [{ value: 0, disabled: true }],

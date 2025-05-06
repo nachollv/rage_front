@@ -132,6 +132,7 @@ onSubmit() {
         formValue.activityType = 'fixed'
         formValue.id_empresa = this.organizacionID
         formValue.activityData = this.fuelForm.get('activityData')?.value
+        formValue.periodoFactura = this.fuelForm.get('periodoFactura')?.value
         this.scopeOneRecordsService.createRecord(formValue)
           .subscribe(
             (dataActivReg: any) => {
