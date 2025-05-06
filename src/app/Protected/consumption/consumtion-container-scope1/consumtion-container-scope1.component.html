@@ -1,5 +1,5 @@
   <h1><button mat-menu-item (click)="openDialog(1)"><mat-icon style="color: #0a470d;">info</mat-icon>{{"scope1" | translate}}</button></h1>
-  
+  <span *ngIf="cargando">Un momento...</span>
   <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start" [(selectedIndex)]="selectedTabIndexscope1" (selectedIndexChange)="onTabChange($event)"  *ngIf = "activityYear">
     <mat-tab label="{{'fixedInstallationsFuelConsumption' | translate}}">
       <button mat-menu-item (click)="openDialog(2)"><mat-icon style="color: #ff9310;">info</mat-icon>{{"fixedInstallationsFuelConsumption" | translate}}</button>
@@ -13,14 +13,12 @@
     </mat-tab>
 
     <mat-tab label="{{'railSeaAirTransport' | translate}}">
-      <button mat-menu-item (click)="openDialog(4)"> 
-      <mat-icon style="color: #ff9310;">info</mat-icon>{{"railSeaAirTransport" | translate}}</button>
+      <button mat-menu-item (click)="openDialog(4)"><mat-icon style="color: #ff9310;">info</mat-icon>{{"railSeaAirTransport" | translate}}</button>
       <app-rail-sea-airtransport [activityYear]="activityYear" [productionCenter]="productionCenter"></app-rail-sea-airtransport>
     </mat-tab>
 
     <mat-tab label="{{'fuelConsumptionMachinery' | translate}}">
-      <button mat-menu-item (click)="openDialog(5)"> 
-      <mat-icon style="color: #ff9310;">info</mat-icon>{{"fuelConsumptionMachinery" | translate}}</button>
+      <button mat-menu-item (click)="openDialog(5)"><mat-icon style="color: #ff9310;">info</mat-icon>{{"fuelConsumptionMachinery" | translate}}</button>
       <app-machinery [activityYear]="activityYear" [productionCenter]="productionCenter"></app-machinery>
     </mat-tab>
 
