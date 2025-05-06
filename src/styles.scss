@@ -60,5 +60,11 @@ mat-form-field {
   margin-bottom: 20px;
 }
 
+.spinner-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; // Ocupa toda la altura de la pantalla
+}
 
 

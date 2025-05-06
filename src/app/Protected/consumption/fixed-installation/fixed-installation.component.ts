@@ -1,7 +1,6 @@
 import { Component, Input, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FuelDataService } from '../../../services/fuel-data.service';
-import { MatDialog } from '@angular/material/dialog';
 import { finalize } from 'rxjs/operators';
 import { DialogService } from '../../../services/dialog.service';
 import { MatTableDataSource } from '@angular/material/table';

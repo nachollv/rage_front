@@ -1,8 +1,6 @@
 import { Component, Input } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { DialogComponent } from '../../../dialog/dialog.component';
-import { AuxHelpingTextsService } from '../../../services/aux-helping-texts.service';
-import { AuxTextDTO } from '../../../models/auxText.dto';
+import { finalize } from 'rxjs/operators';
+import { DialogService } from '../../../services/dialog.service';
 
 @Component({
   selector: 'app-consumtion-container-scope2',
@@ -13,14 +11,9 @@ export class ConsumtionContainerScope2Component {
   @Input() activityYear: number = 0
   @Input() productionCenter: number = 0
   selectedTabIndexscope2: number = 0;
-  /* productionCenterForm: FormGroup; */
-  token: string = ''
-  auxText: AuxTextDTO | undefined
-  title: string = ''
-  text: string = ''
+  cargando:boolean = false
   
-  constructor (public dialog: MatDialog,
-    private auxHelpingTextsService: AuxHelpingTextsService) {  }
+  constructor (private dialogService: DialogService) {  }
 
   ngOnInit() {
     const savedTabIndex = localStorage.getItem('selectedTabIndexscope2')
@@ -33,36 +26,12 @@ export class ConsumtionContainerScope2Component {
     localStorage.setItem('selectedTabIndexscope2', index.toString());
   }
 
-  openDialog( id: any ): void {
-    this.auxHelpingTextsService.getAuxTextById(id)
-    .subscribe((text: AuxTextDTO | undefined) => {
-      if (text) {
-        this.auxText = text
-
-        if (localStorage.getItem('preferredLang') === 'es') {
-         this.title = text.titleES
-         this.text = text.sectionTextES
-        } else if (localStorage.getItem('preferredLang') === 'ca') {
-          this.title = text.titleCA
-          this.text = text.sectionTextCA
-        } else if (localStorage.getItem('preferredLang') === 'en') {
-          this.title = text.titleEN
-          this.text = text.sectionTextEN
-        } else {
-          console.error('Idioma no soportado')
-        }
-      } else {
-        console.error('Texto auxiliar no encontrado');
-      }
-      this.dialog.open(DialogComponent, {
-        data: {
-          title: this.title,
-          text: this.text,
-          position: 'center'
-        },
-        width: '450px',
-      });
-      
-    });
- }
+  openDialog(id: number): void {
+    this.cargando = true;
+    this.dialogService.openDialog(id).pipe(
+      finalize(() => {
+        this.cargando = false;
+      })
+    ).subscribe();
+  }
 }
