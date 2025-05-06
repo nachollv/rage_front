@@ -1,6 +1,6 @@
   <h1><button mat-menu-item (click)="openDialog(1)"><mat-icon style="color: #0a470d;">info</mat-icon>{{"scope1" | translate}}</button></h1>
+  
   <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start" [(selectedIndex)]="selectedTabIndexscope1" (selectedIndexChange)="onTabChange($event)"  *ngIf = "activityYear">
-    
     <mat-tab label="{{'fixedInstallationsFuelConsumption' | translate}}">
       <button mat-menu-item (click)="openDialog(2)"><mat-icon style="color: #ff9310;">info</mat-icon>{{"fixedInstallationsFuelConsumption" | translate}}</button>
       <app-fixed-installation [activityYear]="activityYear" [productionCenter]="productionCenter"></app-fixed-installation>
@@ -29,7 +29,6 @@
         <mat-icon style="color: #ff9310;">info</mat-icon>{{"fugitiveEmissions" | translate}}</button>
         <app-fugitive-gases [activityYear]="activityYear" [productionCenter]="productionCenter"></app-fugitive-gases>
     </mat-tab>
-
   </mat-tab-group>
 
   <section *ngIf="cargando" ngClass="spinner-container">
