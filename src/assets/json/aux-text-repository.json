@@ -130,5 +130,71 @@
     "sectionTextCA": "Troba respostes a preguntes freqüents heatSteamColdCompressedAir.",
     "sectionTextES": "Encuentra respuestas a preguntas frecuentes heatSteamColdCompressedAir.",
     "sectionTextEN": "Find answers to frequently asked questions heatSteamColdCompressedAir."
+  },
+  {
+    "id": 11,
+    "scope": 88,
+    "scopeTab": 0,
+    "titleCA": "Manteniment dels factors d'emissió",
+    "titleES": "Mantenimento de los factores de emisión",
+    "titleEN": "Emission Factors Maintenance",
+    "sectionTextCA": "Troba respostes a preguntes freqüents heatSteamColdCompressedAir.",
+    "sectionTextES": "Encuentra respuestas a preguntas frecuentes heatSteamColdCompressedAir.",
+    "sectionTextEN": "Find answers to frequently asked questions heatSteamColdCompressedAir."
+  },
+  {
+    "id": 12,
+    "scope": 88,
+    "scopeTab": 0,
+    "titleCA": "Manteniment dels factors d'emissió",
+    "titleES": "Mantenimento de los factores de emisión",
+    "titleEN": "Emission Factors Maintenance",
+    "sectionTextCA": "Troba respostes a preguntes freqüents heatSteamColdCompressedAir.",
+    "sectionTextES": "Encuentra respuestas a preguntas frecuentes heatSteamColdCompressedAir.",
+    "sectionTextEN": "Find answers to frequently asked questions heatSteamColdCompressedAir."
+  },
+  {
+    "id": 13,
+    "scope": 88,
+    "scopeTab": 0,
+    "titleCA": "Manteniment dels factors d'emissió",
+    "titleES": "Mantenimento de los factores de emisión",
+    "titleEN": "Emission Factors Maintenance",
+    "sectionTextCA": "Troba respostes a preguntes freqüents heatSteamColdCompressedAir.",
+    "sectionTextES": "Encuentra respuestas a preguntas frecuentes heatSteamColdCompressedAir.",
+    "sectionTextEN": "Find answers to frequently asked questions heatSteamColdCompressedAir."
+  },
+  {
+    "id": 14,
+    "scope": 88,
+    "scopeTab": 0,
+    "titleCA": "Manteniment dels factors d'emissió",
+    "titleES": "Mantenimento de los factores de emisión",
+    "titleEN": "Emission Factors Maintenance",
+    "sectionTextCA": "Troba respostes a preguntes freqüents heatSteamColdCompressedAir.",
+    "sectionTextES": "Encuentra respuestas a preguntas frecuentes heatSteamColdCompressedAir.",
+    "sectionTextEN": "Find answers to frequently asked questions heatSteamColdCompressedAir."
+  },
+  {
+    "id": 15,
+    "scope": 88,
+    "scopeTab": 0,
+    "titleCA": "Manteniment dels gasos o mescles",
+    "titleES": "Mantenimiento de los gases o mezclas",
+    "titleEN": "Maintenance of gases or mixtures",
+    "sectionTextCA": "Troba respostes a preguntes freqüents heatSteamColdCompressedAir.",
+    "sectionTextES": "Encuentra respuestas a preguntas frecuentes heatSteamColdCompressedAir.",
+    "sectionTextEN": "Find answers to frequently asked questions heatSteamColdCompressedAir."
+  },
+  {
+    "id": 16,
+    "scope": 88,
+    "scopeTab": 0,
+    "titleCA": "Categoria de vehicle",
+    "titleES": "Categoría de vehículo",
+    "titleEN": "Vehicle category",
+    "sectionTextCA": "Troba respostes a preguntes freqüents heatSteamColdCompressedAir.",
+    "sectionTextES": "Encuentra respuestas a preguntas frecuentes heatSteamColdCompressedAir.",
+    "sectionTextEN": "Find answers to frequently asked questions heatSteamColdCompressedAir."
   }
 ]

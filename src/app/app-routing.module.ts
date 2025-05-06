@@ -7,12 +7,12 @@ import { OrganGeneralDataComponent } from './Protected/organ-general-data/organ-
 import { ElectricityComponent } from './Protected/consumption/electricity/electricity.component';
 import { HomeComponent } from './home/home.component';
 import { ConsumptionComponent } from './Protected/consumption/consumption.component';
-import { ConsumtionContainerScope2Component } from './Protected/consumption/consumtion-container-scope2/consumtion-container-scope2.component';
 import { ControlPanelContainerComponent } from './control-panel-container/control-panel-container.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { RecoveryPasswordComponent } from './recovery-password/recovery-password.component';
 import { UserManagementComponent } from './Protected/user/user-management/user-management.component';
 import { RaquingsByProductionCenterComponent } from './Protected/raquings-by-production-center/raquings-by-production-center.component';
+import { EmissionFactorMaintenanceComponent } from './Protected/emission-factor/emission-factor-maintenance/emission-factor-maintenance.component';
 
 const routes: Routes = [
 
@@ -27,6 +27,7 @@ const routes: Routes = [
   { path: 'ranquing', component: RaquingsByProductionCenterComponent},
   { path: 'electricity-consumption', component: ElectricityComponent, canActivate: [AuthGuard] },
   { path: 'recover-password', component: RecoveryPasswordComponent },
+  { path: 'emission-factor-maintenance', component: EmissionFactorMaintenanceComponent},
   { path: '*', redirectTo: '/login', pathMatch: 'full' },
   { path: '**', component: PageNotFoundComponent },
 

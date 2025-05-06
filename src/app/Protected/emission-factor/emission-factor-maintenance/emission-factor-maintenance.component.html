@@ -1,0 +1,35 @@
+<h1><button mat-menu-item (click)="openDialog(11)"><mat-icon style="color: #0a470d;">info</mat-icon>{{"emissionFactorMaintenance" | translate}}</button></h1>
+<mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start" [(selectedIndex)]="selectedTabIndexFE" (selectedIndexChange)="onTabChange($event)">
+
+
+  <mat-tab label="{{'fuelEmissions' | translate}}">
+    <button mat-menu-item (click)="openDialog(12)">
+      <mat-icon style="color: #ff9310;">info</mat-icon>{{"fuelEmissions" | translate}}</button>
+      <app-data-table></app-data-table>
+  </mat-tab>
+
+  <mat-tab label="{{'fuelEmissionsRailSeaAir' | translate}}">
+    <button mat-menu-item (click)="openDialog(13)"> 
+    <mat-icon style="color: #ff9310;">info</mat-icon>{{"fuelEMissionsRailSeaAir" | translate}}</button>
+    <app-data-table></app-data-table>
+  </mat-tab>
+
+  <mat-tab label="{{'electricalEmissions' | translate}}">
+    <button mat-menu-item (click)="openDialog(14)"> 
+    <mat-icon style="color: #ff9310;">info</mat-icon>{{"electricalEmissions" | translate}}</button>
+    <app-data-table></app-data-table>
+  </mat-tab>
+
+  <mat-tab label="{{'fugitiveEmissions' | translate}}">
+    <button mat-menu-item (click)="openDialog(15)"> 
+    <mat-icon style="color: #ff9310;">info</mat-icon>{{"fugitiveEmissions" | translate}}</button>
+    <app-data-table></app-data-table>
+  </mat-tab>
+
+  <mat-tab label="{{'vehicleCategory' | translate}}">
+    <button mat-menu-item (click)="openDialog(16)">
+      <mat-icon style="color: #ff9310;">info</mat-icon>{{"vehicleCategory" | translate}}</button>
+      <app-data-table></app-data-table>
+  </mat-tab>
+
+</mat-tab-group>

@@ -17,6 +17,9 @@
   "scope2": "INDIRECT EMISSIONS",
   "scope2_2": "(Scope 2)",
   "ranquing": "Ranking",
+
+  "emissionFactorMaintenance": "Emission Factors Maintenance",
+
   
   "filter_by_year": "Filter by activity year",
   "filter_by_activity": "Filter by activity",
@@ -36,6 +39,7 @@
   "organizationName": "Organization name",
   "productionCenter": "Production center",
   "activitySector": "Activity sector",
+  "vehicleCategory": "Vehicle category",
 
   "otherGEH": "Actividades que generan otros gases de efecto invernadero",
   "processEmissions": "Emisiones de proceso",

@@ -19,6 +19,8 @@
   "scope2_2": "(Abast 2)",
   "ranquing": "Ranquin",
 
+  "emissionFactorMaintenance": "Manteniment dels factors d'emissió",
+
   "filter_by_year": "Filtrar per any d'activitat",
   "filter_by_activity": "Filtrar per activitat",
   "apply_filter": "Aplicar filtre",
@@ -36,6 +38,7 @@
   "organizationName": "Nom de l'organització",
   "productionCenter": "Centre de producció",
   "activitySector": "Sector d'activitat",
+  "vehicleCategory": "Categoria de vehicle",
 
   "ley_1_2005": "obligaciones establecidas en la Ley 1/2005 de 9 de marzo",
 
