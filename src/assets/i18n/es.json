@@ -38,17 +38,18 @@
   "organizationName": "Nombre de la organización",
   "productionCenter": "Centro de producción",
   "activitySector": "Sector de actividad",
-  "vehicleCategory": "Categoría de vehículo",
+  "fuelEmissionsRailSeaAir": "Emisiones transporte ferroviario, marítimo y aéreo",
+  "vehicleEmissions": "Emisiones de vehículos",
+  "machineryEmissions": "Emisiones de maquinaria",
 
   "ley_1_2005": "obligaciones establecidas en la Ley 1/2005 de 9 de marzo",
-
 
   "otherGEH": "Actividades que generan otros gases de efecto invernadero",
   "processEmissions": "Emisiones de proceso",
   "emissionFactors": "Factores de emisión",
   "fuelEmissions": "Emisiones de combustibles",
   "fuelEmissionsTransportRailSeaAir": "Emisiones de combustibles en el transporte ferroviario, marítimo y aéreo",
-  "electricalEmissions": "Emisiones eléctricas",
+  "electricalEmissions": "Emisiones comercializadoras eléctricas",
   "fugitiveEmissions": "Emisiones Fugitivas",
   "organizationGeneralData": "Datos generales de la organización",
   "electricityConsumptionInBuildings": "Consumo eléctrico en edificios",

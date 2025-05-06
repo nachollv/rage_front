@@ -10,7 +10,7 @@
 
   <mat-tab label="{{'fuelEmissionsRailSeaAir' | translate}}">
     <button mat-menu-item (click)="openDialog(13)"> 
-    <mat-icon style="color: #ff9310;">info</mat-icon>{{"fuelEMissionsRailSeaAir" | translate}}</button>
+    <mat-icon style="color: #ff9310;">info</mat-icon>{{"fuelEmissionsRailSeaAir" | translate}}</button>
     <app-data-table></app-data-table>
   </mat-tab>
 
@@ -26,10 +26,15 @@
     <app-data-table></app-data-table>
   </mat-tab>
 
-  <mat-tab label="{{'vehicleCategory' | translate}}">
+  <mat-tab label="{{'vehicleEmissions' | translate}}">
     <button mat-menu-item (click)="openDialog(16)">
-      <mat-icon style="color: #ff9310;">info</mat-icon>{{"vehicleCategory" | translate}}</button>
+      <mat-icon style="color: #ff9310;">info</mat-icon>{{"vehicleEmissions" | translate}}</button>
       <app-data-table></app-data-table>
   </mat-tab>
 
+  <mat-tab label="{{'machineryEmissions' | translate}}">
+    <button mat-menu-item (click)="openDialog(17)">
+      <mat-icon style="color: #ff9310;">info</mat-icon>{{"machineryEmissions" | translate}}</button>
+      <app-data-table></app-data-table>
+  </mat-tab>
 </mat-tab-group>

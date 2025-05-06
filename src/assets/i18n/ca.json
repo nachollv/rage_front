@@ -38,7 +38,9 @@
   "organizationName": "Nom de l'organització",
   "productionCenter": "Centre de producció",
   "activitySector": "Sector d'activitat",
-  "vehicleCategory": "Categoria de vehicle",
+  "fuelEmissionsRailSeaAir": "Emissions transport ferroviari, marítim i aeri",
+  "vehicleEmissions": "Emissions vehicles",
+  "machineryEmissions": "Emissions maquinària",
 
   "ley_1_2005": "obligaciones establecidas en la Ley 1/2005 de 9 de marzo",
 
@@ -48,7 +50,7 @@
   "emissionFactors": "Factors d'emissió",
   "fuelEmissions": "Emissions de combustibles",
   "fuelEmissionsTransportRailSeaAir": "Emissions de combustibles en el transport ferroviari, maritim i aeri",
-  "electricalEmissions": "Emissions elèctriques",
+  "electricalEmissions": "Emissions comercialitzadores elèctriques",
   "fugitiveEmissions": "Emissions Fugitives",
   "organizationGeneralData": "Dades generals de l'organització",
   "electricityConsumptionInBuildings": "Consum elèctric en edificis",
