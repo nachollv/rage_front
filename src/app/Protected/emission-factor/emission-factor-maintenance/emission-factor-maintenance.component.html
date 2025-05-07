@@ -1,7 +1,6 @@
 <h1><button mat-menu-item (click)="openDialog(11)"><mat-icon style="color: #0a470d;">info</mat-icon>{{"emissionFactorMaintenance" | translate}}</button></h1>
 <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start" [(selectedIndex)]="selectedTabIndexFE" (selectedIndexChange)="onTabChange($event)">
 
-
   <mat-tab label="{{'fuelEmissionsFixedInst' | translate}}">
     <button mat-menu-item (click)="openDialog(12)">
       <mat-icon style="color: #ff9310;">info</mat-icon>{{"fuelEmissionsFixedInst" | translate}}</button>
@@ -38,6 +37,4 @@
       <app-data-table></app-data-table>
   </mat-tab>
 </mat-tab-group>
-<section *ngIf="cargando" ngClass="spinner-container">
-  <mat-spinner></mat-spinner>
-</section>
+<section *ngIf="cargando" ngClass="spinner-container"><mat-spinner></mat-spinner></section>
