@@ -48,7 +48,7 @@
   "otherGEH": "Activitats que generen altres gasos d'efecte d'hivernacle",
   "processEmissions": "Emissions de procés",
   "emissionFactors": "Factors d'emissió",
-  "fuelEmissions": "Emissions de combustibles",
+  "fuelEmissionsFixedInst": "Emissions de combustibles inst. fixes",
   "fuelEmissionsTransportRailSeaAir": "Emissions de combustibles en el transport ferroviari, maritim i aeri",
   "electricalEmissions": "Emissions comercialitzadores elèctriques",
   "fugitiveEmissions": "Emissions Fugitives",

@@ -46,7 +46,7 @@
   "otherGEH": "Actividades que generan otros gases de efecto invernadero",
   "processEmissions": "Emisiones de proceso",
   "emissionFactors": "Emission factors",
-  "fuelEmissions": "Fuel emissions",
+  "fuelEmissionsFixedInst": "Fuel emissions fixed install.",
   "fuelEmissionsTransportRailSeaAir": "Fuel emissions in rail, sea and air transport",
   "electricalEmissions": "Emissions from electricity traders",
   "fugitiveEmissions": "Fugitive Emissions",

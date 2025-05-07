@@ -2,9 +2,9 @@
 <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start" [(selectedIndex)]="selectedTabIndexFE" (selectedIndexChange)="onTabChange($event)">
 
 
-  <mat-tab label="{{'fuelEmissions' | translate}}">
+  <mat-tab label="{{'fuelEmissionsFixedInst' | translate}}">
     <button mat-menu-item (click)="openDialog(12)">
-      <mat-icon style="color: #ff9310;">info</mat-icon>{{"fuelEmissions" | translate}}</button>
+      <mat-icon style="color: #ff9310;">info</mat-icon>{{"fuelEmissionsFixedInst" | translate}}</button>
       <app-fuel-emission-factor-maintenance></app-fuel-emission-factor-maintenance>
   </mat-tab>
 
