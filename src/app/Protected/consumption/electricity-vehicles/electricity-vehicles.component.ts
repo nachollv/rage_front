@@ -149,8 +149,6 @@ export class ElectricityVehiclesComponent implements OnInit, OnChanges{
   // Método para enviar el formulario
   onSubmit() {
     const formValue = this.vehiclesElectricity.value
-    console.log('Form Value:', formValue); // Imprime el valor del formulario
-
     formValue.year = this.activityYear
     formValue.productionCenter = this.productionCenter
     formValue.activityType = 'electricityVehicles' // Tipo de actividad
