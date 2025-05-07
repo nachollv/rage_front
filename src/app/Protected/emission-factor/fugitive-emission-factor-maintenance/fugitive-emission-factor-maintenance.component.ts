@@ -10,7 +10,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrl: './fugitive-emission-factor-maintenance.component.scss'
 })
 export class FugitiveEmissionFactorMaintenanceComponent {
-  displayedColumns: string[] = ['year', 'nombreComercial', 'kg_CO2_kWh', 'delete']
+  displayedColumns: string[] = ['Nombre', 'FormulaQuimica', 'PCA_6AR', 'delete']
   data = [{ }]
   dataSource = new MatTableDataSource<any>(this.data)
   emissionForm: FormGroup;
