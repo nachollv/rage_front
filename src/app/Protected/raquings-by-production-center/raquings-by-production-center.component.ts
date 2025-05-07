@@ -67,23 +67,20 @@ export class RaquingsByProductionCenterComponent implements OnInit, OnChanges {
         this.productionCenterService.getCentroDeProduccionByID(productionCenterID).subscribe(
           (prodCenter: any) => {
             this.productionCenterData = [prodCenter];
-    
             // Inicializar `totales` con este centro y totalRecords = 0
             this.totales = [
               {
                 activityYear: this.activityYear,
                 productionCenter: prodCenter.nombre,
+                productionCenterID: prodCenter.id,
                 totalRecords: 0
               }
             ];
-    
             this.getRanquings(this.activityYear, prodCenter).subscribe(
-              (totals: any[]) => {
-                // Actualizamos el total si existen datos reales
-                totals.forEach((record: any) => {
-                  const index = this.totales.findIndex(
-                    (t) => t.productionCenter === record.productionCenter
-                  );
+              (totals: ApiResponse) => {
+                // Actualizamos el total
+                totals.data.forEach((record: any) => {
+                  const index = this.totales.findIndex((t) => t.productionCenterID === record.productionCenter);
                   if (index !== -1) {
                     this.totales[index].totalRecords = record.total_records;
                   }
@@ -104,14 +101,12 @@ export class RaquingsByProductionCenterComponent implements OnInit, OnChanges {
           (prodCenters: any) => {
             this.productionCenterData = prodCenters;
             // Inicializar los totales con valores de 0
-           
             this.totales = prodCenters.map((center: any) => ({
               activityYear: this.activityYear,
               productionCenter: center.nombre,
               productionCenterID: center.id,
               totalRecords: 0
             }));
-            
             // Procesar cada centro de producción
             prodCenters.forEach((center: any) => {
               this.getRanquings(this.activityYear, center).subscribe(
