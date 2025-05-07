@@ -1,4 +1,4 @@
-<form [formGroup]="emissionForm" (ngSubmit)="onSubmit()" class="form-container">
+<form [formGroup]="emissionForm" (ngSubmit)="onSubmit()" ngClass="form-container">
   <mat-form-field appearance="outline">
     <mat-label>Combustible</mat-label>
     <input matInput formControlName="combustible" placeholder="Ejemplo: Gasolina">
@@ -23,17 +23,6 @@
     <mat-label>N2O (g/ud)</mat-label>
     <input matInput formControlName="n2o_g_ud" type="number" step="0.01">
   </mat-form-field>
-
-  <mat-form-field appearance="outline">
-    <mat-label>Cantidad</mat-label>
-    <input matInput formControlName="cantidad" type="number">
-  </mat-form-field>
-
-  <mat-form-field appearance="outline">
-    <mat-label>Fecha</mat-label>
-    <input matInput formControlName="fecha" type="date">
-  </mat-form-field>
-
   <button mat-raised-button color="primary" [disabled]="loading">Registrar</button>
 </form>
 <app-data-table [displayedColumns]="displayedColumns" [dataSource]="dataSource"></app-data-table>
