@@ -2,6 +2,16 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, catchError, throwError } from 'rxjs';
 
+export interface EmisionesCombustiblesTransFerMarAer {
+  id: number;         // Identificador único de la emisión
+  fuelType: string;     // Nombre descriptivo de la emisión
+  Categoria: string;
+  year: number;
+  CO2_kg_ud: number;
+  CH4_g_ud: number;
+  N2O_g_ud: number;
+}
+
 @Injectable({
   providedIn: 'root'
 })
