@@ -1,0 +1,39 @@
+<form [formGroup]="emissionForm" (ngSubmit)="onSubmit()" class="form-container">
+  <mat-form-field appearance="outline">
+    <mat-label>Combustible</mat-label>
+    <input matInput formControlName="combustible" placeholder="Ejemplo: Gasolina">
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Año</mat-label>
+    <input matInput formControlName="anio" type="number" placeholder="Ejemplo: 2025">
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>CO2 (kg/ud)</mat-label>
+    <input matInput formControlName="co2_kg_ud" type="number" step="0.01">
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>CH4 (g/ud)</mat-label>
+    <input matInput formControlName="ch4_g_ud" type="number" step="0.01">
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>N2O (g/ud)</mat-label>
+    <input matInput formControlName="n2o_g_ud" type="number" step="0.01">
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Cantidad</mat-label>
+    <input matInput formControlName="cantidad" type="number">
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Fecha</mat-label>
+    <input matInput formControlName="fecha" type="date">
+  </mat-form-field>
+
+  <button mat-raised-button color="primary" [disabled]="loading">Registrar</button>
+</form>
+<app-data-table [displayedColumns]="displayedColumns" [dataSource]="dataSource"></app-data-table>

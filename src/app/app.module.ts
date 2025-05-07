@@ -60,6 +60,7 @@ import { UserManagementComponent } from './Protected/user/user-management/user-m
 import { ConsumptionComponent } from './Protected/consumption/consumption.component';
 import { RaquingsByProductionCenterComponent } from './Protected/raquings-by-production-center/raquings-by-production-center.component';
 import { EmissionFactorMaintenanceComponent } from './Protected/emission-factor/emission-factor-maintenance/emission-factor-maintenance.component';
+import { FuelEmissionFactorMaintenanceComponent } from './Protected/emission-factor/fuel-emission-factor-maintenance/fuel-emission-factor-maintenance.component';
 
 // Función para cargar los archivos de traducción
 export function HttpLoaderFactory(http: HttpClient) {
@@ -100,6 +101,7 @@ export function tokenGetter() {
     ConsumptionComponent,
     RaquingsByProductionCenterComponent,
     EmissionFactorMaintenanceComponent,
+    FuelEmissionFactorMaintenanceComponent,
   ],
   imports: [
     BrowserModule,

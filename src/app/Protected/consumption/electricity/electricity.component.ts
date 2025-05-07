@@ -9,6 +9,8 @@ import { ScopeTwoRecordsService } from '../../../services/scope-two-records.serv
 import { MesesService } from '../../../services/meses.service';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { AuthService } from '../../../services/auth.service';
+import { finalize } from 'rxjs/operators';
+import { DialogService } from '../../../services/dialog.service';
 
 @Component({
   selector: 'app-electricity',
@@ -26,6 +28,7 @@ export class ElectricityComponent implements OnInit, OnChanges {
   buildingElecConsumption!: FormGroup;
   token: string = '' // Token del usuario
   organizacionID!: number // ID de la organización
+  cargando:boolean = false
 
   constructor(private fb: FormBuilder, 
       private emisionesElectricasservice: EmisionesElectricasEdificiosService,
@@ -34,6 +37,7 @@ export class ElectricityComponent implements OnInit, OnChanges {
       private jwtHelper: JwtHelperService,
       private authService: AuthService,
       private snackBar: MatSnackBar,
+      private dialogService: DialogService,
       public dialog: MatDialog) {
         this.token = this.authService.getToken() || ''
         this.organizacionID = this.jwtHelper.decodeToken(this.token).data.id_empresa
@@ -172,21 +176,13 @@ export class ElectricityComponent implements OnInit, OnChanges {
         });
     }
 
-    openDialog(): void {
-        const dialogRef = this.dialog.open(DialogComponent, {
-          data: {
-            title: 'Título del Dialog',
-            text: 'Este es el texto del Dialog.',
-            position: 'center'
-          },
-          /* position: { top: '20%', left: '20%' } ,*/ // Ajusta la posición según tus necesidades
-          width: '400px',
-          height: '300px'
-        });
-    
-        dialogRef.afterClosed().subscribe(result => {
-          console.log('El dialog se cerró');
-        });
+    openDialog(id: number): void {
+      this.cargando = true;
+      this.dialogService.openDialog(id).pipe(
+        finalize(() => {
+          this.cargando = false;
+        })
+      ).subscribe();
     }
 
     private showSnackBar(msg: string): void {

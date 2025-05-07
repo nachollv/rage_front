@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, Input } from '@angular/core';
+import { Component, OnInit, ViewChild, Input, AfterViewInit, OnChanges, SimpleChanges } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -9,11 +9,11 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   templateUrl: './data-table.component.html',
   styleUrls: ['./data-table.component.scss']
 })
-export class DataTableComponent implements OnInit {
+export class DataTableComponent implements OnInit, AfterViewInit, OnChanges {
   @Input() columns: string[] = []
   @Input() data: any[] = []
   @Input() displayedColumns: string[] = []
-  @Input() dataSource : MatTableDataSource<any>
+  @Input() dataSource!: MatTableDataSource<any>
 
   @ViewChild(MatPaginator) paginator!: MatPaginator
   @ViewChild(MatSort) sort!: MatSort
@@ -23,9 +23,24 @@ export class DataTableComponent implements OnInit {
   }
 
   ngOnInit() { 
-    this.dataSource = new MatTableDataSource(this.data)
-    this.dataSource.paginator = this.paginator
-    this.dataSource.sort = this.sort
+    if (this.dataSource) {
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    }
+  }
+
+  ngAfterViewInit() {
+    if (this.dataSource) {
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    }
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['dataSource'] && this.dataSource) {
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    }
   }
     
   applyFilter(event: Event) {
@@ -46,11 +61,10 @@ export class DataTableComponent implements OnInit {
   }
   private showSnackBar(msg: string): void {
     this.snackBar.open(msg, 'Close', {
-      duration: 15000,
+      duration: 5000,
       verticalPosition: 'top',
       horizontalPosition: 'center',
       panelClass: ['custom-snackbar'],
     });
   }
-
 }
