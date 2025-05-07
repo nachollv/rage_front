@@ -14,7 +14,7 @@ import { EmisionesTransFerAerMarService } from '../services/emisiones-trans-fera
 import { EmisionesMachineryService } from '../services/emisiones-machinery.service';
 import { LeakrefrigerantgasesService } from '../services/leakrefrigerantgases.service';
 import { RegistroemisionesFugasService } from '../services/registroemisionesfugas.service';
-import { EmisionesElectricasEdificiosService } from '../services/emisiones-electricas-edificios.service';
+import { EmisionesElectricaComercializadorasService } from '../services/emisiones-electricas-comercializadoras.service';
 
 @Component({
   selector: 'app-control-panel-container',
@@ -87,7 +87,7 @@ export class ControlPanelContainerComponent implements OnInit {
     private scopeOneRecordsService: ScopeOneRecordsService,
     private scopeTwoRecordsService: ScopeTwoRecordsService,
     private fugitiveEmissionRecordsService: RegistroemisionesFugasService,
-    private emisionesElectricasBuildingService:EmisionesElectricasEdificiosService)
+    private emisionesElectricasComercializadorasService:EmisionesElectricaComercializadorasService)
 
     {
       this.token = this.authService.getToken() || ''
@@ -938,7 +938,7 @@ heatSteamColdCompAir(chartType: keyof ChartTypeRegistry, scop2DataSteam: any): v
   }
 
   getEmisionesComercializadoras(year:number) {
-    this.emisionesElectricasBuildingService.getByYear(year)
+    this.emisionesElectricasComercializadorasService.getByYear(year)
     .subscribe((item:any) => {
       this.comercializadorasElectricas = item
     })

@@ -1,7 +1,14 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
+
+export interface EmisionesLeakRefrigerantGases {
+  id: number;         // Identificador único de la emisión
+  Nombre: string;     // Nombre descriptivo de la emisión
+  FormulaQuimica: string;
+  PCA_6AR: number;
+}
 
 @Injectable({
   providedIn: 'root',
@@ -33,7 +40,7 @@ export class LeakrefrigerantgasesService {
 
   // POST para crear un nuevo registro
   create(data: any): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/emisionesfugitivasclimrefr`, data).pipe(
+    return this.http.post<any>(`${this.apiUrl}/emisionesfugitivasclimrefr/create`, data).pipe(
       catchError((error) => {
         console.error('Error en POST:', error);
         throw error;
@@ -43,7 +50,7 @@ export class LeakrefrigerantgasesService {
 
   // PUT para actualizar un registro existente
   update(id: string, data: any): Observable<any> {
-    return this.http.put<any>(`${this.apiUrl}/emisionesfugitivasclimrefr/${id}`, data).pipe(
+    return this.http.put<any>(`${this.apiUrl}/emisionesfugitivasclimrefr/update/${id}`, data).pipe(
       catchError((error) => {
         console.error('Error en PUT:', error);
         throw error;
@@ -53,7 +60,7 @@ export class LeakrefrigerantgasesService {
 
   // DELETE para eliminar un registro
   delete(id: string): Observable<any> {
-    return this.http.delete<any>(`${this.apiUrl}/emisionesfugitivasclimrefr/${id}`).pipe(
+    return this.http.delete<any>(`${this.apiUrl}/emisionesfugitivasclimrefr/delete/${id}`).pipe(
       catchError((error) => {
         console.error('Error en DELETE:', error);
         throw error;

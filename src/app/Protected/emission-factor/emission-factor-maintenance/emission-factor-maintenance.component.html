@@ -17,13 +17,13 @@
   <mat-tab label="{{'electricalEmissions' | translate}}">
     <button mat-menu-item (click)="openDialog(14)"> 
     <mat-icon style="color: #ff9310;">info</mat-icon>{{"electricalEmissions" | translate}}</button>
-    <app-data-table></app-data-table>
+    <app-electrical-traders-emission-factor-maintenance></app-electrical-traders-emission-factor-maintenance>
   </mat-tab>
 
   <mat-tab label="{{'fugitiveEmissions' | translate}}">
     <button mat-menu-item (click)="openDialog(15)"> 
     <mat-icon style="color: #ff9310;">info</mat-icon>{{"fugitiveEmissions" | translate}}</button>
-    <app-data-table></app-data-table>
+    <app-fugitive-emission-factor-maintenance></app-fugitive-emission-factor-maintenance>
   </mat-tab>
 
   <mat-tab label="{{'vehicleEmissions' | translate}}">

@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, OnChanges, SimpleChanges } from '@angular/core';
-import { EmisionesElectricasEdificiosService } from '../../../services/emisiones-electricas-edificios.service';
+import { EmisionesElectricaComercializadorasService } from '../../../services/emisiones-electricas-comercializadoras.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent } from '../../../dialog/dialog.component';
@@ -31,7 +31,7 @@ export class ElectricityComponent implements OnInit, OnChanges {
   cargando:boolean = false
 
   constructor(private fb: FormBuilder, 
-      private emisionesElectricasservice: EmisionesElectricasEdificiosService,
+      private emisionesElectricasservice: EmisionesElectricaComercializadorasService,
       private scopeTwoRecordsService: ScopeTwoRecordsService,
       private mesesService: MesesService,
       private jwtHelper: JwtHelperService,

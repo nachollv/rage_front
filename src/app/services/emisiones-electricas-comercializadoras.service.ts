@@ -4,10 +4,17 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
+export interface EmisionesComercializadoraElectrica {
+  id: number;         // Identificador único de la emisión
+  nombreComercial: string;     // Nombre descriptivo de la emisión
+  kg_CO2_kWh: string;
+  year: number;
+}
+
 @Injectable({
   providedIn: 'root'
 })
-export class EmisionesElectricasEdificiosService {
+export class EmisionesElectricaComercializadorasService {
 
   private apiUrl = 'https://rage.industrialocalsostenible.com/public/index.php';
 
@@ -29,42 +36,42 @@ export class EmisionesElectricasEdificiosService {
 
   // Crear una nueva emisión eléctrica
   create(data: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/emisioneselectricasedificios/create`, data).pipe(
+    return this.http.post(`${this.apiUrl}/emisioneselectricascomercializadoras/create`, data).pipe(
       catchError(this.handleError)
     );
   }
 
   // Leer todas las emisiones eléctricas
   getAll(): Observable<any> {
-    return this.http.get(`${this.apiUrl}/emisioneselectricasedificios`).pipe(
+    return this.http.get(`${this.apiUrl}/emisioneselectricascomercializadoras`).pipe(
       catchError(this.handleError)
     );
   }
 
   // Leer una emisión eléctrica específica por ID
   getById(id: string): Observable<any> {
-    return this.http.get(`${this.apiUrl}/emisioneselectricasedificios/${id}`).pipe(
+    return this.http.get(`${this.apiUrl}/emisioneselectricascomercializadoras/${id}`).pipe(
       catchError(this.handleError)
     );
   }
 
     // Leer una emisión eléctrica específica por ID
     getByYear(year: number): Observable<any> {
-      return this.http.get(`${this.apiUrl}/emisioneselectricasedificios/activityYear/${year}`).pipe(
+      return this.http.get(`${this.apiUrl}/emisioneselectricascomercializadoras/activityYear/${year}`).pipe(
         catchError(this.handleError)
       );
     }
 
   // Actualizar una emisión eléctrica específica por ID
   update(id: string, data: any): Observable<any> {
-    return this.http.put(`${this.apiUrl}/emisioneselectricasedificios/update/${id}`, data).pipe(
+    return this.http.put(`${this.apiUrl}/emisioneselectricascomercializadoras/update/${id}`, data).pipe(
       catchError(this.handleError)
     );
   }
 
   // Eliminar una emisión eléctrica específica por ID
   delete(id: string): Observable<any> {
-    return this.http.delete(`${this.apiUrl}/emisioneselectricasedificios/delete/${id}`).pipe(
+    return this.http.delete(`${this.apiUrl}/emisioneselectricascomercializadoras/delete/${id}`).pipe(
       catchError(this.handleError)
     );
   }

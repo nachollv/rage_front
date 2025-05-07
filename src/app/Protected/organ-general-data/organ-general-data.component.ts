@@ -15,7 +15,7 @@ import { SectoresEconomicosService } from '../../services/sectores.economicos.se
 import { activityIndexDTO } from '../../models/activityIndex.dto';
 import { actRanquingDTO } from '../../models/actRanquing.dto';
 import { MatCheckboxChange } from '@angular/material/checkbox';
-import { EmisionesElectricasEdificiosService } from '../../services/emisiones-electricas-edificios.service';
+import { EmisionesElectricaComercializadorasService } from '../../services/emisiones-electricas-comercializadoras.service';
 
 @Component({
   selector: 'app-organ-general-data',
@@ -55,7 +55,7 @@ export class OrganGeneralDataComponent implements OnInit {
     constructor(private fb: FormBuilder, private snackBar: MatSnackBar,
       private jwtHelper: JwtHelperService,
       private authService: AuthService, 
-      private emisionesElectricasservice: EmisionesElectricasEdificiosService,
+      private emisionesElectricasService: EmisionesElectricaComercializadorasService,
       private organizationService: OrganizacionService,
       private productionCenterService: ProductioncenterService,
       private sectoresEconomicos: SectoresEconomicosService,
@@ -145,7 +145,7 @@ export class OrganGeneralDataComponent implements OnInit {
     }
 
     getAllEmisionesbyYear(year:number): void {
-      this.emisionesElectricasservice.getByYear(year).subscribe({
+      this.emisionesElectricasService.getByYear(year).subscribe({
         next: (data) => {
           this.comercializadorasElectricas = data;
         },

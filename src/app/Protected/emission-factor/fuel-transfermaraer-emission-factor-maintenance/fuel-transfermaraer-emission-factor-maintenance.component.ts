@@ -9,6 +9,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   templateUrl: './fuel-transfermaraer-emission-factor-maintenance.component.html',
   styleUrl: './fuel-transfermaraer-emission-factor-maintenance.component.scss'
 })
+
 export class FuelTransfermaraerEmissionFactorMaintenanceComponent {
   displayedColumns: string[] = ['year', 'FuelType', 'Categoria', 'CH4_g_ud', 'CO2_kg_ud', 'N2O_g_ud', 'delete']
   data = [{ }]

@@ -1,6 +1,6 @@
 import { Component, Input, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { ScopeTwoRecordsService } from '../../../services/scope-two-records.service';
-import { EmisionesElectricasEdificiosService } from '../../../services/emisiones-electricas-edificios.service';
+import { EmisionesElectricaComercializadorasService } from '../../../services/emisiones-electricas-comercializadoras.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent } from '../../../dialog/dialog.component';
@@ -29,7 +29,7 @@ export class ElectricityVehiclesComponent implements OnInit, OnChanges{
 
   constructor(private fb: FormBuilder, 
     private scopeTWoRecordsService: ScopeTwoRecordsService,
-    private emisionesElectricasservice: EmisionesElectricasEdificiosService,
+    private emisionesElectricasService: EmisionesElectricaComercializadorasService,
     private mesesService: MesesService,
     private jwtHelper: JwtHelperService,
     private authService: AuthService,
@@ -61,7 +61,7 @@ export class ElectricityVehiclesComponent implements OnInit, OnChanges{
     }
   }
   getAllEmissionsbyYear(year:number): void {
-    this.emisionesElectricasservice.getByYear(year).subscribe({
+    this.emisionesElectricasService.getByYear(year).subscribe({
       next: (data) => {
         this.comercializadorasElectricas = data;
         console.log('Emisiones obtenidas:', this.comercializadorasElectricas);
@@ -77,7 +77,7 @@ export class ElectricityVehiclesComponent implements OnInit, OnChanges{
     this.scopeTWoRecordsService.getRecordsByFilters(this.activityYear, this.productionCenter, this.organizacionID, 'electricityVehicles')
     .subscribe({
       next: (itemsElectricity: any) => {
-        this.emisionesElectricasservice.getByYear(this.activityYear)
+        this.emisionesElectricasService.getByYear(this.activityYear)
           .subscribe((comercializadora:any) => {
             this.comercializadorasElectricas = comercializadora
             const meses = this.mesesService.getMeses();

@@ -62,6 +62,8 @@ import { RaquingsByProductionCenterComponent } from './Protected/raquings-by-pro
 import { EmissionFactorMaintenanceComponent } from './Protected/emission-factor/emission-factor-maintenance/emission-factor-maintenance.component';
 import { FuelEmissionFactorMaintenanceComponent } from './Protected/emission-factor/fuel-emission-factor-maintenance/fuel-emission-factor-maintenance.component';
 import { FuelTransfermaraerEmissionFactorMaintenanceComponent } from './Protected/emission-factor/fuel-transfermaraer-emission-factor-maintenance/fuel-transfermaraer-emission-factor-maintenance.component';
+import { ElectricalTradersEmissionFactorMaintenanceComponent } from './Protected/emission-factor/electrical-traders-emission-factor-maintenance/electrical-traders-emission-factor-maintenance.component';
+import { FugitiveEmissionFactorMaintenanceComponent } from './Protected/emission-factor/fugitive-emission-factor-maintenance/fugitive-emission-factor-maintenance.component';
 
 // Función para cargar los archivos de traducción
 export function HttpLoaderFactory(http: HttpClient) {
@@ -104,6 +106,8 @@ export function tokenGetter() {
     EmissionFactorMaintenanceComponent,
     FuelEmissionFactorMaintenanceComponent,
     FuelTransfermaraerEmissionFactorMaintenanceComponent,
+    ElectricalTradersEmissionFactorMaintenanceComponent,
+    FugitiveEmissionFactorMaintenanceComponent,
   ],
   imports: [
     BrowserModule,
