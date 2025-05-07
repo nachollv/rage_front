@@ -48,19 +48,19 @@ export class FuelDataService {
     }
   
     create(data: EmisionesCombustibles): Observable<EmisionesCombustibles> {
-      return this.http.post<EmisionesCombustibles>(`${this.apiUrl}/create`, data).pipe(
+      return this.http.post<EmisionesCombustibles>(`${this.apiUrl}/emisionescombustibles/create`, data).pipe(
         catchError(this.handleError)
       );
     }
   
     update(id: number, data: EmisionesCombustibles): Observable<EmisionesCombustibles> {
-      return this.http.put<EmisionesCombustibles>(`${this.apiUrl}/${id}`, data).pipe(
+      return this.http.put<EmisionesCombustibles>(`${this.apiUrl}/emisionescombustibles/update/${id}`, data).pipe(
         catchError(this.handleError)
       );
     }
   
     delete(id: number): Observable<void> {
-      return this.http.delete<void>(`${this.apiUrl}/${id}`).pipe(
+      return this.http.delete<void>(`${this.apiUrl}/emisionescombustibles/delete/${id}`).pipe(
         catchError(this.handleError)
       );
     }
