@@ -24,10 +24,10 @@ const routes: Routes = [
   { path: 'scope/:scope', component: ConsumptionComponent, canActivate: [AuthGuard] },
   { path: 'organ-gen-data', component: OrganGeneralDataComponent, canActivate: [AuthGuard] },
   { path: 'dashboard', component: ControlPanelContainerComponent },
-  { path: 'ranquing', component: RaquingsByProductionCenterComponent},
+  { path: 'ranquing', component: RaquingsByProductionCenterComponent },
   { path: 'electricity-consumption', component: ElectricityComponent, canActivate: [AuthGuard] },
   { path: 'recover-password', component: RecoveryPasswordComponent },
-  { path: 'emission-factor-maintenance', component: EmissionFactorMaintenanceComponent},
+  { path: 'emission-factor-maintenance', component: EmissionFactorMaintenanceComponent, canActivate: [AuthGuard] },
   { path: '*', redirectTo: '/login', pathMatch: 'full' },
   { path: '**', component: PageNotFoundComponent },
 
