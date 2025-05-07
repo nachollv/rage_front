@@ -60,9 +60,7 @@ export class RaquingsByProductionCenterComponent implements OnInit, OnChanges {
     this.getProductionCenterData(this.productionCenterID)
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    
-  }
+  ngOnChanges(changes: SimpleChanges): void { }
   
     getProductionCenterData(productionCenterID?: number) {
       if (productionCenterID) {

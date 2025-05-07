@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent } from '../../dialog/dialog.component';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-footer',
@@ -12,13 +13,18 @@ export class FooterComponent {
   role: string = 'User'
   userName: string = ''
   decodedToken: any
+  token: string = ''
+  isExpiredToken: boolean = false
 
-  constructor( private jwtHelper: JwtHelperService, public dialog: MatDialog ) {}
+  constructor( private jwtHelper: JwtHelperService, 
+              private authService: AuthService, 
+              public dialog: MatDialog ) {}
 
   ngOnInit(): void {
-    const token = localStorage.getItem('authToken')
-    if (token) {
-      this.decodedToken = this.jwtHelper.decodeToken(token)
+    this.token = this.authService.getToken() || ''
+    this.isExpiredToken = this.jwtHelper.isTokenExpired(this.token)
+    if ( !this.isExpiredToken ) {
+      this.decodedToken = this.jwtHelper.decodeToken(this.token)
       this.role = this.decodedToken.data.rol
       this.userName = this.decodedToken.data.nombre
     } else {
