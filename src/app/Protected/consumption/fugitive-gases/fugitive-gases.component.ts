@@ -146,13 +146,16 @@ export class FugitiveGasesComponent implements OnInit, OnChanges {
     formValue.id_empresa = this.organizacionID
     formValue.nombre_gas_mezcla = formValue.nombre_gas_mezcla.id;
 
-     this.registerLeakService.createRegistro(formValue).subscribe({
-      next: (response) => { 
+     this.registerLeakService.createRegistro(formValue)
+     .subscribe(
+      (response: any) => {
         this.showSnackBar(response.message)
         this.emisionesForm.reset()
         this.getFugitiveEmisRegisters()},
-      error: (err) => { this.showSnackBar("Error al crear el registro "+err.message) } })
-
+      (error: any) => {
+        this.showSnackBar('Error al crear:' + error.message);
+      }
+      );
   }
 
   private showSnackBar(error: string): void {

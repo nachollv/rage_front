@@ -96,13 +96,14 @@ export class ControlPanelContainerComponent implements OnInit {
        if (!this.isExpiredToken) {
         this.rol  = this.jwtHelper.decodeToken(this.token).data.rol
         if (this.rol === 'Admin') {
-            this.organizacionID = this.jwtHelper.decodeToken(this.token).data.id_empresa
             this.prodCenterID = undefined
-        } else  {
+            this.organizacionID = this.jwtHelper.decodeToken(this.token).data.id_empresa
+        } else {
             this.prodCenterID = this.jwtHelper.decodeToken(this.token).data.id
             this.organizacionID = undefined
         }
        }
+       console.log ("rol", this.rol, this.prodCenterID, this.organizacionID)
       }
     }
 
@@ -120,7 +121,7 @@ export class ControlPanelContainerComponent implements OnInit {
     await this.getEmisionesComercializadoras(this.filterForm.value.activityYear)
     await this.getScopeOneRecords(this.filterForm.value.activityYear, this.prodCenterID, this.organizacionID)
     await this.getScopeTwoRecords(this.filterForm.value.activityYear, this.prodCenterID, this.organizacionID)
-    await this.getFugitiveEmissionRecords(this.filterForm.value.activityYear, this.organizacionID)
+    await this.getFugitiveEmissionRecords(this.filterForm.value.activityYear, this.prodCenterID, this.organizacionID)
   }
 
 onYearFilterChange(event: any): void {
@@ -162,11 +163,12 @@ async getScopeOneRecords(activityYear: number, prodCenterID?: number, organizati
                 this.showSnackBar('Error al obtener registros de Alcance 1.');
             }
         }
-    }  
-getFugitiveEmissionRecords(activityYear: number, prodCenterID?: number): void {
-    this.fugitiveEmissionRecordsService.getRegistroByFilters(activityYear, prodCenterID)
+}
+getFugitiveEmissionRecords(activityYear: number, prodCenterID?: number, organizationID?: number): void {
+    this.fugitiveEmissionRecordsService.getRegistroByFilters(activityYear, prodCenterID, organizationID)
       .subscribe((response: any) => {
         this.fugitiveEmissionsRecords = response.data;
+        console.log ( "this.fugitiveEmissionsRecords", this.fugitiveEmissionsRecords)
         const meses = this.mesesService.getMeses();
         this.fugitiveEmissionsRecords.forEach((registro: any) => {
           const resultado = meses.find((mes) => mes.key === registro.periodoFactura)

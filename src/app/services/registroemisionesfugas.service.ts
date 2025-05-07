@@ -33,8 +33,8 @@ export class RegistroemisionesFugasService {
   }
 
   // Leer un registro por año de cálculo, centro de producción
-  getRegistroByFilters(calculationYear: number, productionCenter?: number): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/registroemisionesfugas/activityYear/${calculationYear}/productionCenter/${productionCenter}`)
+  getRegistroByFilters(activityYear: number, productionCenter?: number, organizationID?: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/registroemisionesfugas/activityYear/${activityYear}/productionCenter/${productionCenter}/${organizationID}`)
     .pipe(
       catchError(this.handleError))
   }

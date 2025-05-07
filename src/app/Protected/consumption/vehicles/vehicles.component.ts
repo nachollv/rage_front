@@ -150,7 +150,7 @@ onSubmit() {
         (fuel: any) => {
           this.showSnackBar(fuel.message);
           this.getScopeOneRecords(this.activityYear, this.productionCenter, this.organizacionID, 'roadTransp')
-          /* this.vehicleForm.reset() */
+          this.vehicleForm.reset()
         },
         (error: any) => {
           this.showSnackBar('Error al crear:' + error.message);
