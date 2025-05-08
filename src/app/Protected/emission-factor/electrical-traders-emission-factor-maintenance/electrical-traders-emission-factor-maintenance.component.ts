@@ -71,7 +71,6 @@ export class ElectricalTradersEmissionFactorMaintenanceComponent {
         registro['Comercializadora'] = registro.nombreComercial
         registro['kg CO₂/kWh'] = registro.kg_CO2_kWh // Se usa el subíndice Unicode '₂'
       })
-      console.log (this.electrTraders)
       this.dataSource = new MatTableDataSource(this.electrTraders)
     })
   }

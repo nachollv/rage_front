@@ -11,7 +11,7 @@ import { VehiclesFuelConsumptionService, vehicleFuel } from '../../../services/v
 })
 
 export class VehicleEmissionFactorMaintenanceComponent {
-  displayedColumns: string[] = ['year', 'Categoria', 'FuelType', 'CO2_kg_ud', 'N2O_g_ud', 'CH4_g_ud', 'delete']
+  displayedColumns: string[] = ['Año actividad', 'Categoria de vehículo', 'Tipo de combustible o aditivo', 'kg CO₂/ud', 'g CH₄/ud', 'g N₂O/ud', 'delete']
   data = [{ }]
   dataSource = new MatTableDataSource<any>(this.data)
   emissionForm: FormGroup;
@@ -68,6 +68,15 @@ export class VehicleEmissionFactorMaintenanceComponent {
       this.vehicleFuelConsumptionService.getAll()
       .subscribe((fuel:any) => {
         this.fuelTypes = fuel
+        this.fuelTypes.forEach((registro: any) => {
+          registro.delete = true
+          registro['Año actividad'] = registro.year
+          registro['Categoria de vehículo'] = registro.Categoria
+          registro['Tipo de combustible o aditivo'] = registro.FuelType
+          registro['kg CO₂/ud'] = registro.CO2_kg_ud // Se usa el subíndice Unicode '₂'
+          registro['g CH₄/ud'] = registro.CH4_g_ud // También aplicando subíndice en CH₄
+          registro['g N₂O/ud'] = registro.N2O_g_ud // Aplicando subíndice en N₂O
+        })
         this.dataSource = new MatTableDataSource(this.fuelTypes)
       })
     }

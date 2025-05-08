@@ -70,7 +70,6 @@ export class FugitiveEmissionFactorMaintenanceComponent {
             registro['Fórmula química'] = registro.FormulaQuimica
             registro['PCA'] = registro.PCA_6AR
           })
-          console.log (this.feGases)
           this.dataSource = new MatTableDataSource(this.feGases)
         })
       }
