@@ -10,13 +10,13 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrl: './fugitive-emission-factor-maintenance.component.scss'
 })
 export class FugitiveEmissionFactorMaintenanceComponent {
-  displayedColumns: string[] = ['Nombre', 'FormulaQuimica', 'PCA_6AR', 'delete']
+  displayedColumns: string[] = ['Nombre del gas o de la mezcla', 'Fórmula química', 'PCA', 'delete']
   data = [{ }]
   dataSource = new MatTableDataSource<any>(this.data)
   emissionForm: FormGroup;
   submitted = false;
   loading = false;
-  feGases: any[] = []
+  feGases: EmisionesLeakRefrigerantGases[] = []
 
     constructor(private fb: FormBuilder, private leakRefrigerantGasesService: LeakrefrigerantgasesService,
       private snackBar: MatSnackBar) {
@@ -62,8 +62,15 @@ export class FugitiveEmissionFactorMaintenanceComponent {
     
       getLeakGases() {
         this.leakRefrigerantGasesService.getAll()
-        .subscribe((traders:any) => {
+        .subscribe((traders:EmisionesLeakRefrigerantGases[]) => {
           this.feGases = traders
+          this.feGases.forEach((registro: any) => {
+            registro.delete = true
+            registro['Nombre del gas o de la mezcla'] = registro.Nombre
+            registro['Fórmula química'] = registro.FormulaQuimica
+            registro['PCA'] = registro.PCA_6AR
+          })
+          console.log (this.feGases)
           this.dataSource = new MatTableDataSource(this.feGases)
         })
       }

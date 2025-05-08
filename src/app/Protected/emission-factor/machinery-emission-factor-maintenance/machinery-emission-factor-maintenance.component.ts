@@ -68,7 +68,6 @@ export class MachineryEmissionFactorMaintenanceComponent {
     this.machineryEmissionsService.getEmisiones()
     .subscribe((machinery:any) => {
       this.machineryEmissions = machinery
-      console.log ("this.machineryEmissions", this.machineryEmissions)
       this.dataSource = new MatTableDataSource(this.machineryEmissions)
     })
   }
