@@ -11,7 +11,7 @@ import { EmisionesMachineryService, machineryEmissions } from '../../../services
   styleUrl: './machinery-emission-factor-maintenance.component.scss'
 })
 export class MachineryEmissionFactorMaintenanceComponent {
-  displayedColumns: string[] = ['year', 'Categoria', 'FuelType', 'CO2_kg_l', 'N2O_g_l', 'CH4_g_l', 'delete']
+  displayedColumns: string[] = ['Año actividad', 'Categoría de vehículo', 'Tipo de combustible', 'kg CO₂/ud', 'g CH₄/ud', 'g N₂O/ud', 'delete']
   data = [{ }]
   dataSource = new MatTableDataSource<any>(this.data)
   emissionForm: FormGroup;
@@ -68,6 +68,16 @@ export class MachineryEmissionFactorMaintenanceComponent {
     this.machineryEmissionsService.getEmisiones()
     .subscribe((machinery:any) => {
       this.machineryEmissions = machinery
+      this.machineryEmissions.forEach((registro: any) => {
+        registro.delete = true
+        registro['Año actividad'] = registro.year
+        registro['Categoría de vehículo'] = registro.Categoria
+        registro['Tipo de combustible'] = registro.FuelType
+        registro['kg CO₂/ud'] = registro.CO2_kg_l // Se usa el subíndice Unicode '₂'
+        registro['g CH₄/ud'] = registro.CH4_g_l // También aplicando subíndice en CH₄
+        registro['g N₂O/ud'] = registro.N2O_g_l // Aplicando subíndice en N₂O
+      })
+      console.log (this.machineryEmissions)
       this.dataSource = new MatTableDataSource(this.machineryEmissions)
     })
   }
