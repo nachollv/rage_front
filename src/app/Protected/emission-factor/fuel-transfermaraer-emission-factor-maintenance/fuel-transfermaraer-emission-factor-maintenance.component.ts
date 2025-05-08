@@ -11,7 +11,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 
 export class FuelTransfermaraerEmissionFactorMaintenanceComponent {
-  displayedColumns: string[] = ['year', 'FuelType', 'Categoria', 'CH4_g_ud', 'CO2_kg_ud', 'N2O_g_ud', 'delete']
+  displayedColumns: string[] = ['Año actividad', 'Tipo de combustible',  'Categoria', 'kg CO₂/ud', 'g CH₄/ud', 'g N₂O/ud', 'delete']
   data = [{ }]
   dataSource = new MatTableDataSource<any>(this.data)
   emissionForm: FormGroup;
@@ -90,6 +90,14 @@ export class FuelTransfermaraerEmissionFactorMaintenanceComponent {
     this.transFerAerMarService.getEmisiones()
     .subscribe((fuel:any) => {
       this.fuelTypes = fuel
+      this.fuelTypes.forEach((registro: any) => {
+        registro.delete = true
+        registro['Año actividad'] = registro.year
+        registro['Tipo de combustible'] = registro.Combustible
+        registro['kg CO₂/ud'] = registro.CO2_kg_ud // Se usa el subíndice Unicode '₂'
+        registro['g CH₄/ud'] = registro.CH4_g_ud // También aplicando subíndice en CH₄
+        registro['g N₂O/ud'] = registro.N2O_g_ud // Aplicando subíndice en N₂O
+      })
       this.dataSource = new MatTableDataSource(this.fuelTypes)
     })
   }
