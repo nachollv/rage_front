@@ -28,8 +28,8 @@ export class FugitiveEmissionFactorMaintenanceComponent {
     }
 
     ngOnInit(): void {
-        this.getLeakGases()
-      }
+      this.getLeakGases()
+    }
     
       onSubmit(): void {
         this.submitted = true;
@@ -64,7 +64,6 @@ export class FugitiveEmissionFactorMaintenanceComponent {
         this.leakRefrigerantGasesService.getAll()
         .subscribe((traders:any) => {
           this.feGases = traders
-          console.log (this.feGases)
           this.dataSource = new MatTableDataSource(this.feGases)
         })
       }

@@ -1,0 +1,62 @@
+<form [formGroup]="emissionForm" (ngSubmit)="onSubmit()" class="form-container">
+  <mat-form-field appearance="outline">
+    <mat-label>Tipo de Combustible</mat-label>
+    <input matInput formControlName="FuelType" placeholder="Ejemplo: Gasolina">
+    <mat-error *ngIf="emissionForm.get('FuelType')?.hasError('required')">
+      Este campo es obligatorio.
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Categoría</mat-label>
+    <input matInput formControlName="Categoria" placeholder="Ejemplo: Transporte">
+    <mat-error *ngIf="emissionForm.get('Categoria')?.hasError('required')">
+      La categoría es obligatoria.
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Año</mat-label>
+    <input matInput formControlName="year" type="number" placeholder="Ejemplo: 2025">
+    <mat-error *ngIf="emissionForm.get('year')?.hasError('pattern')">
+      Debe ser un año válido (4 dígitos).
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>CO2 (kg/ud)</mat-label>
+    <input matInput formControlName="CO2_kg_ud" type="number" step="0.01">
+    <mat-error *ngIf="emissionForm.get('CO2_kg_ud')?.hasError('min')">
+      Debe ser un número positivo.
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>CH4 (g/ud)</mat-label>
+    <input matInput formControlName="CH4_g_ud" type="number" step="0.01">
+    <mat-error *ngIf="emissionForm.get('CH4_g_ud')?.hasError('min')">
+      Debe ser un número positivo.
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>N2O (g/ud)</mat-label>
+    <input matInput formControlName="N2O_g_ud" type="number" step="0.01">
+    <mat-error *ngIf="emissionForm.get('N2O_g_ud')?.hasError('min')">
+      Debe ser un número positivo.
+    </mat-error>
+  </mat-form-field>
+
+  <button mat-raised-button color="primary" type="submit" [disabled]="emissionForm.invalid">Registrar</button>
+</form>
+
+<div *ngIf="emissionForm.invalid && emissionForm.touched" class="error-container">
+  <p>El formulario tiene errores:</p>
+  <ul>
+    <li *ngFor="let error of getFormErrors()">{{ error }}</li>
+  </ul>
+</div>
+
+
+<app-data-table [displayedColumns]="displayedColumns" [dataSource]="dataSource"></app-data-table>
+

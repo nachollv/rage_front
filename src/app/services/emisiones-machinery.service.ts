@@ -2,9 +2,20 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, catchError, throwError } from 'rxjs';
 
+export interface machineryEmissions {
+  id: number;         // Identificador único de la emisión
+  year: number;
+  FuelType: string;     // Nombre descriptivo de la emisión
+  Categoria: string;
+  CO2_kg_l: number;
+  CH4_g_l: number;
+  N2O_g_l: number;
+}
+
 @Injectable({
   providedIn: 'root'
 })
+
 export class EmisionesMachineryService {
 
   private apiUrl = 'https://rage.industrialocalsostenible.com/public/index.php';

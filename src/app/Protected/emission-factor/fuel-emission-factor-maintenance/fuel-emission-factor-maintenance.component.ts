@@ -30,7 +30,7 @@ export class FuelEmissionFactorMaintenanceComponent {
   }
 
   ngOnInit(): void {
-    this.getFuelConsumptions()
+    this.getFuelEmissions()
   }
 
   onSubmit(): void {
@@ -62,7 +62,7 @@ export class FuelEmissionFactorMaintenanceComponent {
     });
   }
 
-  getFuelConsumptions() {
+  getFuelEmissions() {
     this.fuelDataService.getAll()
     .subscribe((fuel:any) => {
       this.fuelTypes = fuel

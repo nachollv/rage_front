@@ -28,13 +28,13 @@
   <mat-tab label="{{'vehicleEmissions' | translate}}">
     <button mat-menu-item (click)="openDialog(16)">
       <mat-icon style="color: #ff9310;">info</mat-icon>{{"vehicleEmissions" | translate}}</button>
-      <app-data-table></app-data-table>
+      <app-vehicle-emission-factor-maintenance></app-vehicle-emission-factor-maintenance>
   </mat-tab>
 
   <mat-tab label="{{'machineryEmissions' | translate}}">
     <button mat-menu-item (click)="openDialog(17)">
       <mat-icon style="color: #ff9310;">info</mat-icon>{{"machineryEmissions" | translate}}</button>
-      <app-data-table></app-data-table>
+      <app-machinery-emission-factor-maintenance></app-machinery-emission-factor-maintenance>
   </mat-tab>
 </mat-tab-group>
 <section *ngIf="cargando" ngClass="spinner-container"><mat-spinner></mat-spinner></section>

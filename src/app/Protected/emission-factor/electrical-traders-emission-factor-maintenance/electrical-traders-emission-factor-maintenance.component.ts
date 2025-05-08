@@ -65,7 +65,6 @@ export class ElectricalTradersEmissionFactorMaintenanceComponent {
     this.comercializadoraElectricaService.getAll()
     .subscribe((traders:any) => {
       this.electrTraders = traders
-      console.log (this.electrTraders)
       this.dataSource = new MatTableDataSource(this.electrTraders)
     })
   }
