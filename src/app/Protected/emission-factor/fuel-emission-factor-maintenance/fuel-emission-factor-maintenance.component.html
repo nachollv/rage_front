@@ -1,17 +1,17 @@
 <form [formGroup]="emissionForm" (ngSubmit)="onSubmit()" class="form-container">
   <mat-form-field appearance="outline">
-    <mat-label>Combustible</mat-label>
-    <input matInput formControlName="Combustible" placeholder="Ejemplo: Gasolina">
-    <mat-error *ngIf="emissionForm.get('Combustible')?.invalid && emissionForm.get('Combustible')?.touched">
-      Combustible es obligatorio.
+    <mat-label>Año actividad</mat-label>
+    <input matInput formControlName="year" type="number" placeholder="Ejemplo: 2025">
+    <mat-error *ngIf="emissionForm.get('year')?.invalid && emissionForm.get('year')?.touched">
+      Año actividad debe ser un número válido de 4 dígitos.
     </mat-error>
   </mat-form-field>
 
   <mat-form-field appearance="outline">
-    <mat-label>Año</mat-label>
-    <input matInput formControlName="year" type="number" placeholder="Ejemplo: 2025">
-    <mat-error *ngIf="emissionForm.get('year')?.invalid && emissionForm.get('year')?.touched">
-      Año debe ser un número válido de 4 dígitos.
+    <mat-label>Tipo de combustible</mat-label>
+    <input matInput formControlName="Combustible" placeholder="Ejemplo: Gasolina">
+    <mat-error *ngIf="emissionForm.get('Combustible')?.invalid && emissionForm.get('Combustible')?.touched">
+      Tipo de combustible es obligatorio.
     </mat-error>
   </mat-form-field>
 

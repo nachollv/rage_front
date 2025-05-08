@@ -1,5 +1,13 @@
 <form [formGroup]="emissionForm" (ngSubmit)="onSubmit()" class="form-container">
   <mat-form-field appearance="outline">
+    <mat-label>Año actividad</mat-label>
+    <input matInput formControlName="year" type="number" placeholder="Ejemplo: 2025">
+    <mat-error *ngIf="emissionForm.get('year')?.hasError('pattern')">
+      Debe ser un año válido (4 dígitos).
+    </mat-error>
+  </mat-form-field>
+  
+  <mat-form-field appearance="outline">
     <mat-label>Categoría</mat-label>
     <mat-select formControlName="Categoria">
       <mat-option *ngFor="let type of ['Ferrocarril', 'Marítimo', 'Aéreo']" [value]="type">{{ type }}</mat-option>
@@ -14,14 +22,6 @@
     <input matInput formControlName="FuelType" placeholder="Ejemplo: Gasóleo">
     <mat-error *ngIf="emissionForm.get('FuelType')?.hasError('required')">
       El Tipo de combustible es obligatorio.
-    </mat-error>
-  </mat-form-field>
-
-  <mat-form-field appearance="outline">
-    <mat-label>Año</mat-label>
-    <input matInput formControlName="year" type="number" placeholder="Ejemplo: 2025">
-    <mat-error *ngIf="emissionForm.get('year')?.hasError('pattern')">
-      Debe ser un año válido (4 dígitos).
     </mat-error>
   </mat-form-field>
 
