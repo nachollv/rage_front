@@ -70,6 +70,28 @@ export class FuelEmissionFactorMaintenanceComponent {
     })
   }
 
+  getFormErrors(): string[] {
+    const errors: string[] = [];
+    Object.keys(this.emissionForm.controls).forEach(key => {
+      const controlErrors = this.emissionForm.get(key)?.errors;
+      if (controlErrors) {
+        Object.keys(controlErrors).forEach(errorKey => {
+          errors.push(`Error en ${key}: ${this.getErrorMessage(errorKey, key)}`);
+        });
+      }
+    });
+    return errors;
+  }
+
+  getErrorMessage(errorType: string, fieldName: string): string {
+    const errorMessages: { [key: string]: string } = {
+      required: `${fieldName} es obligatorio.`,
+      pattern: `${fieldName} debe tener el formato correcto.`,
+      min: `${fieldName} debe ser un número positivo.`,
+    };
+    return errorMessages[errorType] || 'Error desconocido.';
+  }
+
   private showSnackBar(msg: string): void {
     this.snackBar.open(msg, 'Close', {
       duration: 15000,

@@ -32,12 +32,12 @@
   <button mat-raised-button color="primary" type="submit" [disabled]="emissionForm.invalid">Registrar</button>
 </form>
 
-<div *ngIf="emissionForm.invalid && emissionForm.touched" class="error-container">
+<section *ngIf="emissionForm.invalid && emissionForm.touched" class="error-container">
   <p>El formulario tiene errores:</p>
   <ul>
     <li *ngFor="let error of getFormErrors()">{{ error }}</li>
   </ul>
-</div>
+</section>
 
 
 <app-data-table [displayedColumns]="displayedColumns" [dataSource]="dataSource"></app-data-table>

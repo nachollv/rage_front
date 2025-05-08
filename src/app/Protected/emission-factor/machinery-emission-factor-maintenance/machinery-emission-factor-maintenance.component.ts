@@ -11,7 +11,7 @@ import { EmisionesMachineryService, machineryEmissions } from '../../../services
   styleUrl: './machinery-emission-factor-maintenance.component.scss'
 })
 export class MachineryEmissionFactorMaintenanceComponent {
-  displayedColumns: string[] = ['year', 'Categoria', 'FuelType', 'CO2_kg_ud', 'N2O_g_ud', 'CH4_g_ud', 'delete']
+  displayedColumns: string[] = ['year', 'Categoria', 'FuelType', 'CO2_kg_l', 'N2O_g_l', 'CH4_g_l', 'delete']
   data = [{ }]
   dataSource = new MatTableDataSource<any>(this.data)
   emissionForm: FormGroup;
