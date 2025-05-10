@@ -11,8 +11,6 @@ export interface vehicleFuel {
     CO2_kg_ud: number;
     CH4_g_ud: number;
     N2O_g_ud: number;
-    cantidad: number;   // Cantidad de emisiones (por ejemplo, en toneladas)
-    fecha: string;      // Fecha de registro de la emisión en formato ISO (YYYY-MM-DD)
   }
   
   @Injectable({
@@ -54,19 +52,19 @@ export interface vehicleFuel {
     }
   
     create(data: vehicleFuel): Observable<vehicleFuel> {
-      return this.http.post<vehicleFuel>(`${this.apiUrl}/emisionescombustiblesvehiculos/vehicleFuel`, data).pipe(
+      return this.http.post<vehicleFuel>(`${this.apiUrl}/emisionescombustiblesvehiculos/create`, data).pipe(
         catchError(this.handleError)
       );
     }
   
     update(id: number, data: vehicleFuel): Observable<vehicleFuel> {
-      return this.http.put<vehicleFuel>(`${this.apiUrl}/emisionescombustiblesvehiculos/vehicleFuel/${id}`, data).pipe(
+      return this.http.put<vehicleFuel>(`${this.apiUrl}/emisionescombustiblesvehiculos/update/${id}`, data).pipe(
         catchError(this.handleError)
       );
     }
   
     delete(id: number): Observable<void> {
-      return this.http.delete<void>(`${this.apiUrl}/${id}`).pipe(
+      return this.http.delete<void>(`${this.apiUrl}/emisionescombustiblesvehiculos/delete/${id}`).pipe(
         catchError(this.handleError)
       );
     }

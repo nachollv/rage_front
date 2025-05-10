@@ -1,7 +1,7 @@
 <form [formGroup]="emissionForm" (ngSubmit)="onSubmit()" class="form-container">
   <mat-form-field appearance="outline">
-    <mat-label>Nombre</mat-label>
-    <input matInput formControlName="Nombre" placeholder="Ejemplo: Metano">
+    <mat-label>Nombre del gas o de la mezcla</mat-label>
+    <input matInput formControlName="Nombre" placeholder="Ejemplo: HFC-23">
     <mat-error *ngIf="emissionForm.get('Nombre')?.hasError('required')">
       Este campo es obligatorio.
     </mat-error>
@@ -9,14 +9,14 @@
 
   <mat-form-field appearance="outline">
     <mat-label>Fórmula Química</mat-label>
-    <input matInput formControlName="FormulaQuimica" placeholder="Ejemplo: CH4">
+    <input matInput formControlName="FormulaQuimica" placeholder="Ejemplo: CH2F3">
     <mat-error *ngIf="emissionForm.get('FormulaQuimica')?.hasError('required')">
       La fórmula química es obligatoria.
     </mat-error>
   </mat-form-field>
 
   <mat-form-field appearance="outline">
-    <mat-label>PCA 6AR</mat-label>
+    <mat-label>PCA</mat-label>
     <input matInput formControlName="PCA_6AR" type="number" step="0.01">
     <mat-error *ngIf="emissionForm.get('PCA_6AR')?.hasError('required')">
       Este campo es obligatorio.
@@ -29,12 +29,12 @@
   <button mat-raised-button color="primary" type="submit" [disabled]="emissionForm.invalid">Registrar</button>
 </form>
 
-<div *ngIf="emissionForm.invalid && emissionForm.touched" class="error-container">
+<section *ngIf="emissionForm.invalid && emissionForm.touched" class="error-container">
   <p>El formulario tiene errores:</p>
   <ul>
     <li *ngFor="let error of getFormErrors()">{{ error }}</li>
   </ul>
-</div>
+</section>
 
 <app-data-table [displayedColumns]="displayedColumns" [dataSource]="dataSource"></app-data-table>
 

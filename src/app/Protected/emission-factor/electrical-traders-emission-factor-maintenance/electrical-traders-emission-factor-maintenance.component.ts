@@ -11,7 +11,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 
 export class ElectricalTradersEmissionFactorMaintenanceComponent {
-  displayedColumns: string[] = ['year', 'nombreComercial', 'kg_CO2_kWh', 'delete']
+  displayedColumns: string[] = ['Año actividad', 'Comercializadora', 'kg CO₂/kWh', 'delete']
   data = [{ }]
   dataSource = new MatTableDataSource<any>(this.data)
   emissionForm: FormGroup;
@@ -65,7 +65,12 @@ export class ElectricalTradersEmissionFactorMaintenanceComponent {
     this.comercializadoraElectricaService.getAll()
     .subscribe((traders:any) => {
       this.electrTraders = traders
-      console.log (this.electrTraders)
+      this.electrTraders.forEach((registro: any) => {
+        registro.delete = true
+        registro['Año actividad'] = registro.year
+        registro['Comercializadora'] = registro.nombreComercial
+        registro['kg CO₂/kWh'] = registro.kg_CO2_kWh // Se usa el subíndice Unicode '₂'
+      })
       this.dataSource = new MatTableDataSource(this.electrTraders)
     })
   }

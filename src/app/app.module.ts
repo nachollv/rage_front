@@ -64,6 +64,8 @@ import { FuelEmissionFactorMaintenanceComponent } from './Protected/emission-fac
 import { FuelTransfermaraerEmissionFactorMaintenanceComponent } from './Protected/emission-factor/fuel-transfermaraer-emission-factor-maintenance/fuel-transfermaraer-emission-factor-maintenance.component';
 import { ElectricalTradersEmissionFactorMaintenanceComponent } from './Protected/emission-factor/electrical-traders-emission-factor-maintenance/electrical-traders-emission-factor-maintenance.component';
 import { FugitiveEmissionFactorMaintenanceComponent } from './Protected/emission-factor/fugitive-emission-factor-maintenance/fugitive-emission-factor-maintenance.component';
+import { VehicleEmissionFactorMaintenanceComponent } from './Protected/emission-factor/vehicle-emission-factor-maintenance/vehicle-emission-factor-maintenance.component';
+import { MachineryEmissionFactorMaintenanceComponent } from './Protected/emission-factor/machinery-emission-factor-maintenance/machinery-emission-factor-maintenance.component';
 
 // Función para cargar los archivos de traducción
 export function HttpLoaderFactory(http: HttpClient) {
@@ -108,6 +110,8 @@ export function tokenGetter() {
     FuelTransfermaraerEmissionFactorMaintenanceComponent,
     ElectricalTradersEmissionFactorMaintenanceComponent,
     FugitiveEmissionFactorMaintenanceComponent,
+    VehicleEmissionFactorMaintenanceComponent,
+    MachineryEmissionFactorMaintenanceComponent,
   ],
   imports: [
     BrowserModule,

@@ -2,54 +2,61 @@
   <mat-form-field appearance="outline">
     <mat-label>Año actividad</mat-label>
     <input matInput formControlName="year" type="number" placeholder="Ejemplo: 2025">
-    <mat-error *ngIf="emissionForm.get('year')?.invalid && emissionForm.get('year')?.touched">
-      Año actividad debe ser un número válido de 4 dígitos.
+    <mat-error *ngIf="emissionForm.get('year')?.hasError('pattern')">
+      Debe ser un año válido (4 dígitos).
+    </mat-error>
+  </mat-form-field>
+  
+  <mat-form-field appearance="outline">
+    <mat-label>Tipo de Combustible</mat-label>
+    <input matInput formControlName="FuelType" placeholder="Ejemplo: Gasolina">
+    <mat-error *ngIf="emissionForm.get('FuelType')?.hasError('required')">
+      Este campo es obligatorio.
     </mat-error>
   </mat-form-field>
 
   <mat-form-field appearance="outline">
-    <mat-label>Tipo de combustible</mat-label>
-    <input matInput formControlName="Combustible" placeholder="Ejemplo: Gasolina">
-    <mat-error *ngIf="emissionForm.get('Combustible')?.invalid && emissionForm.get('Combustible')?.touched">
-      Tipo de combustible es obligatorio.
+    <mat-label>Categoría</mat-label>
+    <input matInput formControlName="Categoria" placeholder="Ejemplo: Transporte">
+    <mat-error *ngIf="emissionForm.get('Categoria')?.hasError('required')">
+      La categoría es obligatoria.
     </mat-error>
   </mat-form-field>
 
   <mat-form-field appearance="outline">
     <mat-label>CO₂ (kg/ud)</mat-label>
     <input matInput formControlName="CO2_kg_ud" type="number" step="0.01">
-    <mat-error *ngIf="emissionForm.get('CO2_kg_ud')?.invalid && emissionForm.get('CO2_kg_ud')?.touched">
-      CO₂ debe ser un número positivo.
+    <mat-error *ngIf="emissionForm.get('CO2_kg_ud')?.hasError('min')">
+      Debe ser un número positivo.
     </mat-error>
   </mat-form-field>
 
   <mat-form-field appearance="outline">
     <mat-label>CH₄ (g/ud)</mat-label>
     <input matInput formControlName="CH4_g_ud" type="number" step="0.01">
-    <mat-error *ngIf="emissionForm.get('CH4_g_ud')?.invalid && emissionForm.get('CH4_g_ud')?.touched">
-      CH₄ debe ser un número positivo.
+    <mat-error *ngIf="emissionForm.get('CH4_g_ud')?.hasError('min')">
+      Debe ser un número positivo.
     </mat-error>
   </mat-form-field>
 
   <mat-form-field appearance="outline">
     <mat-label>N₂O (g/ud)</mat-label>
     <input matInput formControlName="N2O_g_ud" type="number" step="0.01">
-    <mat-error *ngIf="emissionForm.get('N2O_g_ud')?.invalid && emissionForm.get('N2O_g_ud')?.touched">
-      N₂O debe ser un número positivo.
+    <mat-error *ngIf="emissionForm.get('N2O_g_ud')?.hasError('min')">
+      Debe ser un número positivo.
     </mat-error>
   </mat-form-field>
-
-  <div *ngIf="emissionForm.invalid && emissionForm.touched" class="error-message">
-    <p>El formulario contiene errores, por favor verifica los campos.</p>
-  </div>
 
   <button mat-raised-button color="primary" type="submit" [disabled]="emissionForm.invalid">Registrar</button>
 </form>
 
-<section *ngIf="emissionForm.invalid && emissionForm.touched" class="error-container">
+<div *ngIf="emissionForm.invalid && emissionForm.touched" class="error-container">
   <p>El formulario tiene errores:</p>
   <ul>
     <li *ngFor="let error of getFormErrors()">{{ error }}</li>
   </ul>
-</section>
+</div>
+
+
 <app-data-table [displayedColumns]="displayedColumns" [dataSource]="dataSource"></app-data-table>
+

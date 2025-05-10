@@ -38,14 +38,14 @@ export class ControlPanelContainerComponent implements OnInit {
   scopeOneRecords: any[] = [] // Lista de registros de Scope 1
   scopeTwoRecords: any[] = [] // Lista de registros de Scope 2
   fugitiveEmissionsRecords: any[] = []
-  displayedColumnsScope1FI: string[] = ['activity Year', 'Period', 'fuelType', 'activity Data']
-  displayedColumnsScope1RT: string[] = ['activity Year', 'Period', 'Categoría vehículo', 'fuelType', 'activity Data']
-  displayedColumnsScope1TransFerMarAe: string[] = ['activity Year', 'Period', 'Categoría vehículo', 'fuelType', 'activity Data']
-  displayedColumnsScope1MA: string[] = ['activity Year', 'Period', 'equipmentType', 'fuelType', 'activity Data']
-  displayedColumnsScope1FE: string[] = ['activity Year', 'Period', 'Gas/Mezcla', 'Capacidad', 'Recarga']
+  displayedColumnsScope1FI: string[] = ['activity Year', 'Period', 'fuelType', 'activity Data', 'total Emissions (tnCO₂eq)']
+  displayedColumnsScope1RT: string[] = ['activity Year', 'Period', 'Categoría vehículo', 'fuelType', 'activity Data', 'total Emissions (tnCO₂eq)']
+  displayedColumnsScope1TransFerMarAe: string[] = ['activity Year', 'Period', 'Categoría vehículo', 'fuelType', 'activity Data', 'total Emissions (tnCO₂eq)']
+  displayedColumnsScope1MA: string[] = ['activity Year', 'Period', 'equipmentType', 'fuelType', 'activity Data', 'total Emissions (tnCO₂eq)']
+  displayedColumnsScope1FE: string[] = ['activity Year', 'Period', 'Gas/Mezcla', 'Capacidad', 'Recarga', 'total Emissions (tnCO₂eq)']
 
-  displayedColumnsScope2: string[] = ['activity Year', 'Period', 'Comercializadora', 'activity Data']
-  displayedColumnsScope2Steam: string[] = ['activity Year', 'Period', 'Tipo de energía adquirida', 'activity Data']
+  displayedColumnsScope2: string[] = ['activity Year', 'Period', 'Comercializadora', 'activity Data', 'total Emissions (tnCO₂eq)']
+  displayedColumnsScope2Steam: string[] = ['activity Year', 'Period', 'Tipo de energía adquirida', 'activity Data', 'total Emissions (tnCO₂eq)']
 
   fuelTypes: { id: number; Combustible: string }[] = []
   vehicleCategories: { id: number; FuelType: string; Categoria: string }[] = []
@@ -144,6 +144,11 @@ async getScopeOneRecords(activityYear: number, prodCenterID?: number, organizati
                 registro['updated At'] = registro.updated_at;
                 registro.edit = false;
                 registro.delete = false;
+                const matchedFuel = this.fuelTypes.find((fuelItem: any) => fuelItem.id === registro.fuelType);
+                const co2 = registro.activityData * parseFloat((matchedFuel as any)?.CO2_kg_ud || '0');
+                const ch4 = registro.activityData * parseFloat((matchedFuel as any)?.CH4_g_ud || 0);
+                const n2o = registro.activityData * parseFloat((matchedFuel as any)?.NO2_g_ud || 0);
+                registro['total Emissions (tnCO₂eq)'] = '<strong>' + (co2 + (ch4 / 1000) * 25 + (n2o / 1000) * 298).toFixed(3).toString()+'</strong>';
             });
     
             if (this.scopeOneRecords.length > 0) {
