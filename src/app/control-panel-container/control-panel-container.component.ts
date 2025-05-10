@@ -38,10 +38,10 @@ export class ControlPanelContainerComponent implements OnInit {
   scopeOneRecords: any[] = [] // Lista de registros de Scope 1
   scopeTwoRecords: any[] = [] // Lista de registros de Scope 2
   fugitiveEmissionsRecords: any[] = []
-  displayedColumnsScope1FI: string[] = ['activity Year', 'Period', 'fuelType', 'activity Data', 'total Emissions (tnCO₂eq)']
-  displayedColumnsScope1RT: string[] = ['activity Year', 'Period', 'Categoría vehículo', 'fuelType', 'activity Data', 'total Emissions (tnCO₂eq)']
-  displayedColumnsScope1TransFerMarAe: string[] = ['activity Year', 'Period', 'Categoría vehículo', 'fuelType', 'activity Data', 'total Emissions (tnCO₂eq)']
-  displayedColumnsScope1MA: string[] = ['activity Year', 'Period', 'equipmentType', 'fuelType', 'activity Data', 'total Emissions (tnCO₂eq)']
+  displayedColumnsScope1FI: string[] = ['activity Year', 'Period', 'Combustible', 'activity Data', 'total Emissions (tnCO₂eq)']
+  displayedColumnsScope1RT: string[] = ['activity Year', 'Period', 'Categoria', 'Combustible', 'activity Data', 'total Emissions (tnCO₂eq)']
+  displayedColumnsScope1TransFerMarAe: string[] = ['activity Year', 'Period', 'Categoria', 'Combustible', 'activity Data', 'total Emissions (tnCO₂eq)']
+  displayedColumnsScope1MA: string[] = ['activity Year', 'Period', 'Categoria', 'fuelType', 'activity Data', 'total Emissions (tnCO₂eq)']
   displayedColumnsScope1FE: string[] = ['activity Year', 'Period', 'Gas/Mezcla', 'Capacidad', 'Recarga', 'total Emissions (tnCO₂eq)']
 
   displayedColumnsScope2: string[] = ['activity Year', 'Period', 'Comercializadora', 'activity Data', 'total Emissions (tnCO₂eq)']
@@ -104,7 +104,7 @@ export class ControlPanelContainerComponent implements OnInit {
         }
        }
       }
-    }
+}
 
   async ngOnInit(): Promise<void> {
 
@@ -112,31 +112,39 @@ export class ControlPanelContainerComponent implements OnInit {
       activityYear: [new Date().getFullYear()-2], // Por defecto, el año actual menos 2
     });
     Chart.register(...registerables);
-    await this.getFixedFuelConsumptions(this.filterForm.value.activityYear)
-    await this.getFuelConsumptions(this.filterForm.value.activityYear)
-    await this.getferMarAerConsumtions(this.filterForm.value.activityYear)
-    await this.getMachineryConsumtions(this.filterForm.value.activityYear)
-    await this.getEmisionesFugitivas()
-    await this.getEmisionesComercializadoras(this.filterForm.value.activityYear)
-    await this.getScopeOneRecords(this.filterForm.value.activityYear, this.prodCenterID, this.organizacionID)
+    this.getFixedFuelConsumptions(this.filterForm.value.activityYear)
+    this.getFuelConsumptions(this.filterForm.value.activityYear)
+    this.getferMarAerConsumtions(this.filterForm.value.activityYear)
+    this.getMachineryConsumtions(this.filterForm.value.activityYear)
+    this.getEmisionesFugitivas()
+    this.getEmisionesComercializadoras(this.filterForm.value.activityYear)
+
+    await this.getScopeOneRecordsFixed(this.filterForm.value.activityYear, this.prodCenterID, this.organizacionID)
+    await this.getScopeOneRecordsRoadTransp(this.filterForm.value.activityYear, this.prodCenterID, this.organizacionID)
+    await this.getScopeOneRecordsTranFerMaAer(this.filterForm.value.activityYear, this.prodCenterID, this.organizacionID)
+    await this.getScopeOneRecordsMachinery(this.filterForm.value.activityYear, this.prodCenterID, this.organizacionID)
+
     await this.getScopeTwoRecords(this.filterForm.value.activityYear, this.prodCenterID, this.organizacionID)
     await this.getFugitiveEmissionRecords(this.filterForm.value.activityYear, this.prodCenterID, this.organizacionID)
   }
 
 onYearFilterChange(event: any): void {
     const activityYear = event;
-    this.getScopeOneRecords(activityYear)
+    this.getScopeOneRecordsFixed(activityYear, this.prodCenterID, this.organizacionID)
+    this.getScopeOneRecordsRoadTransp(activityYear, this.prodCenterID, this.organizacionID)
+    this.getScopeOneRecordsTranFerMaAer(activityYear, this.prodCenterID, this.organizacionID)
+    this.getScopeOneRecordsMachinery(this.filterForm.value.activityYear, this.prodCenterID, this.organizacionID)
+
     this.getScopeTwoRecords(activityYear)
     this.getFugitiveEmissionRecords(activityYear)
 }
 
-async getScopeOneRecords(activityYear: number, prodCenterID?: number, organizationID?: number): Promise<void> {
+async getScopeOneRecordsFixed(activityYear: number, prodCenterID?: number, organizationID?: number): Promise<void> {
         try {
-            const response = await this.scopeOneRecordsService.getRecordsByFilters(activityYear, prodCenterID, organizationID).toPromise();
+            const response = await this.scopeOneRecordsService.getRecordsByFilters(activityYear, prodCenterID, organizationID, 'fixed').toPromise();
             this.scopeOneRecords = response.data;
             const meses = this.mesesService.getMeses();
-    
-            this.scopeOneRecords.forEach((registro: any) => {
+             this.scopeOneRecords.forEach((registro: any) => {
                 const resultado = meses.find((mes) => mes.key === registro.periodoFactura);
                 registro['Period'] = resultado?.value || 'desconocido';
                 registro['activity Data'] = registro.activityData;
@@ -148,14 +156,82 @@ async getScopeOneRecords(activityYear: number, prodCenterID?: number, organizati
                 const co2 = registro.activityData * parseFloat((matchedFuel as any)?.CO2_kg_ud || '0');
                 const ch4 = registro.activityData * parseFloat((matchedFuel as any)?.CH4_g_ud || 0);
                 const n2o = registro.activityData * parseFloat((matchedFuel as any)?.NO2_g_ud || 0);
-                registro['total Emissions (tnCO₂eq)'] = '<strong>' + (co2 + (ch4 / 1000) * 25 + (n2o / 1000) * 298).toFixed(3).toString()+'</strong>';
+                registro['total Emissions (tnCO₂eq)'] = (co2 + (ch4 / 1000) * 25 + (n2o / 1000) * 298).toFixed(3).toString();
             });
     
             if (this.scopeOneRecords.length > 0) {
+                this.dataSourceScope1FixedEmis = new MatTableDataSource( this.scopeOneRecords.filter((record: any) => record.activityType === 'fixed'));
                 await this.fixedInstChart('bar', this.scopeOneRecords.filter((record: any) => record.activityType === 'fixed'));
-                await this.roadTranspChart('bar', this.scopeOneRecords.filter((record: any) => record.activityType === 'roadTransp'));
+            } else {
+                this.showSnackBar('No hay registros con activityType "fixed".');
+            }
+        } catch (error: any) {
+            if (error.status === 404 && error.messages?.error === "No se encontraron registros con los parámetros proporcionados.") {
+                this.showSnackBar('No se encontraron registros con los parámetros proporcionados.');
+            } else {
+                this.showSnackBar('Error al obtener registros de Alcance 1.');
+            }
+        }
+}
+
+async getScopeOneRecordsRoadTransp(activityYear: number, prodCenterID?: number, organizationID?: number): Promise<void> {
+        try {
+            const response = await this.scopeOneRecordsService.getRecordsByFilters(activityYear, prodCenterID, organizationID, 'roadTransp').toPromise();
+            this.scopeOneRecords = response.data;
+            const meses = this.mesesService.getMeses();
+             this.scopeOneRecords.forEach((registro: any) => {
+                const resultado = meses.find((mes) => mes.key === registro.periodoFactura);
+                registro['Period'] = resultado?.value || 'desconocido';
+                registro['activity Data'] = registro.activityData;
+                registro['activity Year'] = registro.year;
+                registro['updated At'] = registro.updated_at;
+                registro.edit = false;
+                registro.delete = false;
+                const matchedFuel = this.fuelTypes.find((fuelItem: any) => fuelItem.id === registro.fuelType);
+                const co2 = registro.activityData * parseFloat((matchedFuel as any)?.CO2_kg_ud || '0');
+                const ch4 = registro.activityData * parseFloat((matchedFuel as any)?.CH4_g_ud || 0);
+                const n2o = registro.activityData * parseFloat((matchedFuel as any)?.NO2_g_ud || 0);
+                registro['total Emissions (tnCO₂eq)'] = (co2 + (ch4 / 1000) * 25 + (n2o / 1000) * 298).toFixed(3).toString();
+            });
     
-                this.railSeaAirChart('bar', this.scopeOneRecords.filter((record: any) => record.activityType === 'transferma'));
+            if (this.scopeOneRecords.length > 0) {
+                this.dataSourceScope1RoadTransp = new MatTableDataSource(this.scopeOneRecords);
+                await this.roadTranspChart('bar', this.scopeOneRecords);
+            } else {
+                this.showSnackBar('No hay registros con activityType "fixed".');
+            }
+        } catch (error: any) {
+            if (error.status === 404 && error.messages?.error === "No se encontraron registros con los parámetros proporcionados.") {
+                this.showSnackBar('No se encontraron registros con los parámetros proporcionados.');
+            } else {
+                this.showSnackBar('Error al obtener registros de Alcance 1.');
+            }
+        }
+}
+
+async getScopeOneRecordsTranFerMaAer(activityYear: number, prodCenterID?: number, organizationID?: number): Promise<void> {
+        try {
+            const response = await this.scopeOneRecordsService.getRecordsByFilters(activityYear, prodCenterID, organizationID, 'transferma').toPromise();
+            this.scopeOneRecords = response.data;
+            const meses = this.mesesService.getMeses();
+             this.scopeOneRecords.forEach((registro: any) => {
+                const resultado = meses.find((mes) => mes.key === registro.periodoFactura);
+                registro['Period'] = resultado?.value || 'desconocido';
+                registro['activity Data'] = registro.activityData;
+                registro['activity Year'] = registro.year;
+                registro['updated At'] = registro.updated_at;
+                registro.edit = false;
+                registro.delete = false;
+                const matchedFuel = this.fuelTypes.find((fuelItem: any) => fuelItem.id === registro.fuelType);
+                const co2 = registro.activityData * parseFloat((matchedFuel as any)?.CO2_kg_ud || '0');
+                const ch4 = registro.activityData * parseFloat((matchedFuel as any)?.CH4_g_ud || 0);
+                const n2o = registro.activityData * parseFloat((matchedFuel as any)?.NO2_g_ud || 0);
+                registro['total Emissions (tnCO₂eq)'] = (co2 + (ch4 / 1000) * 25 + (n2o / 1000) * 298).toFixed(3).toString();
+            });
+    
+            if (this.scopeOneRecords.length > 0) {
+                this.dataSourceScope1RailSeaAir = new MatTableDataSource(this.scopeOneRecords)
+                await this.railSeaAirChart('bar', this.scopeOneRecords.filter((record: any) => record.activityType === 'transferma'));
                 this.machineryChart('bar', this.scopeOneRecords.filter((record: any) => record.activityType === 'machinery'));
             } else {
                 this.showSnackBar('No hay registros con activityType "fixed".');
@@ -168,6 +244,43 @@ async getScopeOneRecords(activityYear: number, prodCenterID?: number, organizati
             }
         }
 }
+
+async getScopeOneRecordsMachinery(activityYear: number, prodCenterID?: number, organizationID?: number): Promise<void> {
+        try {
+            const response = await this.scopeOneRecordsService.getRecordsByFilters(activityYear, prodCenterID, organizationID, 'machinery').toPromise();
+            this.scopeOneRecords = response.data;
+            console.log ("this.scopeOneRecords machinery", this.scopeOneRecords)
+            const meses = this.mesesService.getMeses();
+             this.scopeOneRecords.forEach((registro: any) => {
+                const resultado = meses.find((mes) => mes.key === registro.periodoFactura);
+                registro['Period'] = resultado?.value || 'desconocido';
+                registro['activity Data'] = registro.activityData;
+                registro['activity Year'] = registro.year;
+                registro['updated At'] = registro.updated_at;
+                registro.edit = false;
+                registro.delete = false;
+                const matchedFuel = this.fuelTypes.find((fuelItem: any) => fuelItem.id === registro.fuelType);
+                const co2 = registro.activityData * parseFloat((matchedFuel as any)?.CO2_kg_ud || '0');
+                const ch4 = registro.activityData * parseFloat((matchedFuel as any)?.CH4_g_ud || 0);
+                const n2o = registro.activityData * parseFloat((matchedFuel as any)?.NO2_g_ud || 0);
+                registro['total Emissions (tnCO₂eq)'] = (co2 + (ch4 / 1000) * 25 + (n2o / 1000) * 298).toFixed(3).toString();
+            });
+    
+            if (this.scopeOneRecords.length > 0) {
+                this.dataSourceScope1Machinery = new MatTableDataSource(this.scopeOneRecords)
+                this.machineryChart('bar', this.scopeOneRecords);
+            } else {
+                this.showSnackBar('No hay registros con activityType "fixed".');
+            }
+        } catch (error: any) {
+            if (error.status === 404 && error.messages?.error === "No se encontraron registros con los parámetros proporcionados.") {
+                this.showSnackBar('No se encontraron registros con los parámetros proporcionados.');
+            } else {
+                this.showSnackBar('Error al obtener registros de Alcance 1.');
+            }
+        }
+}
+
 getFugitiveEmissionRecords(activityYear: number, prodCenterID?: number, organizationID?: number): void {
     this.fugitiveEmissionRecordsService.getRegistroByFilters(activityYear, prodCenterID, organizationID)
       .subscribe((response: any) => {
@@ -256,8 +369,6 @@ fixedInstChart(chartType: keyof ChartTypeRegistry, scop1DataFI: any): void {
           }
       });
   
-      this.dataSourceScope1FixedEmis = new MatTableDataSource(scop1DataFI);
-  
       if (this.chartInstanceFixedEmis) {
           this.chartInstanceFixedEmis.destroy();
       }
@@ -341,7 +452,7 @@ roadTranspChart(chartType: keyof ChartTypeRegistry, scop1DataRD: any): void {
           });
       });
   
-      this.dataSourceScope1RoadTransp = new MatTableDataSource(scop1DataRD);
+      /* this.dataSourceScope1RoadTransp = new MatTableDataSource(scop1DataRD); */
   
       if (this.chartInstanceRoadTransp) {
           this.chartInstanceRoadTransp.destroy();
@@ -432,7 +543,7 @@ railSeaAirChart(chartType: keyof ChartTypeRegistry, scop1DataRSA: any): void {
           });
       });
   
-      this.dataSourceScope1RailSeaAir = new MatTableDataSource(scop1DataRSA);
+      /* this.dataSourceScope1RailSeaAir = new MatTableDataSource(scop1DataRSA); */
   
       if (this.chartInstanceRailSeaAir) {
           this.chartInstanceRailSeaAir.destroy();
@@ -519,8 +630,6 @@ machineryChart(chartType: keyof ChartTypeRegistry, scop1DataMA: any): void {
               }
           });
       });
-  
-      this.dataSourceScope1Machinery = new MatTableDataSource(scop1DataMA);
   
       if (this.chartInstanceMachinery) {
           this.chartInstanceMachinery.destroy();
