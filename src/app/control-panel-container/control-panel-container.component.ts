@@ -299,7 +299,6 @@ getFugitiveEmissionRecords(activityYear: number, prodCenterID?: number, organiza
           registro.edit = false
           registro.delete = false
         });
-        console.log ("this.fugitiveEmissionsRecords", this.fugitiveEmissionsRecords)
         this.dataSourceScope1FugitiveEmiss = new MatTableDataSource(this.fugitiveEmissionsRecords);
         this.fugitiveEmissChart('bar', this.fugitiveEmissionsRecords)
 
