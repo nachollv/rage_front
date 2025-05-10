@@ -103,7 +103,6 @@ export class ControlPanelContainerComponent implements OnInit {
             this.organizacionID = undefined
         }
        }
-       console.log ("rol", this.rol, this.prodCenterID, this.organizacionID)
       }
     }
 
@@ -168,7 +167,6 @@ getFugitiveEmissionRecords(activityYear: number, prodCenterID?: number, organiza
     this.fugitiveEmissionRecordsService.getRegistroByFilters(activityYear, prodCenterID, organizationID)
       .subscribe((response: any) => {
         this.fugitiveEmissionsRecords = response.data;
-        console.log ( "this.fugitiveEmissionsRecords", this.fugitiveEmissionsRecords)
         const meses = this.mesesService.getMeses();
         this.fugitiveEmissionsRecords.forEach((registro: any) => {
           const resultado = meses.find((mes) => mes.key === registro.periodoFactura)
