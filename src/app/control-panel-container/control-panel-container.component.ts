@@ -286,13 +286,15 @@ getFugitiveEmissionRecords(activityYear: number, prodCenterID?: number, organiza
         this.fugitiveEmissionsRecords = response.data;
         const meses = this.mesesService.getMeses();
         this.fugitiveEmissionsRecords.forEach((registro: any) => {
-          const resultado = meses.find((mes) => mes.key === registro.periodoFactura)
+          const resultado = meses.find((mes) => mes.key === registro.PeriodoFactura)
+          console.log (resultado)
           registro['Period'] = resultado?.value || 'desconocido'
           const matchedFE = this.fugitiveEmissions.find((fuelItem: any) => fuelItem.id === registro.nombre_gas_mezcla);
           registro['Gas/Mezcla'] = matchedFE?.Nombre
           registro['Recarga'] = registro.recarga_equipo
           registro['Capacidad'] = registro.capacidad_equipo
           registro['activity Year'] = registro.year
+          registro['total Emissions (tnCO₂eq)'] = registro.totalEmissions
           registro['updated At'] = registro.updated_at
           registro.edit = false
           registro.delete = false
