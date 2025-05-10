@@ -287,7 +287,6 @@ getFugitiveEmissionRecords(activityYear: number, prodCenterID?: number, organiza
         const meses = this.mesesService.getMeses();
         this.fugitiveEmissionsRecords.forEach((registro: any) => {
           const resultado = meses.find((mes) => mes.key === registro.PeriodoFactura)
-          console.log (resultado)
           registro['Period'] = resultado?.value || 'desconocido'
           const matchedFE = this.fugitiveEmissions.find((fuelItem: any) => fuelItem.id === registro.nombre_gas_mezcla);
           registro['Gas/Mezcla'] = matchedFE?.Nombre
@@ -317,6 +316,13 @@ getScopeTwoRecords(activityYear: number, prodCenterID?: number, organizationID?:
           registro['activity Data'] = registro.activityData
           registro['activity Year'] = registro.year
           registro['updated At'] = registro.updated_at
+            const matchedComercializadora = this.comercializadorasElectricas.find((comercializadoraItem: any) => comercializadoraItem.id === registro.electricityTradingCompany);
+            console.log ("matchedComercializadora", matchedComercializadora)
+            const activityData =  registro.activityData || 0;
+            const factorMixElectrico = matchedComercializadora?.kg_CO2_kWh || 0;
+            const fe_co2 = +factorMixElectrico === 0.302 ? 1.0 : registro.gdo || 0;
+            const emisionesCO2e = (Number(activityData) * Number(factorMixElectrico) * Number(fe_co2)) / 1000;
+            registro['total Emissions (tnCO₂eq)'] = "<span ngClass='co2eqData'>"+ emisionesCO2e.toFixed(3) + "</span>"
           registro.edit = false
           registro.delete = false
         });
