@@ -249,7 +249,6 @@ async getScopeOneRecordsMachinery(activityYear: number, prodCenterID?: number, o
         try {
             const response = await this.scopeOneRecordsService.getRecordsByFilters(activityYear, prodCenterID, organizationID, 'machinery').toPromise();
             this.scopeOneRecords = response.data;
-            console.log ("this.scopeOneRecords machinery", this.scopeOneRecords)
             const meses = this.mesesService.getMeses();
              this.scopeOneRecords.forEach((registro: any) => {
                 const resultado = meses.find((mes) => mes.key === registro.periodoFactura);
@@ -285,6 +284,7 @@ getFugitiveEmissionRecords(activityYear: number, prodCenterID?: number, organiza
     this.fugitiveEmissionRecordsService.getRegistroByFilters(activityYear, prodCenterID, organizationID)
       .subscribe((response: any) => {
         this.fugitiveEmissionsRecords = response.data;
+        console.log ("this.fugitiveEmissionsRecords", this.fugitiveEmissionsRecords)
         const meses = this.mesesService.getMeses();
         this.fugitiveEmissionsRecords.forEach((registro: any) => {
           const resultado = meses.find((mes) => mes.key === registro.periodoFactura)

@@ -11,7 +11,7 @@ import { AuthService } from '../../services/auth.service';
 })
 export class FooterComponent {
   role: string = 'User'
-  userName: string = ''
+  userName: string = 'not-logged-in'
   decodedToken: any
   token: string = ''
   isExpiredToken: boolean = false
@@ -25,11 +25,11 @@ export class FooterComponent {
     this.isExpiredToken = this.jwtHelper.isTokenExpired(this.token)
     if ( !this.isExpiredToken ) {
       this.decodedToken = this.jwtHelper.decodeToken(this.token)
-      this.role = this.decodedToken.data.rol
+      this.role = "[" + this.decodedToken.data.rol + "]"
       this.userName = this.decodedToken.data.nombre
     } else {
      this.role = ""
-     this.userName = ""
+     this.userName = 'not-logged-in'
     }
   
     
