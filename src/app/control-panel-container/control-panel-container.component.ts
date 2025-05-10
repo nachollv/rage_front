@@ -683,7 +683,6 @@ machineryChart(chartType: keyof ChartTypeRegistry, scop1DataMA: any): void {
       });
     }
 fugitiveEmissChart(chartType: keyof ChartTypeRegistry, scop1DataFE: any): void {
-            console.log ("scop1DataFE", scop1DataFE)
       const ctx = document.getElementById('fugitiveEmissChart') as HTMLCanvasElement;
       // Inicializar tipos de gases únicos
       const gasTypes = new Set(scop1DataFE.map((item: any) => item['Gas/Mezcla']));
