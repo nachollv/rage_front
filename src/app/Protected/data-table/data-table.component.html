@@ -19,8 +19,8 @@
           <div *ngSwitchCase="'delete'">
             <button *ngIf="element[column]" (click)="deleteUser(index)"><mat-icon>delete</mat-icon></button>
           </div>
-          <span *ngSwitchCase="'total Emissions (tnCO₂eq)'" [innerHTML]="element[column]"></span>
-          <div *ngSwitchDefault [innerHTML]="element[column]"></div>
+          <span ngClass="co2Emissions" *ngSwitchCase="'total Emissions (tnCO₂eq)'" [innerHTML]="element[column]"></span>
+          <span ngClass="data" *ngSwitchDefault [innerHTML]="element[column]"></span>
         </section>
        
       </td>

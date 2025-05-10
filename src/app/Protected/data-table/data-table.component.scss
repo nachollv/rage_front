@@ -48,17 +48,22 @@ td.mat-cell {
 .header-table-align {
 text-align: left;
 font-weight: 400;
-font-size: .75rem;
+font-size: .5rem;
 color: #008000;
 }
 
-span {
-background-color: rgb(220, 243, 119);
+.co2Emissions {
+  background-color: rgb(220, 243, 119);
   color: #000;
   padding: .2rem;
   border-radius: .2rem;
+  font-weight: 400;
+  border: 1px solid #000;
 }
 
+.data,.co2Emissions {
+  font-size: .65rem;
+}
 /*  */
 .cards {
   display: none;
