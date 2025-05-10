@@ -317,7 +317,6 @@ getScopeTwoRecords(activityYear: number, prodCenterID?: number, organizationID?:
           registro['activity Year'] = registro.year
           registro['updated At'] = registro.updated_at
             const matchedComercializadora = this.comercializadorasElectricas.find((comercializadoraItem: any) => comercializadoraItem.id === registro.electricityTradingCompany);
-            console.log ("matchedComercializadora", matchedComercializadora)
             const activityData =  registro.activityData || 0;
             const factorMixElectrico = matchedComercializadora?.kg_CO2_kWh || 0;
             const fe_co2 = +factorMixElectrico === 0.302 ? 1.0 : registro.gdo || 0;
@@ -933,6 +932,7 @@ electricityVehicles(chartType: keyof ChartTypeRegistry, scop2DataVehicles: any):
       });
   }
 heatSteamColdCompAir(chartType: keyof ChartTypeRegistry, scop2DataSteam: any): void {
+    console.log ("scop2DataSteam", scop2DataSteam)
       const ctx = document.getElementById('heatSteamColdCompAir') as HTMLCanvasElement;
       scop2DataSteam.forEach((registro: any) => {
         registro['Tipo de energía adquirida'] = registro.energyType
