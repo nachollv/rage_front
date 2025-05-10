@@ -284,7 +284,6 @@ getFugitiveEmissionRecords(activityYear: number, prodCenterID?: number, organiza
     this.fugitiveEmissionRecordsService.getRegistroByFilters(activityYear, prodCenterID, organizationID)
       .subscribe((response: any) => {
         this.fugitiveEmissionsRecords = response.data;
-        console.log ("this.fugitiveEmissionsRecords", this.fugitiveEmissionsRecords)
         const meses = this.mesesService.getMeses();
         this.fugitiveEmissionsRecords.forEach((registro: any) => {
           const resultado = meses.find((mes) => mes.key === registro.periodoFactura)
@@ -298,7 +297,10 @@ getFugitiveEmissionRecords(activityYear: number, prodCenterID?: number, organiza
           registro.edit = false
           registro.delete = false
         });
+        console.log ("this.fugitiveEmissionsRecords", this.fugitiveEmissionsRecords)
+        this.dataSourceScope1FugitiveEmiss = new MatTableDataSource(this.fugitiveEmissionsRecords);
         this.fugitiveEmissChart('bar', this.fugitiveEmissionsRecords)
+
       });
     }
 getScopeTwoRecords(activityYear: number, prodCenterID?: number, organizationID?: number): void {
@@ -681,6 +683,7 @@ machineryChart(chartType: keyof ChartTypeRegistry, scop1DataMA: any): void {
       });
     }
 fugitiveEmissChart(chartType: keyof ChartTypeRegistry, scop1DataFE: any): void {
+            console.log ("scop1DataFE", scop1DataFE)
       const ctx = document.getElementById('fugitiveEmissChart') as HTMLCanvasElement;
       // Inicializar tipos de gases únicos
       const gasTypes = new Set(scop1DataFE.map((item: any) => item['Gas/Mezcla']));
@@ -690,7 +693,7 @@ fugitiveEmissChart(chartType: keyof ChartTypeRegistry, scop1DataFE: any): void {
           const monthlyData = new Array(12).fill(0); // Inicializar con 12 meses en 0
           scop1DataFE.forEach((dataObject: any) => {
               if (dataObject['Gas/Mezcla'] === gasType) {
-                  const monthIndex = parseInt(dataObject.periodoFactura.replace('M', '')) - 1; // Obtener índice del mes
+                  const monthIndex = parseInt(dataObject.PeriodoFactura.replace('M', '')) - 1; // Obtener índice del mes
                   monthlyData[monthIndex] += parseFloat(dataObject.capacidad_equipo) - parseFloat(dataObject.recarga_equipo); // Sumar datos mensuales
               }
           });
@@ -707,7 +710,7 @@ fugitiveEmissChart(chartType: keyof ChartTypeRegistry, scop1DataFE: any): void {
           }
       });
   
-      this.dataSourceScope1FugitiveEmiss = new MatTableDataSource(scop1DataFE);
+     /*  this.dataSourceScope1FugitiveEmiss = new MatTableDataSource(scop1DataFE); */
   
       if (this.chartInstanceFugitiveEmiss) {
           this.chartInstanceFugitiveEmiss.destroy();
