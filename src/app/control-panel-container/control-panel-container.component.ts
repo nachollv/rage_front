@@ -932,7 +932,6 @@ electricityVehicles(chartType: keyof ChartTypeRegistry, scop2DataVehicles: any):
       });
   }
 heatSteamColdCompAir(chartType: keyof ChartTypeRegistry, scop2DataSteam: any): void {
-    console.log ("scop2DataSteam", scop2DataSteam)
       const ctx = document.getElementById('heatSteamColdCompAir') as HTMLCanvasElement;
       scop2DataSteam.forEach((registro: any) => {
         registro['Tipo de energía adquirida'] = registro.energyType

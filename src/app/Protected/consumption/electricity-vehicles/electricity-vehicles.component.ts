@@ -64,7 +64,6 @@ export class ElectricityVehiclesComponent implements OnInit, OnChanges{
     this.emisionesElectricasService.getByYear(year).subscribe({
       next: (data) => {
         this.comercializadorasElectricas = data;
-        console.log('Emisiones obtenidas:', this.comercializadorasElectricas);
       },
       error: (error) => {
         this.errorMessage = error.message;
@@ -96,6 +95,7 @@ export class ElectricityVehiclesComponent implements OnInit, OnChanges{
               const fe_co2 = +factorMixElectrico === 0.302 ? 1.0 : registro.gdo || 0;
               const emisionesCO2e = (activityData * factorMixElectrico * fe_co2) / 1000;
               registro['total Emissions'] = "<strong><span ngClass='co2eqData'>"+ emisionesCO2e.toFixed(3) + " (tnCO2eq)</span></strong>"
+              console.log ("electricty vehicles", activityData, factorMixElectrico, fe_co2, emisionesCO2e)
             })
 
           })

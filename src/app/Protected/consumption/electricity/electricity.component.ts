@@ -71,7 +71,6 @@ export class ElectricityComponent implements OnInit, OnChanges {
       this.scopeTwoRecordsService.getRecordsByFilters(activityYear, productionCenter, organizacionID, activityType)
         .subscribe({
           next: (registros: any) => {
-            console.log (registros)
             this.emisionesElectricasservice.getByYear(activityYear)
               .subscribe((comercializadora:any) => {
                 this.comercializadorasElectricas = comercializadora
