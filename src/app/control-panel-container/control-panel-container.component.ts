@@ -124,8 +124,8 @@ export class ControlPanelContainerComponent implements OnInit {
     await this.getScopeOneRecordsTranFerMaAer(this.filterForm.value.activityYear, this.prodCenterID, this.organizacionID)
     await this.getScopeOneRecordsMachinery(this.filterForm.value.activityYear, this.prodCenterID, this.organizacionID)
 
-    await this.getScopeTwoRecords(this.filterForm.value.activityYear, this.prodCenterID, this.organizacionID)
-    await this.getFugitiveEmissionRecords(this.filterForm.value.activityYear, this.prodCenterID, this.organizacionID)
+    this.getScopeTwoRecords(this.filterForm.value.activityYear, this.prodCenterID, this.organizacionID)
+    this.getFugitiveEmissionRecords(this.filterForm.value.activityYear, this.prodCenterID, this.organizacionID)
   }
 
 onYearFilterChange(event: any): void {
@@ -357,14 +357,12 @@ fixedInstChart(chartType: keyof ChartTypeRegistry, scop1DataFI: any): void {
       // Crear datos agrupados por fuelType
       fuelTypes.forEach((fuelType) => {
           const monthlyData = new Array(12).fill(0); // Inicializar con 12 meses en 0
-  
           scop1DataFI.forEach((dataObjectFI: any) => {
               if (dataObjectFI['fuelType'] === fuelType) {
                   const monthIndex = parseInt(dataObjectFI.periodoFactura.replace('M', '')) - 1; // Obtener índice del mes
                   monthlyData[monthIndex] += parseFloat(dataObjectFI.activityData); // Sumar datos mensuales
               }
           });
-  
           // Agregar dataset si tiene datos
           if (monthlyData.some((value) => value > 0)) {
               datasets.push({
