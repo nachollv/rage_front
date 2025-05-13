@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent } from '../../dialog/dialog.component';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { AuthService } from '../../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-footer',
@@ -17,7 +18,8 @@ export class FooterComponent {
   isExpiredToken: boolean = false
 
   constructor( private jwtHelper: JwtHelperService, 
-              private authService: AuthService, 
+              private authService: AuthService,
+              private router: Router,
               public dialog: MatDialog ) {}
 
   ngOnInit(): void {
@@ -33,6 +35,10 @@ export class FooterComponent {
     }
   
     
+  }
+
+  goHome () {
+    this.router.navigate([''])
   }
 
   openDialog(title:string, text: string): void {
