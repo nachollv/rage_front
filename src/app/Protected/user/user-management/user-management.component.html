@@ -1,9 +1,9 @@
 <mat-card aria-label="Gestión de Usuarios">
-  <h2>Gestión de Usuarios{{'userManagement' | translate}}</h2>
+  <h2>{{'userManagement' | translate}}</h2>
   <form [formGroup]="userForm" (ngSubmit)="editingIndex === null ? addUser() : updateUser()" aria-label="Formulario de gestión de usuarios">
     
     <mat-form-field appearance="fill">
-      <mat-label>Nombre del Centro de producción{{'prodCenterName' | translate}}</mat-label>
+      <mat-label>{{'productionCenter' | translate}}</mat-label>
       <input matInput formControlName="nombre" aria-label="Ingrese el nombre del centro de producción" />
     </mat-form-field>
 

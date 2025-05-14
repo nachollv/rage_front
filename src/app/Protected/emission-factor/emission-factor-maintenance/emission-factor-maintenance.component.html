@@ -1,40 +1,60 @@
-<h1><button mat-menu-item (click)="openDialog(11)"><mat-icon style="color: #0a470d;">info</mat-icon>{{"emissionFactorMaintenance" | translate}}</button></h1>
-<mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start" [(selectedIndex)]="selectedTabIndexFE" (selectedIndexChange)="onTabChange($event)">
+<h1>
+  <button mat-menu-item (click)="openDialog(11)" aria-label="Información sobre mantenimiento del factor de emisión">
+    <mat-icon style="color: #0a470d;">info</mat-icon>
+    {{"emissionFactorMaintenance" | translate}}
+  </button>
+</h1>
 
-  <mat-tab label="{{'fuelEmissionsFixedInst' | translate}}">
-    <button mat-menu-item (click)="openDialog(12)">
-      <mat-icon style="color: #ff9310;">info</mat-icon>{{"fuelEmissionsFixedInst" | translate}}</button>
-      <app-fuel-emission-factor-maintenance></app-fuel-emission-factor-maintenance>
+<mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start" [(selectedIndex)]="selectedTabIndexFE" (selectedIndexChange)="onTabChange($event)">
+  <mat-tab label="{{'fuelEmissionsFixedInst' | translate}}" aria-label="Emisiones de combustible en instalaciones fijas">
+    <button mat-menu-item (click)="openDialog(12)" aria-label="Información sobre emisiones de combustible en instalaciones fijas">
+      <mat-icon style="color: #ff9310;">info</mat-icon>
+      {{"fuelEmissionsFixedInst" | translate}}
+    </button>
+    <app-fuel-emission-factor-maintenance></app-fuel-emission-factor-maintenance>
   </mat-tab>
 
-  <mat-tab label="{{'fuelEmissionsRailSeaAir' | translate}}">
-    <button mat-menu-item (click)="openDialog(13)">
-    <mat-icon style="color: #ff9310;">info</mat-icon>{{"fuelEmissionsRailSeaAir" | translate}}</button>
+  <mat-tab label="{{'fuelEmissionsRailSeaAir' | translate}}" aria-label="Emisiones de combustible en transporte ferroviario, marítimo y aéreo">
+    <button mat-menu-item (click)="openDialog(13)" aria-label="Información sobre emisiones de combustible en transporte ferroviario, marítimo y aéreo">
+      <mat-icon style="color: #ff9310;">info</mat-icon>
+      {{"fuelEmissionsRailSeaAir" | translate}}
+    </button>
     <app-fuel-transfermaraer-emission-factor-maintenance></app-fuel-transfermaraer-emission-factor-maintenance>
   </mat-tab>
 
-  <mat-tab label="{{'electricalEmissions' | translate}}">
-    <button mat-menu-item (click)="openDialog(14)"> 
-    <mat-icon style="color: #ff9310;">info</mat-icon>{{"electricalEmissions" | translate}}</button>
+  <mat-tab label="{{'electricalEmissions' | translate}}" aria-label="Emisiones eléctricas">
+    <button mat-menu-item (click)="openDialog(14)" aria-label="Información sobre emisiones eléctricas">
+      <mat-icon style="color: #ff9310;">info</mat-icon>
+      {{"electricalEmissions" | translate}}
+    </button>
     <app-electrical-traders-emission-factor-maintenance></app-electrical-traders-emission-factor-maintenance>
   </mat-tab>
 
-  <mat-tab label="{{'fugitiveEmissions' | translate}}">
-    <button mat-menu-item (click)="openDialog(15)"> 
-    <mat-icon style="color: #ff9310;">info</mat-icon>{{"fugitiveEmissions" | translate}}</button>
+  <mat-tab label="{{'fugitiveEmissions' | translate}}" aria-label="Emisiones fugitivas">
+    <button mat-menu-item (click)="openDialog(15)" aria-label="Información sobre emisiones fugitivas">
+      <mat-icon style="color: #ff9310;">info</mat-icon>
+      {{"fugitiveEmissions" | translate}}
+    </button>
     <app-fugitive-emission-factor-maintenance></app-fugitive-emission-factor-maintenance>
   </mat-tab>
 
-  <mat-tab label="{{'vehicleEmissions' | translate}}">
-    <button mat-menu-item (click)="openDialog(16)">
-      <mat-icon style="color: #ff9310;">info</mat-icon>{{"vehicleEmissions" | translate}}</button>
-      <app-vehicle-emission-factor-maintenance></app-vehicle-emission-factor-maintenance>
+  <mat-tab label="{{'vehicleEmissions' | translate}}" aria-label="Emisiones de vehículos">
+    <button mat-menu-item (click)="openDialog(16)" aria-label="Información sobre emisiones de vehículos">
+      <mat-icon style="color: #ff9310;">info</mat-icon>
+      {{"vehicleEmissions" | translate}}
+    </button>
+    <app-vehicle-emission-factor-maintenance></app-vehicle-emission-factor-maintenance>
   </mat-tab>
 
-  <mat-tab label="{{'machineryEmissions' | translate}}">
-    <button mat-menu-item (click)="openDialog(17)">
-      <mat-icon style="color: #ff9310;">info</mat-icon>{{"machineryEmissions" | translate}}</button>
-      <app-machinery-emission-factor-maintenance></app-machinery-emission-factor-maintenance>
+  <mat-tab label="{{'machineryEmissions' | translate}}" aria-label="Emisiones de maquinaria">
+    <button mat-menu-item (click)="openDialog(17)" aria-label="Información sobre emisiones de maquinaria">
+      <mat-icon style="color: #ff9310;">info</mat-icon>
+      {{"machineryEmissions" | translate}}
+    </button>
+    <app-machinery-emission-factor-maintenance></app-machinery-emission-factor-maintenance>
   </mat-tab>
 </mat-tab-group>
-<section *ngIf="cargando" ngClass="spinner-container"><mat-spinner></mat-spinner></section>
+
+<section *ngIf="cargando" ngClass="spinner-container" aria-live="polite">
+  <mat-spinner></mat-spinner>
+</section>

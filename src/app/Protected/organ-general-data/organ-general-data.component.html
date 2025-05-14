@@ -7,7 +7,7 @@
     </mat-form-field>
 
     <mat-form-field appearance="fill">
-      <mat-label>{{'name' | translate}}</mat-label>
+      <mat-label>{{'organizationName' | translate}}</mat-label>
       <input matInput formControlName="companyName" aria-label="Nombre de la organización">
     </mat-form-field>
 
@@ -17,7 +17,7 @@
     </mat-form-field>
 
     <mat-form-field appearance="fill">
-      <mat-label>Tipo de organización{{'organizationType' | translate}}</mat-label>
+      <mat-label>{{'organizationType' | translate}}</mat-label>
       <mat-select formControlName="organizationType" aria-label="Seleccionar tipo de organización">
         <mat-option *ngFor="let type of organizationTypes" [value]="type.id" aria-label="Tipo de organización">
           {{ type.name }}
@@ -35,9 +35,9 @@
     </mat-form-field>
 
     <section ngClass="limites-organizacion" aria-label="Límites de la organización">
-      <h4>Límites de la organización{{'organizationLimits' | translate}}</h4>
+      <h4>{{'organizationLimits' | translate}}</h4>
       <mat-form-field appearance="fill">
-        <mat-label>Comercializadora eléctrica{{'electricalTradeer' | translate}}</mat-label>
+        <mat-label>{{'electricalTrader' | translate}}</mat-label>
         <mat-select formControlName="comercializadora" multiple aria-label="Seleccionar comercializadora eléctrica">
           <mat-option *ngFor="let comercializadora of comercializadorasElectricas" [value]="comercializadora.id">
             {{ comercializadora.nombreComercial }}
@@ -46,12 +46,12 @@
       </mat-form-field>
 
       <mat-checkbox (change)="onMultipleOrgChange($event)" formControlName="multipleProductionCenter" aria-label="Seleccionar si la organización tiene más de un centro de producción">
-        Más de un Centro de Producción{{'moreThanOneProdCenter' | translate}}
+        {{'moreThanOneProdCenter' | translate}}
       </mat-checkbox>
       
       <section aria-label="Opciones adicionales">
         <mat-form-field appearance="fill">
-          <mat-label>Seleccione hasta tres años{{'selectThreYears' | translate}}</mat-label>
+          <mat-label>{{'selectThreeYears' | translate}}</mat-label>
           <mat-select multiple formControlName="activityYear" aria-label="Seleccionar años de cálculo de huella de carbono">
             <mat-option *ngFor="let year of availableYears" [value]="year" aria-label="Año de actividad">
               {{ year }}
@@ -62,26 +62,26 @@
     </section>
 
     <mat-form-field appearance="fill">
-      <mat-label>Código Postal{{'zipCode' | translate}}</mat-label>
+      <mat-label>{{'zipCode' | translate}}</mat-label>
       <input matInput formControlName="zipCode" minlength="5" maxlength="5" aria-label="Código postal">
     </mat-form-field>
 
     <mat-form-field appearance="fill">
-      <mat-label>Email usuario administrador{{'emailUserAdmin' | translate}}</mat-label>
+      <mat-label>{{'emailUserAdmin' | translate}}</mat-label>
       <input matInput formControlName="email" aria-label="Correo electrónico del administrador">
     </mat-form-field>
 
     <mat-form-field appearance="fill">
-      <mat-label>Duración contraseña usuarios [por seguridad]{{'passwordDuration' | translate}}</mat-label>
-      <mat-select formControlName="daysPasswordDuration" aria-label="Duración de la contraseña en días">
-        <mat-option value="30">30 días</mat-option>
-        <mat-option value="45">45 días</mat-option>
-        <mat-option value="60">60 días</mat-option>
-        <mat-option value="75">75 días</mat-option>
+      <mat-label>{{'passwordDuration' | translate}}</mat-label>
+      <mat-select formControlName="daysPasswordDuration" aria-label="Duración de la contraseña en {{'zipCode' | translate}}">
+        <mat-option value="30">30 {{'days' | translate}}</mat-option>
+        <mat-option value="45">45 {{'days' | translate}}</mat-option>
+        <mat-option value="60">60 {{'days' | translate}}</mat-option>
+        <mat-option value="75">75 {{'days' | translate}}</mat-option>
       </mat-select>
     </mat-form-field>
 
-    <button mat-raised-button color="primary" type="submit" [disabled]="organizationForm.invalid" aria-label="Enviar formulario">Enviar{{'register' | translate}}</button>
+    <button mat-raised-button color="primary" type="submit" [disabled]="organizationForm.invalid" aria-label="Enviar formulario">{{'register' | translate}}</button>
   </form>
 
   <section *ngIf="mustShowDelegations" aria-label="Tabla de delegaciones">
