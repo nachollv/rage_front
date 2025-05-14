@@ -66,17 +66,28 @@
   "send": "Send",
   "cancel": "Cancel",
   "currentUser": "Actual user",
-
+  "register": "Register",
 
   "allRightsReserved": "All rights reserved",
 
-  
   "termsAndConditions": "Terms and conditions",
   "termsAndConditionsText": "The use of this application is subject to the acceptance of the terms and conditions of use. If you do not accept them, you will not be able to use the application.",
   "privacyPolicy": "Policy of privacy",
   "cookiesPolicy": "Cookies",
   "legalNotice": "Legal notice",
   "aboutUs": "About us",
-  "help": "Help"
+  "help": "Help",
 
+  "january": "January",
+  "february": "February",
+  "march": "March",
+  "april": "April",
+  "may": "May",
+  "june": "June",
+  "july": "July",          
+  "august": "August",
+  "september": "September",
+  "october": "October",
+  "november": "November",        
+  "december": "December"
 }

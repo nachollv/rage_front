@@ -1,25 +1,34 @@
-  <h1><button mat-menu-item (click)="openDialog (7)"><mat-icon style="color: #0a470d;">info</mat-icon>{{"scope2" | translate}}</button></h1>
-  
-  <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start"  [(selectedIndex)]="selectedTabIndexscope2" (selectedIndexChange)="onTabChange($event)" *ngIf = "activityYear">
-    <mat-tab label="{{'electricityConsumptionInBuildings' | translate}}">
-      <button mat-menu-item (click)="openDialog(8)">
-        <mat-icon style="color: #ff9310;">info</mat-icon>{{"electricityConsumptionInBuildings" | translate}}</button>
-        <app-electricity [activityYear]="activityYear" [productionCenter]="productionCenter"></app-electricity>
-    </mat-tab>
+<h1>
+  <button mat-menu-item (click)="openDialog(7)" aria-label="Abrir información sobre Alcance 2">
+    <mat-icon style="color: #0a470d;">info</mat-icon>{{"scope2" | translate}}
+  </button>
+</h1>
 
-    <mat-tab label="{{'electricityConsumptionInVehicles' | translate}}">
-      <button mat-menu-item (click)="openDialog(9)">
-        <mat-icon style="color: #ff9310;">info</mat-icon>{{"electricityConsumptionInVehicles" | translate}}</button>
-        <app-electricity-vehicles [activityYear]="activityYear" [productionCenter]="productionCenter"></app-electricity-vehicles>
-    </mat-tab>
+<mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start" [(selectedIndex)]="selectedTabIndexscope2" (selectedIndexChange)="onTabChange($event)" *ngIf="activityYear" aria-label="Navegación entre categorías de Alcance 2">
   
-    <mat-tab label="{{'heatSteamColdCompressedAir' | translate}}">
-      <button mat-menu-item (click)="openDialog(10)">
-        <mat-icon style="color: #ff9310;">info</mat-icon>{{"heatSteamColdCompressedAir" | translate}}</button>
-        <app-heat-steam-cold-comp-air [activityYear]="activityYear" [productionCenter]="productionCenter"></app-heat-steam-cold-comp-air>
-    </mat-tab>
-  </mat-tab-group>
+  <mat-tab label="{{'electricityConsumptionInBuildings' | translate}}" aria-label="Consumo de electricidad en edificios">
+    <button mat-menu-item (click)="openDialog(8)" aria-label="Abrir información sobre consumo de electricidad en edificios">
+      <mat-icon style="color: #ff9310;">info</mat-icon>{{"electricityConsumptionInBuildings" | translate}}
+    </button>
+    <app-electricity [activityYear]="activityYear" [productionCenter]="productionCenter"></app-electricity>
+  </mat-tab>
 
-  <section *ngIf="cargando" ngClass="spinner-container">
-    <mat-spinner></mat-spinner>
-  </section>
+  <mat-tab label="{{'electricityConsumptionInVehicles' | translate}}" aria-label="Consumo de electricidad en vehículos">
+    <button mat-menu-item (click)="openDialog(9)" aria-label="Abrir información sobre consumo de electricidad en vehículos">
+      <mat-icon style="color: #ff9310;">info</mat-icon>{{"electricityConsumptionInVehicles" | translate}}
+    </button>
+    <app-electricity-vehicles [activityYear]="activityYear" [productionCenter]="productionCenter"></app-electricity-vehicles>
+  </mat-tab>
+
+  <mat-tab label="{{'heatSteamColdCompressedAir' | translate}}" aria-label="Consumo de calor, vapor, aire frío y aire comprimido">
+    <button mat-menu-item (click)="openDialog(10)" aria-label="Abrir información sobre consumo de calor, vapor y aire comprimido">
+      <mat-icon style="color: #ff9310;">info</mat-icon>{{"heatSteamColdCompressedAir" | translate}}
+    </button>
+    <app-heat-steam-cold-comp-air [activityYear]="activityYear" [productionCenter]="productionCenter"></app-heat-steam-cold-comp-air>
+  </mat-tab>
+
+</mat-tab-group>
+
+<section *ngIf="cargando" ngClass="spinner-container" aria-label="Cargando contenido">
+  <mat-spinner></mat-spinner>
+</section>

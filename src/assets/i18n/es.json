@@ -75,6 +75,19 @@
   "cookiesPolicy": "Política de cookies",
   "legalNotice": "Aviso legal",
   "aboutUs": "Sobre nosotros",
-  "help": "Ayuda"
+  "help": "Ayuda",
+
+   "january": "enero",
+  "february": "febrero",
+  "march": "marzo",
+  "april": "abril",
+  "may": "mayo",
+  "june": "junio",
+  "july": "julio",          
+  "august": "agosto",
+  "september": "septiembre",
+  "october": "octubre",
+  "november": "noviembre",        
+  "december": "diciembre"
 
 }

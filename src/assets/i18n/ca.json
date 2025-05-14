@@ -75,6 +75,18 @@
   "cookiesPolicy": "Política de galetes",
   "legalNotice": "Avís legal",
   "aboutUs": "Sobre nosaltres",
-  "help": "Ajuda"
+  "help": "Ajuda",
 
+  "january": "gener",
+  "february": "febrer",
+  "march": "març",
+  "april": "abril",
+  "may": "maig",
+  "june": "juny",
+  "july": "juliol",          
+  "august": "agost",
+  "september": "setembre",
+  "october": "octubre",
+  "november": "novembre",        
+  "december": "desembre"
 }

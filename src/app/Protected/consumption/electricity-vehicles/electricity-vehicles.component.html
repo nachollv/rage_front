@@ -1,87 +1,73 @@
-<mat-card>
-  <form [formGroup]="vehiclesElectricity" (ngSubmit)="onSubmit()">
+<mat-card aria-label="Formulario de consumo eléctrico de vehículos">
+  <form [formGroup]="vehiclesElectricity" (ngSubmit)="onSubmit()" aria-label="Formulario para registrar consumo eléctrico de vehículos">
 
-      <mat-card-content>      
+    <mat-card-content>      
+      <mat-form-field appearance="fill">
+        <mat-label>Periodo factura</mat-label>
+        <mat-select formControlName="periodoFactura" aria-label="Seleccione el periodo de factura">
+          <mat-option value="M01" aria-label="Enero">{{"january" | translate}}</mat-option>
+          <mat-option value="M02" aria-label="Febrero">{{"february" | translate}}</mat-option>
+          <mat-option value="M03" aria-label="Marzo">{{"march" | translate}}</mat-option>
+          <mat-option value="M04" aria-label="Abril">{{"april" | translate}}</mat-option>
+          <mat-option value="M05" aria-label="Mayo">{{"may" | translate}}</mat-option>
+          <mat-option value="M06" aria-label="Junio">{{"june" | translate}}</mat-option>
+          <mat-option value="M07" aria-label="Julio">{{"july" | translate}}</mat-option>
+          <mat-option value="M08" aria-label="Agosto">{{"august" | translate}}</mat-option>
+          <mat-option value="M09" aria-label="Setiembre">{{"september" | translate}}</mat-option>
+          <mat-option value="M10" aria-label="Octubre">{{"october" | translate}}</mat-option>
+          <mat-option value="M11" aria-label="Noviembre">{{"november" | translate}}</mat-option>
+          <mat-option value="M12" aria-label="Diciembre">{{"december" | translate}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <section formGroupName="consumos" aria-label="Datos de consumo eléctrico">
         <mat-form-field appearance="fill">
-          <mat-label>Periodo factura</mat-label>
-          <mat-select formControlName="periodoFactura">
-            <mat-option value="M01">Enero</mat-option>
-              <mat-option value="M02">Febrero</mat-option>
-              <mat-option value="M03">Marzo</mat-option>
-              <mat-option value="M04">Abril</mat-option>
-              <mat-option value="M05">Mayo</mat-option>
-              <mat-option value="M06">Junio</mat-option>
-              <mat-option value="M07">Julio</mat-option>
-              <mat-option value="M08">Agosto</mat-option>
-              <mat-option value="M09">Setiembre</mat-option>
-              <mat-option value="M10">Octubre</mat-option>
-              <mat-option value="M11">Noviembre</mat-option>
-              <mat-option value="M12">Diciembre</mat-option>
+          <mat-label>Comercializadora</mat-label>
+          <mat-select formControlName="comercializadora" (selectionChange)="onComercializadoraChange($event.value)" aria-label="Seleccione su comercializadora eléctrica">
+            <mat-option *ngFor="let comercializadora of comercializadorasElectricas" [value]="comercializadora" aria-label="nombre Comercial">
+              {{ comercializadora.nombreComercial }}
+            </mat-option>
           </mat-select>
         </mat-form-field>
-        
-        <section formGroupName="consumos">
-          <mat-form-field appearance="fill">
-            <mat-label>Comercializadora</mat-label>
-            <mat-select formControlName="comercializadora" (selectionChange)="onComercializadoraChange($event.value)">
-              <mat-option *ngFor="let comercializadora of comercializadorasElectricas" [value]="comercializadora">
-                {{ comercializadora.nombreComercial }}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-      
-          <mat-form-field appearance="fill">
-            <mat-label>¿Dispone de garantía de origen (Gdo) </mat-label>
-            <mat-select formControlName="gdo" (selectionChange)="onGdoChange($event.value)">
-              <mat-option value="0.000">Gdo energía renovable</mat-option>
-              <mat-option value="0.302">Gdo cogeneración de alta eficiencia</mat-option>
-              <mat-option value="1.000">No</mat-option>
-            </mat-select>
-          </mat-form-field>
-      
-          <mat-form-field appearance="fill">
-            <mat-label>Dato de actividad (kWh)</mat-label>
-            <input matInput formControlName="activityData" type="number">
-            <mat-error *ngIf="vehiclesElectricity.get('activityData')?.hasError('required')">
-              {{ "Este campo es obligatorio" | translate }}
-            </mat-error>
-            <mat-error *ngIf="vehiclesElectricity.get('activityData')?.hasError('pattern')">
-              {{ "El formato debe ser un número con hasta dos decimales" | translate }}
-            </mat-error>
-          </mat-form-field>
-          
-          <mat-form-field>
-            <mat-label>Factor de emisión kg CO<sub>2</sub>/kWh</mat-label>
-            <input matInput formControlName="fe_co2" ngClass="gas-emission">
-          </mat-form-field>
-          
-          <mat-form-field ngClass="full-width">
-            <mat-label>Factor Mix eléct. (kg CO2e/kWh)</mat-label>
-            <input matInput placeholder="Factor Mix eléctrico" formControlName="factorMixElectrico" ngClass="gas-emission"/>
-            <mat-error *ngIf="vehiclesElectricity.get('factorMixElectrico')?.hasError('required')">
-              Este campo es obligatorio
-            </mat-error>
-            <mat-error *ngIf="vehiclesElectricity.get('factorMixElectrico')?.hasError('min')">
-              El factor debe ser mayor o igual a 0
-            </mat-error>
-          </mat-form-field>
-        </section>
 
-          <mat-form-field class="full-width">
-            <mat-label>Emisiones Totales (tnCO<sub>2</sub>eq)</mat-label>
-            <input matInput placeholder="Emisiones generadas" formControlName="emisionesCO2e" ngClass="gas-emission tnCo2eq"/>
-            <mat-error *ngIf="vehiclesElectricity.get('emisiones')?.hasError('required')">
-              Este campo es obligatorio
-            </mat-error>
-            <mat-error *ngIf="vehiclesElectricity.get('emisiones')?.hasError('min')">
-              Las emisiones deben ser mayor o igual a 0
-            </mat-error>
-          </mat-form-field>
-          
-      </mat-card-content>
-   
-    <button mat-raised-button color="primary" type="submit" [disabled]="vehiclesElectricity.invalid">Enviar</button>
+        <mat-form-field appearance="fill">
+          <mat-label>¿Dispone de garantía de origen (Gdo)?</mat-label>
+          <mat-select formControlName="gdo" (selectionChange)="onGdoChange($event.value)" aria-label="Seleccione la garantía de origen">
+            <mat-option value="0.000" aria-label="Gdo energía renovable">Gdo energía renovable</mat-option>
+            <mat-option value="0.302" aria-label="Gdo cogeneración de alta eficiencia">Gdo cogeneración de alta eficiencia</mat-option>
+            <mat-option value="1.000" aria-label="No dispone de garantía de origen">No</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Dato de actividad (kWh)</mat-label>
+          <input matInput formControlName="activityData" type="number" aria-label="Ingrese el consumo eléctrico en kWh">
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Factor de emisión kg CO₂/kWh</mat-label>
+          <input matInput formControlName="fe_co2" ngClass="gas-emission" aria-label="Ingrese el factor de emisión">
+        </mat-form-field>
+
+        <mat-form-field class="full-width">
+          <mat-label>Factor Mix eléct. (kg CO₂e/kWh)</mat-label>
+          <input matInput placeholder="Factor Mix eléctrico" formControlName="factorMixElectrico" ngClass="gas-emission" aria-label="Ingrese el factor de mezcla eléctrico"/>
+        </mat-form-field>
+      </section>
+
+      <mat-form-field class="full-width">
+        <mat-label>Emisiones Totales (tnCO₂eq)</mat-label>
+        <input matInput placeholder="Emisiones generadas" formControlName="emisionesCO2e" ngClass="gas-emission tnCo2eq" aria-label="Ingrese las emisiones totales en toneladas de CO₂ equivalente"/>
+      </mat-form-field>
+      
+    </mat-card-content>
+
+    <button mat-raised-button color="primary" type="submit" [disabled]="vehiclesElectricity.invalid" aria-label="Enviar formulario de consumo eléctrico">
+      Enviar
+    </button>
   </form>
-  <app-data-table [displayedColumns]="displayedColumns" [dataSource]="dataSource"></app-data-table>
-</mat-card>
 
+  <section aria-label="Tabla de datos de consumo eléctrico de vehículos">
+    <app-data-table [displayedColumns]="displayedColumns" [dataSource]="dataSource"></app-data-table>
+  </section>
+</mat-card>
