@@ -18,6 +18,7 @@
   "scope2": "EMISSIONS INDIRECTES",
   "scope2_2": "(Abast 2)",
   "ranquing": "Ranquin",
+  "register": "Registrar",
 
   "emissionFactorMaintenance": "Manteniment dels factors d'emissió",
 
@@ -77,6 +78,9 @@
   "aboutUs": "Sobre nosaltres",
   "help": "Ajuda",
 
+  "fuelType": "Tipus de combustible",
+
+  "period": "Periode",
   "january": "gener",
   "february": "febrer",
   "march": "març",

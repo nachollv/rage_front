@@ -1,8 +1,8 @@
-<mat-card>
+<mat-card aria-label="Formulario de registro de consumo de transporte">
   <form [formGroup]="transportForm" (ngSubmit)="onSubmit()">
     <mat-form-field appearance="fill">
       <mat-label>{{"period" | translate}}</mat-label>
-      <mat-select formControlName="periodoFactura">
+      <mat-select formControlName="periodoFactura" aria-label="Seleccione el periodo de la factura">
           <mat-option value="M01" aria-label="Enero">{{"january" | translate}}</mat-option>
           <mat-option value="M02" aria-label="Febrero">{{"february" | translate}}</mat-option>
           <mat-option value="M03" aria-label="Marzo">{{"march" | translate}}</mat-option>
@@ -17,7 +17,7 @@
           <mat-option value="M12" aria-label="Diciembre">{{"december" | translate}}</mat-option>
       </mat-select>
     </mat-form-field>
-    <section ngClass="type-fuel-quantity">
+    <section ngClass="type-fuel-quantity" aria-label="Selección de tipo de combustible y cantidad">
       <!-- Tipo de transporte -->
       <mat-form-field appearance="fill">
         <mat-label>Tipo de transporte</mat-label>

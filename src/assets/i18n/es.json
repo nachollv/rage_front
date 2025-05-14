@@ -17,7 +17,8 @@
   "scope2": "EMISIONES INDIRECTAS",
   "scope2_2": "(Alcance 2)",
   "ranquing": "Ranquin",
-
+  "register": "Registrar",
+  
   "emissionFactorMaintenance": "Mantenimento de los factores de emisión",
 
 
@@ -77,7 +78,11 @@
   "aboutUs": "Sobre nosotros",
   "help": "Ayuda",
 
-   "january": "enero",
+  "fuelType": "Tipo de combustible",
+
+  "period": "Periodo",
+
+  "january": "enero",
   "february": "febrero",
   "march": "marzo",
   "april": "abril",
