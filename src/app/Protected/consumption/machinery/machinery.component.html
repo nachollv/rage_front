@@ -1,7 +1,7 @@
 <mat-card>
   <form [formGroup]="emissionsForm" (ngSubmit)="onSubmit()">
     <mat-form-field appearance="fill">
-      <mat-label>Periodo factura</mat-label>
+      <mat-label>{{"period" | translate}}</mat-label>
       <mat-select formControlName="periodoFactura">
           <mat-option value="M01" aria-label="Enero">{{"january" | translate}}</mat-option>
           <mat-option value="M02" aria-label="Febrero">{{"february" | translate}}</mat-option>

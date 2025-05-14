@@ -2,7 +2,7 @@
   <form [formGroup]="buildingElecConsumption" (ngSubmit)="onSubmit()" aria-label="Formulario para registrar consumo eléctrico">
 
     <mat-form-field appearance="fill">
-      <mat-label>Periodo factura</mat-label>
+      <mat-label>{{"period" | translate}}</mat-label>
       <mat-select formControlName="periodoFactura" aria-label="Seleccione el periodo de factura">
           <mat-option value="M01" aria-label="Enero">{{"january" | translate}}</mat-option>
           <mat-option value="M02" aria-label="Febrero">{{"february" | translate}}</mat-option>

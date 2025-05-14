@@ -1,7 +1,7 @@
 <mat-card>
 <form [formGroup]="vehicleForm" (ngSubmit)="onSubmit()">
   <mat-form-field appearance="fill">
-    <mat-label>Periodo factura</mat-label>
+    <mat-label>{{"period" | translate}}</mat-label>
     <mat-select formControlName="periodoFactura">
           <mat-option value="M01" aria-label="Enero">{{"january" | translate}}</mat-option>
           <mat-option value="M02" aria-label="Febrero">{{"february" | translate}}</mat-option>
@@ -19,7 +19,7 @@
   </mat-form-field>
   <section ngClass="type-fuel-quantity">
   <mat-form-field appearance="fill">
-    <mat-label>Categoría de vehículo</mat-label>
+    <mat-label>Categoría de vehículo{{"vehicleCategory" | translate}}</mat-label>
     <mat-select formControlName="equipmentType" (selectionChange)="setFuelTypes()">
       <mat-option *ngFor="let category of vehicleCategories" [value]="category">{{ category.Categoria }}</mat-option>
     </mat-select>
@@ -27,7 +27,7 @@
   </mat-form-field>
 
   <mat-form-field appearance="fill">
-    <mat-label>Combustible o lubricante</mat-label>
+    <mat-label>Combustible o lubricante{{"fuelOrLubricant" | translate}}</mat-label>
     <mat-select formControlName="fuelType" (selectionChange)="setEmissionFactors()">
       <mat-option *ngFor="let fuel of fuelTypes" [value]="fuel">{{ fuel.FuelType }}</mat-option>
     </mat-select>
@@ -35,12 +35,12 @@
   </mat-form-field>
 
   <mat-form-field appearance="fill">
-    <mat-label>Dato de actividad (ud)</mat-label>
+    <mat-label>Dato de actividad (ud){{"activityData" | translate}}</mat-label>
     <input matInput type="number" formControlName="activityData" >
     <mat-error *ngIf="vehicleForm.get('activityData')?.invalid">Campo obligatorio y debe ser un número</mat-error>
   </mat-form-field>
 </section>
-<h3>Factores de Emisión por gases</h3>
+<h3>Factores de Emisión por gases{{"emissionFactorsByGas" | translate}}</h3>
   <section formGroupName="defaultEmissionFactor" ngClass="factor-group">
     <mat-form-field appearance="fill">
       <mat-label>[kg CO2/ud]</mat-label>
@@ -56,28 +56,28 @@
     </mat-form-field>
   </section>
 
-  <h3>Emisiones Parciales</h3>
+  <h3>Emisiones Parciales{{"partialEmissions" | translate}}</h3>
   <section formGroupName="partialEmissions" ngClass="emissions-group">
     <mat-form-field appearance="fill">
-      <mat-label>Emisiones parciales (kg CO2)</mat-label>
+      <mat-label>Emisiones parciales {{"partialEmissions" | translate}}(kg CO2)</mat-label>
       <input matInput formControlName="co2" ngClass="gas-emission">
     </mat-form-field>
     <mat-form-field appearance="fill">
-      <mat-label>Emisiones parciales (g CH4)</mat-label>
+      <mat-label>Emisiones parciales {{"partialEmissions" | translate}}(g CH4)</mat-label>
       <input matInput formControlName="ch4" ngClass="gas-emission">
     </mat-form-field>
     <mat-form-field appearance="fill">
-      <mat-label>Emisiones parciales (g N2O)</mat-label>
+      <mat-label>Emisiones parciales {{"partialEmissions" | translate}}(g N2O)</mat-label>
       <input matInput formControlName="n2o" ngClass="gas-emission">
     </mat-form-field>
   </section>
 
-  <h3>Emisiones Totales (tnCO<sub>2</sub>eq) [CO<sub>2</sub>eq: CO<sub>2</sub>+CH<sub>4</sub>+N<sub>2</sub>O]</h3>
+  <h3>Emisiones Totales {{"totalEmissions" | translate}}(tnCO<sub>2</sub>eq) [CO<sub>2</sub>eq: CO<sub>2</sub>+CH<sub>4</sub>+N<sub>2</sub>O]</h3>
   <mat-form-field>
     <mat-label>(tnCO<sub>2</sub>eq)</mat-label>
     <input matInput formControlName="totalEmissions" ngClass="gas-emission tnCo2eq">
   </mat-form-field>
-  <button mat-raised-button color="accent" type="submit" [disabled]="!vehicleForm.valid">Registrar</button>
+  <button mat-raised-button color="accent" type="submit" [disabled]="!vehicleForm.valid">Registrar{{"register" | translate}}</button>
 </form>
 <app-data-table [displayedColumns]="displayedColumns" [dataSource]="dataSource"></app-data-table>
 </mat-card>

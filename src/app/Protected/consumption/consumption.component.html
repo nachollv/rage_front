@@ -1,16 +1,19 @@
-<form [formGroup]="productionCenterForm">
-  <section appearance="fill">
+<form [formGroup]="productionCenterForm" aria-label="Formulario de selección de centro de producción y año de actividad">
+  <section appearance="fill" aria-label="Información del centro de producción">
     <mat-label>{{"organizationName" | translate}}: </mat-label>
-    <h2 [innerHTML]="organizationName"></h2>
+    <h2 [innerHTML]="organizationName" aria-label="Nombre de la organización"></h2>
+    
     <mat-label>{{"productionCenter" | translate}}: </mat-label>
-    <h2 [innerHTML]="prodCenterName"></h2>
+    <h2 [innerHTML]="prodCenterName" aria-label="Nombre del centro de producción"></h2>
   </section>
+
   <mat-form-field appearance="fill">
     <mat-label>{{"activityYear" | translate}}</mat-label>
-    <mat-select formControlName="activityYear" (selectionChange)="onYearChange($event)">
-      <mat-option *ngFor="let year of availableYears" [value]="year">{{ year }}</mat-option>
+    <mat-select formControlName="activityYear" (selectionChange)="onYearChange($event)" aria-label="Seleccionar año de actividad">
+      <mat-option *ngFor="let year of availableYears" [value]="year" aria-label="Años disponibles">{{ year }}</mat-option>
     </mat-select>
   </mat-form-field>
 </form>
+
 <app-consumtion-container-scope1 *ngIf="scope1" [activityYear]="selectedActivityYear" [productionCenter]="prodCenterID"></app-consumtion-container-scope1>
 <app-consumtion-container-scope2 *ngIf="scope2" [activityYear]="selectedActivityYear" [productionCenter]="prodCenterID"></app-consumtion-container-scope2>
