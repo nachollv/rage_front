@@ -2,7 +2,7 @@
   "HELLO": "Bienvenido",
   "rageTitle": "Registro y Análisis de Gases de Efecto invernadero",
   "rageTitleShort": "RAGE",
-  "footerTitle": "Medición de huella de carbono",
+  "footerTitle": "Medición de la huella de carbono",
   "footerContact": "Contacto",
   "footerContactEmail": "Correo electrónico",
   "initWorkingSession": "Iniciar sesión de trabajo",
@@ -11,14 +11,17 @@
   "sectionText": "<p>Calcular la huella de carbono ayuda a una empresa a entender cuánto impacto tiene en el medioambiente. Si una empresa emite mucho CO₂ (por fábricas, transporte, electricidad, etc.), conocer esta información le permite reducir costos, mejorar su imagen y cumplir con regulaciones ambientales. Al medir su huella de carbono, la empresa puede:<ul><li> ✅ Ahorrar dinero optimizando recursos y energía.</li><li> ✅ Cumplir con leyes ambientales y evitar multas.</li><li> ✅ Mejorar su reputación mostrando compromiso con la sostenibilidad.</li><li> ✅ Crear estrategias ecológicas, como usar energías renovables. En pocas palabras, conocer su impacto permite a la empresa ser más eficiente, responsable y competitiva en un mundo donde lo ecológico cada vez importa más.</li></ul> 🌱✨ ¿Quieres contribuir a reducirla? ... RAGE te ayudará. 😃</p>",
   "scopeOneEmissions": "son emisiones de fuentes que son propiedad de o están controladas por la organización. De una manera muy simplificada, podrían entenderse como las emisiones liberadas in situ en el lugar donde se produce la actividad, por ejemplo, las emisiones debidas al sistema de calefacción si éste se basa en la quema de combustibles fósiles. Por ejemplo, emisiones provenientes de la combustión en calderas, hornos, vehículos, etc., que son propiedad de o están controladas por la entidad en cuestión. También incluye las emisiones fugitivas (p.ej. fugas de aire acondicionado, fugas de CH4 de conductos, etc.).",
   "scopeTwoEmissions": "son emisiones consecuencia de las actividades de la organización, pero que ocurren en fuentes que son propiedad de o están controladas por otra organización. Un ejemplo de emisión indirecta es la emisión procedente de la electricidad consumida por una organización, cuyas emisiones han sido producidas en el lugar en el que se generó dicha electricidad 3 organización, cuyas emisiones han sido producidas en el lugar en el que se generó dicha electricidad.", 
-  
+  "footPrintCalculator": "CALCULADORA DE HUELLA DE CARBONO DE UNA ORGANIZACIÓN",
+  "scope1Home": "EMISIONES DIRECTAS",
+  "scope2Home": "EMISIONES INDIRECTAS POR LA COMPRA DE ELECTRICIDAD Y DE OTRAS ENERGÍAS",
+
   "scope1": "EMISIONES DIRECTAS",
   "scope1_1": "(Alcance 1)",
   "scope2": "EMISIONES INDIRECTAS",
   "scope2_2": "(Alcance 2)",
   "ranquing": "Ranquin",
   "register": "Registrar",
-  
+
   "emissionFactorMaintenance": "Mantenimento de los factores de emisión",
 
 
@@ -26,6 +29,10 @@
   "filter_by_activity": "Filtrar por actividad",
   "apply_filter": "Aplicar filtro",
   "clear_filter": "Limpiar filtro",
+  "activityData": "Dato de actividad",
+  "emissionFactorByGases": "Factores de emisión por gases",
+  "partialEmissions": "Emisiones Parciales",
+  "totalEmissions": "Emisiones Totales",
 
   "electricityOtherEnergies": "Electricidad y otras energías",
   "fixedInstallationsFuelConsumption": "Instalaciones fijas",

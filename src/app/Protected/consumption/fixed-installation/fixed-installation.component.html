@@ -35,7 +35,7 @@
       </mat-form-field>
     </section>
 
-    <h3 aria-label="Factores de emisión por gases">Factores de Emisión por gases</h3>
+    <h3 aria-label="Factores de emisión por gases">{{"emissionFactorByGases" | translate}}</h3>
     <section formGroupName="defaultFactor" ngClass="factor-group" aria-label="Factores de emisión de gases">
       <mat-form-field>
         <mat-label>kg CO₂/ud</mat-label>
@@ -51,7 +51,7 @@
       </mat-form-field>
     </section>
 
-    <h3 aria-label="Emisiones parciales">Emisiones Parciales</h3>
+    <h3 aria-label="Emisiones parciales">{{"partialEmissions" | translate}}</h3>
     <section formGroupName="partialEmissions" ngClass="emissions-group" aria-label="Registro de emisiones parciales">
       <mat-form-field>
         <mat-label>kg CO₂</mat-label>
@@ -67,7 +67,7 @@
       </mat-form-field>
     </section>
 
-    <h3 aria-label="Emisiones totales">Emisiones Totales (tnCO₂eq)</h3>
+    <h3 aria-label="Emisiones totales">{{"totalEmissions" | translate}}(tnCO₂eq)</h3>
     <mat-form-field>
       <mat-label>(tnCO₂eq)</mat-label>
       <input matInput formControlName="totalEmissions" ngClass="gas-emission tnCo2eq" aria-label="Ingrese el total de emisiones en tnCO₂eq">

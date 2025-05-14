@@ -11,7 +11,10 @@
   "sectionText": "<p>Calculating the carbon footprint helps a company understand its environmental impact. If a business emits a lot of CO₂ (through production, transportation, energy use, etc.), knowing this allows it to reduce costs, improve its image, and comply with environmental regulations. By measuring its carbon footprint, a company can:<ul><li> ✅ Save money by optimizing resources and energy.</li><li> ✅ Meet environmental laws and avoid fines.</li><li> ✅ Enhance its reputation by showing commitment to sustainability.</li><li> ✅ Implement eco-friendly strategies, such as using renewable energy. In short, understanding its impact helps a company be more efficient, responsible, and competitive in a world that values sustainability more than ever.</li></ul> 🌱✨ Do you want to contribute to reduce it?... RAGE will help you. 😃</p>",
   "scopeOneEmissions": "are emissions from sources owned or controlled by the organisation. In a very simplified way, they could be understood as emissions released on-site at the place where the activity takes place, e.g. emissions due to the heating system if it is based on the burning of fossil fuels. For example, emissions from combustion in boilers, furnaces, vehicles, etc., which are owned or controlled by the entity concerned. It also includes fugitive emissions (e.g. air conditioning leaks, CH4 leakage from ducts, etc.).",
   "scopeTwoEmissions": "are emissions resulting from the organisation's activities, but occurring at sources owned or controlled by another organisation. An example of an indirect emission is the emission from electricity consumed by an organisation, the emissions of which have been produced at the place where the electricity was generated 3 organisation, the emissions of which have been produced at the place where the electricity was generated.", 
-  
+  "footPrintCalculator": "CARBON FOOTPRINT CALCULATOR FOR AN ORGANIZATION",
+  "scope1Home": "DIRECT EMISSIONS",
+  "scope2Home": "INDIRECT EMISSIONS FROM THE PURCHASE OF ELECTRICITY AND OTHER ENERGY SOURCES",
+
   "scope1": "DIRECT EMISSIONS",
   "scope1_1": "(Scope 1)",
   "scope2": "INDIRECT EMISSIONS",
@@ -25,6 +28,10 @@
   "filter_by_activity": "Filter by activity",
   "apply_filter": "Apply filter",
   "clear_filter": "Clear filter",
+  "activityData": "Activity data",
+  "emissionFactorByGases": "Emission Factors by Gases",
+  "partialEmissions": "Partial Emissions",
+  "totalEmissions": "Total Emissions",
   
   "electricityOtherEnergies": "Electricity and other energies",
   "fixedInstallationsFuelConsumption": "Fixed Installations",
