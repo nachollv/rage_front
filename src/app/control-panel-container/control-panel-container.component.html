@@ -1,69 +1,70 @@
 <!-- Filtro por activityYear al inicio -->
-<section>
+<section aria-label="Filtro de año de actividad">
   <h2>{{ 'filter_by_year' | translate }}</h2>
   <form [formGroup]="filterForm">
     <mat-form-field appearance="fill">
       <mat-label>{{ 'activityYear' | translate }}</mat-label>
-      <mat-select id="activityYear" formControlName="activityYear" (selectionChange)="onYearFilterChange($event.value)">
-        <mat-option *ngFor="let year of availableYears" [value]="year">{{ year }}</mat-option>
+      <mat-select id="activityYear" formControlName="activityYear" (selectionChange)="onYearFilterChange($event.value)" aria-label="Seleccionar año de actividad">
+        <mat-option *ngFor="let year of availableYears" [value]="year" aria-label="Año de actividad">{{ year }}</mat-option>
       </mat-select>
     </mat-form-field>
   </form>
 </section>
 
-<h2 ngClass="scope1-title">{{'scope1' | translate}} {{'scope1_1' | translate}}</h2>
-<section ngClass="scope1">
-  <article ngClass="fixed">
+<h2 ngClass="scope1-title" aria-label="Emisiones del Alcance 1">{{'scope1' | translate}} {{'scope1_1' | translate}}</h2>
+<section ngClass="scope1" aria-label="Sección de Alcance 1">
+  <article ngClass="fixed" aria-label="Emisiones de instalaciones fijas">
     <canvas id="fixedInstChart"></canvas>
   </article>
-  <article ngClass="road">
+  <article ngClass="road" aria-label="Emisiones por transporte terrestre">
     <canvas id="roadTranspChart"></canvas>
   </article>
-  <article ngClass="rail">
+  <article ngClass="rail" aria-label="Emisiones por transporte ferroviario, marítimo y aéreo">
     <canvas id="railSeaAirChart"></canvas>
   </article>
-  <article ngClass="machinery">
+  <article ngClass="machinery" aria-label="Emisiones por maquinaria">
     <canvas id="machineryChart"></canvas>
   </article>
-  <article ngClass="fugitive">
+  <article ngClass="fugitive" aria-label="Emisiones fugitivas">
     <canvas id="fugitiveEmissChart"></canvas>
   </article>
-  <article ngClass="scope1TableFI">
+  
+  <article ngClass="scope1TableFI" aria-label="Tabla de emisiones fijas">
     <app-data-table [displayedColumns]="displayedColumnsScope1FI" [dataSource]="dataSourceScope1FixedEmis"></app-data-table>
   </article>
-  <article ngClass="scope1TableRD">
+  <article ngClass="scope1TableRD" aria-label="Tabla de transporte terrestre">
     <app-data-table [displayedColumns]="displayedColumnsScope1RT" [dataSource]="dataSourceScope1RoadTransp"></app-data-table>
   </article>
-  <article ngClass="scope1TableRA">
+  <article ngClass="scope1TableRA" aria-label="Tabla de transporte ferroviario, marítimo y aéreo">
     <app-data-table [displayedColumns]="displayedColumnsScope1TransFerMarAe" [dataSource]="dataSourceScope1RailSeaAir"></app-data-table>
   </article>
-  <article ngClass="scope1TableMA">
+  <article ngClass="scope1TableMA" aria-label="Tabla de emisiones por maquinaria">
     <app-data-table [displayedColumns]="displayedColumnsScope1MA" [dataSource]="dataSourceScope1Machinery"></app-data-table>
   </article>
-  <article ngClass="scope1TableFE">
+  <article ngClass="scope1TableFE" aria-label="Tabla de emisiones fugitivas">
     <app-data-table [displayedColumns]="displayedColumnsScope1FE" [dataSource]="dataSourceScope1FugitiveEmiss"></app-data-table>
   </article>
 </section>
 
-<h2 ngClass="scope2-title">{{'scope2' | translate}} {{'scope2_2' | translate}}</h2>
-<section ngClass="scope2">
-  <article ngClass="electricity" >
+<h2 ngClass="scope2-title" aria-label="Emisiones del Alcance 2">{{'scope2' | translate}} {{'scope2_2' | translate}}</h2>
+<section ngClass="scope2" aria-label="Sección de Alcance 2">
+  <article ngClass="electricity" aria-label="Emisiones por consumo de electricidad">
     <canvas id="electricityBuildings"></canvas>
   </article>
-  <article ngClass="electricityVehicles">
+  <article ngClass="electricityVehicles" aria-label="Emisiones por vehículos eléctricos">
     <canvas id="electricityVehicles"></canvas>
   </article>
-  <article ngClass="heat" >
+  <article ngClass="heat" aria-label="Emisiones por consumo de calor, vapor y aire comprimido">
     <canvas id="heatSteamColdCompAir"></canvas>
   </article>
 
-  <article ngClass="scope2TableElec">
+  <article ngClass="scope2TableElec" aria-label="Tabla de emisiones por electricidad">
     <app-data-table [displayedColumns]="displayedColumnsScope2" [dataSource]="dataSourceScope2ElectricityBuildings"></app-data-table>
   </article>
-  <article ngClass="scope2TableElecVehi">
+  <article ngClass="scope2TableElecVehi" aria-label="Tabla de emisiones por vehículos eléctricos">
     <app-data-table [displayedColumns]="displayedColumnsScope2" [dataSource]="dataSourceScope2ElectricityVehicles"></app-data-table>
   </article>
-  <article ngClass="scope2TableHeatCold">
+  <article ngClass="scope2TableHeatCold" aria-label="Tabla de emisiones por calor, vapor y aire comprimido">
     <app-data-table [displayedColumns]="displayedColumnsScope2Steam" [dataSource]="dataSourceScope2SteamColdCompAir"></app-data-table>
   </article>  
 </section>

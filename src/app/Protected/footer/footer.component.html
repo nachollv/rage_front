@@ -1,15 +1,20 @@
-<footer ngClass="footer">
+<footer ngClass="footer" aria-label="Pie de página de la aplicación RAGE">
   <p>&copy; 2025 RAGE. {{"allRightsReserved" | translate}}</p>
-  <p (click)="goHome()">{{"footerTitle" | translate}}</p>
+  
+  <p (click)="goHome()" aria-label="Volver a la página de inicio">{{"footerTitle" | translate}}</p>
+  
   <p>
-      <a href="/aviso-legal">{{"legalNotice" | translate}}</a> |
-      <a href="/ayuda">{{"help" | translate}}</a> |
-      <a href="/sobre-nosotros">{{"aboutUs" | translate}}</a>
+      <a href="/aviso-legal" aria-label="Aviso legal">{{"legalNotice" | translate}}</a> |
+      <a href="/ayuda" aria-label="Centro de ayuda">{{"help" | translate}}</a> |
+      <a href="/sobre-nosotros" aria-label="Información sobre nosotros">{{"aboutUs" | translate}}</a>
   </p>
-  <p>
+  
+  <p aria-label="Usuario actual">
     {{'currentUser' | translate}}:<br>{{userName}} {{role}}
   </p>
-  <p>
-    {{'footerContact' | translate}}<br><a href="mailto:  [email protected]"> [email protected]</a>
+  
+  <p aria-label="Información de contacto">
+    {{'footerContact' | translate}}<br>
+    <a href="mailto:[email protected]" aria-label="Enviar un correo electrónico a soporte">[email protected]</a>
   </p>
 </footer>

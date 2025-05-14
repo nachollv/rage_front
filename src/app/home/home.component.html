@@ -1,24 +1,24 @@
-<mat-card ngClass="home-card" appearance="outlined">
+<mat-card ngClass="home-card" appearance="outlined" aria-label="Calculadora de huella de carbono de una organización">
   <mat-card-header>
-    <section mat-card-avatar ngClass="info-header-tooltip">
-      <button mat-menu-item (click)="openDialog(9999)">
+    <section mat-card-avatar ngClass="info-header-tooltip" aria-label="Información sobre la calculadora">
+      <button mat-menu-item (click)="openDialog(9999)" aria-label="Abrir información adicional">
         <mat-icon style="color: #ff9310;">info</mat-icon>
       </button>
     </section>
-    <mat-card-title>CALCULADORA DE
-      HUELLA DE CARBONO DE UNA ORGANIZACIÓN</mat-card-title>
+    <mat-card-title aria-label="Título de la calculadora">CALCULADORA DE HUELLA DE CARBONO DE UNA ORGANIZACIÓN</mat-card-title>
     <mat-card-subtitle>
-      <h2>EMISIONES DIRECTAS</h2>
-      <h2>EMISIONES INDIRECTAS POR LA COMPRA DE ELECTRICIDAD Y DE OTRAS ENERGÍAS</h2>
+      <h2 aria-label="Sección de emisiones directas">EMISIONES DIRECTAS</h2>
+      <h2 aria-label="Sección de emisiones indirectas">EMISIONES INDIRECTAS POR LA COMPRA DE ELECTRICIDAD Y DE OTRAS ENERGÍAS</h2>
     </mat-card-subtitle>
   </mat-card-header>
   
   <mat-card-content>
-    <article  [innerHTML]="'homeIntro' | translate"></article>
-    <article [innerHTML]="'sectionText' | translate"></article>
+    <article  [innerHTML]="'homeIntro' | translate" aria-label="Introducción a la calculadora"></article>
+    <article [innerHTML]="'sectionText' | translate" aria-label="Descripción de la sección"></article>
   </mat-card-content>
+  
   <mat-card-actions>
-    <button mat-button routerLink="login">{{'login' | translate}}</button>
-    <button mat-button routerLink="sign-up">{{'signUp' | translate}}</button>
+    <button mat-button routerLink="login" aria-label="Iniciar sesión">{{'login' | translate}}</button>
+    <button mat-button routerLink="sign-up" aria-label="Registrarse">{{'signUp' | translate}}</button>
   </mat-card-actions>
 </mat-card>

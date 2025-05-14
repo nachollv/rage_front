@@ -1,41 +1,33 @@
-<mat-card>
-  <h2>Gestión de Usuarios</h2>
-  <form [formGroup]="userForm" (ngSubmit)="editingIndex === null ? addUser() : updateUser()">
+<mat-card aria-label="Gestión de Usuarios">
+  <h2>Gestión de Usuarios{{'userManagement' | translate}}</h2>
+  <form [formGroup]="userForm" (ngSubmit)="editingIndex === null ? addUser() : updateUser()" aria-label="Formulario de gestión de usuarios">
+    
     <mat-form-field appearance="fill">
-      <mat-label>Nombre del Centro de producción</mat-label>
-      <input matInput formControlName="nombre" />
+      <mat-label>Nombre del Centro de producción{{'prodCenterName' | translate}}</mat-label>
+      <input matInput formControlName="nombre" aria-label="Ingrese el nombre del centro de producción" />
     </mat-form-field>
 
     <mat-form-field appearance="fill">
       <mat-label>Email</mat-label>
-      <input matInput formControlName="email" />
+      <input matInput formControlName="email" aria-label="Ingrese el correo electrónico del usuario" />
     </mat-form-field>
 
     <mat-form-field appearance="fill">
       <mat-label>Rol</mat-label>
-      <mat-select formControlName="rol">
-        <mat-option value="Admin">Administrador</mat-option>
-        <mat-option value="User">Usuario</mat-option>
+      <mat-select formControlName="rol" aria-label="Seleccione el rol del usuario">
+        <mat-option value="Admin" aria-label="Administrador">Administrador</mat-option>
+        <mat-option value="User" aria-label="Usuario">Usuario</mat-option>
       </mat-select>
     </mat-form-field>
 
-    <button mat-raised-button color="primary" type="submit" ngClass="submitBtn" [disabled]="userForm.invalid">
+    <button mat-raised-button color="primary" type="submit" ngClass="submitBtn" [disabled]="userForm.invalid"
+      aria-label="'Añadir nuevo usuario' o 'Actualizar información del usuario'">
       {{ editingIndex === null ? 'Añadir Usuario' : 'Actualizar Usuario' }}
     </button>
   </form>
 
-<!--   <mat-list>
-    <mat-list-item *ngFor="let user of users; let i = index" class="userlist">
-      <div class="user-item">
-        <span class="user-column">{{ user.nombre }}</span>
-        <span class="user-column">{{ user.email }}</span>
-        <span class="user-column">{{ user.rol }}</span>
-        <span class="user-column">{{ user.deleted_at }}</span>
-        <button mat-button color="accent" (click)="editUser(i)">Editar</button>
-        <button mat-button color="warn" (click)="deleteUser(i)">Eliminar</button>
-      </div>
-    </mat-list-item>
-  </mat-list> -->
-<app-data-table [displayedColumns]="displayedColumns" [dataSource]="dataSource"></app-data-table>
-  
+  <section aria-label="Tabla de usuarios registrados">
+    <app-data-table [displayedColumns]="displayedColumns" [dataSource]="dataSource"></app-data-table>
+  </section>
 </mat-card>
+
