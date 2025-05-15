@@ -22,8 +22,9 @@
   "ranquing": "Ranquin",
   "register": "Registrar",
 
+  "emissionFactor": "Factor d'emissió",
   "emissionFactorMaintenance": "Manteniment dels factors d'emissió",
-
+  "electricalMixFactor": "Factor de mescla elèctrica",
   "filter_by_year": "Filtrar per any d'activitat",
   "filter_by_activity": "Filtrar per activitat",
   "apply_filter": "Aplicar filtre",
@@ -32,6 +33,11 @@
   "emissionFactorByGases": "Factors d'emissió per gasos",
   "partialEmissions": "Emissions Parcials",
   "totalEmissions": "Emissions Totals",
+  "energyType": "Tipus d'energia",
+  "heat": "Calor",
+  "steam": "Vapor",
+  "cold": "Fred",
+  "compressedAir": "Aire comprimit",
 
   "electricityOtherEnergies": "Electricitat i altres energies",
   "fixedInstallationsFuelConsumption": "Instalacions fixes",

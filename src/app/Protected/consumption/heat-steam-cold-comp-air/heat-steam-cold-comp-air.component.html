@@ -21,12 +21,12 @@
     <!-- Tipo de energía -->
     <div class="form-group">
       <mat-form-field appearance="fill">
-        <mat-label>Tipo de energía</mat-label>
+        <mat-label>{{"energyType" | translate}}</mat-label>
         <mat-select formControlName="energyType">
-          <mat-option value="calor">Calor</mat-option>
-          <mat-option value="vapor">Vapor</mat-option>
-          <mat-option value="frio">Frío</mat-option>
-          <mat-option value="aire-comprimido">Aire comprimido</mat-option>
+          <mat-option value="calor">{{"heat" | translate}}</mat-option>
+          <mat-option value="vapor">{{"steam" | translate}}</mat-option>
+          <mat-option value="frio">{{"cold" | translate}}</mat-option>
+          <mat-option value="aire-comprimido">{{"compressedAir" | translate}}</mat-option>
         </mat-select>
       </mat-form-field>
     </div>
@@ -34,7 +34,7 @@
     <!-- Factor de emisión -->
     <div class="form-group">
       <mat-form-field appearance="fill">
-        <mat-label>Factor de emisión (kg CO2e/kWh)</mat-label>
+        <mat-label>{{"emissionFactor" | translate}} (kg CO2e/kWh)</mat-label>
         <input matInput formControlName="emissionFactor" ngClass="gas-emission">
       </mat-form-field>
     </div>
@@ -42,7 +42,7 @@
     <!-- Consumo -->
     <div class="form-group">
       <mat-form-field appearance="fill">
-        <mat-label>Dato de actividad (kWh)</mat-label>
+        <mat-label>{{"activityData" | translate}} (kWh)</mat-label>
           <input matInput type="number" formControlName="activityData" (input)="calculateEmissions()">
       </mat-form-field>
     </div>
@@ -50,14 +50,14 @@
     <!-- Emisiones -->
     <div class="form-group">
       <mat-form-field appearance="fill">
-        <mat-label>Emisiones Totales (tnCO<sub>2</sub>eq) [CO<sub>2</sub>eq: CO<sub>2</sub>+CH<sub>4</sub>+N<sub>2</sub>O]</mat-label>
+        <mat-label>{{"totalEmissions" | translate}} (tnCO<sub>2</sub>eq) [CO<sub>2</sub>eq: CO<sub>2</sub>+CH<sub>4</sub>+N<sub>2</sub>O]</mat-label>
         <input matInput formControlName="emisionesCO2e" ngClass="gas-emission tnCo2eq">
       </mat-form-field>
     </div>
   
     <!-- Botones -->
     <div class="button-group">
-      <button mat-raised-button color="accent" type="submit" [disabled]="heatSteamColdAirForm.invalid">Registrar</button>
+      <button mat-raised-button color="accent" type="submit" [disabled]="heatSteamColdAirForm.invalid">{{"register" | translate}}</button>
     </div>
   </form>
   <app-data-table [displayedColumns]="displayedColumns" [dataSource]="dataSource"></app-data-table>

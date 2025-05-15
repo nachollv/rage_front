@@ -21,8 +21,9 @@
   "scope2_2": "(Scope 2)",
   "ranquing": "Ranking",
 
+  "emissionFactor": "Emission factor",
   "emissionFactorMaintenance": "Emission Factors Maintenance",
-
+  "electricalMixFactor": "Electrical Mix Factor",
   "filter_by_year": "Filter by activity year",
   "filter_by_activity": "Filter by activity",
   "apply_filter": "Apply filter",
@@ -31,6 +32,11 @@
   "emissionFactorByGases": "Emission Factors by Gases",
   "partialEmissions": "Partial Emissions",
   "totalEmissions": "Total Emissions",
+  "energyType": "Energy type",
+  "heat": "Heat",
+  "steam": "Steam",
+  "cold": "Cold",
+  "compressedAir": "Compressed Air",
   
   "electricityOtherEnergies": "Electricity and other energies",
   "fixedInstallationsFuelConsumption": "Fixed Installations",
