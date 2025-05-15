@@ -18,7 +18,7 @@ export class MachineryComponent implements OnInit, OnChanges {
   @Input() productionCenter: number = 0
   emissionsForm!: FormGroup;
   showField: boolean = false
-  displayedColumns: string[] = ['activity Year', 'Period', 'categoria', 'fuel Type', 'activity Data', 'total Emissions', 'updated At', 'delete']
+  displayedColumns: string[] = ['activity Year', 'Period', 'categoria', 'fuel Type', 'activity Data', 'total Emissions (tnCO₂eq)', 'updated At', 'delete']
   data = [{ }]
   dataSource = new MatTableDataSource<any>(this.data)
   fuelEmisTypes: any[] = []
@@ -89,8 +89,7 @@ export class MachineryComponent implements OnInit, OnChanges {
                   const co2 = registro.activityData * parseFloat(matchedFuel.CO2_kg_l || 0);
                   const ch4 = registro.activityData * parseFloat(matchedFuel.CH4_g_l || 0);
                   const n2o = registro.activityData * parseFloat(matchedFuel.N2O_g_l || 0);
-                  registro['total Emissions'] = '<strong>' + (co2 + (ch4 / 1000) * 25 + (n2o / 1000) * 298).toFixed(3).toString()+' (tnCO2eq)</strong>';
-                  console.log ("total emissions ", registro['total Emissions'])
+                  registro['total Emissions (tnCO₂eq)'] = '<strong>' + (co2 + (ch4 / 1000) * 25 + (n2o / 1000) * 298).toFixed(3).toString()+'</strong>';
                 })
                 this.dataSource = new MatTableDataSource(registros.data)
               })

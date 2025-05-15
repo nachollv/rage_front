@@ -20,6 +20,7 @@
     </mat-form-field>
 
     <section formGroupName="consumos" aria-label="Datos de consumo eléctrico">
+     <section ngClass="type-fuel-quantity" aria-label="Datos de comercializadora eléctrica y selección de GDO">  
       <mat-form-field appearance="fill">
         <mat-label>{{"electricalTrader" | translate}}</mat-label>
         <mat-select formControlName="comercializadora" (selectionChange)="onComercializadoraChange($event.value)" aria-label="Seleccione su comercializadora eléctrica">
@@ -48,7 +49,8 @@
           {{ "El formato debe ser un número con hasta dos decimales" | translate }}
         </mat-error>
       </mat-form-field>
-      
+    </section>
+    <section ngClass="emission-mix-factor" aria-label="Datos de factores de emisión y de mix eléctrico">
       <mat-form-field>
         <mat-label>{{"emissionFactor" | translate}} kg CO₂/kWh</mat-label>
         <input matInput formControlName="fe_co2" ngClass="gas-emission" aria-label="Ingrese el factor de emisión">
@@ -58,6 +60,8 @@
         <mat-label>{{"electricalMixFactor" | translate}} (kg CO₂e/kWh)</mat-label>
         <input matInput placeholder="Factor Mix eléctrico" formControlName="factorMixElectrico" ngClass="gas-emission" aria-label="Ingrese el factor de mezcla eléctrico"/>
       </mat-form-field>
+    </section>
+
     </section>
 
     <mat-form-field class="full-width">

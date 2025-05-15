@@ -21,29 +21,35 @@
       </mat-form-field>
 
       <section formGroupName="consumos" aria-label="Datos de consumo eléctrico">
-        <mat-form-field appearance="fill">
+        <section ngClass="type-fuel-quantity" aria-label="Datos de comercializadora eléctrica y selección de GDO">
+          <mat-form-field appearance="fill">
           <mat-label>{{"electricalTrader" | translate}}</mat-label>
           <mat-select formControlName="comercializadora" (selectionChange)="onComercializadoraChange($event.value)" aria-label="Seleccione su comercializadora eléctrica">
             <mat-option *ngFor="let comercializadora of comercializadorasElectricas" [value]="comercializadora" aria-label="nombre Comercial">
               {{ comercializadora.nombreComercial }}
             </mat-option>
           </mat-select>
-        </mat-form-field>
+          </mat-form-field>
 
-        <mat-form-field appearance="fill">
+          <mat-form-field appearance="fill">
           <mat-label>{{'hasGDOguarantee' | translate}}</mat-label>
           <mat-select formControlName="gdo" (selectionChange)="onGdoChange($event.value)" aria-label="Seleccione la garantía de origen">
             <mat-option value="0.000" aria-label="Gdo energía renovable">Gdo energía renovable</mat-option>
             <mat-option value="0.302" aria-label="Gdo cogeneración de alta eficiencia">Gdo cogeneración de alta eficiencia</mat-option>
             <mat-option value="1.000" aria-label="No dispone de garantía de origen">No</mat-option>
           </mat-select>
-        </mat-form-field>
+          </mat-form-field>
 
-        <mat-form-field appearance="fill">
+          <mat-form-field appearance="fill">
           <mat-label>{{'activityData' | translate}} (kWh)</mat-label>
           <input matInput formControlName="activityData" type="number" aria-label="Ingrese el consumo eléctrico en kWh">
-        </mat-form-field>
-
+          </mat-form-field>
+        </section>
+        <section ngClass="emission-mix-factor" aria-label="Datos de factores de emisión y de mix eléctrico">
+          <mat-form-field>
+          <mat-label>{{'emissionFactor' | translate}} kg CO₂/kWh</mat-label>
+          <input matInput formControlName="fe_co2" ngClass="gas-emission" aria-label="Ingrese el factor de emisión">
+          </mat-form-field>
         <mat-form-field>
           <mat-label>{{'emissionFactor' | translate}} kg CO₂/kWh</mat-label>
           <input matInput formControlName="fe_co2" ngClass="gas-emission" aria-label="Ingrese el factor de emisión">
@@ -53,6 +59,8 @@
           <mat-label>{{"electricalMixFactor" | translate}} (kg CO₂e/kWh)</mat-label>
           <input matInput placeholder="Factor Mix eléctrico" formControlName="factorMixElectrico" ngClass="gas-emission" aria-label="Ingrese el factor de mezcla eléctrico"/>
         </mat-form-field>
+        </section>
+        
       </section>
 
       <mat-form-field class="full-width">

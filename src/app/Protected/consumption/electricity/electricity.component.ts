@@ -22,7 +22,7 @@ export class ElectricityComponent implements OnInit, OnChanges {
   @Input() productionCenter: number = 0
   comercializadorasElectricas: any[] = []
   errorMessage: string = ''
-  displayedColumns: string[] = ['activity Year', 'Period', 'electricity Trading Company', 'activity Data', 'gdo', 'total Emissions', 'updated_at', 'delete']
+  displayedColumns: string[] = ['activity Year', 'Period', 'electricity Trading Company', 'activity Data', 'gdo', 'total Emissions (tnCO₂eq)', 'updated_at', 'delete']
   data = [ { } ];
   dataSource = new MatTableDataSource<any>(this.data)
   buildingElecConsumption!: FormGroup;
@@ -64,6 +64,7 @@ export class ElectricityComponent implements OnInit, OnChanges {
     ngOnChanges(changes: SimpleChanges): void {
       if (changes['activityYear'] && !changes['activityYear'].firstChange) {
         this.getAllEmissionsbyYear(this.activityYear);
+        this.getScopeTwoRecords()
       }
     }
 
@@ -90,7 +91,7 @@ export class ElectricityComponent implements OnInit, OnChanges {
                   registro.electricityTradingCompany = matchedComercializadora?.nombreComercial+" (fe:"+matchedComercializadora?.kg_CO2_kWh+")" || 'desconocido';
                   registro['electricity Trading Company'] = registro.electricityTradingCompany
                   registro['activity Data'] = registro.activityData + " kWh"
-                  registro['total Emissions'] = "<strong><span ngClass='co2eqData'>"+ emisionesCO2e.toFixed(3) + " (tnCO2eq)</span></strong>"
+                  registro['total Emissions (tnCO₂eq)'] = "<strong>"+ emisionesCO2e.toFixed(3) + "</strong>"
                 })
 
               })

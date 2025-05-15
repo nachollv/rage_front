@@ -28,14 +28,25 @@ mat-error {
 
 // Estilo adicional para el contenedor de consumos
 [formGroupName="consumos"] {
-  display: flex;
+/*   display: flex;
   gap: 1rem; // Espaciado entre los campos de "consumos"
-  flex-wrap: wrap;
+  flex-wrap: wrap; */
 
   mat-form-field {
     flex: 1 1 calc(50% - 1rem); // Dos columnas con espaciado
     min-width: 200px; // Ancho mínimo para mantener legibilidad
   }
+}
+
+.type-fuel-quantity {
+  display: grid;
+  grid-template-columns: 33% 33% 33%;
+  gap: 1rem; // Espaciado entre los campos de "consumos"
+}
+.emission-mix-factor {
+  display: grid;
+  grid-template-columns: 50% 50%;
+  gap: 1rem; // Espaciado entre los campos de "consumos"
 }
 
 /* Large devices (laptops/desktops, 992px and up) */

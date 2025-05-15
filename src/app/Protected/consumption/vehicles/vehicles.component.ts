@@ -17,7 +17,7 @@ import { AuthService } from '../../../services/auth.service';
 export class MachineryVehiclesComponent  implements OnInit, OnChanges {
   @Input() activityYear!: number
   @Input() productionCenter!: number
-  displayedColumns: string[] = ['activity Year', 'Period', 'equipment Type', 'fuel Type', 'activity Data', 'total Emissions', 'updated At', 'delete']
+  displayedColumns: string[] = ['activity Year', 'Period', 'equipment Type', 'fuel Type', 'activity Data', 'total Emissions (tnCO₂eq)', 'updated At', 'delete']
   data = [ { }, ]
   dataSource = new MatTableDataSource<any>(this.data)
   vehicleCategories: any[] = []
@@ -108,7 +108,7 @@ getScopeOneRecords(calculationYear: number = this.activityYear, productionCenter
               const co2 = registro.activityData * parseFloat(matchedFuel.CO2_kg_ud || 0);
               const ch4 = registro.activityData * parseFloat(matchedFuel.CH4_g_ud || 0);
               const n2o = registro.activityData * parseFloat(matchedFuel.NO2_g_ud || 0);
-              registro['total Emissions'] = '<strong>' + (co2 + (ch4 / 1000) * 25 + (n2o / 1000) * 298).toFixed(3).toString()+' (tnCO2eq)</strong>'; 
+              registro['total Emissions (tnCO₂eq)'] = '<strong>' + (co2 + (ch4 / 1000) * 25 + (n2o / 1000) * 298).toFixed(3).toString()+'</strong>'; 
             })
             this.dataSource = new MatTableDataSource(registros.data)        
           })

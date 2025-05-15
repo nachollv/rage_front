@@ -18,7 +18,7 @@ import { AuthService } from '../../../services/auth.service';
 export class FugitiveGasesComponent implements OnInit, OnChanges {
   @Input() activityYear: number = 0
   @Input() productionCenter: number = 0
-  displayedColumns: string[] = ['activity Year', 'Period', 'Name of gas mixture', 'gas Equipment Capacity', 'Equipment recharge', 'total Emissions', 'updated At', 'delete']
+  displayedColumns: string[] = ['activity Year', 'Period', 'Name of gas mixture', 'gas Equipment Capacity', 'Equipment recharge', 'total Emissions (tnCO₂eq)', 'updated At', 'delete']
   data = [{ }]
   dataSource = new MatTableDataSource<any>(this.data)
   emisionesForm!: FormGroup;
@@ -92,7 +92,7 @@ export class FugitiveGasesComponent implements OnInit, OnChanges {
 
             registro['gas Equipment Capacity'] = registro.capacidad_equipo
             registro['Equipment recharge'] = registro.recarga_equipo
-            registro['total Emissions'] = "<strong><span ngClass='co2eqData'>"+ (recharge * pca6AR).toFixed(3) + " (tnCO2eq)</span></strong>"
+            registro['total Emissions (tnCO₂eq)'] = "<strong>"+ (recharge * pca6AR).toFixed(3) + "</strong>"
           });
 
           this.dataSource = new MatTableDataSource(registrosleak.data);
