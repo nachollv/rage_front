@@ -23,7 +23,6 @@
 
   "emissionFactorMaintenance": "Emission Factors Maintenance",
 
-  
   "filter_by_year": "Filter by activity year",
   "filter_by_activity": "Filter by activity",
   "apply_filter": "Apply filter",
@@ -52,7 +51,16 @@
   "moreThanOneProdCenter": "More than one production center",
   "selectThreeYears": "Select THREE years maximum",
   "fuelEmissionsRailSeaAir": "Emissions from rail, maritime and air transport",
+  "emissionFactorsByGases": "Emission factors by gases",
+  "transportType": "Transport type",
+  "railWayTransport": "Railway transport",
+  "maritimeTransport": "Maritime transport",
+  "airTransport": "Air transport",
+  "machineryType": "Machinery type",
+  "commercialInstitutionalIndustrialMachinery": "Commercial, institutional and industrial machinery",
   "vehicleEmissions": "Vehicle emissions",
+  "vehicleCategory": "Vehicle category",
+  "fuelOrLubricant": "Fuel or lubricant type",
   "machineryEmissions": "Machinery emissions",
   "zipCode": "Zip code",
   "emailUserAdmin": "Email 'Admin' rol user",

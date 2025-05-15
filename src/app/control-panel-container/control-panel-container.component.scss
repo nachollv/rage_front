@@ -51,15 +51,14 @@
   display: grid;
   grid-template-areas: "electricity scope2TableElec" 
   "electricityVehicle scope2TableElecVehi"
-  "heat scope2TableHeatCold"; // Tres columnas de igual ancho
-  gap: 1rem; // Espaciado uniforme entre columnas y filas
-  width: auto; // Ocupa todo el ancho del contenedor padre
-  box-sizing: border-box; // Asegura un cálculo correcto del ancho
-  margin: 1rem; // Espacio entre las dos secciones
-  padding: 1rem; // Espacio interno para el contenido
-  border-radius: 8px; // Bordes redondeados para un aspecto más suave
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); // Sombra sutil para profundidad
-  border: 1px solid #ccc; // Borde sutil para separación
+  "heat scope2TableHeatCold";
+  gap: 1rem; 
+  width: auto;
+  box-sizing: border-box; 
+  padding: 1rem; 
+  border-radius: 8px; 
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border: 1px solid #ccc; 
   align-items: start;
 }
 .electricity {

@@ -382,10 +382,7 @@ fixedInstChart(chartType: keyof ChartTypeRegistry, scop1DataFI: any): void {
       this.chartInstanceFixedEmis = new Chart(ctx, {
           type: chartType,
           data: {
-              labels: [
-                  'January', 'February', 'March', 'April', 'May', 'June',
-                  'July', 'August', 'September', 'October', 'November', 'December',
-              ],
+              labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
               datasets: datasets,
           },
           options: {
