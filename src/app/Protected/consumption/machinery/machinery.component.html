@@ -19,7 +19,7 @@
       </mat-select>
     </mat-form-field>
 
-    <section aria-label="Datos de maquinaria y selección de combustible">
+    <section ngClass="type-fuel-quantity" aria-label="Datos de maquinaria y selección de combustible">
       <mat-form-field appearance="fill">
         <mat-label>{{"machineryType" | translate}}</mat-label>
         <mat-select formControlName="equipmentType" (selectionChange)="onMachineryChange($event.value)" aria-label="Seleccione el tipo de maquinaria">
