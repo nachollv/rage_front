@@ -80,6 +80,8 @@
   "zipCode": "Código postal",
   "emailUserAdmin": "Email usuario role 'Admin'",
   "passwordDuration": "Duración contraseña usuarios [por seguridad]",
+  "password": "Contraseña",
+  "confirmPassword": "Confirmar contraseña",
   "days": "días",
   "formContainsErrors": "El formulario contiene errores, por favor verifica los campos.",
   "formContainsErrorsShort": "El formulario contiene errores",

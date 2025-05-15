@@ -4,6 +4,7 @@ import { passwordMatchValidator } from '../custom-validators/custom.validator';
 import { OrganizacionService } from '../services/organizacion.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { SignUpMailService } from '../sign-up-mail.service';
 
 @Component({
   selector: 'app-register',
@@ -14,7 +15,10 @@ import { Router } from '@angular/router';
 export class RegisterComponent  {
   registerForm!: FormGroup;
 
-  constructor(private formBuilder: FormBuilder, private snackBar: MatSnackBar, private registerService: OrganizacionService, private router: Router, private cdr: ChangeDetectorRef) {
+  constructor(private formBuilder: FormBuilder, private snackBar: MatSnackBar, 
+    private registerService: OrganizacionService, 
+    private signUpMailService: SignUpMailService,
+    private router: Router, private cdr: ChangeDetectorRef) {
     this.registerForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6), this.passwordValidator]],
@@ -27,13 +31,6 @@ export class RegisterComponent  {
     this.registerForm.get('retypePassword')?.valueChanges.subscribe(() => {
       this.registerForm.updateValueAndValidity({ onlySelf: false });
     });
-
-/*     this.registerForm.valueChanges.subscribe(() => {
-      this.registerForm.markAsTouched();
-      this.registerForm.updateValueAndValidity();
-    }); */
-    
-    
   }
 
   ngOnInit() {
@@ -72,7 +69,17 @@ export class RegisterComponent  {
       this.registerService.crearOrganizacion(formData).subscribe(
         (response) => {
           this.showSnackBar('Su empresa ha sido registrada correctamente.');
+          const email = this.registerForm.value.email;
+      this.signUpMailService.sendSignUpEmail(email).subscribe({
+        next: (response) => {
+          this.showSnackBar('Correo enviado exitosamente. Revisa tu bandeja de entrada.');
           this.router.navigate(['/login']);
+        },
+        error: (error) => {
+          this.showSnackBar('Hubo un problema al enviar el correo.<br>' + error + '<br>Por favor, intenta de nuevo en un momento.');
+        },
+      })
+          
         },
         (error) => {
           this.showSnackBar('Error en el registro: ' + error.messages);
