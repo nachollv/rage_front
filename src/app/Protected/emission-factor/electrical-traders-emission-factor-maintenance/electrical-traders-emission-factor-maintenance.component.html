@@ -1,7 +1,7 @@
-<form [formGroup]="emissionForm" (ngSubmit)="onSubmit()" class="form-container">
+<form [formGroup]="emissionForm" (ngSubmit)="onSubmit()" class="form-container" aria-label="Formulario de registro de emisiones de comercializadoras eléctricas">
   <mat-form-field appearance="outline">
     <mat-label>{{ 'activityYear' | translate }}</mat-label>
-    <input matInput formControlName="year" type="number" placeholder="Ejemplo: 2025">
+    <input matInput formControlName="year" type="number" placeholder="Ejemplo: 2025" aria-label="Ingrese el año de actividad">
     <mat-error *ngIf="emissionForm.get('year')?.hasError('required')">
       Este campo es obligatorio.
     </mat-error>
@@ -12,7 +12,7 @@
   
   <mat-form-field appearance="outline">
     <mat-label>{{"electricalTrader" | translate}}</mat-label>
-    <input matInput formControlName="nombreComercial" placeholder="Ejemplo: Empresa XYZ">
+    <input matInput formControlName="nombreComercial" placeholder="Ejemplo: Empresa XYZ" aria-label="Ingrese el nombre de la comercializadora eléctrica">
     <mat-error *ngIf="emissionForm.get('nombreComercial')?.hasError('required')">
       Este campo es obligatorio.
     </mat-error>
@@ -20,7 +20,7 @@
 
   <mat-form-field appearance="outline">
     <mat-label>Emisión CO₂ (kg/kWh)</mat-label>
-    <input matInput formControlName="kg_CO2_kWh" type="number" step="0.01">
+    <input matInput formControlName="kg_CO2_kWh" type="number" step="0.01" aria-label="Ingrese el factor de emisión de CO₂ en kg/kWh">
     <mat-error *ngIf="emissionForm.get('kg_CO2_kWh')?.hasError('required')">
       Este campo es obligatorio.
     </mat-error>
@@ -29,16 +29,17 @@
     </mat-error>
   </mat-form-field>
 
-  <button mat-raised-button color="primary" type="submit" [disabled]="emissionForm.invalid">{{'register' | translate}}</button>
+  <button mat-raised-button color="primary" type="submit" [disabled]="emissionForm.invalid" aria-label="Enviar formulario de registro de emisiones">
+    {{'register' | translate}}
+  </button>
 </form>
 
-<section *ngIf="emissionForm.invalid && emissionForm.touched" class="error-container">
+<section *ngIf="emissionForm.invalid && emissionForm.touched" class="error-container" aria-label="Lista de errores en el formulario">
   <p>{{ 'formContainsErrorsShort' | translate }}:</p>
   <ul>
-    <li *ngFor="let error of getFormErrors()">{{ error }}</li>
+    <li *ngFor="let error of getFormErrors()" aria-label="Error en el formulario">{{ error }}</li>
   </ul>
 </section>
 
-
-<app-data-table [displayedColumns]="displayedColumns" [dataSource]="dataSource"></app-data-table>
+<app-data-table [displayedColumns]="displayedColumns" [dataSource]="dataSource" aria-label="Tabla de datos de emisiones"></app-data-table>
 

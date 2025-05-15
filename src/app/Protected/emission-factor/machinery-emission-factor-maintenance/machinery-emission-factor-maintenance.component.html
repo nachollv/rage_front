@@ -1,23 +1,23 @@
-<form [formGroup]="emissionForm" (ngSubmit)="onSubmit()" class="form-container">
+<form [formGroup]="emissionForm" (ngSubmit)="onSubmit()" class="form-container" aria-label="Formulario de registro de emisiones de combustibles">
   <mat-form-field appearance="outline">
-    <mat-label>Año actividad</mat-label>
-    <input matInput formControlName="year" type="number" placeholder="Ejemplo: 2025">
+    <mat-label>{{"activityYear" | translate}}</mat-label>
+    <input matInput formControlName="year" type="number" placeholder="Ejemplo: 2025" aria-label="Ingrese el año de actividad">
     <mat-error *ngIf="emissionForm.get('year')?.hasError('pattern')">
       Debe ser un año válido (4 dígitos).
     </mat-error>
   </mat-form-field>
   
   <mat-form-field appearance="outline">
-    <mat-label>Tipo de Combustible</mat-label>
-    <input matInput formControlName="FuelType" placeholder="Ejemplo: Gasolina">
+    <mat-label>{{"fuelType" | translate}}</mat-label>
+    <input matInput formControlName="FuelType" placeholder="Ejemplo: Gasolina" aria-label="Ingrese el tipo de combustible">
     <mat-error *ngIf="emissionForm.get('FuelType')?.hasError('required')">
       Este campo es obligatorio.
     </mat-error>
   </mat-form-field>
 
   <mat-form-field appearance="outline">
-    <mat-label>Categoría</mat-label>
-    <input matInput formControlName="Categoria" placeholder="Ejemplo: Transporte">
+    <mat-label>{{"category" | translate}}</mat-label>
+    <input matInput formControlName="Categoria" placeholder="Ejemplo: Transporte" aria-label="Ingrese la categoría de emisiones">
     <mat-error *ngIf="emissionForm.get('Categoria')?.hasError('required')">
       La categoría es obligatoria.
     </mat-error>
@@ -25,7 +25,7 @@
 
   <mat-form-field appearance="outline">
     <mat-label>CO₂ (kg/ud)</mat-label>
-    <input matInput formControlName="CO2_kg_ud" type="number" step="0.01">
+    <input matInput formControlName="CO2_kg_ud" type="number" step="0.01" aria-label="Ingrese el factor de emisión de CO₂">
     <mat-error *ngIf="emissionForm.get('CO2_kg_ud')?.hasError('min')">
       Debe ser un número positivo.
     </mat-error>
@@ -33,7 +33,7 @@
 
   <mat-form-field appearance="outline">
     <mat-label>CH₄ (g/ud)</mat-label>
-    <input matInput formControlName="CH4_g_ud" type="number" step="0.01">
+    <input matInput formControlName="CH4_g_ud" type="number" step="0.01" aria-label="Ingrese el factor de emisión de CH₄">
     <mat-error *ngIf="emissionForm.get('CH4_g_ud')?.hasError('min')">
       Debe ser un número positivo.
     </mat-error>
@@ -41,22 +41,22 @@
 
   <mat-form-field appearance="outline">
     <mat-label>N₂O (g/ud)</mat-label>
-    <input matInput formControlName="N2O_g_ud" type="number" step="0.01">
+    <input matInput formControlName="N2O_g_ud" type="number" step="0.01" aria-label="Ingrese el factor de emisión de N₂O">
     <mat-error *ngIf="emissionForm.get('N2O_g_ud')?.hasError('min')">
       Debe ser un número positivo.
     </mat-error>
   </mat-form-field>
 
-  <button mat-raised-button color="primary" type="submit" [disabled]="emissionForm.invalid">Registrar</button>
+  <button mat-raised-button color="primary" type="submit" [disabled]="emissionForm.invalid" aria-label="Enviar formulario de registro de emisiones">
+    {{"register" | translate}}
+  </button>
 </form>
 
-<section *ngIf="emissionForm.invalid && emissionForm.touched" ngClass="error-container">
-  <p>El formulario tiene errores:</p>
+<section *ngIf="emissionForm.invalid && emissionForm.touched" ngClass="error-container" aria-label="Lista de errores en el formulario">
+  <p>{{"formContainsErrorsShort" | translate}}:</p>
   <ul>
-    <li *ngFor="let error of getFormErrors()">{{ error }}</li>
+    <li *ngFor="let error of getFormErrors()" aria-label="Error en el formulario">{{ error }}</li>
   </ul>
 </section>
 
-<app-data-table [displayedColumns]="displayedColumns" [dataSource]="dataSource"></app-data-table>
-
-
+<app-data-table [displayedColumns]="displayedColumns" [dataSource]="dataSource" aria-label="Tabla de datos de emisiones"></app-data-table>

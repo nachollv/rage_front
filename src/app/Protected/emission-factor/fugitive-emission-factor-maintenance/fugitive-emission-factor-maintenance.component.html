@@ -1,15 +1,15 @@
-<form [formGroup]="emissionForm" (ngSubmit)="onSubmit()" class="form-container">
+<form [formGroup]="emissionForm" (ngSubmit)="onSubmit()" class="form-container" aria-label="Formulario de registro de gases y mezclas químicas">
   <mat-form-field appearance="outline">
-    <mat-label>Nombre del gas o de la mezcla</mat-label>
-    <input matInput formControlName="Nombre" placeholder="Ejemplo: HFC-23">
+    <mat-label>{{"gasNameORMixture" | translate}}</mat-label>
+    <input matInput formControlName="Nombre" placeholder="Ejemplo: HFC-23" aria-label="Ingrese el nombre del gas o mezcla">
     <mat-error *ngIf="emissionForm.get('Nombre')?.hasError('required')">
       Este campo es obligatorio.
     </mat-error>
   </mat-form-field>
 
   <mat-form-field appearance="outline">
-    <mat-label>Fórmula Química</mat-label>
-    <input matInput formControlName="FormulaQuimica" placeholder="Ejemplo: CH2F3">
+    <mat-label>{{"chemicalFormula" | translate}}</mat-label>
+    <input matInput formControlName="FormulaQuimica" placeholder="Ejemplo: CH2F3" aria-label="Ingrese la fórmula química">
     <mat-error *ngIf="emissionForm.get('FormulaQuimica')?.hasError('required')">
       La fórmula química es obligatoria.
     </mat-error>
@@ -17,7 +17,7 @@
 
   <mat-form-field appearance="outline">
     <mat-label>PCA</mat-label>
-    <input matInput formControlName="PCA_6AR" type="number" step="0.01">
+    <input matInput formControlName="PCA_6AR" type="number" step="0.01" aria-label="Ingrese el potencial de calentamiento atmosférico (PCA)">
     <mat-error *ngIf="emissionForm.get('PCA_6AR')?.hasError('required')">
       Este campo es obligatorio.
     </mat-error>
@@ -26,16 +26,16 @@
     </mat-error>
   </mat-form-field>
 
-  <button mat-raised-button color="primary" type="submit" [disabled]="emissionForm.invalid">Registrar</button>
+  <button mat-raised-button color="primary" type="submit" [disabled]="emissionForm.invalid" aria-label="Enviar formulario de registro de gases y mezclas químicas">
+    {{"register" | translate}}
+  </button>
 </form>
 
-<section *ngIf="emissionForm.invalid && emissionForm.touched" class="error-container">
-  <p>El formulario tiene errores:</p>
+<section *ngIf="emissionForm.invalid && emissionForm.touched" class="error-container" aria-label="Lista de errores en el formulario">
+  <p>{{"formContainsErrorsShort" | translate}}:</p>
   <ul>
-    <li *ngFor="let error of getFormErrors()">{{ error }}</li>
+    <li *ngFor="let error of getFormErrors()" aria-label="Error en el formulario">{{ error }}</li>
   </ul>
 </section>
 
-<app-data-table [displayedColumns]="displayedColumns" [dataSource]="dataSource"></app-data-table>
-
-
+<app-data-table [displayedColumns]="displayedColumns" [dataSource]="dataSource" aria-label="Tabla de datos de gases y mezclas químicas"></app-data-table>
