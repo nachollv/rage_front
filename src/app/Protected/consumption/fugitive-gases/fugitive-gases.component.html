@@ -20,7 +20,7 @@
     </mat-form-field>
 
     <mat-form-field>
-      <mat-label>Nombre del gas o de la mezcla</mat-label>
+      <mat-label>{{"gasNameORMixture" | translate}}</mat-label>
       <mat-select formControlName="nombre_gas_mezcla" placeholder="Introduce el nombre del gas o mezcla" (selectionChange)="setPCAAndChemicalFormula()" aria-label="Seleccione el nombre del gas o mezcla">
         <mat-option *ngFor="let gas of gasTypes" [value]="gas" aria-label="Nombre gas o mezcla">{{ gas.Nombre }}</mat-option>
       </mat-select>
@@ -28,7 +28,7 @@
 
     <section aria-label="Datos químicos del gas">
       <mat-form-field>
-        <mat-label>Fórmula química</mat-label>
+        <mat-label>{{"chemicalFormula" | translate}}</mat-label>
         <input matInput formControlName="formulaQuimica" ngClass="gas-emission" aria-label="Ingrese la fórmula química del gas"/>
       </mat-form-field>
 
@@ -40,24 +40,24 @@
 
     <section aria-label="Datos de equipo y recarga">
       <mat-form-field>
-        <mat-label>Capacidad del equipo (kg)</mat-label>
+        <mat-label>{{"equipmentCapacity" | translate}} (kg)</mat-label>
         <input matInput type="number" formControlName="capacidad_equipo" placeholder="Ej. 10.5" aria-label="Ingrese la capacidad del equipo en kg"/>
       </mat-form-field>
 
       <mat-form-field>
-        <mat-label>Recarga del equipo (kg)</mat-label>
+        <mat-label>{{"equipmentRecharge" | translate}} (kg)</mat-label>
         <input matInput type="number" formControlName="recarga_equipo" (change)="equipmentRechargeChange()" placeholder="Ej. 5.0" aria-label="Ingrese la recarga del equipo en kg"/>
       </mat-form-field>
     </section>
 
-    <h3 aria-label="Emisiones totales">Emisiones Totales (tnCO₂eq)</h3>
+    <h3 aria-label="Emisiones totales">{{"totalEmissions" | translate}} (tnCO₂eq)</h3>
     <mat-form-field>
       <mat-label>(tnCO₂eq)</mat-label>
       <input matInput formControlName="emisionesCO2e" ngClass="gas-emission tnCo2eq" aria-label="Ingrese el total de emisiones en tnCO₂eq"/>
     </mat-form-field>
 
     <button mat-raised-button color="accent" type="submit" [disabled]="emisionesForm.invalid" aria-label="Enviar formulario de registro de emisiones">
-      Registrar
+      {{"register" | translate}}
     </button>
   </form>
 

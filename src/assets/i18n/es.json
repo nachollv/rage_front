@@ -24,7 +24,6 @@
 
   "emissionFactorMaintenance": "Mantenimento de los factores de emisión",
 
-
   "filter_by_year": "Filtrar por año de actividad",
   "filter_by_activity": "Filtrar por actividad",
   "apply_filter": "Aplicar filtro",
@@ -40,7 +39,10 @@
   "railSeaAirTransport": "Transporte ferroviario, marítimo, aéreo",
   "fuelConsumptionMachinery": "Maquinaria",
   "heatSteamColdCompressedAir": "Calor, Vapor, Frío y Aire Comprimido",
-
+  "gasNameORMixture": "Nombre del gas o mezcla",
+  "chemicalFormula": "Fórmula química",
+  "equipmentCapacity": "Capacidad del equipo",
+  "equipmentRecharge": "Recarga del equipo",
   "activityYear": "Año de actividad",
   "activityType": "Tipo de actividad",
   "organizationName": "Nombre de la organización",

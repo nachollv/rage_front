@@ -1,89 +1,92 @@
-<mat-card>
-  <form [formGroup]="emissionsForm" (ngSubmit)="onSubmit()">
+<mat-card aria-label="Formulario de registro de emisiones">
+  <form [formGroup]="emissionsForm" (ngSubmit)="onSubmit()" aria-label="Formulario para registrar emisiones de maquinaria">
+
     <mat-form-field appearance="fill">
       <mat-label>{{"period" | translate}}</mat-label>
-      <mat-select formControlName="periodoFactura">
-          <mat-option value="M01" aria-label="Enero">{{"january" | translate}}</mat-option>
-          <mat-option value="M02" aria-label="Febrero">{{"february" | translate}}</mat-option>
-          <mat-option value="M03" aria-label="Marzo">{{"march" | translate}}</mat-option>
-          <mat-option value="M04" aria-label="Abril">{{"april" | translate}}</mat-option>
-          <mat-option value="M05" aria-label="Mayo">{{"may" | translate}}</mat-option>
-          <mat-option value="M06" aria-label="Junio">{{"june" | translate}}</mat-option>
-          <mat-option value="M07" aria-label="Julio">{{"july" | translate}}</mat-option>
-          <mat-option value="M08" aria-label="Agosto">{{"august" | translate}}</mat-option>
-          <mat-option value="M09" aria-label="Setiembre">{{"september" | translate}}</mat-option>
-          <mat-option value="M10" aria-label="Octubre">{{"october" | translate}}</mat-option>
-          <mat-option value="M11" aria-label="Noviembre">{{"november" | translate}}</mat-option>
-          <mat-option value="M12" aria-label="Diciembre">{{"december" | translate}}</mat-option>
+      <mat-select formControlName="periodoFactura" aria-label="Seleccione el periodo de la factura">
+        <mat-option value="M01" aria-label="Enero">{{"january" | translate}}</mat-option>
+        <mat-option value="M02" aria-label="Febrero">{{"february" | translate}}</mat-option>
+        <mat-option value="M03" aria-label="Marzo">{{"march" | translate}}</mat-option>
+        <mat-option value="M04" aria-label="Abril">{{"april" | translate}}</mat-option>
+        <mat-option value="M05" aria-label="Mayo">{{"may" | translate}}</mat-option>
+        <mat-option value="M06" aria-label="Junio">{{"june" | translate}}</mat-option>
+        <mat-option value="M07" aria-label="Julio">{{"july" | translate}}</mat-option>
+        <mat-option value="M08" aria-label="Agosto">{{"august" | translate}}</mat-option>
+        <mat-option value="M09" aria-label="Setiembre">{{"september" | translate}}</mat-option>
+        <mat-option value="M10" aria-label="Octubre">{{"october" | translate}}</mat-option>
+        <mat-option value="M11" aria-label="Noviembre">{{"november" | translate}}</mat-option>
+        <mat-option value="M12" aria-label="Diciembre">{{"december" | translate}}</mat-option>
       </mat-select>
     </mat-form-field>
-      <section ngClass="type-fuel-quantity">
-        <!-- Tipo de maquinaria -->
-        <mat-form-field appearance="fill">
-          <mat-label>{{"machineryType" | translate}}</mat-label>
-          <mat-select formControlName="equipmentType" (selectionChange)="onMachineryChange($event.value)">
-            <mat-option value="Agrícola">{{"agriculturalMachinery" | translate}}</mat-option>
-            <mat-option value="Forestal">{{"forrestMachinery" | translate}}</mat-option>
-            <mat-option value="Comercial, institucional e industrial">{{"commercialInstitutionalIndustrialMachinery" | translate}}</mat-option>
-          </mat-select>
-        </mat-form-field>
-  
-        <!-- Tipo de Combustible o lubricante -->
-        <mat-form-field appearance="fill">
-          <mat-label>{{"fuelOrLubricant" | translate}}</mat-label>
-          <mat-select formControlName="fuelType"  (selectionChange)="setEmissionFactors()">
-            <mat-option *ngFor="let fuelEmis of fuelEmisTypes" [value]="fuelEmis">{{ fuelEmis.FuelType }}</mat-option>
-          </mat-select>
-        </mat-form-field>
-  
-        <!-- Cantidad (ud) -->
-        <mat-form-field appearance="fill">
-          <mat-label>{{"activityData" | translate}} (ud)</mat-label>
-          <input matInput type="number" formControlName="activityData" (input)="onActivityDataChange()" />
-        </mat-form-field>
-      </section>
 
-      <!-- Factores de emisión por defecto -->
-      <h3>{{"emissionFactorByGases" | translate}}</h3>
-      <section formGroupName="defaultEmissionFactor" class="factor-group">
-        <mat-form-field appearance="fill">
-          <mat-label>kg CO₂/ud</mat-label>
-          <input matInput formControlName="co2" ngClass="gas-emission"/>
-        </mat-form-field>
-        <mat-form-field appearance="fill">
-          <mat-label>g CH₄/ud</mat-label>
-          <input matInput formControlName="ch4" ngClass="gas-emission"/>
-        </mat-form-field>
-        <mat-form-field appearance="fill">
-          <mat-label>g N₂O/ud</mat-label>
-          <input matInput formControlName="n2o" ngClass="gas-emission"/>
-        </mat-form-field>
-      </section>
-  
-      <!-- Emisiones parciales -->
-      <h3>{{"partialEmissions" | translate}}</h3>
-      <section formGroupName="partialEmissions" class="emissions-group">
-        <mat-form-field appearance="fill">
-          <mat-label>kg CO₂</mat-label>
-          <input matInput formControlName="co2"  ngClass="gas-emission"/>
-        </mat-form-field>
-        <mat-form-field appearance="fill">
-          <mat-label>g CH₄</mat-label>
-          <input matInput formControlName="ch4"  ngClass="gas-emission"/>
-        </mat-form-field>
-        <mat-form-field appearance="fill">
-          <mat-label>g N₂O</mat-label>
-          <input matInput formControlName="n2o"  ngClass="gas-emission"/>
-        </mat-form-field>
-      </section>
-  
-      <!-- Emisiones totales -->
-      <h3>{{"totalEmissions" | translate}} (tnCO<sub>2</sub>eq) [CO<sub>2</sub>eq: CO<sub>2</sub>+CH<sub>4</sub>+N<sub>2</sub>O]</h3>
-      <mat-form-field>
-        <mat-label>(tnCO<sub>2</sub>eq)</mat-label>
-        <input matInput formControlName="totalEmissions"  ngClass="gas-emission tnCo2eq" />
+    <section aria-label="Datos de maquinaria y selección de combustible">
+      <mat-form-field appearance="fill">
+        <mat-label>{{"machineryType" | translate}}</mat-label>
+        <mat-select formControlName="equipmentType" (selectionChange)="onMachineryChange($event.value)" aria-label="Seleccione el tipo de maquinaria">
+          <mat-option value="Agrícola" aria-label="Maquinaria agrícola">{{"agriculturalMachinery" | translate}}</mat-option>
+          <mat-option value="Forestal" aria-label="Maquinaria forestal">{{"forrestMachinery" | translate}}</mat-option>
+          <mat-option value="Comercial, institucional e industrial" aria-label="Maquinaria comercial, institucional e industrial">{{"commercialInstitutionalIndustrialMachinery" | translate}}</mat-option>
+        </mat-select>
       </mat-form-field>
-      <button mat-raised-button color="accent" type="submit" [disabled]="!emissionsForm.valid">{{"register" | translate}}</button>
+
+      <mat-form-field appearance="fill">
+        <mat-label>{{"fuelOrLubricant" | translate}}</mat-label>
+        <mat-select formControlName="fuelType"  (selectionChange)="setEmissionFactors()" aria-label="Seleccione el tipo de combustible">
+          <mat-option *ngFor="let fuelEmis of fuelEmisTypes" [value]="fuelEmis" aria-label="Fuel Type">{{ fuelEmis.FuelType }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>{{"activityData" | translate}} (ud)</mat-label>
+        <input matInput type="number" formControlName="activityData" (input)="onActivityDataChange()" aria-label="Ingrese el dato de actividad">
+      </mat-form-field>
+    </section>
+
+    <h3 aria-label="Factores de emisión por gases">{{"emissionFactorByGases" | translate}}</h3>
+    <section formGroupName="defaultEmissionFactor" class="factor-group">
+      <mat-form-field appearance="fill">
+        <mat-label>kg CO₂/ud</mat-label>
+        <input matInput formControlName="co2" ngClass="gas-emission" aria-label="Ingrese el factor de emisión de CO₂">
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>g CH₄/ud</mat-label>
+        <input matInput formControlName="ch4" ngClass="gas-emission" aria-label="Ingrese el factor de emisión de CH₄">
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>g N₂O/ud</mat-label>
+        <input matInput formControlName="n2o" ngClass="gas-emission" aria-label="Ingrese el factor de emisión de N₂O">
+      </mat-form-field>
+    </section>
+
+    <h3 aria-label="Emisiones parciales">{{"partialEmissions" | translate}}</h3>
+    <section formGroupName="partialEmissions" class="emissions-group">
+      <mat-form-field appearance="fill">
+        <mat-label>kg CO₂</mat-label>
+        <input matInput formControlName="co2" ngClass="gas-emission" aria-label="Ingrese las emisiones parciales de CO₂">
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>g CH₄</mat-label>
+        <input matInput formControlName="ch4" ngClass="gas-emission" aria-label="Ingrese las emisiones parciales de CH₄">
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>g N₂O</mat-label>
+        <input matInput formControlName="n2o" ngClass="gas-emission" aria-label="Ingrese las emisiones parciales de N₂O">
+      </mat-form-field>
+    </section>
+
+    <h3 aria-label="Emisiones totales">{{"totalEmissions" | translate}} (tnCO₂eq)</h3>
+    <mat-form-field>
+      <mat-label>(tnCO₂eq)</mat-label>
+      <input matInput formControlName="totalEmissions" ngClass="gas-emission tnCo2eq" aria-label="Ingrese las emisiones totales en tnCO₂eq">
+    </mat-form-field>
+
+    <button mat-raised-button color="accent" type="submit" [disabled]="!emissionsForm.valid" aria-label="Enviar formulario de registro de emisiones">
+      {{ "register" | translate }}
+    </button>
   </form>
-  <app-data-table [displayedColumns]="displayedColumns" [dataSource]="dataSource"></app-data-table>
+
+  <section aria-label="Tabla de datos de emisiones">
+    <app-data-table [displayedColumns]="displayedColumns" [dataSource]="dataSource"></app-data-table>
+  </section>
 </mat-card>
+
