@@ -321,7 +321,7 @@ getScopeTwoRecords(activityYear: number, prodCenterID?: number, organizationID?:
             const factorMixElectrico = matchedComercializadora?.kg_CO2_kWh || 0;
             const fe_co2 = +factorMixElectrico === 0.302 ? 1.0 : registro.gdo || 0;
             const emisionesCO2e = (Number(activityData) * Number(factorMixElectrico) * Number(fe_co2)) / 1000;
-            registro['total Emissions (tnCO₂eq)'] = "<span ngClass='co2eqData'>"+ emisionesCO2e.toFixed(3) + "</span>"
+            registro['total Emissions (tnCO₂eq)'] = emisionesCO2e.toFixed(3)
           registro.edit = false
           registro.delete = false
         });
