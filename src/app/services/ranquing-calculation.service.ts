@@ -23,9 +23,23 @@ export class RanquingCalculationService {
       return throwError(() => new Error(errorMessage));
     }
 
-    // Obtener totales de registros por calculationYear, productionCenter, fuelType y activityType
-    getTotalizedRecordsByFilters(activityYear: number, productionCenter?: number, fuelType?:number, activityType?: string): Observable<any> {
+    // Obtener totales de registros por calculationYear, productionCenter, fuelType y activityType de alcance 1
+    getTotalizedRecordsByFiltersScopeOne(activityYear: number, productionCenter?: number, fuelType?:number, activityType?: string): Observable<any> {
         return this.http.get<any>(`${this.apiUrl}/scopeonerecords/totals/${activityYear}/productionCenter/${productionCenter}/fuelType/${fuelType}/activityType/${activityType}`, {
+      }).pipe(
+        catchError(this.handleError)
+      );
+    }
+    // Obtener totales de registros por calculationYear, productionCenter, fuelType y activityType de alcance 2
+    getTotalizedRecordsByFiltersScopeTwo(activityYear: number, productionCenter?: number, activityType?: string): Observable<any> {
+        return this.http.get<any>(`${this.apiUrl}/scopetworecords/totals/${activityYear}/productionCenter/${productionCenter}/activityType/${activityType}`, {
+      }).pipe(
+        catchError(this.handleError)
+      );
+    }
+    // Obtener totales de registros por calculationYear, productionCenter de emisiones fugitivas
+    getTotalizedRecordsByFiltersFugitiveEmissions(activityYear: number, productionCenter?: number): Observable<any> {
+        return this.http.get<any>(`${this.apiUrl}/registroemisionesfugas/totals/${activityYear}/productionCenter/${productionCenter}`, {
       }).pipe(
         catchError(this.handleError)
       );

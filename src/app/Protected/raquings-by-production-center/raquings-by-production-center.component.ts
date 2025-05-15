@@ -1,7 +1,7 @@
 import { Component, Input , OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { ProductioncenterService } from '../../services/productioncenter.service';
 import { RanquingCalculationService } from '../../services/ranquing-calculation.service';
-import { tap } from 'rxjs';
+import { map, switchMap, tap } from 'rxjs';
 import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { AuthService } from '../../services/auth.service';
@@ -139,24 +139,77 @@ export class RaquingsByProductionCenterComponent implements OnInit, OnChanges {
       }
     }
     
-    getRanquings(year: number, prodCenter: any) {
-      return this.ranquingCalculation.getTotalizedRecordsByFilters(year, prodCenter.id).pipe(
-        tap((response: any) => {
-          if (!response.data || response.data.length === 0) {
-            // Si no hay datos, retornamos un registro vacío para este centro
-            response.data = [
-              {
-                total_records: 0, // Total 0 para centros sin registros
-                productionCenterID: prodCenter.id,
-                productionCenter: prodCenter.nombre,
-                activityYear: year
-              }
-            ];
+/* getRanquings(year: number, prodCenter: any) {
+  return this.ranquingCalculation.getTotalizedRecordsByFiltersScopeOne(year, prodCenter.id).pipe(
+    map((response: any) => {
+      if (!response.data || response.data.length === 0) {
+        response.data = [
+          {
+            total_records: 0, // Total 0 para centros sin registros
+            productionCenterID: prodCenter.id,
+            productionCenter: prodCenter.nombre,
+            activityYear: year
           }
-          return response.data;
-        })
-      );
-    }
+        ];
+      }
+
+      // Calculamos el total de registros
+      response.totalRecords = response.data.reduce((sum: number, record: any) => sum + (record.total_records || 0), 0);
+      return response;
+    }),
+    switchMap((scopeOneResponse: any) => this.ranquingCalculation.getTotalizedRecordsByFiltersScopeTwo(year, prodCenter.id).pipe(
+      map((scopeTwoResponse: any) => {
+        // Agregamos el total de registros de Scope Two
+        scopeTwoResponse.totalRecords = scopeTwoResponse.data.reduce((sum: number, record: any) => sum + (record.total_records || 0), 0);
+        scopeOneResponse.data[0].total_records = parseFloat(scopeOneResponse.data[0].total_records)+ parseFloat(scopeTwoResponse.data[0].total_records)
+        return scopeOneResponse
+      })
+    ))
+  );
+} */
+
+
+  getRanquings(year: number, prodCenter: any) {
+  return this.ranquingCalculation.getTotalizedRecordsByFiltersScopeOne(year, prodCenter.id).pipe(
+    map((scopeOneResponse: any) => {
+      if (!scopeOneResponse.data || scopeOneResponse.data.length === 0) {
+        // Si no hay datos, retornamos un registro vacío para este centro
+        scopeOneResponse.data = [
+          {
+            total_records: 0, // Total 0 para centros sin registros
+            productionCenterID: prodCenter.id,
+            productionCenter: prodCenter.nombre,
+            activityYear: year
+          }
+        ];
+      }
+
+      // Calculamos el total de registros de Scope One
+      scopeOneResponse.totalRecords = scopeOneResponse.data.reduce((sum: number, record: any) => sum + (record.total_records || 0), 0);
+      return scopeOneResponse;
+    }),
+    switchMap((scopeOneResponse: any) => this.ranquingCalculation.getTotalizedRecordsByFiltersScopeTwo(year, prodCenter.id).pipe(
+      map((scopeTwoResponse: any) => {
+        // Agregamos el total de registros de Scope Two
+        scopeTwoResponse.totalRecords = scopeTwoResponse.data.reduce((sum: number, record: any) => sum + (record.total_records || 0), 0);
+
+        // Sumamos los registros de Scope One y Scope Two
+        scopeOneResponse.data[0].total_records = parseFloat(scopeOneResponse.data[0].total_records) + parseFloat(scopeTwoResponse.data[0].total_records);
+        return { scopeOneResponse, scopeTwoResponse };
+      })
+    )),
+    switchMap(({ scopeOneResponse, scopeTwoResponse }) => this.ranquingCalculation.getTotalizedRecordsByFiltersFugitiveEmissions(year, prodCenter.id).pipe(
+      map((fugitiveEmissionsResponse: any) => {
+        // Agregamos el total de registros de Fugitive Emissions
+        fugitiveEmissionsResponse.totalRecords = fugitiveEmissionsResponse.data.reduce((sum: number, record: any) => sum + (record.total_records || 0), 0);
+        // Sumamos todos los registros
+        scopeOneResponse.data[0].total_records = parseFloat(scopeOneResponse.data[0].total_records)+ parseFloat(fugitiveEmissionsResponse.data[0].total_records)
+        return scopeOneResponse
+      })
+    ))
+  );
+}
+
 
     filterByYear(year: number | 2023) {
       this.activityYear = +year;
