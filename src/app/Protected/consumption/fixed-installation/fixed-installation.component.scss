@@ -39,11 +39,7 @@ button {
   gap: 1rem; // Espaciado entre los campos de "consumos"
 }
 
-.type-fuel-quantity {
-  display: grid;
-  grid-template-columns: 33% 33% 33%;
-  gap: 1rem;
-}
+
 .gas-emission {
   font-size: 2rem;
   font-weight: bolder;
@@ -77,6 +73,14 @@ button {
     height: auto;
   }
 
+  .type-fuel-quantity {
+  grid-template-columns: 100%;
+}
+
+.factor-group, .emissions-group {
+  grid-template-columns: 100%;
+}
+  
   mat-card {
     width: 100%;
   }

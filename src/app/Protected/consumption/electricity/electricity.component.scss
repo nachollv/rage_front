@@ -59,6 +59,17 @@ mat-error {
     grid-template-columns: 100%;
   }
 
+    .type-fuel-quantity {
+  grid-template-columns: 100%;
+}
+.emission-mix-factor {
+  grid-template-columns: 100%;
+}
+
+.factor-group, .emissions-group {
+  grid-template-columns: 100%;
+}
+
   mat-card {
     width: 100%;
   }

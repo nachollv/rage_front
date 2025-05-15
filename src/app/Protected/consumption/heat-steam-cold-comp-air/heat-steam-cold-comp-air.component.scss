@@ -70,4 +70,16 @@ mat-error {
   mat-card {
     width: 100%;
   }
+.form-container {
+  display: grid;
+  grid-template-columns:1fr;
+  gap: 1rem;
+}
+  [formGroupName="consumos"] {
+    grid-template-columns: 100%;
+    mat-form-field {
+      flex: 1 ; // Dos columnas con espaciado
+      min-width: 100%; // Ancho mínimo para mantener legibilidad
+    }
+  }
 }

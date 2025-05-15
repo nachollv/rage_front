@@ -52,3 +52,22 @@ button {
     min-width: 200px; // Ancho mínimo para mantener legibilidad
   }
 }
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (max-width: 992px) {
+  :host {
+    height: auto;
+  }
+
+    .type-fuel-quantity {
+  grid-template-columns: 100%;
+}
+
+.factor-group, .emissions-group {
+  grid-template-columns: 100%;
+}
+
+  mat-card {
+    width: 100%;
+  }
+}
