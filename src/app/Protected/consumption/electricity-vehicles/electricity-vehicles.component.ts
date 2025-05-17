@@ -95,7 +95,7 @@ export class ElectricityVehiclesComponent implements OnInit, OnChanges{
               const factorMixElectrico = matchedComercializadora.kg_CO2_kWh || 0;
               const fe_co2 = +factorMixElectrico === 0.302 ? 1.0 : registro.gdo || 0;
               const emisionesCO2e = (activityData * factorMixElectrico * fe_co2) / 1000;
-              registro['total Emissions (tnCO₂eq)'] = "<strong><span ngClass='co2eqData'>"+ emisionesCO2e.toFixed(3) + ")</span></strong>"
+              registro['total Emissions (tnCO₂eq)'] = "<strong>"+ emisionesCO2e.toFixed(3) + "</strong>"
               console.log ("electricty vehicles", activityData, factorMixElectrico, fe_co2, emisionesCO2e)
             })
 
