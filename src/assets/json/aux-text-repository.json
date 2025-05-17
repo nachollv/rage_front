@@ -61,9 +61,9 @@
     "titleCA": "Transports per carretera",
     "titleES": "Transporte por carretera",
     "titleEN": "Road transport",
-    "sectionTextCA": "Consum de combustibles derivat del transport de passatgers i/o mercaderies que realitza l'organització mitjançant vehicles de rodes que són propietat de l'organització o sobre els quals té control. A més, pot incloure el consum d'AdBlue.",
-    "sectionTextES": "Consumo de combustibles debido al transporte de pasajeros y/o de mercancías que realiza la organización a través de vehículos rodados que son propiedad de la organización, o sobre los que tiene control. Además, puede incluir el consumo de AdBlue.",
-    "sectionTextEN": "Fuel consumption due to the transportation of passengers and/or goods carried out by the organization through wheeled vehicles owned or controlled by the organization. In addition, it may include AdBlue consumption."
+    "sectionTextCA": "Consum de combustibles derivat del transport de passatgers i/o mercaderies que realitza l'organització mitjançant vehicles de rodes que són propietat de l'organització o sobre els quals té control. A més, pot incloure el consum d'<a href='https://www.repsol.es/particulares/asesoramiento-consumo/que-es-adblue/' target='_blank' rel='noopener noreferrer'> AdBlue</a>.",
+    "sectionTextES": "Consumo de combustibles debido al transporte de pasajeros y/o de mercancías que realiza la organización a través de vehículos rodados que son propiedad de la organización, o sobre los que tiene control. Además, puede incluir el consumo de <a href='https://www.repsol.es/particulares/asesoramiento-consumo/que-es-adblue/' target='_blank' rel='noopener noreferrer'> AdBlue</a>.",
+    "sectionTextEN": "Fuel consumption due to the transportation of passengers and/or goods carried out by the organization through wheeled vehicles owned or controlled by the organization. In addition, it may include <a href='https://www.repsol.es/particulares/asesoramiento-consumo/que-es-adblue/' target='_blank' rel='noopener noreferrer'> AdBlue</a> consumption."
   },
   {
     "id": 5,
