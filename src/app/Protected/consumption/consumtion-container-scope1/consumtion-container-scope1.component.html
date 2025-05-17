@@ -9,35 +9,35 @@
 <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start" [(selectedIndex)]="selectedTabIndexscope1" (selectedIndexChange)="onTabChange($event)" *ngIf="activityYear" aria-label="Navegación entre categorías de Alcance 1">
   
   <mat-tab label="{{'fixedInstallationsFuelConsumption' | translate}}" aria-label="Consumo de combustible en instalaciones fijas">
-    <button mat-menu-item (click)="openDialog(2)" aria-label="Abrir información sobre consumo de combustible en instalaciones fijas">
+    <button mat-menu-item (click)="openDialog(3)" aria-label="Abrir información sobre consumo de combustible en instalaciones fijas">
       <mat-icon style="color: #ff9310;">info</mat-icon>{{"fixedInstallationsFuelConsumption" | translate}}
     </button>
     <app-fixed-installation [activityYear]="activityYear" [productionCenter]="productionCenter"></app-fixed-installation>
   </mat-tab>
 
   <mat-tab label="{{'roadTransport' | translate}}" aria-label="Transporte por carretera">
-    <button mat-menu-item (click)="openDialog(3)" aria-label="Abrir información sobre transporte por carretera">
+    <button mat-menu-item (click)="openDialog(4)" aria-label="Abrir información sobre transporte por carretera">
       <mat-icon style="color: #ff9310;">info</mat-icon>{{"roadTransport" | translate}}
     </button>
     <app-vehicles [activityYear]="activityYear" [productionCenter]="productionCenter"></app-vehicles>
   </mat-tab>
 
   <mat-tab label="{{'railSeaAirTransport' | translate}}" aria-label="Transporte ferroviario, marítimo y aéreo">
-    <button mat-menu-item (click)="openDialog(4)" aria-label="Abrir información sobre transporte ferroviario, marítimo y aéreo">
+    <button mat-menu-item (click)="openDialog(5)" aria-label="Abrir información sobre transporte ferroviario, marítimo y aéreo">
       <mat-icon style="color: #ff9310;">info</mat-icon>{{"railSeaAirTransport" | translate}}
     </button>
     <app-rail-sea-airtransport [activityYear]="activityYear" [productionCenter]="productionCenter"></app-rail-sea-airtransport>
   </mat-tab>
 
   <mat-tab label="{{'fuelConsumptionMachinery' | translate}}" aria-label="Consumo de combustible en maquinaria">
-    <button mat-menu-item (click)="openDialog(5)" aria-label="Abrir información sobre consumo de combustible en maquinaria">
+    <button mat-menu-item (click)="openDialog(6)" aria-label="Abrir información sobre consumo de combustible en maquinaria">
       <mat-icon style="color: #ff9310;">info</mat-icon>{{"fuelConsumptionMachinery" | translate}}
     </button>
     <app-machinery [activityYear]="activityYear" [productionCenter]="productionCenter"></app-machinery>
   </mat-tab>
 
   <mat-tab label="{{'fugitiveEmissions' | translate}}" aria-label="Emisiones fugitivas">
-    <button mat-menu-item (click)="openDialog(6)" aria-label="Abrir información sobre emisiones fugitivas">
+    <button mat-menu-item (click)="openDialog(7)" aria-label="Abrir información sobre emisiones fugitivas">
       <mat-icon style="color: #ff9310;">info</mat-icon>{{"fugitiveEmissions" | translate}}
     </button>
     <app-fugitive-gases [activityYear]="activityYear" [productionCenter]="productionCenter"></app-fugitive-gases>
