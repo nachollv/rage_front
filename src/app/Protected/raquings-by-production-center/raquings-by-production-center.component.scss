@@ -18,6 +18,10 @@ header {
   font-family: 'Arial', sans-serif;
 }
 
+.ranking-container{
+  margin: 2rem;
+}
+
 .ranquing-card {
   margin: auto;
   padding: 1rem;
@@ -25,7 +29,7 @@ header {
   border-radius: 1rem;
   background-color: #ffffff;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease;
+  transition: all 0.8s ease;
 
   &:hover {
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
